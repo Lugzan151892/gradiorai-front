@@ -1,11 +1,11 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import GenerateStep from './components/GenerateStep';
-import { ETEST_STEPS } from './interfaces';
+import GenerateStep from '@/app/(tests)/tests/generate/components/GenerateStep';
+import { ETEST_STEPS } from '@/app/(tests)/tests/generate/interfaces';
 import CustomButton from '@/components/ui/button/CustomButton';
 import { useRouter } from 'next/navigation';
-import TestsPrepareLayout from '../components/TestsPrepareLayout';
+import TestsPrepareLayout from '@/app/(tests)/tests/components/TestsPrepareLayout';
 
 const TestsGenerate = () => {
   const [step, setStep] = useState(ETEST_STEPS.FIRST);
