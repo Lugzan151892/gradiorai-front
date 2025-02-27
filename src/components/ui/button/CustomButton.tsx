@@ -1,15 +1,18 @@
 import { Button } from '@headlessui/react';
-import { ReactNode, useMemo } from 'react';
+import { ReactNode } from 'react';
 
 interface ICustomButtonProps {
-  text?: string;
-  className?: string;
-  children?: ReactNode;
-  type?: 'success' | 'error';
-  level?: 1 | 2 | 3;
-  onClick?: () => void;
-  disabled?: boolean;
-  maxRounded?: boolean;
+  text?: string
+  className?: string
+  children?: ReactNode
+  type?: 'success' | 'error'
+  level?: 1 | 2 | 3
+  onClick?: (...args: unknown[]) => void
+  disabled?: boolean
+  maxRounded?: boolean
+  selected?: boolean
+  color?: 'blue'|'red'|'green'
+  small?: boolean
 }
 
 const CustomButton: React.FC<ICustomButtonProps> = ({
@@ -17,39 +20,33 @@ const CustomButton: React.FC<ICustomButtonProps> = ({
   className,
   children,
   type = 'success',
-  level = 1,
   onClick,
   disabled,
-  maxRounded = true,
+  maxRounded = false,
+  selected,
+  color,
+  small
 }) => {
-  const levelOneClasses =
-    type === 'success'
-      ? 'bg-blue-secondary border-blue-secondary text-white'
-      : 'bg-error border-error';
-  const levelTwoClasses =
-    type === 'success'
-      ? 'border-blue-secondary bg-white'
-      : 'border-error text-error bg-white';
-  const levelThreeClasses =
-    'border-0 bg-transparent ' +
-    (type === 'success' ? 'text-white' : 'text-error');
   const disabledClass = disabled ? 'pointer-events-none opacity-40' : '';
-  const classes = useMemo(() => {
-    if (level === 1) {
-      return levelOneClasses;
+  const selectedClass = selected ? 'border-white' : 'border-transparent';
+  const sizeClasses = small ? 'px-2 py-1' : 'px-4 py-2';
+  const getColor = () => {
+    switch (color) {
+      case 'blue':
+        return 'bg-blue-secondary';
+      case 'red':
+        return 'bg-red';
+      case 'green':
+        return 'bg-green';
+      default:
+        return 'bg-blue-secondary';
     }
+  };
+  const classes = type === 'success' ? `${getColor()} text-white` : 'bg-error text-white';
 
-    if (level === 2) {
-      return levelTwoClasses;
-    }
-
-    if (level === 3) {
-      return levelThreeClasses;
-    }
-  }, [level, levelOneClasses, levelTwoClasses, levelThreeClasses]);
   return (
     <Button
-      className={`border-1 px-24 py-5 ${(maxRounded && 'rounded-xl') || 'rounded-lg'} ${classes} ${className || ''} ${disabledClass}`}
+      className={`${sizeClasses} ${(maxRounded && 'rounded-xl') || 'rounded-lg'} ${classes} ${className || ''} ${disabledClass} ${selectedClass} border-2`}
       onClick={onClick}
     >
       {children || text}

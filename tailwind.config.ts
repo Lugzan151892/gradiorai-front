@@ -8,6 +8,9 @@ export default {
   ],
   theme: {
     extend: {
+      borderWidth: {
+        1: '1px',
+      },
       colors: {
         background: 'var(--background)',
         white: 'var(--main-white)',
