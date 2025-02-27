@@ -7,7 +7,7 @@ interface ICustomButtonProps {
   children?: ReactNode
   type?: 'success' | 'error'
   level?: 1 | 2 | 3
-  onClick?: (...args: unknown[]) => void
+  onClick?: () => void
   disabled?: boolean
   maxRounded?: boolean
   selected?: boolean
