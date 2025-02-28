@@ -1,3 +1,4 @@
+import React from 'react';
 import AppHeader from '@/components/header/AppHeader';
 
 const TestsLayout = ({
@@ -6,7 +7,7 @@ const TestsLayout = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <div className="grid grid-cols-1 grid-rows-layout h-full">
+    <div className={'grid grid-cols-1 grid-rows-layout h-full'}>
       <AppHeader />
       {children}
     </div>

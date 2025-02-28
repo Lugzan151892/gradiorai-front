@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import GenerateStep from '@/app/(tests)/tests/generate/components/GenerateStep';
 import { ETEST_STEPS } from '@/app/(tests)/tests/generate/interfaces';
 import CustomButton from '@/components/ui/button/CustomButton';
@@ -26,7 +26,7 @@ const TestsGenerate = () => {
     }
   }, [step, spec, level, questionsAmount]);
 
-  const changeStep = (direction: 'back'|'forward' = 'forward') => {
+  const changeStep = (direction: 'back' | 'forward' = 'forward') => {
     if (direction === 'forward') {
       if (step !== ETEST_STEPS.THIRD) {
         setStep(step + 1);
@@ -40,14 +40,14 @@ const TestsGenerate = () => {
         router.push('/tests');
       }
     }
-  }
+  };
 
   let stepMarkup = null;
   if (step === ETEST_STEPS.FIRST) {
     stepMarkup = (
       <GenerateStep
-        title="Первый Шаг"
-        description="Выберите специализацию"
+        title={'Первый Шаг'}
+        description={'Выберите специализацию'}
         options={[
           {
             id: 1,
@@ -71,8 +71,8 @@ const TestsGenerate = () => {
   if (step === ETEST_STEPS.SECOND) {
     stepMarkup = (
       <GenerateStep
-        title="Второй Шаг"
-        description="Выберите уровень вопросов"
+        title={'Второй Шаг'}
+        description={'Выберите уровень вопросов'}
         options={[
           {
             id: 1,
@@ -96,8 +96,8 @@ const TestsGenerate = () => {
   if (step === ETEST_STEPS.THIRD) {
     stepMarkup = (
       <GenerateStep
-        title="Третий Шаг"
-        description="Выберите количество вопросов"
+        title={'Третий Шаг'}
+        description={'Выберите количество вопросов'}
         options={[
           {
             id: 1,
@@ -120,11 +120,21 @@ const TestsGenerate = () => {
 
   return (
     <TestsPrepareLayout>
-      <div className='flex flex-col h-full'>
+      <div className={'flex flex-col h-full'}>
         {stepMarkup}
-        <div className='mt-auto ml-auto'>
-          <CustomButton small text='Назад' onClick={() => changeStep('back')} />
-          <CustomButton className='ml-2' small text={step === ETEST_STEPS.THIRD ? 'Завершить' : 'Продолжить'} disabled={checkNextStep} onClick={() => changeStep()} />
+        <div className={'mt-auto ml-auto'}>
+          <CustomButton
+            small
+            text={'Назад'}
+            onClick={() => changeStep('back')}
+          />
+          <CustomButton
+            className={'ml-2'}
+            small
+            text={step === ETEST_STEPS.THIRD ? 'Завершить' : 'Продолжить'}
+            disabled={checkNextStep}
+            onClick={() => changeStep()}
+          />
         </div>
       </div>
     </TestsPrepareLayout>

@@ -1,4 +1,5 @@
 import AppHeader from '@/components/header/AppHeader';
+import React from 'react';
 
 const Home = ({
   children,
@@ -8,7 +9,7 @@ const Home = ({
   return (
     <>
       <AppHeader />
-      <main className="flex flex-col w-full">{children}</main>
+      <main className={'flex flex-col w-full'}>{children}</main>
     </>
   );
 };
