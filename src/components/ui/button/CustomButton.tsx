@@ -1,18 +1,18 @@
 import { Button } from '@headlessui/react';
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 
 interface ICustomButtonProps {
-  text?: string
-  className?: string
-  children?: ReactNode
-  type?: 'success' | 'error'
-  level?: 1 | 2 | 3
-  onClick?: () => void
-  disabled?: boolean
-  maxRounded?: boolean
-  selected?: boolean
-  color?: 'blue'|'red'|'green'
-  small?: boolean
+  text?: string;
+  className?: string;
+  children?: ReactNode;
+  type?: 'success' | 'error';
+  level?: 1 | 2 | 3;
+  onClick?: () => void;
+  disabled?: boolean;
+  maxRounded?: boolean;
+  selected?: boolean;
+  color?: 'blue' | 'red' | 'green';
+  small?: boolean;
 }
 
 const CustomButton: React.FC<ICustomButtonProps> = ({
@@ -25,7 +25,7 @@ const CustomButton: React.FC<ICustomButtonProps> = ({
   maxRounded = false,
   selected,
   color,
-  small
+  small,
 }) => {
   const disabledClass = disabled ? 'pointer-events-none opacity-40' : '';
   const selectedClass = selected ? 'border-white' : 'border-transparent';
@@ -42,7 +42,8 @@ const CustomButton: React.FC<ICustomButtonProps> = ({
         return 'bg-blue-secondary';
     }
   };
-  const classes = type === 'success' ? `${getColor()} text-white` : 'bg-error text-white';
+  const classes =
+    type === 'success' ? `${getColor()} text-white` : 'bg-error text-white';
 
   return (
     <Button
