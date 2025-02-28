@@ -1,15 +1,11 @@
 import AppHeader from '@/components/header/AppHeader';
 import React from 'react';
 
-const Home = ({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) => {
+const Home = () => {
   return (
     <>
       <AppHeader />
-      <main className={'flex flex-col w-full'}>{children}</main>
+      <main className={'flex flex-col w-full'} />
     </>
   );
 };
