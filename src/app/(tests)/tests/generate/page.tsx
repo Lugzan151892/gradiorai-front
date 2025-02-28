@@ -8,7 +8,6 @@ import { useRouter } from 'next/navigation';
 import TestsPrepareLayout from '@/app/(tests)/tests/components/TestsPrepareLayout';
 import {
   Button,
-  Description,
   Dialog,
   DialogPanel,
   DialogTitle,
