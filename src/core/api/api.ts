@@ -3,9 +3,7 @@ import UserError from '@/utils/errors/UserError';
 import { IResponse, IResponseSilent } from './interfaces';
 
 const API_PATH =
-  process.env.NODE_ENV === 'development'
-    ? 'http://localhost:5000'
-    : `${window.location.origin}/api`;
+  process.env.NODE_ENV === 'development' ? 'http://localhost:5000/api' : `/api`;
 
 type TApiMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
 type ResponseType<R, S extends boolean> = S extends true
@@ -26,9 +24,6 @@ class Api {
     method: TApiMethod,
     options: T = {} as T
   ): Promise<Response> {
-    /** @todo fix */
-    // @ts-expect-error tut fix
-    if (typeof window === 'undefined') return;
     let requestParams = '';
 
     if (options && method === 'GET') {
