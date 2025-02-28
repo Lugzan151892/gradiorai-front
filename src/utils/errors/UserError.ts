@@ -1,4 +1,4 @@
-import { IResponseError } from '@/services/api/interfaces';
+import { IResponseError } from '@/core/api/interfaces';
 
 export default class UserError extends Error {
   public status: number;
