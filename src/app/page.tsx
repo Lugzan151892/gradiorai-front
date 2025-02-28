@@ -8,7 +8,7 @@ const Home = ({
   return (
     <>
       <AppHeader />
-      <main className="flex flex-col h-full w-full">{children}</main>
+      <main className="flex flex-col w-full">{children}</main>
     </>
   );
 };
