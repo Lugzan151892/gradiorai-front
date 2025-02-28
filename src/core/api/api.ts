@@ -26,6 +26,9 @@ class Api {
     method: TApiMethod,
     options: T = {} as T
   ): Promise<Response> {
+    /** @todo fix */
+    // @ts-expect-error tut fix
+    if (typeof window === 'undefined') return;
     let requestParams = '';
 
     if (options && method === 'GET') {
@@ -36,13 +39,10 @@ class Api {
       );
     }
 
-    const authToken = localStorage.getItem('token');
-
     return fetch(API_PATH + path + requestParams, {
       method,
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
-        ...(authToken && { Authorization: `Bearer ${authToken}` }),
       },
       credentials: 'include',
       ...(method !== 'GET' && { body: JSON.stringify(options) }),
