@@ -3,7 +3,7 @@ import UserError from '@/utils/errors/UserError';
 import { IResponse, IResponseSilent } from './interfaces';
 
 const API_PATH =
-  process.env.NODE_ENV === 'development' || process.env.NODE_ENV
+  process.env.NODE_ENV === 'development' || process.env.NEXT_PUBLIC_IS_DEV
     ? 'http://localhost:5000'
     : `${window.location.origin}/api`;
 
