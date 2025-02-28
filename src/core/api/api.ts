@@ -24,9 +24,6 @@ class Api {
     method: TApiMethod,
     options: T = {} as T
   ): Promise<Response> {
-    /** @todo fix */
-    // @ts-expect-error tut fix
-    if (typeof window === 'undefined') return;
     let requestParams = '';
 
     if (options && method === 'GET') {
