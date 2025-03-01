@@ -19,9 +19,12 @@ export default {
         error: 'var(--main-error)',
         success: 'var(--main-success)',
         warning: 'var(--main-warning)',
+        gray: 'var(--main-gray)',
+        aqua: 'var(--main-aqua)',
+        'text-secondary': 'var(--text-secondary)',
       },
       gridTemplateRows: {
-        layout: '50px 1fr',
+        layout: '48px 1fr',
       },
     },
   },

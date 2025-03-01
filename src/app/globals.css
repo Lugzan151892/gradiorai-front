@@ -16,6 +16,9 @@
   --main-error: #ff7171;
   --main-success: #14a38b;
   --main-warning: #f2ac57;
+  --main-gray: #d8d3d3;
+  --main-aqua: #c2fbf7;
+  --text-secondary: #6f6969;
 }
 
 html,

@@ -10,18 +10,17 @@ const CustomRadioButton: React.FC<ICustomRadioButtonProps> = ({
   selected,
   onClick,
 }) => {
-  const selectedClass = selected ? 'border-main-blue' : 'border-transparent';
   return (
-    <div className={'flex items-center w-full justify-between py-1'}>
-      {caption ? <div> {caption} </div> : null}
+    <div className={'flex items-center w-full py-1 cursor-pointer'}>
       <div
-        className={`border-1 ${selectedClass} rounded-full bg-white h-4 w-4 flex items-center justify-center`}
+        className={
+          'border-1 border-gray rounded-full bg-white h-4 w-4 flex items-center justify-center shadow-2xl'
+        }
         onClick={onClick}
       >
-        {selected ? (
-          <div className={'rounded-full bg-main-blue h-2 w-2'} />
-        ) : null}
+        {selected ? <div className={'rounded-full bg-gray h-2 w-2'} /> : null}
       </div>
+      {caption ? <div className={'ml-4 text-black'}> {caption} </div> : null}
     </div>
   );
 };
