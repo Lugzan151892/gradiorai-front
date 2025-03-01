@@ -16,6 +16,8 @@ import {
   Label,
 } from '@headlessui/react';
 import Api from '@/core/api/api';
+import GenerateTest from './components/GenerateTest';
+import mockedTests from '@/core/mock/tests';
 
 const TestsGenerate = () => {
   const [step, setStep] = useState(ETEST_STEPS.FIRST);
@@ -73,6 +75,10 @@ const TestsGenerate = () => {
 
     console.log(result);
   };
+
+  if (true) {
+    return <GenerateTest tests={mockedTests.questions} />;
+  }
 
   let stepMarkup = null;
   if (step === ETEST_STEPS.FIRST) {

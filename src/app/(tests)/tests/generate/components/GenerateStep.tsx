@@ -18,7 +18,11 @@ const GenerateStep: React.FC<IGenerateStepProps> = ({
   value,
 }) => {
   return (
-    <div className={'flex flex-col items-center align-center w-full'}>
+    <div
+      className={
+        'flex flex-col items-center align-center w-full max-w-md mx-auto'
+      }
+    >
       <div className={'text-3xl mb-1'}>{title}</div>
       <div className={'mb-5 text-xl'}>{description}</div>
       {options

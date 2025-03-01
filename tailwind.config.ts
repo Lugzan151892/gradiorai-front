@@ -21,7 +21,7 @@ export default {
         warning: 'var(--main-warning)',
       },
       gridTemplateRows: {
-        layout: '80px 1fr',
+        layout: '50px 1fr',
       },
     },
   },
