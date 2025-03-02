@@ -5,6 +5,7 @@ export default {
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/features/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     extend: {
@@ -14,14 +15,18 @@ export default {
       colors: {
         background: 'var(--background)',
         white: 'var(--main-white)',
+        black: 'var(--main-black)',
         'main-blue': 'var(--main-blue)',
         'blue-secondary': 'var(--main-blue-secondary)',
         error: 'var(--main-error)',
         success: 'var(--main-success)',
         warning: 'var(--main-warning)',
+        gray: 'var(--main-gray)',
+        aqua: 'var(--main-aqua)',
+        'text-secondary': 'var(--text-secondary)',
       },
       gridTemplateRows: {
-        layout: '80px 1fr',
+        layout: '48px 1fr',
       },
     },
   },
