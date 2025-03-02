@@ -34,6 +34,7 @@ const eslintConfig = [
       'react/self-closing-comp': ['error', { component: true, html: true }], // Автозакрывающиеся теги, если нет контента
       'react/jsx-boolean-value': ['error', 'never'], // Не указывать `={true}` у булевых пропсов
       'object-shorthand': ['error', 'always'], // { data: data } => { data }
+      '@typescript-eslint/no-explicit-any': 'off',
     },
   },
 ];

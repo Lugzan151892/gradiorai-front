@@ -1,7 +1,7 @@
 'use client';
 import CustomButton from '@/components/ui/button/CustomButton';
 import { useRouter } from 'next/navigation';
-import TestsPrepareLayout from './components/TestsPrepareLayout';
+import TestsPrepareLayout from '@/app/(tests)/tests/components/TestsPrepareLayout';
 import React from 'react';
 
 const TestsPage = () => {

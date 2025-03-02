@@ -1,11 +1,7 @@
 import React from 'react';
 import AppHeader from '@/components/header/AppHeader';
 
-const TestsLayout = ({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) => {
+const TestsLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <div className={'grid grid-cols-1 grid-rows-layout h-full'}>
       <AppHeader />

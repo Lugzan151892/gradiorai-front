@@ -11,11 +11,15 @@
     rgba(29, 58, 121, 0.42) 70%,
     rgba(30, 15, 95, 0.42) 100%
   );
-  --main-blue: #1e3da4;
+  --main-black: #000000;
+  --main-blue: #6d8aeef2;
   --main-blue-secondary: #19b0da;
   --main-error: #ff7171;
-  --main-success: #14a38b;
+  --main-success: #50fb26;
   --main-warning: #f2ac57;
+  --main-gray: #d8d3d3;
+  --main-aqua: #c2fbf7;
+  --text-secondary: #6f6969;
 }
 
 html,
@@ -28,3 +32,7 @@ body {
   background: var(--main-gradient);
   font-family: Arial, Helvetica, sans-serif;
 }
+/* 
+.bg-test {
+  @apply bg-black;
+} */
