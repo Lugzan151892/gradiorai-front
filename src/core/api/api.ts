@@ -3,7 +3,7 @@ import UserError from '@/utils/errors/UserError';
 import { IResponse, IResponseSilent } from './interfaces';
 
 const API_PATH =
-  process.env.NODE_ENV === 'development' ? 'http://localhost:5000/api' : `/api`;
+  process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : `/api`;
 
 type TApiMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
 type ResponseType<R, S extends boolean> = S extends true

@@ -5,7 +5,7 @@ const TestsPrepareLayout: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   return (
     <div className={'h-full flex flex-grow w-full'}>
-      <div className={'my-11 mx-6 rounded-lg bg-main-blue w-full p-4'}>
+      <div className={'my-7 mx-3 rounded-lg bg-main-blue w-full p-4'}>
         {children}
       </div>
     </div>
