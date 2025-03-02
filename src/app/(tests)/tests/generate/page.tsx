@@ -76,6 +76,8 @@ const TestsGenerate = () => {
     try {
       dispatch(setLoading(true));
       const result = await Api.post('/gpt/generate', data);
+      console.log(result);
+
       if (result) {
         setStep(ETEST_STEPS.TEST);
       }
