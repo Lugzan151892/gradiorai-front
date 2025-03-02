@@ -32,7 +32,7 @@ body {
   background: var(--main-gradient);
   font-family: Arial, Helvetica, sans-serif;
 }
-
+/* 
 .bg-test {
   @apply bg-black;
-}
+} */

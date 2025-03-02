@@ -18,6 +18,8 @@ import {
 import Api from '@/core/api/api';
 import GenerateTest from './components/GenerateTest';
 import mockedTests from '@/core/mock/tests';
+import { useAppDispatch } from '@/hooks/redux';
+import { setLoading } from '@/features/loading/loadingSlice';
 
 const TestsGenerate = () => {
   const [step, setStep] = useState(ETEST_STEPS.FIRST);
@@ -29,9 +31,9 @@ const TestsGenerate = () => {
 
   const [passwordModal, setPasswordModal] = useState(false);
 
-  const handleSetPassword = (e: string) => {
-    console.log(e);
+  const dispatch = useAppDispatch();
 
+  const handleSetPassword = (e: string) => {
     setPassword(e);
   };
 
@@ -71,13 +73,17 @@ const TestsGenerate = () => {
       spec,
     };
 
-    const result = await Api.post('/gpt/generate', data);
-
-    if (result) {
-      setStep(ETEST_STEPS.TEST);
+    try {
+      dispatch(setLoading(true));
+      const result = await Api.post('/gpt/generate', data);
+      if (result) {
+        setStep(ETEST_STEPS.TEST);
+      }
+    } catch (e: any) {
+      console.log(e);
+    } finally {
+      dispatch(setLoading(false));
     }
-
-    console.log(result);
   };
 
   const testsWithId = mockedTests.questions.map((question) => ({

@@ -12,14 +12,18 @@ const GlobalLoader = () => {
 
   return (
     <div
-      className={'fixed inset-0 w-full h-full flex items-center justify-center'}
+      className={
+        'fixed inset-0 w-full h-full flex items-center justify-center z-50'
+      }
     >
       <div
-        className={'fixed inset-0 w-full bg-fixed h-full bg-test opacity-40'}
+        className={
+          'fixed inset-0 w-full bg-fixed h-full bg-black opacity-40 z-50'
+        }
       />
       <div
         className={
-          'fixed inset-0 w-full bg-fixed h-full flex items-center justify-center ' +
+          'fixed inset-0 w-full bg-fixed h-full flex items-center justify-center z-50 ' +
           styles.loader
         }
       />
