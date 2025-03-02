@@ -14,6 +14,7 @@ export default {
       colors: {
         background: 'var(--background)',
         white: 'var(--main-white)',
+        black: 'var(--main-black)',
         'main-blue': 'var(--main-blue)',
         'blue-secondary': 'var(--main-blue-secondary)',
         error: 'var(--main-error)',

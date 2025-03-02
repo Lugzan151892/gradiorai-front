@@ -73,11 +73,23 @@ const TestsGenerate = () => {
 
     const result = await Api.post('/gpt/generate', data);
 
+    if (result) {
+      setStep(ETEST_STEPS.TEST);
+    }
+
     console.log(result);
   };
 
-  if (true) {
-    return <GenerateTest tests={mockedTests.questions} />;
+  const testsWithId = mockedTests.questions.map((question) => ({
+    ...question,
+    responses: question.responses.map((answer, index) => ({
+      ...answer,
+      id: index + 1,
+    })),
+  }));
+
+  if (step === ETEST_STEPS.TEST) {
+    return <GenerateTest tests={testsWithId} />;
   }
 
   let stepMarkup = null;
