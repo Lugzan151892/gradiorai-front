@@ -2,7 +2,11 @@
 
 import React, { useMemo, useState } from 'react';
 import GenerateStep from '@/app/(tests)/tests/generate/components/GenerateStep';
-import { ETEST_STEPS } from '@/app/(tests)/tests/generate/interfaces';
+import {
+  ETEST_STEPS,
+  ITest,
+  ITestParams,
+} from '@/app/(tests)/tests/generate/interfaces';
 import CustomButton from '@/components/ui/button/CustomButton';
 import { useRouter } from 'next/navigation';
 import TestsPrepareLayout from '@/app/(tests)/tests/components/TestsPrepareLayout';
@@ -17,21 +21,26 @@ import {
 } from '@headlessui/react';
 import Api from '@/core/api/api';
 import GenerateTest from './components/GenerateTest';
-import mockedTests from '@/core/mock/tests';
 import { useAppDispatch } from '@/hooks/redux';
 import { setLoading } from '@/features/loading/loadingSlice';
+import {
+  EQUESTION_AMOUNT,
+  ESKILL_LEVEL,
+  ETEST_SPEC,
+} from '@/core/interfaces/enums';
 
 const TestsGenerate = () => {
   const [step, setStep] = useState(ETEST_STEPS.FIRST);
-  const [spec, setSpec] = useState<number>();
-  const [level, setLevel] = useState<number>();
-  const [questionsAmount, setQuestionsAmount] = useState<number>();
+  const [spec, setSpec] = useState<ETEST_SPEC>();
+  const [level, setLevel] = useState<ESKILL_LEVEL>();
+  const [questionsAmount, setQuestionsAmount] = useState<EQUESTION_AMOUNT>();
   const router = useRouter();
   const [password, setPassword] = useState('');
 
   const [passwordModal, setPasswordModal] = useState(false);
 
   const dispatch = useAppDispatch();
+  const [tests, setTests] = useState<ITest[]>([]);
 
   const handleSetPassword = (e: string) => {
     setPassword(e);
@@ -66,7 +75,11 @@ const TestsGenerate = () => {
   };
 
   const generateTests = async () => {
-    const data = {
+    if (!questionsAmount || !level || !spec) {
+      return;
+    }
+
+    const data: ITestParams = {
       password,
       amount: questionsAmount,
       level,
@@ -75,10 +88,14 @@ const TestsGenerate = () => {
 
     try {
       dispatch(setLoading(true));
-      const result = await Api.post('/gpt/generate', data);
+      const result = await Api.post<
+        ITestParams,
+        { response: string; usage: any }
+      >('/gpt/generate', data);
       console.log(result);
 
-      if (result) {
+      if (result.success) {
+        setTests(JSON.parse(result.data.response).questions);
         setStep(ETEST_STEPS.TEST);
       }
     } catch (e: any) {
@@ -88,16 +105,8 @@ const TestsGenerate = () => {
     }
   };
 
-  const testsWithId = mockedTests.questions.map((question) => ({
-    ...question,
-    responses: question.responses.map((answer, index) => ({
-      ...answer,
-      id: index + 1,
-    })),
-  }));
-
   if (step === ETEST_STEPS.TEST) {
-    return <GenerateTest tests={testsWithId} />;
+    return <GenerateTest tests={tests} />;
   }
 
   let stepMarkup = null;
@@ -108,15 +117,15 @@ const TestsGenerate = () => {
         description={'Выберите специализацию'}
         options={[
           {
-            id: 1,
+            id: ETEST_SPEC.FRONT,
             text: 'Front',
           },
           {
-            id: 2,
+            id: ETEST_SPEC.BACK,
             text: 'Back',
           },
           {
-            id: 3,
+            id: ETEST_SPEC.QA,
             text: 'QA',
           },
         ]}
@@ -133,15 +142,15 @@ const TestsGenerate = () => {
         description={'Выберите уровень вопросов'}
         options={[
           {
-            id: 1,
+            id: ESKILL_LEVEL.JUNIOR,
             text: 'Junior',
           },
           {
-            id: 2,
+            id: ESKILL_LEVEL.MIDDLE,
             text: 'Middle',
           },
           {
-            id: 3,
+            id: ESKILL_LEVEL.SENIOR,
             text: 'Senior',
           },
         ]}
@@ -158,16 +167,16 @@ const TestsGenerate = () => {
         description={'Выберите количество вопросов'}
         options={[
           {
-            id: 1,
-            text: '3',
+            id: EQUESTION_AMOUNT.TEN,
+            text: EQUESTION_AMOUNT.TEN.toString(),
           },
           {
-            id: 2,
-            text: '5',
+            id: EQUESTION_AMOUNT.FIFTEEN,
+            text: EQUESTION_AMOUNT.FIFTEEN.toString(),
           },
           {
-            id: 3,
-            text: '10',
+            id: EQUESTION_AMOUNT.TWENTY,
+            text: EQUESTION_AMOUNT.TWENTY.toString(),
           },
         ]}
         value={questionsAmount}
