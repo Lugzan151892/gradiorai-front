@@ -2,12 +2,10 @@ import React, { useState } from 'react';
 import AnswerComponent from './AnswerComponent';
 import CustomButton from '@/components/ui/button/CustomButton';
 import { useRouter } from 'next/navigation';
+import { ITest } from '../interfaces';
 
 const GenerateTest: React.FC<{
-  tests: Array<{
-    question: string;
-    responses: Array<{ answer: string; correct: boolean; id: number }>;
-  }>;
+  tests: ITest[];
 }> = ({ tests }) => {
   const [currentQuestion, setCurrentQuestion] = useState<number>(1);
   const [userChoise, setUserChoise] = useState<number>();
