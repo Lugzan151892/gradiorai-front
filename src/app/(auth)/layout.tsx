@@ -8,7 +8,7 @@ const AuthLayout: React.FC<{
     <div className={'w-full h-full flex flex-col'}>
       <AppHeader />
       <div className={'flex justify-center w-full h-full'}>
-        <div className={'max-w-screen-sm w-full bg-gray'}>{children}</div>
+        <div className={'max-w-screen-sm w-full'}>{children}</div>
       </div>
     </div>
   );
