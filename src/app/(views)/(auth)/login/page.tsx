@@ -21,14 +21,12 @@ const LoginView = () => {
     setPasswordError(passwordErrorMsg);
 
     try {
-      const result = await Api.post('/auth/login', {
+      await Api.post('/auth/login', {
         email,
         password,
       });
 
       router.push('/');
-
-      console.log(result);
     } catch (e: any) {
       console.log(e);
     }

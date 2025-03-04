@@ -21,13 +21,15 @@ import {
 } from '@headlessui/react';
 import Api from '@/core/api/api';
 import GenerateTest from './components/GenerateTest';
-import { useAppDispatch } from '@/hooks/redux';
+import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { setLoading } from '@/features/loading/loadingSlice';
 import {
   EQUESTION_AMOUNT,
   ESKILL_LEVEL,
   ETEST_SPEC,
 } from '@/core/interfaces/enums';
+import { RootState } from '@/store';
+import { shuffleArray } from '@/core/utils/array';
 
 const TestsGenerate = () => {
   const [step, setStep] = useState(ETEST_STEPS.FIRST);
@@ -41,6 +43,7 @@ const TestsGenerate = () => {
 
   const dispatch = useAppDispatch();
   const [tests, setTests] = useState<ITest[]>([]);
+  const { user } = useAppSelector((state: RootState) => state.user);
 
   const handleSetPassword = (e: string) => {
     setPassword(e);
@@ -63,7 +66,11 @@ const TestsGenerate = () => {
       if (step !== ETEST_STEPS.THIRD) {
         setStep(step + 1);
       } else {
-        setPasswordModal(true);
+        if (user?.admin) {
+          generateTests();
+        } else {
+          setPasswordModal(true);
+        }
       }
     } else {
       if (step !== ETEST_STEPS.FIRST) {
@@ -90,12 +97,18 @@ const TestsGenerate = () => {
       dispatch(setLoading(true));
       const result = await Api.post<
         ITestParams,
-        { response: string; usage: any }
+        { response: { questions: ITest[] }; usage: any }
       >('/gpt/generate', data);
       console.log(result);
 
       if (result.success) {
-        setTests(JSON.parse(result.payload.response).questions);
+        const shuffledTests = result.payload.response.questions.map(
+          (question) => ({
+            ...question,
+            responses: shuffleArray(question.responses),
+          })
+        );
+        setTests(shuffledTests);
         setStep(ETEST_STEPS.TEST);
       }
     } catch (e: any) {
@@ -105,8 +118,8 @@ const TestsGenerate = () => {
     }
   };
 
-  if (step === ETEST_STEPS.TEST) {
-    return <GenerateTest tests={tests} />;
+  if (step === ETEST_STEPS.TEST && level && spec) {
+    return <GenerateTest level={level} spec={spec} tests={tests} />;
   }
 
   let stepMarkup = null;

@@ -1,19 +1,32 @@
 'use client';
-import { useAppSelector } from '@/hooks/redux';
+import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import { RootState } from '@/store';
 import CustomButton from '../ui/button/CustomButton';
+import Api from '@/core/api/api';
+import { logout } from '@/store/userSlice';
 
 const AppHeader = () => {
   const router = useRouter();
   const { user } = useAppSelector((state: RootState) => state.user);
+  const dispatch = useAppDispatch();
 
   const handleLogin = () => {
     router.push('/login');
   };
   const handleRegister = () => {
     router.push('/registration');
+  };
+
+  const handleLogout = async () => {
+    const result = await Api.get('/auth/logout');
+
+    if (result.success) {
+      localStorage.removeItem('token');
+    }
+
+    dispatch(logout());
   };
   return (
     <header
@@ -31,7 +44,14 @@ const AppHeader = () => {
             onClick={handleRegister}
           />
         </div>
-      ) : null}
+      ) : (
+        <div className={'ml-auto flex items-center'}>
+          <div className={'text-white mr-2'}>
+            {`USER: ${user.email}${user.admin ? ' (ADMIN)' : ''}`}
+          </div>
+          <CustomButton small text={'Выйти'} onClick={handleLogout} />
+        </div>
+      )}
     </header>
   );
 };
