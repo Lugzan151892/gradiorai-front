@@ -119,6 +119,7 @@ const TestsGenerate = () => {
   };
 
   if (step === ETEST_STEPS.TEST && level && spec) {
+    // eslint-disable-next-line react/jsx-max-props-per-line
     return <GenerateTest level={level} spec={spec} tests={tests} />;
   }
 
