@@ -1,5 +1,5 @@
 export interface IResponseSuccess<R> {
-  data: R;
+  payload: R;
   error: false;
   errorMessage?: null;
   message?: null;
