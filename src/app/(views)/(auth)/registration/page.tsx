@@ -17,7 +17,14 @@ const RegistrationPage = () => {
 
   const handleRegister = async () => {
     const emailErrorMsg = email ? '' : 'Поле не заполнено';
+    const emailRegError =
+      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)
+        ? ''
+        : 'Некорректный формат';
     const passwordErrorMsg = password ? '' : 'Поле не заполнено';
+    const passwordReqError = /^(?=.*[A-Z])(?=.*[\W_]).{8,}$/.test(password)
+      ? ''
+      : 'Пароль должен содержать минимум 8 символов, заглавную букву и спецсимвол';
     const repeatedPasswordErrorMsg = repeatedPassword
       ? ''
       : 'Поле не заполнено';
@@ -25,9 +32,15 @@ const RegistrationPage = () => {
     const passwordMismatchError =
       password !== repeatedPassword ? 'Пароли не совпадают' : '';
 
-    if (emailErrorMsg || passwordErrorMsg || repeatedPasswordErrorMsg) {
-      setEmailError(emailErrorMsg);
-      setPasswordError(passwordErrorMsg);
+    if (
+      emailErrorMsg ||
+      passwordErrorMsg ||
+      repeatedPasswordErrorMsg ||
+      emailRegError ||
+      passwordReqError
+    ) {
+      setEmailError(emailErrorMsg || emailRegError);
+      setPasswordError(passwordErrorMsg || passwordReqError);
       setRepeatedPasswordError(
         passwordMismatchError || repeatedPasswordErrorMsg
       );
@@ -59,6 +72,7 @@ const RegistrationPage = () => {
       <div className={'flex flex-col w-full gap-1 text-3xl'}>
         <div className={'mb-6'}>Регистрация</div>
         <CustomInput
+          label={'E-mail'}
           validation
           value={email}
           error={emailError}
@@ -68,6 +82,7 @@ const RegistrationPage = () => {
           }}
         />
         <CustomInput
+          label={'Пароль'}
           validation
           value={password}
           error={passwordError}
@@ -77,6 +92,7 @@ const RegistrationPage = () => {
           }}
         />
         <CustomInput
+          label={'Повторите пароль'}
           validation
           value={repeatedPassword}
           error={repeatedPasswordError}

@@ -41,6 +41,7 @@ const LoginView = () => {
       <div className={'flex flex-col w-full gap-1 text-3xl'}>
         <div className={'mb-6'}>Вход</div>
         <CustomInput
+          label={'E-mail'}
           validation
           value={email}
           error={emailError}
@@ -50,6 +51,7 @@ const LoginView = () => {
           }}
         />
         <CustomInput
+          label={'Пароль'}
           validation
           value={password}
           error={passwordError}

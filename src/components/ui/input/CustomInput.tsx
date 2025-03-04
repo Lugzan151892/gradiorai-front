@@ -40,9 +40,7 @@ const CustomInput: React.FC<ICustomInputProps> = ({
     <div className={'w-full'}>
       <Field>
         {label ? (
-          <Label className={'text-sm/6 mb-3 font-medium text-black'}>
-            {label}
-          </Label>
+          <Label className={'text-xl mb-1 text-black'}>{label}</Label>
         ) : null}
         <div
           className={
@@ -63,7 +61,7 @@ const CustomInput: React.FC<ICustomInputProps> = ({
             onInput={handleInput}
             onChange={handleChange}
             className={
-              'pl-3 border-l-2 text-sm/6 focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25 ' +
+              'w-full pl-3 border-l-2 text-sm/6 focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25 ' +
               classes
             }
           />

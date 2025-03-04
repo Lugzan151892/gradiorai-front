@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import { RootState } from '@/store';
-import CustomButton from '../ui/button/CustomButton';
+import CustomButton from '@/components/ui/button/CustomButton';
 import Api from '@/core/api/api';
 import { logout } from '@/store/userSlice';
 
@@ -27,6 +27,7 @@ const AppHeader = () => {
     }
 
     dispatch(logout());
+    router.push('/login');
   };
   return (
     <header
