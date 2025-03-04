@@ -34,10 +34,13 @@ class Api {
       );
     }
 
+    const authToken = localStorage.getItem('token');
+
     return fetch(API_PATH + path + requestParams, {
       method,
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
+        ...(authToken && { Authorization: `Bearer ${authToken}` }),
       },
       credentials: 'include',
       ...(method !== 'GET' && { body: JSON.stringify(options) }),
@@ -60,16 +63,16 @@ class Api {
       throw new UserError(error);
     }
 
-    const authToken = response.headers.get('Authorization');
-    if (authToken) {
-      localStorage.setItem('token', authToken);
-    }
-
     const result = await response.text();
+    const parsedResult = JSON.parse(result);
+
+    if (parsedResult.accessToken) {
+      localStorage.setItem('token', parsedResult.accessToken);
+    }
 
     return {
       success: true,
-      ...JSON.parse(result),
+      payload: { ...parsedResult },
     } as ResponseType<R, S>;
   }
 

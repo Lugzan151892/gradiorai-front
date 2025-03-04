@@ -1,12 +1,13 @@
 'use client';
 import AppHeader from '@/components/header/AppHeader';
 import CustomButton from '@/components/ui/button/CustomButton';
+import { useUser } from '@/hooks/useUser';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
 const Home = () => {
   const router = useRouter();
-
+  useUser();
   return (
     <div className={'flex flex-col w-full h-full'}>
       <AppHeader />

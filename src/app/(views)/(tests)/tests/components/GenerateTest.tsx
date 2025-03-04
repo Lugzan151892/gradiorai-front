@@ -1,17 +1,23 @@
 import React, { useState } from 'react';
-import AnswerComponent from './AnswerComponent';
+import AnswerComponent from '@/app/(views)/(tests)/tests/components/AnswerComponent';
 import CustomButton from '@/components/ui/button/CustomButton';
 import { useRouter } from 'next/navigation';
-import { ITest } from '../interfaces';
+import { ITest } from '@/app/(views)/(tests)/tests/interfaces';
+import { RootState } from '@/store';
+import { useAppSelector } from '@/hooks/redux';
+import Api from '@/core/api/api';
 
 const GenerateTest: React.FC<{
   tests: ITest[];
-}> = ({ tests }) => {
+  level: number;
+  spec: number;
+}> = ({ tests, level, spec }) => {
   const [currentQuestion, setCurrentQuestion] = useState<number>(1);
   const [userChoise, setUserChoise] = useState<number>();
   const [userResult, setUserResult] = useState<number>(0);
   const [showResults, setShowResults] = useState<boolean>(false);
   const router = useRouter();
+  const { user } = useAppSelector((state: RootState) => state.user);
 
   const handleSetUserChoise = (answer: {
     answer: string;
@@ -38,6 +44,16 @@ const GenerateTest: React.FC<{
 
   const goToTests = () => {
     router.push('/tests');
+  };
+
+  const saveQuestion = async () => {
+    const result = await Api.post('/questions/save', {
+      ...tests[currentQuestion - 1],
+      level,
+      type: spec,
+    });
+
+    console.log(result);
   };
 
   if (showResults) {
@@ -103,6 +119,10 @@ const GenerateTest: React.FC<{
           ))}
         </div>
         <div className={'w-full mt-auto flex'}>
+          {user?.admin ? (
+            // eslint-disable-next-line react/jsx-max-props-per-line
+            <CustomButton text={'Сохранить вопрос'} onClick={saveQuestion} />
+          ) : null}
           <CustomButton
             className={'ml-auto'}
             text={currentQuestion === tests.length ? 'Завершить' : 'Продолжить'}
