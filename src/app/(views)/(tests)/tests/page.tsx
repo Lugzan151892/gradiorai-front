@@ -1,15 +1,15 @@
 'use client';
 
 import React, { useMemo, useState } from 'react';
-import GenerateStep from '@/app/(tests)/tests/components/GenerateStep';
+import GenerateStep from '@/app/(views)/(tests)/tests/components/GenerateStep';
 import {
   ETEST_STEPS,
   ITest,
   ITestParams,
-} from '@/app/(tests)/tests/interfaces';
+} from '@/app/(views)/(tests)/tests/interfaces';
 import CustomButton from '@/components/ui/button/CustomButton';
 import { useRouter } from 'next/navigation';
-import TestsPrepareLayout from '@/app/(tests)/tests/components/TestsPrepareLayout';
+import TestsPrepareLayout from '@/app/(views)/(tests)/tests/components/TestsPrepareLayout';
 import {
   Button,
   Dialog,
@@ -95,7 +95,7 @@ const TestsGenerate = () => {
       console.log(result);
 
       if (result.success) {
-        setTests(JSON.parse(result.data.response).questions);
+        setTests(JSON.parse(result.payload.response).questions);
         setStep(ETEST_STEPS.TEST);
       }
     } catch (e: any) {

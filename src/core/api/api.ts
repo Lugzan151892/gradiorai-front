@@ -72,7 +72,7 @@ class Api {
 
     return {
       success: true,
-      ...parsedResult,
+      payload: { ...parsedResult },
     } as ResponseType<R, S>;
   }
 

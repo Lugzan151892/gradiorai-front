@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import AnswerComponent from './AnswerComponent';
+import AnswerComponent from '@/app/(views)/(tests)/tests/components/AnswerComponent';
 import CustomButton from '@/components/ui/button/CustomButton';
 import { useRouter } from 'next/navigation';
-import { ITest } from '../interfaces';
+import { ITest } from '@/app/(views)/(tests)/tests/interfaces';
 
 const GenerateTest: React.FC<{
   tests: ITest[];
