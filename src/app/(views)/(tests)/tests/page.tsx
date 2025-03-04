@@ -1,15 +1,15 @@
 'use client';
 
 import React, { useMemo, useState } from 'react';
-import GenerateStep from '@/app/(tests)/tests/generate/components/GenerateStep';
+import GenerateStep from '@/app/(views)/(tests)/tests/components/GenerateStep';
 import {
   ETEST_STEPS,
   ITest,
   ITestParams,
-} from '@/app/(tests)/tests/generate/interfaces';
+} from '@/app/(views)/(tests)/tests/interfaces';
 import CustomButton from '@/components/ui/button/CustomButton';
 import { useRouter } from 'next/navigation';
-import TestsPrepareLayout from '@/app/(tests)/tests/components/TestsPrepareLayout';
+import TestsPrepareLayout from '@/app/(views)/(tests)/tests/components/TestsPrepareLayout';
 import {
   Button,
   Dialog,
@@ -21,13 +21,15 @@ import {
 } from '@headlessui/react';
 import Api from '@/core/api/api';
 import GenerateTest from './components/GenerateTest';
-import { useAppDispatch } from '@/hooks/redux';
+import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { setLoading } from '@/features/loading/loadingSlice';
 import {
   EQUESTION_AMOUNT,
   ESKILL_LEVEL,
   ETEST_SPEC,
 } from '@/core/interfaces/enums';
+import { RootState } from '@/store';
+import { shuffleArray } from '@/core/utils/array';
 
 const TestsGenerate = () => {
   const [step, setStep] = useState(ETEST_STEPS.FIRST);
@@ -41,6 +43,7 @@ const TestsGenerate = () => {
 
   const dispatch = useAppDispatch();
   const [tests, setTests] = useState<ITest[]>([]);
+  const { user } = useAppSelector((state: RootState) => state.user);
 
   const handleSetPassword = (e: string) => {
     setPassword(e);
@@ -63,13 +66,17 @@ const TestsGenerate = () => {
       if (step !== ETEST_STEPS.THIRD) {
         setStep(step + 1);
       } else {
-        setPasswordModal(true);
+        if (user?.admin) {
+          generateTests();
+        } else {
+          setPasswordModal(true);
+        }
       }
     } else {
       if (step !== ETEST_STEPS.FIRST) {
         setStep(step - 1);
       } else {
-        router.push('/tests');
+        router.push('/');
       }
     }
   };
@@ -90,12 +97,18 @@ const TestsGenerate = () => {
       dispatch(setLoading(true));
       const result = await Api.post<
         ITestParams,
-        { response: string; usage: any }
+        { response: { questions: ITest[] }; usage: any }
       >('/gpt/generate', data);
       console.log(result);
 
       if (result.success) {
-        setTests(JSON.parse(result.data.response).questions);
+        const shuffledTests = result.payload.response.questions.map(
+          (question) => ({
+            ...question,
+            responses: shuffleArray(question.responses),
+          })
+        );
+        setTests(shuffledTests);
         setStep(ETEST_STEPS.TEST);
       }
     } catch (e: any) {
@@ -105,8 +118,9 @@ const TestsGenerate = () => {
     }
   };
 
-  if (step === ETEST_STEPS.TEST) {
-    return <GenerateTest tests={tests} />;
+  if (step === ETEST_STEPS.TEST && level && spec) {
+    // eslint-disable-next-line react/jsx-max-props-per-line
+    return <GenerateTest level={level} spec={spec} tests={tests} />;
   }
 
   let stepMarkup = null;
