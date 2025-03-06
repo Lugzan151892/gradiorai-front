@@ -10,21 +10,6 @@ interface ILog {
   timestamp: string;
 }
 
-const parseJsonSafely = (str: string) => {
-  try {
-    return JSON.parse(str);
-  } catch (error: any) {
-    console.log(error);
-
-    return {
-      context: '',
-      level: '',
-      message: '',
-      timestamp: '',
-    };
-  }
-};
-
 const LogsPage = () => {
   const [logs, setLogs] = useState<ILog[]>([]);
 
@@ -32,9 +17,12 @@ const LogsPage = () => {
     const result = await Api.get<any, { [key: number]: string }>(
       '/system/logs'
     );
-    const parsedLogs: ILog[] = Object.values(result.payload)
-      .reverse()
-      .map((log) => parseJsonSafely(log));
+    const parsedLogs: ILog[] = result.payload[0]
+      .trim()
+      .split('\n')
+      .map((line) => JSON.parse(line))
+      .reverse();
+
     setLogs(parsedLogs);
   };
 
