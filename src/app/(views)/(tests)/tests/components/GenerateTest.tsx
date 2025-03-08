@@ -4,8 +4,11 @@ import CustomButton from '@/components/ui/button/CustomButton';
 import { useRouter } from 'next/navigation';
 import { ITest } from '@/app/(views)/(tests)/tests/interfaces';
 import { RootState } from '@/store';
-import { useAppSelector } from '@/hooks/redux';
+import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import Api from '@/core/api/api';
+import errorHandler from '@/core/utils/error/errorHandler';
+import { openModal } from '@/store/tech/techSlice';
+import { setLoading } from '@/features/loading/loadingSlice';
 
 const GenerateTest: React.FC<{
   tests: ITest[];
@@ -18,6 +21,7 @@ const GenerateTest: React.FC<{
   const [showResults, setShowResults] = useState<boolean>(false);
   const router = useRouter();
   const { user } = useAppSelector((state: RootState) => state.user);
+  const dispatch = useAppDispatch();
 
   const handleSetUserChoise = (answer: {
     answer: string;
@@ -47,13 +51,22 @@ const GenerateTest: React.FC<{
   };
 
   const saveQuestion = async () => {
-    const result = await Api.post('/questions/save', {
-      ...tests[currentQuestion - 1],
-      level,
-      type: spec,
-    });
+    try {
+      dispatch(setLoading(true));
+      await Api.post('/questions/save', {
+        ...tests[currentQuestion - 1],
+        level,
+        type: spec,
+      });
 
-    console.log(result);
+      dispatch(
+        openModal({ type: 'success', text: 'Вопрос успешно сохранен!' })
+      );
+    } catch (e: any) {
+      errorHandler(e, dispatch);
+    } finally {
+      dispatch(setLoading(false));
+    }
   };
 
   if (showResults) {
