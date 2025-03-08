@@ -30,6 +30,7 @@ import {
 } from '@/core/interfaces/enums';
 import { RootState } from '@/store';
 import { shuffleArray } from '@/core/utils/array';
+import errorHandler from '@/core/utils/error/errorHandler';
 
 const TestsGenerate = () => {
   const [step, setStep] = useState(ETEST_STEPS.FIRST);
@@ -99,7 +100,6 @@ const TestsGenerate = () => {
         ITestParams,
         { response: { questions: ITest[] }; usage: any }
       >('/gpt/generate', data);
-      console.log(result);
 
       if (result.success) {
         const shuffledTests = result.payload.response.questions.map(
@@ -112,7 +112,7 @@ const TestsGenerate = () => {
         setStep(ETEST_STEPS.TEST);
       }
     } catch (e: any) {
-      console.log(e);
+      errorHandler(e, dispatch);
     } finally {
       dispatch(setLoading(false));
     }

@@ -5,7 +5,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const getUserData = createAsyncThunk(
   'user/getUserData',
-  async (_, { dispatch }) => {
+  async (_, { dispatch, rejectWithValue }) => {
     try {
       dispatch(setLoading(true));
       const user = await Api.get<
@@ -14,7 +14,7 @@ export const getUserData = createAsyncThunk(
       >('/auth/user');
       return user;
     } catch (e) {
-      console.log(e);
+      return rejectWithValue(e);
     } finally {
       dispatch(setLoading(false));
     }
@@ -23,29 +23,31 @@ export const getUserData = createAsyncThunk(
 
 const userSlice = createSlice({
   name: 'user',
-  initialState: { user: null as null | IUser, loading: false },
+  initialState: { user: null as null | IUser, unAuth: false },
   reducers: {
     logout: (state) => {
       state.user = null;
+      state.unAuth = true;
       localStorage.removeItem('accessToken');
+    },
+
+    setUnAuth: (state, { payload }) => {
+      state.unAuth = payload;
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getUserData.pending, (state) => {
-        state.loading = true;
-      })
       .addCase(getUserData.fulfilled, (state, action) => {
-        state.loading = false;
+        state.unAuth = false;
         if (action.payload) {
           state.user = action.payload.payload.data;
         }
       })
       .addCase(getUserData.rejected, (state) => {
-        state.loading = false;
+        state.unAuth = true;
       });
   },
 });
 
-export const { logout } = userSlice.actions;
+export const { logout, setUnAuth } = userSlice.actions;
 export default userSlice.reducer;
