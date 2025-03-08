@@ -13,7 +13,9 @@ const ProtectedRoute = ({
   children,
   onlyGuest = false,
 }: ProtectedRouteProps) => {
-  const { user, loading } = useSelector((state: RootState) => state.user);
+  const loading = false;
+  /** @todo Засунуть лоадинг в стор обратно */
+  const { user } = useSelector((state: RootState) => state.user);
   const router = useRouter();
   const [prevPath, setPrevPath] = useState<string | null>(null);
 

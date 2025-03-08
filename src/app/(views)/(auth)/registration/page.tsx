@@ -3,11 +3,16 @@
 import CustomButton from '@/components/ui/button/CustomButton';
 import CustomInput from '@/components/ui/input/CustomInput';
 import Api from '@/core/api/api';
+import errorHandler from '@/core/utils/error/errorHandler';
+import { setLoading } from '@/features/loading/loadingSlice';
+import { useAppDispatch } from '@/hooks/redux';
+import { setUnAuth } from '@/store/user/userSlice';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
 const RegistrationPage = () => {
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
   const [password, setPassword] = useState('');
@@ -49,17 +54,21 @@ const RegistrationPage = () => {
     }
 
     try {
-      const result = await Api.post('/auth/registration', {
+      dispatch(setLoading(true));
+
+      await Api.post('/auth/registration', {
         email,
         password,
         repeated_password: repeatedPassword,
       });
 
-      router.push('/');
+      dispatch(setUnAuth(false));
 
-      console.log(result);
+      router.push('/');
     } catch (e: any) {
-      console.log(e);
+      errorHandler(e, dispatch);
+    } finally {
+      dispatch(setLoading(false));
     }
   };
 

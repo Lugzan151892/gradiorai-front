@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import GlobalLoader from '@/features/loading/GlobalBusy';
 import Providers from '@/app/providers';
+import ErrorModal from '@/features/error-modal/ErrorModal';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -33,6 +34,7 @@ export default function RootLayout({
         <Providers>
           {children}
           <GlobalLoader />
+          <ErrorModal />
         </Providers>
       </body>
     </html>
