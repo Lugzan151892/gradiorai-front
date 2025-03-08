@@ -1,20 +1,22 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store';
-import { getUserData } from '@/store/userSlice';
-import { useAppDispatch } from './redux';
-import { usePathname } from 'next/navigation';
+import { getUserData } from '@/store/user/userSlice';
+import { useAppDispatch } from '@/hooks/redux';
 
 export const useUser = () => {
   const dispatch = useAppDispatch();
-  const { user, loading } = useSelector((state: RootState) => state.user);
-  const pathName = usePathname();
+  const { user, unAuth } = useSelector((state: RootState) => state.user);
+  const isFetched = useRef(false);
 
   useEffect(() => {
-    dispatch(getUserData());
-  }, [dispatch, pathName]);
+    if (!unAuth && !isFetched.current) {
+      isFetched.current = true;
+      dispatch(getUserData());
+    }
+  }, [dispatch, unAuth]);
 
-  return { user, loading };
+  return { user, unAuth };
 };

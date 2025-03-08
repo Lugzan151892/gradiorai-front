@@ -5,7 +5,7 @@ import React from 'react';
 import { RootState } from '@/store';
 import CustomButton from '@/components/ui/button/CustomButton';
 import Api from '@/core/api/api';
-import { logout } from '@/store/userSlice';
+import { logout } from '@/store/user/userSlice';
 
 const AppHeader = () => {
   const router = useRouter();

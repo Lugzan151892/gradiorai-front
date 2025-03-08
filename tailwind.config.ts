@@ -1,4 +1,5 @@
 import type { Config } from 'tailwindcss';
+import defaultTheme from 'tailwindcss/defaultTheme';
 
 export default {
   content: [
@@ -8,6 +9,11 @@ export default {
     './src/features/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    screens: {
+      mobile: { min: '0px', max: '1023px' },
+      desktop: { min: '1024px' },
+      ...defaultTheme.screens,
+    },
     extend: {
       borderWidth: {
         1: '1px',
@@ -16,6 +22,7 @@ export default {
         background: 'var(--background)',
         white: 'var(--main-white)',
         black: 'var(--main-black)',
+        green: 'var(--main-green)',
         'main-blue': 'var(--main-blue)',
         'blue-secondary': 'var(--main-blue-secondary)',
         error: 'var(--main-error)',
