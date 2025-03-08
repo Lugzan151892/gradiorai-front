@@ -3,6 +3,9 @@
 import CustomButton from '@/components/ui/button/CustomButton';
 import CustomInput from '@/components/ui/input/CustomInput';
 import Api from '@/core/api/api';
+import errorHandler from '@/core/utils/error/errorHandler';
+import { useAppDispatch } from '@/hooks/redux';
+import { setUnAuth } from '@/store/user/userSlice';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
@@ -12,6 +15,7 @@ const LoginView = () => {
   const [emailError, setEmailError] = useState('');
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const dispatch = useAppDispatch();
 
   const handleLogin = async () => {
     const emailErrorMsg = email ? '' : 'Поле не заполнено';
@@ -26,9 +30,11 @@ const LoginView = () => {
         password,
       });
 
+      dispatch(setUnAuth(false));
+
       router.push('/');
     } catch (e: any) {
-      console.log(e);
+      errorHandler(e, dispatch);
     }
   };
 
