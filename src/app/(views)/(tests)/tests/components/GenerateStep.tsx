@@ -5,6 +5,7 @@ interface IGenerateStepProps {
   title?: string;
   description?: string;
   options?: Array<{ id: number; text: string }>;
+  actions?: ReactNode;
   children?: ReactNode;
   value?: number;
   step?: number;
@@ -17,6 +18,7 @@ const GenerateStep: React.FC<IGenerateStepProps> = ({
   onClick,
   value,
   step = 0,
+  actions,
   children,
 }) => {
   return (
@@ -66,20 +68,22 @@ const GenerateStep: React.FC<IGenerateStepProps> = ({
         </div>
       </div>
       <div className={'mb-20 text-xl text-text-gray'}>{description}</div>
-      <div className={'w-full px-10'}>
-        {options
-          ? options.map((option, index) => (
-              <CustomButton
-                className={`w-full ${index && 'mt-5'}`}
-                key={index}
-                text={option.text}
-                selected={option.id === value}
-                onClick={onClick ? () => onClick(option.id) : undefined}
-              />
-            ))
-          : null}
-      </div>
-      <div className={'mt-auto w-full px-10'}>{children}</div>
+      {children || (
+        <div className={'w-full px-10'}>
+          {options
+            ? options.map((option, index) => (
+                <CustomButton
+                  className={`w-full ${index && 'mt-5'}`}
+                  key={index}
+                  text={option.text}
+                  selected={option.id === value}
+                  onClick={onClick ? () => onClick(option.id) : undefined}
+                />
+              ))
+            : null}
+        </div>
+      )}
+      <div className={'mt-auto w-full px-10'}>{actions}</div>
     </div>
   );
 };

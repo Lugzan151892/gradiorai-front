@@ -1,5 +1,4 @@
 import React from 'react';
-// import bg from '../../../../../assets/images/tests-bg.png';
 
 const TestsPrepareLayout: React.FC<{ children: React.ReactNode }> = ({
   children,
