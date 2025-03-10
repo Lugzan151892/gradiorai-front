@@ -1,6 +1,7 @@
 import CustomButton from '@/components/ui/button/CustomButton';
 import CustomInput from '@/components/ui/input/CustomInput';
 import CustomModal from '@/components/ui/modal/CustomModal';
+import Api from '@/core/api/api';
 import { ETEST_SPEC } from '@/core/interfaces/enums';
 import React, { useState } from 'react';
 
@@ -17,8 +18,16 @@ const AddTechModal: React.FC<IAddTechModalProps> = ({
 }) => {
   const [tech, setTech] = useState('');
 
-  const saveTech = () => {
-    console.log('saved', spec);
+  const saveTech = async () => {
+    if (!spec || !tech) {
+      return;
+    }
+
+    const result = await Api.post('/questions/add-tech', {
+      name: tech,
+      spec,
+    });
+    console.log('saved', result);
 
     if (onClose) {
       onClose();

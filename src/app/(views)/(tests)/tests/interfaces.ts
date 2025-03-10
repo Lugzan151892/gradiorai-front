@@ -22,3 +22,9 @@ export interface ITest {
     id: number;
   }>;
 }
+
+export interface ITech {
+  id: number;
+  name: string;
+  spec: number;
+}
