@@ -4,6 +4,7 @@ import React, { useMemo, useState } from 'react';
 import GenerateStep from '@/app/(views)/(tests)/tests/components/GenerateStep';
 import {
   ETEST_STEPS,
+  ITech,
   ITest,
   ITestParams,
 } from '@/app/(views)/(tests)/tests/interfaces';
@@ -27,7 +28,6 @@ import { ESKILL_LEVEL, ETEST_SPEC } from '@/core/interfaces/enums';
 import { RootState } from '@/store';
 import { shuffleArray } from '@/core/utils/array';
 import errorHandler from '@/core/utils/error/errorHandler';
-import mockedTechs from '@/core/mock/techs';
 import CustomCheckbox from '@/components/ui/checkbox/CustomCheckbox';
 import AddTechModal from './components/AddTechModal';
 
@@ -37,7 +37,7 @@ const TestsGenerate = () => {
   const [level, setLevel] = useState<ESKILL_LEVEL>();
   const router = useRouter();
   const [password, setPassword] = useState('');
-  const [techs, setTechs] = useState(mockedTechs);
+  const [techs, setTechs] = useState<ITech[]>([]);
   const [selectedTechs, setSelectedTechs] = useState<number[]>([]);
   const [passwordModal, setPasswordModal] = useState(false);
   const [addTechModal, setAddTechModal] = useState(false);
@@ -48,6 +48,28 @@ const TestsGenerate = () => {
 
   const handleSetPassword = (e: string) => {
     setPassword(e);
+  };
+
+  const loadSpecs = async () => {
+    if (!spec) {
+      return;
+    }
+
+    try {
+      dispatch(setLoading(true));
+      const result = await Api.get<{ spec: number }, { techs: ITech[] }>(
+        '/questions/get-techs',
+        { spec }
+      );
+
+      if (result.payload) {
+        setTechs(result.payload.techs);
+      }
+    } catch (e: any) {
+      errorHandler(e, dispatch);
+    } finally {
+      dispatch(setLoading(false));
+    }
   };
 
   const checkNextStep = useMemo(() => {
@@ -62,9 +84,20 @@ const TestsGenerate = () => {
     }
   }, [step, spec, level, selectedTechs]);
 
-  const changeStep = (direction: 'back' | 'forward' = 'forward') => {
+  const changeStep = async (direction: 'back' | 'forward' = 'forward') => {
+    // switch (step) {
+    //   case ETEST_STEPS.FIRST: {
+    //     if ()
+    //   }
+    //   case ETEST_STEPS.SECOND:
+    //   case ETEST_STEPS.THIRD:
+    //   case ETEST_STEPS.TEST:
+    // }
     if (direction === 'forward') {
       if (step !== ETEST_STEPS.THIRD) {
+        if (step === ETEST_STEPS.SECOND) {
+          await loadSpecs();
+        }
         setStep(step + 1);
       } else {
         if (user?.admin) {
