@@ -5,7 +5,7 @@ interface ICustomButtonProps {
   text?: string;
   className?: string;
   children?: ReactNode;
-  type?: 'success' | 'error' | 'warning';
+  type?: 'success' | 'error' | 'warning' | 'forward' | 'back';
   level?: 1 | 2 | 3;
   onClick?: () => void;
   disabled?: boolean;
@@ -33,17 +33,17 @@ const CustomButton: React.FC<ICustomButtonProps> = ({
   const selectedClass = selected ? 'border-white' : 'border-transparent';
   const sizeClasses = small
     ? 'px-2 py-1'
-    : `px-4 py-2 ${fullWidth ? 'w-full' : ''}`;
+    : `px-4 py-2 ${fullWidth ? 'w-full' : ''} text-2xl`;
   const getColor = () => {
     switch (color) {
       case 'blue':
-        return 'bg-blue-secondary';
+        return 'bg-main-blue';
       case 'red':
         return 'bg-red';
       case 'green':
         return 'bg-green';
       default:
-        return 'bg-blue-secondary';
+        return 'bg-main-blue';
     }
   };
   const classes =
@@ -54,7 +54,7 @@ const CustomButton: React.FC<ICustomButtonProps> = ({
       className={`${sizeClasses} ${(maxRounded && 'rounded-xl') || 'rounded-lg'} ${classes} ${className || ''} ${disabledClass} ${selectedClass} border-2`}
       onClick={onClick}
     >
-      {children || text}
+      {type === 'back' || type === 'forward' ? null : children || text}
     </Button>
   );
 };
