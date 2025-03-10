@@ -23,24 +23,24 @@ import Api from '@/core/api/api';
 import GenerateTest from './components/GenerateTest';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { setLoading } from '@/features/loading/loadingSlice';
-import {
-  EQUESTION_AMOUNT,
-  ESKILL_LEVEL,
-  ETEST_SPEC,
-} from '@/core/interfaces/enums';
+import { ESKILL_LEVEL, ETEST_SPEC } from '@/core/interfaces/enums';
 import { RootState } from '@/store';
 import { shuffleArray } from '@/core/utils/array';
 import errorHandler from '@/core/utils/error/errorHandler';
+import mockedTechs from '@/core/mock/techs';
+import CustomCheckbox from '@/components/ui/checkbox/CustomCheckbox';
+import AddTechModal from './components/AddTechModal';
 
 const TestsGenerate = () => {
   const [step, setStep] = useState(ETEST_STEPS.FIRST);
   const [spec, setSpec] = useState<ETEST_SPEC>();
   const [level, setLevel] = useState<ESKILL_LEVEL>();
-  const [questionsAmount, setQuestionsAmount] = useState<EQUESTION_AMOUNT>();
   const router = useRouter();
   const [password, setPassword] = useState('');
-
+  const [techs, setTechs] = useState(mockedTechs);
+  const [selectedTechs, setSelectedTechs] = useState<number[]>([]);
   const [passwordModal, setPasswordModal] = useState(false);
+  const [addTechModal, setAddTechModal] = useState(false);
 
   const dispatch = useAppDispatch();
   const [tests, setTests] = useState<ITest[]>([]);
@@ -58,9 +58,9 @@ const TestsGenerate = () => {
       return !level;
     }
     if (step === ETEST_STEPS.THIRD) {
-      return !questionsAmount;
+      return !selectedTechs.length;
     }
-  }, [step, spec, level, questionsAmount]);
+  }, [step, spec, level, selectedTechs]);
 
   const changeStep = (direction: 'back' | 'forward' = 'forward') => {
     if (direction === 'forward') {
@@ -74,6 +74,11 @@ const TestsGenerate = () => {
         }
       }
     } else {
+      if (step === ETEST_STEPS.THIRD) {
+        setSelectedTechs([]);
+        setTechs([]);
+      }
+
       if (step !== ETEST_STEPS.FIRST) {
         setStep(step - 1);
       } else {
@@ -82,14 +87,22 @@ const TestsGenerate = () => {
     }
   };
 
+  const changeTechs = (techId: number) => {
+    if (selectedTechs.includes(techId)) {
+      setSelectedTechs(selectedTechs.filter((el) => el !== techId));
+    } else {
+      setSelectedTechs([...selectedTechs, techId]);
+    }
+  };
+
   const generateTests = async () => {
-    if (!questionsAmount || !level || !spec) {
+    if (!selectedTechs.length || !level || !spec) {
       return;
     }
 
     const data: ITestParams = {
       password,
-      amount: questionsAmount,
+      techs: selectedTechs,
       level,
       spec,
     };
@@ -120,11 +133,14 @@ const TestsGenerate = () => {
 
   const actionsMarkup = (
     <div className={'mt-auto ml-auto flex w-full justify-between'}>
-      {/* eslint-disable-next-line react/jsx-max-props-per-line */}
-      <CustomButton text={'Назад'} onClick={() => changeStep('back')} />
+      <CustomButton
+        type={'back'}
+        onClick={() => changeStep('back')}
+      />
       <CustomButton
         className={'ml-2'}
-        text={step === ETEST_STEPS.THIRD ? 'Завершить' : 'Продолжить'}
+        type={step === ETEST_STEPS.THIRD ? 'success' : 'forward'}
+        text={'Начать'}
         disabled={checkNextStep}
         onClick={() => changeStep()}
       />
@@ -132,8 +148,13 @@ const TestsGenerate = () => {
   );
 
   if (step === ETEST_STEPS.TEST && level && spec) {
-    // eslint-disable-next-line react/jsx-max-props-per-line
-    return <GenerateTest level={level} spec={spec} tests={tests} />;
+    return (
+      <GenerateTest
+        level={level}
+        spec={spec}
+        tests={tests}
+      />
+    );
   }
 
   let stepMarkup = null;
@@ -157,10 +178,9 @@ const TestsGenerate = () => {
           },
         ]}
         value={spec}
+        actions={actionsMarkup}
         onClick={setSpec}
-      >
-        {actionsMarkup}
-      </GenerateStep>
+      />
     );
   }
 
@@ -184,10 +204,9 @@ const TestsGenerate = () => {
           },
         ]}
         value={level}
+        actions={actionsMarkup}
         onClick={setLevel}
-      >
-        {actionsMarkup}
-      </GenerateStep>
+      />
     );
   }
 
@@ -195,26 +214,42 @@ const TestsGenerate = () => {
     stepMarkup = (
       <GenerateStep
         step={3}
-        title={'Третий Шаг'}
-        description={'Выберите количество вопросов'}
-        options={[
-          {
-            id: EQUESTION_AMOUNT.TEN,
-            text: EQUESTION_AMOUNT.TEN.toString(),
-          },
-          {
-            id: EQUESTION_AMOUNT.FIFTEEN,
-            text: EQUESTION_AMOUNT.FIFTEEN.toString(),
-          },
-          {
-            id: EQUESTION_AMOUNT.TWENTY,
-            text: EQUESTION_AMOUNT.TWENTY.toString(),
-          },
-        ]}
-        value={questionsAmount}
-        onClick={setQuestionsAmount}
+        description={'Выберите направления'}
+        actions={actionsMarkup}
       >
-        {actionsMarkup}
+        {techs.length ? (
+          <div
+            className={
+              'grid grid-cols-[max-content_max-content] w-full justify-between gap-y-2 px-10'
+            }
+          >
+            {techs.map((el) => (
+              <div
+                key={el.id}
+                className={
+                  'flex px-2 py-[10px] bg-main-blue rounded-lg cursor-pointer text-white'
+                }
+                onClick={() => changeTechs(el.id)}
+              >
+                <CustomCheckbox value={selectedTechs.includes(el.id)} />
+                <div className={'ml-4 text-xl'}>{el.name}</div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div>
+            <div className={'text-3xl text-error'}>Направления не найдены!</div>
+          </div>
+        )}
+        {user?.admin ? (
+          <div className={'w-full flex mt-6'}>
+            <CustomButton
+              className={'mx-auto'}
+              text={'Добавить направления'}
+              onClick={() => setAddTechModal(true)}
+            />
+          </div>
+        ) : null}
       </GenerateStep>
     );
   }
@@ -222,6 +257,11 @@ const TestsGenerate = () => {
   return (
     <TestsPrepareLayout>
       <div className={'flex flex-col h-full'}>{stepMarkup}</div>
+      <AddTechModal
+        spec={spec}
+        open={addTechModal}
+        onClose={() => setAddTechModal(false)}
+      />
       <Dialog
         open={passwordModal}
         as={'div'}

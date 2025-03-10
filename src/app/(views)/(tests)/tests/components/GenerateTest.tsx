@@ -133,8 +133,10 @@ const GenerateTest: React.FC<{
         </div>
         <div className={'w-full mt-auto flex'}>
           {user?.admin ? (
-            // eslint-disable-next-line react/jsx-max-props-per-line
-            <CustomButton text={'Сохранить вопрос'} onClick={saveQuestion} />
+            <CustomButton
+              text={'Сохранить вопрос'}
+              onClick={saveQuestion}
+            />
           ) : null}
           <CustomButton
             className={'ml-auto'}
