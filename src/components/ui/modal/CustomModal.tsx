@@ -1,0 +1,88 @@
+import {
+  Dialog,
+  DialogBackdrop,
+  DialogPanel,
+  DialogTitle,
+} from '@headlessui/react';
+import React from 'react';
+import CustomIcon from '@/components/ui/icon/CustomIcon';
+
+interface ICustomModalProps {
+  open?: boolean;
+  caption?: string;
+  header?: React.ReactNode;
+  children?: React.ReactNode;
+  footer?: React.ReactNode;
+  type?: 'success' | 'error' | 'warning';
+  onClose?: (vaL: boolean) => void;
+}
+
+const CustomModal: React.FC<ICustomModalProps> = ({
+  open = false,
+  type,
+  caption,
+  header,
+  children,
+  footer,
+  onClose,
+}) => {
+  const typeColor = () => {
+    switch (type) {
+      case 'success':
+      case 'error':
+      case 'warning':
+        return type;
+      default:
+        return 'main-blue';
+    }
+  };
+
+  return (
+    <>
+      <Dialog
+        open={open}
+        as={'div'}
+        className={'relative z-10 focus:outline-none'}
+        onClose={onClose || close}
+      >
+        <DialogBackdrop className={'fixed inset-0 bg-black opacity-30'} />
+        <div className={'fixed inset-0 z-10 w-screen overflow-y-auto'}>
+          <div className={'flex min-h-full items-center justify-center p-4'}>
+            <DialogPanel
+              transition
+              className={
+                'w-full max-w-md rounded-xl bg-white p-6 border-2 backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0 ' +
+                `border-${typeColor()}`
+              }
+            >
+              {header || (
+                <div
+                  className={
+                    'grid grid-cols-[1fr_40px] items-center justify-items-center mb-5'
+                  }
+                >
+                  <DialogTitle
+                    as={'h3'}
+                    className={'text-2xl font-medium text-black'}
+                  >
+                    {caption}
+                  </DialogTitle>
+                  <CustomIcon
+                    color={'var(--main-black)'}
+                    name={'cross'}
+                    className={'cursor-pointer'}
+                    onClick={onClose ? () => onClose(false) : undefined}
+                  />
+                </div>
+              )}
+              <div>{children}</div>
+              {footer || null}
+            </DialogPanel>
+          </div>
+        </div>
+      </Dialog>
+    </>
+  );
+};
+
+export default CustomModal;

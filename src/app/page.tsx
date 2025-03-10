@@ -41,7 +41,7 @@ const Home = () => {
             <div className={'mobile:mt-auto mobile:mx-auto mobile:flex mb-4'}>
               <CustomButton
                 className={'mt-9 mobile:mx-auto max-w-sm'}
-                color={'green'}
+                type={'success'}
                 text={'Начать'}
                 onClick={() => router.push('/tests')}
               />
