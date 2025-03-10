@@ -30,8 +30,10 @@ export default {
         success: 'var(--main-success)',
         warning: 'var(--main-warning)',
         gray: 'var(--main-gray)',
+        'gray-second': 'var(--second-gray)',
         aqua: 'var(--main-aqua)',
         'text-secondary': 'var(--text-secondary)',
+        'text-gray': 'var(--text-gray)',
       },
       gridTemplateRows: {
         layout: '48px 1fr',

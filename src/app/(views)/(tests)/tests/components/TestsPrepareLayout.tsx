@@ -7,7 +7,7 @@ const TestsPrepareLayout: React.FC<{ children: React.ReactNode }> = ({
   return (
     <div
       className={
-        'h-full flex justify-items-end w-full desktop:bg-[url("../../../../../assets/images/tests-bg.png")] bg-no-repeat bg-contain bg-left'
+        'h-full flex justify-items-end w-full desktop:bg-[url("../assets/images/tests-bg.png")] bg-no-repeat bg-contain bg-left'
       }
     >
       <div

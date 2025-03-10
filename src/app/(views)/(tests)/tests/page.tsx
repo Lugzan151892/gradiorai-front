@@ -118,6 +118,19 @@ const TestsGenerate = () => {
     }
   };
 
+  const actionsMarkup = (
+    <div className={'mt-auto ml-auto flex w-full justify-between'}>
+      {/* eslint-disable-next-line react/jsx-max-props-per-line */}
+      <CustomButton text={'Назад'} onClick={() => changeStep('back')} />
+      <CustomButton
+        className={'ml-2'}
+        text={step === ETEST_STEPS.THIRD ? 'Завершить' : 'Продолжить'}
+        disabled={checkNextStep}
+        onClick={() => changeStep()}
+      />
+    </div>
+  );
+
   if (step === ETEST_STEPS.TEST && level && spec) {
     // eslint-disable-next-line react/jsx-max-props-per-line
     return <GenerateTest level={level} spec={spec} tests={tests} />;
@@ -127,7 +140,7 @@ const TestsGenerate = () => {
   if (step === ETEST_STEPS.FIRST) {
     stepMarkup = (
       <GenerateStep
-        title={'Первый Шаг'}
+        step={1}
         description={'Выберите специализацию'}
         options={[
           {
@@ -145,14 +158,16 @@ const TestsGenerate = () => {
         ]}
         value={spec}
         onClick={setSpec}
-      />
+      >
+        {actionsMarkup}
+      </GenerateStep>
     );
   }
 
   if (step === ETEST_STEPS.SECOND) {
     stepMarkup = (
       <GenerateStep
-        title={'Второй Шаг'}
+        step={2}
         description={'Выберите уровень вопросов'}
         options={[
           {
@@ -170,13 +185,16 @@ const TestsGenerate = () => {
         ]}
         value={level}
         onClick={setLevel}
-      />
+      >
+        {actionsMarkup}
+      </GenerateStep>
     );
   }
 
   if (step === ETEST_STEPS.THIRD) {
     stepMarkup = (
       <GenerateStep
+        step={3}
         title={'Третий Шаг'}
         description={'Выберите количество вопросов'}
         options={[
@@ -195,29 +213,15 @@ const TestsGenerate = () => {
         ]}
         value={questionsAmount}
         onClick={setQuestionsAmount}
-      />
+      >
+        {actionsMarkup}
+      </GenerateStep>
     );
   }
 
   return (
     <TestsPrepareLayout>
-      <div className={'flex flex-col h-full'}>
-        {stepMarkup}
-        <div className={'mt-auto ml-auto'}>
-          <CustomButton
-            small
-            text={'Назад'}
-            onClick={() => changeStep('back')}
-          />
-          <CustomButton
-            className={'ml-2'}
-            small
-            text={step === ETEST_STEPS.THIRD ? 'Завершить' : 'Продолжить'}
-            disabled={checkNextStep}
-            onClick={() => changeStep()}
-          />
-        </div>
-      </div>
+      <div className={'flex flex-col h-full'}>{stepMarkup}</div>
       <Dialog
         open={passwordModal}
         as={'div'}
