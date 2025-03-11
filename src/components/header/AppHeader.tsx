@@ -33,14 +33,19 @@ const AppHeader = () => {
     <header
       className={'h-12 w-full bg-main-blue flex items-center text-2xl px-4'}
     >
-      {/* eslint-disable-next-line react/jsx-max-props-per-line */}
-      <div className={'cursor-pointer'} onClick={() => router.push('/')}>
+      <div
+        className={'cursor-pointer'}
+        onClick={() => router.push('/')}
+      >
         Skill Test
       </div>
       {!user?.id ? (
         <div className={'ml-auto flex gap-2'}>
-          {/* eslint-disable-next-line react/jsx-max-props-per-line */}
-          <CustomButton small text={'Войти'} onClick={handleLogin} />
+          <CustomButton
+            small
+            text={'Войти'}
+            onClick={handleLogin}
+          />
           <CustomButton
             small
             text={'Зарегистрироваться'}
@@ -52,8 +57,12 @@ const AppHeader = () => {
           <div className={'text-white mr-2'}>
             {`USER: ${user.email}${user.admin ? ' (ADMIN)' : ''}`}
           </div>
-          {/* eslint-disable-next-line react/jsx-max-props-per-line */}
-          <CustomButton small text={'Выйти'} onClick={handleLogout} />
+          {}
+          <CustomButton
+            small
+            text={'Выйти'}
+            onClick={handleLogout}
+          />
         </div>
       )}
     </header>

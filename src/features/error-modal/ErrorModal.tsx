@@ -81,13 +81,13 @@ const ErrorModal = () => {
             >
               <div
                 className={
-                  'grid grid-cols-[40px_1fr_40px] items-center justify-items-center'
+                  'grid grid-cols-[40px_1fr_40px] gap-3 items-center justify-items-center'
                 }
               >
                 {statusIcons()}
                 <DialogTitle
                   as={'h3'}
-                  className={'text-2xl font-medium text-black'}
+                  className={'text-xl font-medium text-black text-center'}
                 >
                   {settings.text}
                 </DialogTitle>

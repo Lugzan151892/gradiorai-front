@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
-  onlyGuest?: boolean; // true — если страница доступна только неавторизованным
+  onlyGuest?: boolean;
 }
 
 const ProtectedRoute = ({
@@ -20,7 +20,6 @@ const ProtectedRoute = ({
   const [prevPath, setPrevPath] = useState<string | null>(null);
 
   useEffect(() => {
-    // Запоминаем предыдущий путь для редиректа
     if (typeof window !== 'undefined') {
       setPrevPath(window.location.pathname);
     }
