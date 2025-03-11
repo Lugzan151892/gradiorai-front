@@ -11,6 +11,7 @@ interface ICustomInputProps {
   value?: string;
   error?: string;
   validation?: boolean;
+  className?: string;
   onInput?: (val: string) => void;
   onChange?: (val: string) => void;
 }
@@ -21,6 +22,7 @@ const CustomInput: React.FC<ICustomInputProps> = ({
   value = '',
   error,
   validation,
+  className,
   onInput,
   onChange,
 }) => {
@@ -37,7 +39,7 @@ const CustomInput: React.FC<ICustomInputProps> = ({
   const classes = error && validation ? 'border-error' : 'border-gray';
   const errorTextClasses = error && validation ? '' : 'opacity-100';
   return (
-    <div className={'w-full'}>
+    <div className={'w-full ' + (className || '')}>
       <Field>
         {label ? (
           <Label className={'text-xl mb-1 text-black'}>{label}</Label>
