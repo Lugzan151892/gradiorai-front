@@ -4,11 +4,8 @@ import CustomButton from '@/components/ui/button/CustomButton';
 import { useRouter } from 'next/navigation';
 import { ITest } from '@/app/(views)/(tests)/tests/interfaces';
 import { RootState } from '@/store';
-import { useAppDispatch, useAppSelector } from '@/hooks/redux';
-import Api from '@/core/api/api';
-import errorHandler from '@/core/utils/error/errorHandler';
-import { openModal } from '@/store/tech/techSlice';
-import { setLoading } from '@/features/loading/loadingSlice';
+import { useAppSelector } from '@/hooks/redux';
+import SaveQuestionModal from './SaveQuestionModal';
 
 const GenerateTest: React.FC<{
   tests: ITest[];
@@ -21,7 +18,9 @@ const GenerateTest: React.FC<{
   const [showResults, setShowResults] = useState<boolean>(false);
   const router = useRouter();
   const { user } = useAppSelector((state: RootState) => state.user);
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
+  const [disableSave, setDisableSave] = useState(false);
+  const [saveQuestionModal, setSaveQuestionModal] = useState(false);
 
   const handleSetUserChoise = (answer: {
     answer: string;
@@ -40,6 +39,7 @@ const GenerateTest: React.FC<{
     } else {
       setUserChoise(undefined);
       setCurrentQuestion(currentQuestion + 1);
+      setDisableSave(false);
     }
   };
   const goHome = () => {
@@ -50,23 +50,25 @@ const GenerateTest: React.FC<{
     router.push('/tests');
   };
 
-  const saveQuestion = async () => {
-    try {
-      dispatch(setLoading(true));
-      await Api.post('/questions/save', {
-        ...tests[currentQuestion - 1],
-        level,
-        type: spec,
-      });
+  const saveQuestion = () => {
+    setSaveQuestionModal(true);
+    // try {
+    //   dispatch(setLoading(true));
+    //   await Api.post<any, { question_id: number }>('/questions/save', {
+    //     ...tests[currentQuestion - 1],
+    //     level,
+    //     type: spec,
+    //   });
+    //   setDisableSave(true);
 
-      dispatch(
-        openModal({ type: 'success', text: 'Вопрос успешно сохранен!' })
-      );
-    } catch (e: any) {
-      errorHandler(e, dispatch);
-    } finally {
-      dispatch(setLoading(false));
-    }
+    //   dispatch(
+    //     openModal({ type: 'success', text: 'Вопрос успешно сохранен!' })
+    //   );
+    // } catch (e: any) {
+    //   errorHandler(e, dispatch);
+    // } finally {
+    //   dispatch(setLoading(false));
+    // }
   };
 
   if (showResults) {
@@ -134,6 +136,7 @@ const GenerateTest: React.FC<{
         <div className={'w-full mt-auto flex'}>
           {user?.admin ? (
             <CustomButton
+              disabled={!!tests[currentQuestion - 1].id || disableSave}
               text={'Сохранить вопрос'}
               onClick={saveQuestion}
             />
@@ -145,6 +148,13 @@ const GenerateTest: React.FC<{
             onClick={handleSetQuestion}
           />
         </div>
+        <SaveQuestionModal
+          spec={spec}
+          level={level}
+          question={tests[currentQuestion - 1]}
+          open={saveQuestionModal}
+          onClose={() => setSaveQuestionModal(false)}
+        />
       </div>
     </div>
   );

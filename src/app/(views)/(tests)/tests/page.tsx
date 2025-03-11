@@ -11,15 +11,6 @@ import {
 import CustomButton from '@/components/ui/button/CustomButton';
 import { useRouter } from 'next/navigation';
 import TestsPrepareLayout from '@/app/(views)/(tests)/tests/components/TestsPrepareLayout';
-import {
-  Button,
-  Dialog,
-  DialogPanel,
-  DialogTitle,
-  Field,
-  Input,
-  Label,
-} from '@headlessui/react';
 import Api from '@/core/api/api';
 import GenerateTest from './components/GenerateTest';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
@@ -28,15 +19,15 @@ import { ESKILL_LEVEL, ETEST_SPEC } from '@/core/interfaces/enums';
 import { RootState } from '@/store';
 import { shuffleArray } from '@/core/utils/array';
 import errorHandler from '@/core/utils/error/errorHandler';
-import CustomCheckbox from '@/components/ui/checkbox/CustomCheckbox';
 import AddTechModal from './components/AddTechModal';
+import TechComponent from './components/TechComponent';
+import GeneratePasswordModal from './components/GeneratePasswordModal';
 
 const TestsGenerate = () => {
   const [step, setStep] = useState(ETEST_STEPS.FIRST);
   const [spec, setSpec] = useState<ETEST_SPEC>();
   const [level, setLevel] = useState<ESKILL_LEVEL>();
   const router = useRouter();
-  const [password, setPassword] = useState('');
   const [techs, setTechs] = useState<ITech[]>([]);
   const [selectedTechs, setSelectedTechs] = useState<number[]>([]);
   const [passwordModal, setPasswordModal] = useState(false);
@@ -45,10 +36,6 @@ const TestsGenerate = () => {
   const dispatch = useAppDispatch();
   const [tests, setTests] = useState<ITest[]>([]);
   const { user } = useAppSelector((state: RootState) => state.user);
-
-  const handleSetPassword = (e: string) => {
-    setPassword(e);
-  };
 
   const loadSpecs = async () => {
     if (!spec) {
@@ -84,39 +71,43 @@ const TestsGenerate = () => {
     }
   }, [step, spec, level, selectedTechs]);
 
-  const changeStep = async (direction: 'back' | 'forward' = 'forward') => {
-    // switch (step) {
-    //   case ETEST_STEPS.FIRST: {
-    //     if ()
-    //   }
-    //   case ETEST_STEPS.SECOND:
-    //   case ETEST_STEPS.THIRD:
-    //   case ETEST_STEPS.TEST:
-    // }
-    if (direction === 'forward') {
-      if (step !== ETEST_STEPS.THIRD) {
-        if (step === ETEST_STEPS.SECOND) {
-          await loadSpecs();
-        }
-        setStep(step + 1);
-      } else {
-        if (user?.admin) {
-          generateTests();
-        } else {
-          setPasswordModal(true);
-        }
-      }
-    } else {
-      if (step === ETEST_STEPS.THIRD) {
-        setSelectedTechs([]);
-        setTechs([]);
-      }
+  const goForward = async () => {
+    if (step === ETEST_STEPS.FIRST) {
+      setStep(step + 1);
+      return;
+    }
 
-      if (step !== ETEST_STEPS.FIRST) {
-        setStep(step - 1);
+    if (step === ETEST_STEPS.SECOND) {
+      await loadSpecs();
+      setStep(step + 1);
+      return;
+    }
+
+    if (step === ETEST_STEPS.THIRD) {
+      if (user?.admin) {
+        generateTests();
       } else {
-        router.push('/');
+        setPasswordModal(true);
       }
+    }
+  };
+
+  const goBack = async () => {
+    if (step === ETEST_STEPS.FIRST) {
+      router.push('/');
+      return;
+    }
+
+    if (step === ETEST_STEPS.SECOND) {
+      setStep(step - 1);
+      return;
+    }
+
+    if (step === ETEST_STEPS.THIRD) {
+      setSelectedTechs([]);
+      setTechs([]);
+      setStep(step - 1);
+      return;
     }
   };
 
@@ -128,7 +119,19 @@ const TestsGenerate = () => {
     }
   };
 
-  const generateTests = async () => {
+  const closeSaveTechModal = async () => {
+    try {
+      dispatch(setLoading(true));
+      await loadSpecs();
+    } catch (e: any) {
+      errorHandler(e, dispatch);
+    } finally {
+      dispatch(setLoading(false));
+      setAddTechModal(false);
+    }
+  };
+
+  const generateTests = async (password?: string) => {
     if (!selectedTechs.length || !level || !spec) {
       return;
     }
@@ -168,14 +171,14 @@ const TestsGenerate = () => {
     <div className={'mt-auto ml-auto flex w-full justify-between'}>
       <CustomButton
         type={'back'}
-        onClick={() => changeStep('back')}
+        onClick={goBack}
       />
       <CustomButton
         className={'ml-2'}
         type={step === ETEST_STEPS.THIRD ? 'success' : 'forward'}
         text={'Начать'}
         disabled={checkNextStep}
-        onClick={() => changeStep()}
+        onClick={goForward}
       />
     </div>
   );
@@ -257,16 +260,12 @@ const TestsGenerate = () => {
             }
           >
             {techs.map((el) => (
-              <div
+              <TechComponent
                 key={el.id}
-                className={
-                  'flex px-2 py-[10px] bg-main-blue rounded-lg cursor-pointer text-white'
-                }
+                tech={el}
+                selected={selectedTechs.includes(el.id)}
                 onClick={() => changeTechs(el.id)}
-              >
-                <CustomCheckbox value={selectedTechs.includes(el.id)} />
-                <div className={'ml-4 text-xl'}>{el.name}</div>
-              </div>
+              />
             ))}
           </div>
         ) : (
@@ -293,64 +292,13 @@ const TestsGenerate = () => {
       <AddTechModal
         spec={spec}
         open={addTechModal}
-        onClose={() => setAddTechModal(false)}
+        onClose={closeSaveTechModal}
       />
-      <Dialog
+      <GeneratePasswordModal
         open={passwordModal}
-        as={'div'}
-        className={'relative z-10 focus:outline-none'}
         onClose={() => setPasswordModal(false)}
-      >
-        <div className={'fixed inset-0 z-10 w-screen overflow-y-auto'}>
-          <div className={'flex min-h-full items-center justify-center p-4'}>
-            <DialogPanel
-              transition
-              className={
-                'w-full max-w-md rounded-xl bg-white/5 p-6 backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0'
-              }
-            >
-              <DialogTitle
-                as={'h3'}
-                className={'text-base/7 font-medium text-white'}
-              >
-                Введите пароль для генерации
-              </DialogTitle>
-              <p className={'mt-2 text-sm/6 text-white/50'}>
-                Введите временный пароль для генерации теста. Пароль можно
-                посмотреть в документации к сервису.
-              </p>
-              <div className={'w-full max-w-md mt-3'}>
-                <Field>
-                  <Label className={'text-sm/6 font-medium text-white'}>
-                    Пароль
-                  </Label>
-                  <Input
-                    className={
-                      'mt-1 block w-full rounded-lg border-none bg-white/5 py-1.5 px-3 text-sm/6 text-black focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25'
-                    }
-                    value={password}
-                    onInput={(val) =>
-                      handleSetPassword(
-                        (val.target as unknown as { value: string }).value
-                      )
-                    }
-                  />
-                </Field>
-              </div>
-              <div className={'mt-4'}>
-                <Button
-                  className={
-                    'inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 focus:outline-none data-[hover]:bg-gray-600 data-[focus]:outline-1 data-[focus]:outline-white data-[open]:bg-gray-700'
-                  }
-                  onClick={generateTests}
-                >
-                  Сгенерировать
-                </Button>
-              </div>
-            </DialogPanel>
-          </div>
-        </div>
-      </Dialog>
+        saveTech={generateTests}
+      />
     </TestsPrepareLayout>
   );
 };
