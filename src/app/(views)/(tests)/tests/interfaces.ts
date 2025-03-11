@@ -8,13 +8,14 @@ export enum ETEST_STEPS {
 }
 
 export interface ITestParams {
-  password: string;
+  password?: string;
   techs: Array<number>;
   level: ESKILL_LEVEL;
   spec: ETEST_SPEC;
 }
 
 export interface ITest {
+  id?: number;
   question: string;
   responses: Array<{
     answer: string;
