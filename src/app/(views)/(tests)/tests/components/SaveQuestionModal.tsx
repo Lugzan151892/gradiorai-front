@@ -146,6 +146,7 @@ const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
 
       if (result.payload) {
         setAllTechs(result.payload.techs);
+        setSelectedTechs(techs);
       }
     } catch (e: any) {
       errorHandler(e, dispatch);
