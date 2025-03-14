@@ -1,9 +1,4 @@
-import {
-  Dialog,
-  DialogBackdrop,
-  DialogPanel,
-  DialogTitle,
-} from '@headlessui/react';
+import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
 import React from 'react';
 import CustomIcon from '@/components/ui/icon/CustomIcon';
 
@@ -13,6 +8,7 @@ interface ICustomModalProps {
   header?: React.ReactNode;
   children?: React.ReactNode;
   footer?: React.ReactNode;
+  fullScreen?: boolean;
   type?: 'success' | 'error' | 'warning';
   onClose?: (vaL: boolean) => void;
 }
@@ -24,6 +20,7 @@ const CustomModal: React.FC<ICustomModalProps> = ({
   header,
   children,
   footer,
+  fullScreen,
   onClose,
 }) => {
   const typeColor = () => {
@@ -36,6 +33,7 @@ const CustomModal: React.FC<ICustomModalProps> = ({
         return 'main-blue';
     }
   };
+  const widthClasses = fullScreen ? 'w-full h-full' : 'w-full max-w-md';
 
   return (
     <>
@@ -47,20 +45,17 @@ const CustomModal: React.FC<ICustomModalProps> = ({
       >
         <DialogBackdrop className={'fixed inset-0 bg-black opacity-30'} />
         <div className={'fixed inset-0 z-10 w-screen overflow-y-auto'}>
-          <div className={'flex min-h-full items-center justify-center p-4'}>
+          <div className={'flex h-full items-center justify-center p-4'}>
             <DialogPanel
               transition
               className={
-                'w-full max-w-md rounded-xl bg-white p-6 border-2 backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0 ' +
-                `border-${typeColor()}`
+                'rounded-xl bg-white p-6 border-2 backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0 ' +
+                `border-${typeColor()} ` +
+                widthClasses
               }
             >
               {header || (
-                <div
-                  className={
-                    'grid grid-cols-[1fr_40px] items-center justify-items-center mb-5'
-                  }
-                >
+                <div className={'grid grid-cols-[1fr_40px] items-center justify-items-center mb-5'}>
                   <DialogTitle
                     as={'h3'}
                     className={'text-2xl font-medium text-black'}
