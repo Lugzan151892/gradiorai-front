@@ -9,7 +9,10 @@ const AnswerComponent: React.FC<{
 }> = ({ answer, onClick, disabled, userChoise }) => {
   const disabledClasses = disabled ? 'opacity-40' : 'cursor-pointer';
   const correctClasses =
-    userChoise === answer.id ? 'border-success' : 'border-error';
+    (userChoise === answer.id && answer.correct) ||
+    (userChoise !== answer.id && answer.correct)
+      ? 'border-success'
+      : 'border-error';
   const showBorder = userChoise && (userChoise === answer.id || answer.correct);
   return (
     <div

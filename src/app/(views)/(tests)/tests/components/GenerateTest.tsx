@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { ITest } from '@/app/(views)/(tests)/tests/interfaces';
 import { RootState } from '@/store';
 import { useAppSelector } from '@/hooks/redux';
-import SaveQuestionModal from './SaveQuestionModal';
+import SaveQuestionModal from '@/app/(views)/(tests)/tests/components/SaveQuestionModal';
 
 const GenerateTest: React.FC<{
   tests: ITest[];
@@ -18,7 +18,6 @@ const GenerateTest: React.FC<{
   const [showResults, setShowResults] = useState<boolean>(false);
   const router = useRouter();
   const { user } = useAppSelector((state: RootState) => state.user);
-  // const dispatch = useAppDispatch();
   const [disableSave, setDisableSave] = useState(false);
   const [saveQuestionModal, setSaveQuestionModal] = useState(false);
 
@@ -52,23 +51,6 @@ const GenerateTest: React.FC<{
 
   const saveQuestion = () => {
     setSaveQuestionModal(true);
-    // try {
-    //   dispatch(setLoading(true));
-    //   await Api.post<any, { question_id: number }>('/questions/save', {
-    //     ...tests[currentQuestion - 1],
-    //     level,
-    //     type: spec,
-    //   });
-    //   setDisableSave(true);
-
-    //   dispatch(
-    //     openModal({ type: 'success', text: 'Вопрос успешно сохранен!' })
-    //   );
-    // } catch (e: any) {
-    //   errorHandler(e, dispatch);
-    // } finally {
-    //   dispatch(setLoading(false));
-    // }
   };
 
   if (showResults) {
