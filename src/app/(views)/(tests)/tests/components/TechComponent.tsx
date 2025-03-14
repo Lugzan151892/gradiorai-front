@@ -1,5 +1,5 @@
 import React from 'react';
-import { ITech } from '../interfaces';
+import { ITech } from '@/app/(views)/(tests)/tests/interfaces';
 import CustomCheckbox from '@/components/ui/checkbox/CustomCheckbox';
 
 interface ITechComponentProps {
@@ -15,17 +15,25 @@ const TechComponent: React.FC<ITechComponentProps> = ({
   className = '',
   onClick,
 }) => {
+  const classes = selected
+    ? 'bg-main-blue text-white '
+    : 'bg-gray-second text-text-gray ';
   return (
     <div
       key={tech.id}
       className={
-        'flex px-2 py-[10px] bg-main-blue rounded-lg cursor-pointer text-white ' +
+        'flex px-2 py-[10px] rounded-lg cursor-pointer items-center h-11 text-ellipsis ' +
+        classes +
         className
       }
       onClick={onClick}
     >
       <CustomCheckbox value={selected} />
-      <div className={'ml-4 text-xl'}>{tech.name}</div>
+      <div
+        className={'ml-4 text-sm font-semibold text-nowrap truncate mw-full'}
+      >
+        {tech.name}
+      </div>
     </div>
   );
 };

@@ -10,14 +10,12 @@ const icons = {
     />
   ),
   'arrow-right': (
-    <g stroke={'currentColor'}>
-      <path
-        d={
-          'M1.57143 6.4C0.703552 6.4 0 7.11634 0 8C0 8.88366 0.703552 9.6 1.57143 9.6H16.6348L13.0317 13.2686C12.418 13.8935 12.418 14.9065 13.0317 15.5314C13.6454 16.1562 14.6403 16.1562 15.254 15.5314L21.5397 9.13137C22.1534 8.50653 22.1534 7.49347 21.5397 6.86863L15.254 0.468629C14.6403 -0.15621 13.6454 -0.15621 13.0317 0.468629C12.418 1.09347 12.418 2.10653 13.0317 2.73137L16.6348 6.4H1.57143Z'
-        }
-        strokeWidth={'1'}
-      />
-    </g>
+    <path
+      d={
+        'M1.57143 6.4C0.703552 6.4 0 7.11634 0 8C0 8.88366 0.703552 9.6 1.57143 9.6H16.6348L13.0317 13.2686C12.418 13.8935 12.418 14.9065 13.0317 15.5314C13.6454 16.1562 14.6403 16.1562 15.254 15.5314L21.5397 9.13137C22.1534 8.50653 22.1534 7.49347 21.5397 6.86863L15.254 0.468629C14.6403 -0.15621 13.6454 -0.15621 13.0317 0.468629C12.418 1.09347 12.418 2.10653 13.0317 2.73137L16.6348 6.4H1.57143Z'
+      }
+      strokeWidth={'1'}
+    />
   ),
   cross: (
     <g stroke={'currentColor'}>
@@ -52,6 +50,17 @@ const CustomIcon: React.FC<ICustomIconProps> = ({
 }) => {
   const icon = icons[name];
 
+  const getViewBox = () => {
+    switch (name) {
+      case 'arrow-left':
+        return '0 0 22 16';
+      case 'arrow-right':
+        return '0 0 22 16';
+      case 'cross':
+        return `0 0 ${size} ${size}`;
+    }
+  };
+
   if (!icon) {
     return null;
   }
@@ -60,19 +69,16 @@ const CustomIcon: React.FC<ICustomIconProps> = ({
     <svg
       width={size}
       height={size}
-      viewBox={`0 0 ${size} ${size}`}
+      viewBox={getViewBox()}
       fill={'none'}
       className={className}
       xmlns={'http://www.w3.org/2000/svg'}
       onClick={onClick}
     >
-      <g transform={'scale(1)'}>
-        {React.cloneElement(icon, {
-          fill: color,
-          stroke: color,
-          transform: 'scale(1)',
-        })}
-      </g>
+      {React.cloneElement(icon, {
+        fill: color,
+        stroke: color,
+      })}
     </svg>
   );
 };
