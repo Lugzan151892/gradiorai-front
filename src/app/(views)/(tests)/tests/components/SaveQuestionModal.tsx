@@ -49,6 +49,13 @@ const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const handleQuestionChange = (value: string) => {
+    setEditedQuestion((prev) => ({
+      ...prev,
+      question: value,
+    }));
+  };
+
   const handleResponseChange = (index: number, value: string) => {
     setEditedQuestion((prev) => ({
       ...prev,
@@ -162,7 +169,10 @@ const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
       <div>
         <div>
           <div className={'text-2xl mb-2'}>Изменение вопроса</div>
-          <CustomTextarea value={editedQuestion.question} />
+          <CustomTextarea
+            value={editedQuestion.question}
+            onInput={(val) => handleQuestionChange(val)}
+          />
           <div className={'mt-2 flex gap-2 items-center'}>
             <div className={'text-nowrap'}>Ответ 1:</div>
             <CustomInput
