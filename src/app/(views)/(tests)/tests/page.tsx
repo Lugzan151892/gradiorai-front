@@ -170,6 +170,7 @@ const TestsGenerate = () => {
   const actionsMarkup = (
     <div className={'mt-auto ml-auto flex w-full justify-between'}>
       <CustomButton
+        text={'Назад'}
         type={'back'}
         onClick={goBack}
       />
@@ -256,7 +257,7 @@ const TestsGenerate = () => {
         {techs.length ? (
           <div
             className={
-              'grid grid-cols-[max-content_max-content] w-full justify-between gap-y-2 px-10'
+              'grid grid-cols-[50%_50%] w-full justify-between gap-y-2 gap-x-2 px-10'
             }
           >
             {techs.map((el) => (
