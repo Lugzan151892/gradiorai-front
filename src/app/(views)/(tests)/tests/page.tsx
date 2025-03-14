@@ -2,12 +2,7 @@
 
 import React, { useMemo, useState } from 'react';
 import GenerateStep from '@/app/(views)/(tests)/tests/components/GenerateStep';
-import {
-  ETEST_STEPS,
-  ITech,
-  ITest,
-  ITestParams,
-} from '@/app/(views)/(tests)/tests/interfaces';
+import { ETEST_STEPS, ITech, ITest, ITestParams } from '@/app/(views)/(tests)/tests/interfaces';
 import CustomButton from '@/components/ui/button/CustomButton';
 import { useRouter } from 'next/navigation';
 import TestsPrepareLayout from '@/app/(views)/(tests)/tests/components/TestsPrepareLayout';
@@ -44,10 +39,7 @@ const TestsGenerate = () => {
 
     try {
       dispatch(setLoading(true));
-      const result = await Api.get<{ spec: number }, { techs: ITech[] }>(
-        '/questions/get-techs',
-        { spec }
-      );
+      const result = await Api.get<{ spec: number }, { techs: ITech[] }>('/questions/get-techs', { spec });
 
       if (result.payload) {
         setTechs(result.payload.techs);
@@ -145,18 +137,16 @@ const TestsGenerate = () => {
 
     try {
       dispatch(setLoading(true));
-      const result = await Api.post<
-        ITestParams,
-        { response: { questions: ITest[] }; usage: any }
-      >('/gpt/generate', data);
+      const result = await Api.post<ITestParams, { response: { questions: ITest[] }; usage: any }>(
+        '/gpt/generate',
+        data
+      );
 
       if (result.success) {
-        const shuffledTests = result.payload.response.questions.map(
-          (question) => ({
-            ...question,
-            responses: shuffleArray(question.responses),
-          })
-        );
+        const shuffledTests = result.payload.response.questions.map((question) => ({
+          ...question,
+          responses: shuffleArray(question.responses),
+        }));
         setTests(shuffledTests);
         setStep(ETEST_STEPS.TEST);
       }
@@ -187,6 +177,7 @@ const TestsGenerate = () => {
   if (step === ETEST_STEPS.TEST && level && spec) {
     return (
       <GenerateTest
+        techs={selectedTechs}
         level={level}
         spec={spec}
         tests={tests}
@@ -255,11 +246,7 @@ const TestsGenerate = () => {
         actions={actionsMarkup}
       >
         {techs.length ? (
-          <div
-            className={
-              'grid grid-cols-[50%_50%] w-full justify-between gap-y-2 gap-x-2 px-10'
-            }
-          >
+          <div className={'grid grid-cols-[50%_50%] w-full justify-between gap-y-2 gap-x-2 px-10'}>
             {techs.map((el) => (
               <TechComponent
                 key={el.id}
