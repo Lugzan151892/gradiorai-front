@@ -15,7 +15,7 @@ const CustomCheckbox: React.FC<ICustomInputProps> = ({
       checked={value}
       onChange={onChange}
       className={
-        'group size-6 rounded-md bg-white p-1 ring-1 ring-white/15 ring-inset data-[checked]:bg-white cursor-pointer'
+        'group size-6 flex-shrink-0 rounded-md bg-white p-1 ring-1 ring-white/15 ring-inset data-[checked]:bg-white cursor-pointer h-6 w-6'
       }
     >
       <svg
