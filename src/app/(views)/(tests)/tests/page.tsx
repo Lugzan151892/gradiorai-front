@@ -17,13 +17,20 @@ import errorHandler from '@/core/utils/error/errorHandler';
 import AddTechModal from './components/AddTechModal';
 import TechComponent from './components/TechComponent';
 import GeneratePasswordModal from './components/GeneratePasswordModal';
+import AdminWrapper from '@/components/admin-wrapper/AdminWrapper';
+
+interface ITechWithAmount extends ITech {
+  _count: {
+    questions: number;
+  };
+}
 
 const TestsGenerate = () => {
   const [step, setStep] = useState(ETEST_STEPS.FIRST);
   const [spec, setSpec] = useState<ETEST_SPEC>();
   const [level, setLevel] = useState<ESKILL_LEVEL>();
   const router = useRouter();
-  const [techs, setTechs] = useState<ITech[]>([]);
+  const [techs, setTechs] = useState<ITechWithAmount[]>([]);
   const [selectedTechs, setSelectedTechs] = useState<number[]>([]);
   const [passwordModal, setPasswordModal] = useState(false);
   const [addTechModal, setAddTechModal] = useState(false);
@@ -32,14 +39,23 @@ const TestsGenerate = () => {
   const [tests, setTests] = useState<ITest[]>([]);
   const { user } = useAppSelector((state: RootState) => state.user);
 
-  const loadSpecs = async () => {
+  const resetState = () => {
+    setStep(ETEST_STEPS.FIRST);
+    setSpec(undefined);
+    setLevel(undefined);
+    setTechs([]);
+    setSelectedTechs([]);
+    setTests([]);
+  };
+
+  const loadTechs = async () => {
     if (!spec) {
       return;
     }
 
     try {
       dispatch(setLoading(true));
-      const result = await Api.get<{ spec: number }, { techs: ITech[] }>('/questions/get-techs', { spec });
+      const result = await Api.get<{ spec: number }, { techs: ITechWithAmount[] }>('/questions/get-techs', { spec });
 
       if (result.payload) {
         setTechs(result.payload.techs);
@@ -70,7 +86,7 @@ const TestsGenerate = () => {
     }
 
     if (step === ETEST_STEPS.SECOND) {
-      await loadSpecs();
+      await loadTechs();
       setStep(step + 1);
       return;
     }
@@ -114,7 +130,7 @@ const TestsGenerate = () => {
   const closeSaveTechModal = async () => {
     try {
       dispatch(setLoading(true));
-      await loadSpecs();
+      await loadTechs();
     } catch (e: any) {
       errorHandler(e, dispatch);
     } finally {
@@ -181,6 +197,7 @@ const TestsGenerate = () => {
         level={level}
         spec={spec}
         tests={tests}
+        onReset={resetState}
       />
     );
   }
@@ -253,7 +270,11 @@ const TestsGenerate = () => {
                 tech={el}
                 selected={selectedTechs.includes(el.id)}
                 onClick={() => changeTechs(el.id)}
-              />
+              >
+                <AdminWrapper className={'ml-auto'}>
+                  <div className={'ml-2 mr-5 font-semibold'}>{el._count.questions || 0}</div>
+                </AdminWrapper>
+              </TechComponent>
             ))}
           </div>
         ) : (

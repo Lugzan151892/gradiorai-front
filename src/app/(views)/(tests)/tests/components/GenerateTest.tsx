@@ -3,22 +3,21 @@ import AnswerComponent from '@/app/(views)/(tests)/tests/components/AnswerCompon
 import CustomButton from '@/components/ui/button/CustomButton';
 import { useRouter } from 'next/navigation';
 import { ITest } from '@/app/(views)/(tests)/tests/interfaces';
-import { RootState } from '@/store';
-import { useAppSelector } from '@/hooks/redux';
 import SaveQuestionModal from '@/app/(views)/(tests)/tests/components/SaveQuestionModal';
+import AdminWrapper from '@/components/admin-wrapper/AdminWrapper';
 
 const GenerateTest: React.FC<{
   tests: ITest[];
   level: number;
   spec: number;
   techs: Array<number>;
-}> = ({ tests, level, spec, techs }) => {
+  onReset: () => void;
+}> = ({ tests, level, spec, techs, onReset }) => {
   const [currentQuestion, setCurrentQuestion] = useState<number>(1);
   const [userChoise, setUserChoise] = useState<number>();
   const [userResult, setUserResult] = useState<number>(0);
   const [showResults, setShowResults] = useState<boolean>(false);
   const router = useRouter();
-  const { user } = useAppSelector((state: RootState) => state.user);
   const [disableSave, setDisableSave] = useState(false);
   const [saveQuestionModal, setSaveQuestionModal] = useState(false);
 
@@ -43,7 +42,7 @@ const GenerateTest: React.FC<{
   };
 
   const goToTests = () => {
-    router.push('/tests');
+    onReset();
   };
 
   const saveQuestion = () => {
@@ -99,13 +98,20 @@ const GenerateTest: React.FC<{
           ))}
         </div>
         <div className={'w-full mt-auto flex'}>
-          {user?.admin ? (
+          <AdminWrapper>
             <CustomButton
               disabled={!!tests[currentQuestion - 1].id || disableSave}
               text={'Сохранить вопрос'}
               onClick={saveQuestion}
             />
-          ) : null}
+          </AdminWrapper>
+          {/* {user?.admin ? (
+            <CustomButton
+              disabled={!!tests[currentQuestion - 1].id || disableSave}
+              text={'Сохранить вопрос'}
+              onClick={saveQuestion}
+            />
+          ) : null} */}
           <CustomButton
             className={'ml-auto'}
             text={currentQuestion === tests.length ? 'Завершить' : 'Продолжить'}
