@@ -47,7 +47,7 @@ const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
     setSelectedLevels([level]);
     setSelectedTechs(techs);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [question]);
 
   const handleQuestionChange = (value: string) => {
     setEditedQuestion((prev) => ({
