@@ -22,25 +22,13 @@ const GenerateStep: React.FC<IGenerateStepProps> = ({
   children,
 }) => {
   return (
-    <div
-      className={
-        'flex flex-col items-center align-center w-full h-full max-w-md mx-auto'
-      }
-    >
+    <div className={'flex flex-col items-center align-center w-full h-full max-w-md mx-auto'}>
       <div className={'w-full mb-6 relative'}>
         <div className={'flex'}>
           <div className={'bg-main-blue h-10 w-full ml-[20px]'} />
-          <div
-            className={
-              'bg-blue border-transparent border-[20px] border-l-[20px] border-l-main-blue'
-            }
-          />
+          <div className={'bg-blue border-transparent border-[20px] border-l-[20px] border-l-main-blue'} />
         </div>
-        <div
-          className={
-            'absolute flex w-full justify-center top-[-10px] left-0 gap-14 pr-[90px] pl-[50px]'
-          }
-        >
+        <div className={'absolute flex w-full justify-center top-[-10px] left-0 gap-14 pr-[90px] pl-[50px]'}>
           <div
             className={
               'w-[60px] h-[60px] rounded-full flex items-center justify-center text-white text-3xl ' +
@@ -67,7 +55,7 @@ const GenerateStep: React.FC<IGenerateStepProps> = ({
           </div>
         </div>
       </div>
-      <div className={'mb-20 text-xl text-text-gray'}>{description}</div>
+      <div className={'mb-5 text-xl text-text-gray'}>{description}</div>
       {children || (
         <div className={'w-full px-10'}>
           {options

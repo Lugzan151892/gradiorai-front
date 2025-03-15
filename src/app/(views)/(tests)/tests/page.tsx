@@ -34,6 +34,7 @@ const TestsGenerate = () => {
   const [selectedTechs, setSelectedTechs] = useState<number[]>([]);
   const [passwordModal, setPasswordModal] = useState(false);
   const [addTechModal, setAddTechModal] = useState(false);
+  const [questionsAmount, setQuestionsAmount] = useState(0);
 
   const dispatch = useAppDispatch();
   const [tests, setTests] = useState<ITest[]>([]);
@@ -55,10 +56,14 @@ const TestsGenerate = () => {
 
     try {
       dispatch(setLoading(true));
-      const result = await Api.get<{ spec: number }, { techs: ITechWithAmount[] }>('/questions/get-techs', { spec });
+      const result = await Api.get<{ spec: number }, { techs: ITechWithAmount[]; questions_amount: number }>(
+        '/questions/get-techs',
+        { spec }
+      );
 
       if (result.payload) {
         setTechs(result.payload.techs);
+        setQuestionsAmount(result.payload.questions_amount);
       }
     } catch (e: any) {
       errorHandler(e, dispatch);
@@ -262,26 +267,33 @@ const TestsGenerate = () => {
         description={'Выберите направления'}
         actions={actionsMarkup}
       >
-        {techs.length ? (
-          <div className={'grid grid-cols-[50%_50%] w-full justify-between gap-y-2 gap-x-2 px-10'}>
-            {techs.map((el) => (
-              <TechComponent
-                key={el.id}
-                tech={el}
-                selected={selectedTechs.includes(el.id)}
-                onClick={() => changeTechs(el.id)}
-              >
-                <AdminWrapper className={'ml-auto'}>
-                  <div className={'ml-2 mr-5 font-semibold'}>{el._count.questions || 0}</div>
-                </AdminWrapper>
-              </TechComponent>
-            ))}
-          </div>
-        ) : (
-          <div>
-            <div className={'text-3xl text-error'}>Направления не найдены!</div>
-          </div>
-        )}
+        <div className={'flex flex-col items-center'}>
+          <AdminWrapper className={'w-[max-content]'}>
+            <div className={'font-semibold text-center mb-3 mr-5'}>
+              Общее количество вопросов в базе: {questionsAmount}
+            </div>
+          </AdminWrapper>
+          {techs.length ? (
+            <div className={'grid grid-cols-[50%_50%] w-full justify-between gap-y-2 gap-x-2 px-10'}>
+              {techs.map((el) => (
+                <TechComponent
+                  key={el.id}
+                  tech={el}
+                  selected={selectedTechs.includes(el.id)}
+                  onClick={() => changeTechs(el.id)}
+                >
+                  <AdminWrapper className={'ml-auto'}>
+                    <div className={'ml-2 mr-5 font-semibold'}>{el._count.questions || 0}</div>
+                  </AdminWrapper>
+                </TechComponent>
+              ))}
+            </div>
+          ) : (
+            <div>
+              <div className={'text-3xl text-error'}>Направления не найдены!</div>
+            </div>
+          )}
+        </div>
         {user?.admin ? (
           <div className={'w-full flex mt-6'}>
             <CustomButton
