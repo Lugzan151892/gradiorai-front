@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import background from '@/assets/images/main-page-bg.png';
+import AdminWrapper from '@/components/admin-wrapper/AdminWrapper';
 
 const Home = () => {
   const router = useRouter();
@@ -20,18 +21,11 @@ const Home = () => {
           }
         >
           <div className={'flex flex-col h-full desktop:w-2/4'}>
-            <div className={'mt-30 text-4xl mt-10'}>
-              Добро пожаловать в Skill Test
-            </div>
-            <div className={'desktop:hidden text-lg mt-3'}>
-              Проверь свои знания и прокачай навыки!
-            </div>
-            <div className={'mobile:hidden text-lg mt-3'}>
-              Хочешь узнать, насколько ты хорош в своей сфере?
-            </div>
+            <div className={'mt-30 text-4xl mt-10'}>Добро пожаловать в Skill Test</div>
+            <div className={'desktop:hidden text-lg mt-3'}>Проверь свои знания и прокачай навыки!</div>
+            <div className={'mobile:hidden text-lg mt-3'}>Хочешь узнать, насколько ты хорош в своей сфере?</div>
             <div className={'mobile:hidden text-lg mt-4'}>
-              Наши тесты помогут тебе оценить уровень знаний, выявить слабые
-              места и подготовиться к новым вызовам!
+              Наши тесты помогут тебе оценить уровень знаний, выявить слабые места и подготовиться к новым вызовам!
             </div>
             <Image
               className={'lg:hidden'}
@@ -46,6 +40,13 @@ const Home = () => {
                 onClick={() => router.push('/tests')}
               />
             </div>
+            <AdminWrapper className={'max-w-[max-content] mt-auto mb-4'}>
+              <CustomButton
+                type={'error'}
+                text={'Система'}
+                onClick={() => router.push('/system')}
+              />
+            </AdminWrapper>
           </div>
         </div>
       </main>
