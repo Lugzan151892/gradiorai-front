@@ -32,6 +32,7 @@ export default {
         gray: 'var(--main-gray)',
         'gray-second': 'var(--second-gray)',
         aqua: 'var(--main-aqua)',
+        orange: 'var(--main-orange)',
         'text-secondary': 'var(--text-secondary)',
         'text-gray': 'var(--text-gray)',
       },
