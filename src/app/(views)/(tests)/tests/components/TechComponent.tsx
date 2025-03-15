@@ -5,10 +5,17 @@ interface ITechComponentProps {
   tech: { id: number; name: string };
   selected?: boolean;
   className?: string;
+  children?: Readonly<React.ReactNode>;
   onClick?: () => void;
 }
 
-const TechComponent: React.FC<ITechComponentProps> = ({ tech, selected = false, className = '', onClick }) => {
+const TechComponent: React.FC<ITechComponentProps> = ({
+  tech,
+  selected = false,
+  className = '',
+  onClick,
+  children,
+}) => {
   const classes = selected ? 'bg-main-blue text-white ' : 'bg-gray-second text-text-gray ';
   return (
     <div
@@ -18,6 +25,7 @@ const TechComponent: React.FC<ITechComponentProps> = ({ tech, selected = false, 
     >
       <CustomCheckbox value={selected} />
       <div className={'ml-4 text-sm font-semibold text-nowrap truncate mw-full'}>{tech.name}</div>
+      {children}
     </div>
   );
 };

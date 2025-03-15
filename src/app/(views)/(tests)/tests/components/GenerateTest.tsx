@@ -3,26 +3,33 @@ import AnswerComponent from '@/app/(views)/(tests)/tests/components/AnswerCompon
 import CustomButton from '@/components/ui/button/CustomButton';
 import { useRouter } from 'next/navigation';
 import { ITest } from '@/app/(views)/(tests)/tests/interfaces';
+import SaveQuestionModal from '@/app/(views)/(tests)/tests/components/SaveQuestionModal';
+import AdminWrapper from '@/components/admin-wrapper/AdminWrapper';
 import { RootState } from '@/store';
 import { useAppSelector } from '@/hooks/redux';
-import SaveQuestionModal from '@/app/(views)/(tests)/tests/components/SaveQuestionModal';
+import Api from '@/core/api/api';
 
 const GenerateTest: React.FC<{
   tests: ITest[];
   level: number;
   spec: number;
   techs: Array<number>;
-}> = ({ tests, level, spec, techs }) => {
+  onReset: () => void;
+}> = ({ tests, level, spec, techs, onReset }) => {
   const [currentQuestion, setCurrentQuestion] = useState<number>(1);
   const [userChoise, setUserChoise] = useState<number>();
   const [userResult, setUserResult] = useState<number>(0);
   const [showResults, setShowResults] = useState<boolean>(false);
   const router = useRouter();
-  const { user } = useAppSelector((state: RootState) => state.user);
   const [disableSave, setDisableSave] = useState(false);
   const [saveQuestionModal, setSaveQuestionModal] = useState(false);
+  const { user } = useAppSelector((state: RootState) => state.user);
 
-  const handleSetUserChoise = (answer: { answer: string; correct: boolean; id: number }) => {
+  const handleSetUserChoise = async (answer: { answer: string; correct: boolean; id: number }) => {
+    if (user?.id && !!tests[currentQuestion - 1].id && answer.correct) {
+      await Api.postSilent('/questions/update-progress', { question_id: tests[currentQuestion - 1].id });
+    }
+
     setUserChoise(answer.id);
     if (answer.correct) {
       setUserResult(userResult + 1);
@@ -43,7 +50,7 @@ const GenerateTest: React.FC<{
   };
 
   const goToTests = () => {
-    router.push('/tests');
+    onReset();
   };
 
   const saveQuestion = () => {
@@ -99,13 +106,13 @@ const GenerateTest: React.FC<{
           ))}
         </div>
         <div className={'w-full mt-auto flex'}>
-          {user?.admin ? (
+          <AdminWrapper>
             <CustomButton
               disabled={!!tests[currentQuestion - 1].id || disableSave}
               text={'Сохранить вопрос'}
               onClick={saveQuestion}
             />
-          ) : null}
+          </AdminWrapper>
           <CustomButton
             className={'ml-auto'}
             text={currentQuestion === tests.length ? 'Завершить' : 'Продолжить'}
