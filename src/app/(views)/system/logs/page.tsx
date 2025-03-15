@@ -1,6 +1,9 @@
 'use client';
 
 import Api from '@/core/api/api';
+import errorHandler from '@/core/utils/error/errorHandler';
+import { setLoading } from '@/features/loading/loadingSlice';
+import { useAppDispatch } from '@/hooks/redux';
 import React, { useEffect, useState } from 'react';
 
 interface ILog {
@@ -12,18 +15,24 @@ interface ILog {
 
 const LogsPage = () => {
   const [logs, setLogs] = useState<ILog[]>([]);
+  const dispatch = useAppDispatch();
 
   const getLogs = async () => {
-    const result = await Api.get<any, { [key: number]: string }>(
-      '/system/logs'
-    );
-    const parsedLogs: ILog[] = result.payload[0]
-      .trim()
-      .split('\n')
-      .map((line) => JSON.parse(line))
-      .reverse();
+    try {
+      dispatch(setLoading(true));
+      const result = await Api.get<any, { [key: number]: string }>('/system/logs');
+      const parsedLogs: ILog[] = result.payload[0]
+        .trim()
+        .split('\n')
+        .map((line) => JSON.parse(line))
+        .reverse();
 
-    setLogs(parsedLogs);
+      setLogs(parsedLogs);
+    } catch (e: any) {
+      errorHandler(e, dispatch);
+    } finally {
+      dispatch(setLoading(false));
+    }
   };
 
   useEffect(() => {
