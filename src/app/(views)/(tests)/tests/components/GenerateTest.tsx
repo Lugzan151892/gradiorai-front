@@ -5,6 +5,9 @@ import { useRouter } from 'next/navigation';
 import { ITest } from '@/app/(views)/(tests)/tests/interfaces';
 import SaveQuestionModal from '@/app/(views)/(tests)/tests/components/SaveQuestionModal';
 import AdminWrapper from '@/components/admin-wrapper/AdminWrapper';
+import { RootState } from '@/store';
+import { useAppSelector } from '@/hooks/redux';
+import Api from '@/core/api/api';
 
 const GenerateTest: React.FC<{
   tests: ITest[];
@@ -20,8 +23,13 @@ const GenerateTest: React.FC<{
   const router = useRouter();
   const [disableSave, setDisableSave] = useState(false);
   const [saveQuestionModal, setSaveQuestionModal] = useState(false);
+  const { user } = useAppSelector((state: RootState) => state.user);
 
-  const handleSetUserChoise = (answer: { answer: string; correct: boolean; id: number }) => {
+  const handleSetUserChoise = async (answer: { answer: string; correct: boolean; id: number }) => {
+    if (user?.id && !!tests[currentQuestion - 1].id && answer.correct) {
+      await Api.postSilent('/questions/update-progress', { question_id: tests[currentQuestion - 1].id });
+    }
+
     setUserChoise(answer.id);
     if (answer.correct) {
       setUserResult(userResult + 1);
@@ -105,13 +113,6 @@ const GenerateTest: React.FC<{
               onClick={saveQuestion}
             />
           </AdminWrapper>
-          {/* {user?.admin ? (
-            <CustomButton
-              disabled={!!tests[currentQuestion - 1].id || disableSave}
-              text={'Сохранить вопрос'}
-              onClick={saveQuestion}
-            />
-          ) : null} */}
           <CustomButton
             className={'ml-auto'}
             text={currentQuestion === tests.length ? 'Завершить' : 'Продолжить'}

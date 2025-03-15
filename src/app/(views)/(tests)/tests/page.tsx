@@ -163,7 +163,7 @@ const TestsGenerate = () => {
           ...question,
           responses: shuffleArray(question.responses),
         }));
-        setTests(shuffledTests);
+        setTests(shuffleArray(shuffledTests));
         setStep(ETEST_STEPS.TEST);
       }
     } catch (e: any) {
