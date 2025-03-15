@@ -10,6 +10,7 @@ interface ICustomTextareaProps {
   error?: string;
   validation?: boolean;
   className?: string;
+  rows?: number;
   onInput?: (val: string) => void;
   onChange?: (val: string) => void;
 }
@@ -21,6 +22,7 @@ const CustomTextarea: React.FC<ICustomTextareaProps> = ({
   error,
   validation,
   className,
+  rows,
   onInput,
   onChange,
 }) => {
@@ -47,6 +49,7 @@ const CustomTextarea: React.FC<ICustomTextareaProps> = ({
               classes
             }
             value={value}
+            rows={rows}
             placeholder={placeholder}
             onInput={handleInput}
             onChange={handleChange}

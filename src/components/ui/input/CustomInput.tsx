@@ -8,7 +8,7 @@ import password from '@/assets/icons/password.svg';
 interface ICustomInputProps {
   label?: string;
   placeholder?: string;
-  value?: string;
+  value?: string | number;
   error?: string;
   validation?: boolean;
   className?: string;
@@ -41,15 +41,8 @@ const CustomInput: React.FC<ICustomInputProps> = ({
   return (
     <div className={'w-full ' + (className || '')}>
       <Field>
-        {label ? (
-          <Label className={'text-xl mb-1 text-black'}>{label}</Label>
-        ) : null}
-        <div
-          className={
-            'flex bg-white w-full rounded-lg py-1.5 px-3 text-black border-2 ' +
-            classes
-          }
-        >
+        {label ? <Label className={'text-xl mb-1 text-black text-nowrap'}>{label}</Label> : null}
+        <div className={'flex bg-white w-full rounded-lg py-1.5 px-3 text-black border-2 ' + classes}>
           <Image
             className={'mr-2'}
             src={password}
@@ -68,13 +61,7 @@ const CustomInput: React.FC<ICustomInputProps> = ({
             }
           />
         </div>
-        {validation ? (
-          <div className={'text-error text-xs h-5 pt-1' + errorTextClasses}>
-            {error}
-          </div>
-        ) : (
-          ''
-        )}
+        {validation ? <div className={'text-error text-xs h-5 pt-1' + errorTextClasses}>{error}</div> : ''}
       </Field>
     </div>
   );
