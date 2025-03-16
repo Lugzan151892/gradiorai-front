@@ -1,6 +1,7 @@
 'use client';
 
 import CustomButton from '@/components/ui/button/CustomButton';
+import routeChecker from '@/hoc/routeChecker';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
@@ -39,4 +40,4 @@ const SystemPage = () => {
   );
 };
 
-export default SystemPage;
+export default routeChecker(SystemPage, 'adminOnly');
