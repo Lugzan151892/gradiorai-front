@@ -3,6 +3,7 @@
 import Api from '@/core/api/api';
 import errorHandler from '@/core/utils/error/errorHandler';
 import { setLoading } from '@/features/loading/loadingSlice';
+import routeChecker from '@/hoc/routeChecker';
 import { useAppDispatch } from '@/hooks/redux';
 import React, { useEffect, useState } from 'react';
 
@@ -37,7 +38,9 @@ const LogsPage = () => {
 
   useEffect(() => {
     getLogs();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   return (
     <div className={'text-black px-2 py-3'}>
       {logs
@@ -57,4 +60,4 @@ const LogsPage = () => {
   );
 };
 
-export default LogsPage;
+export default routeChecker(LogsPage, 'adminOnly');
