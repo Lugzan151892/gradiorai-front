@@ -11,6 +11,7 @@ import CustomInput from '@/components/ui/input/CustomInput';
 import CustomTextarea from '@/components/ui/textarea/CustomTextarea';
 import CustomButton from '@/components/ui/button/CustomButton';
 import { openModal } from '@/store/tech/techSlice';
+import routeChecker from '@/hoc/routeChecker';
 
 //'gpt-4o-mini' | 'gpt-4o'
 interface IGptSettings {
@@ -247,4 +248,4 @@ const SystemGptPage = () => {
   );
 };
 
-export default SystemGptPage;
+export default routeChecker(SystemGptPage, 'adminOnly');

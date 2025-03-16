@@ -4,6 +4,7 @@ import CustomButton from '@/components/ui/button/CustomButton';
 import CustomInput from '@/components/ui/input/CustomInput';
 import Api from '@/core/api/api';
 import errorHandler from '@/core/utils/error/errorHandler';
+import routeChecker from '@/hoc/routeChecker';
 import { useAppDispatch } from '@/hooks/redux';
 import { setUnAuth } from '@/store/user/userSlice';
 import { useRouter } from 'next/navigation';
@@ -74,9 +75,7 @@ const LoginView = () => {
         <div className={'text-xl text-center mt-2'}>
           Еще нет аккаунта?
           <span
-            className={
-              'ml-2 text-main-blue cursor-pointer hover:border-main-blue hover:border-b-1'
-            }
+            className={'ml-2 text-main-blue cursor-pointer hover:border-main-blue hover:border-b-1'}
             onClick={handleGoRegistration}
           >
             Зарегистрироваться
@@ -86,4 +85,4 @@ const LoginView = () => {
     </div>
   );
 };
-export default LoginView;
+export default routeChecker(LoginView, 'guestOnly');
