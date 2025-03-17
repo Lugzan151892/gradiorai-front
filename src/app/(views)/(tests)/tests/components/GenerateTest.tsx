@@ -84,13 +84,13 @@ const GenerateTest: React.FC<{
   }
 
   return (
-    <div className={'h-full flex flex-grow w-full'}>
+    <div className={'h-full flex flex-grow w-full overflow-auto'}>
       <div className={'my-7 mx-3 rounded-lg bg-gray w-full p-4 flex flex-col'}>
         <div className={'flex gap-4'}>
           <div className={'h-24 w-24 bg-aqua rounded flex items-center justify-center text-xl text-text-secondary'}>
             {`${currentQuestion} / ${tests.length}`}
           </div>
-          <div className={'w-full flex items-center bg-white rounded text-black p-3 text-2xl'}>
+          <div className={'w-full flex items-center bg-white rounded text-black p-3 desktop:text-2xl mobile:text-base'}>
             {tests[currentQuestion - 1].question}
           </div>
         </div>
@@ -108,13 +108,28 @@ const GenerateTest: React.FC<{
         <div className={'w-full mt-auto flex'}>
           <AdminWrapper>
             <CustomButton
+              className={'desktop:hidden'}
+              small
+              disabled={!!tests[currentQuestion - 1].id || disableSave}
+              text={'Сохранить вопрос'}
+              onClick={saveQuestion}
+            />
+            <CustomButton
+              className={'mobile:hidden'}
               disabled={!!tests[currentQuestion - 1].id || disableSave}
               text={'Сохранить вопрос'}
               onClick={saveQuestion}
             />
           </AdminWrapper>
           <CustomButton
-            className={'ml-auto'}
+            className={'ml-auto desktop:hidden'}
+            small
+            text={currentQuestion === tests.length ? 'Завершить' : 'Продолжить'}
+            disabled={!userChoise}
+            onClick={handleSetQuestion}
+          />
+          <CustomButton
+            className={'ml-auto mobile:hidden'}
             text={currentQuestion === tests.length ? 'Завершить' : 'Продолжить'}
             disabled={!userChoise}
             onClick={handleSetQuestion}
