@@ -4,10 +4,16 @@ const TestsPrepareLayout: React.FC<Readonly<{ children: React.ReactNode }>> = ({
   return (
     <div
       className={
-        'h-full flex justify-items-end w-full desktop:bg-[url("../assets/images/tests-bg.png")] bg-no-repeat bg-contain bg-left'
+        'flex justify-items-end w-full desktop:bg-[url("../assets/images/tests-bg.png")] bg-no-repeat bg-contain bg-left overflow-y-hidden'
       }
     >
-      <div className={'ml-auto max-w-[40%] w-full my-7 mr-3 rounded-lg p-4 text-black'}>{children}</div>
+      <div
+        className={
+          'w-full ml-auto desktop:max-w-[40%] w-full desktop:my-7 desktop:mr-3 rounded-lg p-4 text-black overflow-x-hidden overflow-y-auto'
+        }
+      >
+        {children}
+      </div>
     </div>
   );
 };
