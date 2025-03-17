@@ -21,8 +21,8 @@ const Home = () => {
           }
         >
           <div className={'flex flex-col h-full desktop:w-2/4'}>
-            <div className={'mt-30 text-4xl mt-10'}>Добро пожаловать в Skill Test</div>
-            <div className={'desktop:hidden text-lg mt-3'}>Проверь свои знания и прокачай навыки!</div>
+            <div className={'mt-30 text-4xl mobile:text-xl mt-10'}>Добро пожаловать в Skill Test</div>
+            <div className={'desktop:hidden text-base mt-3'}>Проверь свои знания и прокачай навыки!</div>
             <div className={'mobile:hidden text-lg mt-3'}>Хочешь узнать, насколько ты хорош в своей сфере?</div>
             <div className={'mobile:hidden text-lg mt-4'}>
               Наши тесты помогут тебе оценить уровень знаний, выявить слабые места и подготовиться к новым вызовам!

@@ -15,11 +15,7 @@ interface IAddTechModalProps {
   onClose?: () => void;
 }
 
-const AddTechModal: React.FC<IAddTechModalProps> = ({
-  spec,
-  open = false,
-  onClose,
-}) => {
+const AddTechModal: React.FC<IAddTechModalProps> = ({ spec, open = false, onClose }) => {
   const [tech, setTech] = useState('');
   const dispatch = useAppDispatch();
 
@@ -61,7 +57,7 @@ const AddTechModal: React.FC<IAddTechModalProps> = ({
       caption={'Создать направление'}
       onClose={closeModal}
     >
-      <div>
+      <div className={'p-6'}>
         <CustomInput
           className={'mb-10'}
           label={'Название направления'}

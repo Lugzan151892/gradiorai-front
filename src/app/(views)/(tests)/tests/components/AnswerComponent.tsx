@@ -1,5 +1,5 @@
-import CustomRadioButton from '@/components/ui/radio-button/CustomRadioButton';
 import React from 'react';
+import CustomRadioButton from '@/components/ui/radio-button/CustomRadioButton';
 
 const AnswerComponent: React.FC<{
   answer: { answer: string; correct: boolean; id: number };
@@ -7,20 +7,19 @@ const AnswerComponent: React.FC<{
   userChoise?: number;
   onClick?: () => void;
 }> = ({ answer, onClick, disabled, userChoise }) => {
-  const disabledClasses = disabled ? 'opacity-40' : 'cursor-pointer';
   const correctClasses =
-    (userChoise === answer.id && answer.correct) ||
-    (userChoise !== answer.id && answer.correct)
+    (userChoise === answer.id && answer.correct) || (userChoise !== answer.id && answer.correct)
       ? 'border-success'
       : 'border-error';
   const showBorder = userChoise && (userChoise === answer.id || answer.correct);
   return (
     <div
-      className={`px-10 py-3 border-2 bg-white rounded ${disabledClasses} ${showBorder ? correctClasses : 'border-transparent'} ${!userChoise && !disabled ? 'hover:shadow-2xl' : ''}`}
+      className={`desktop:px-10 mobile:px-2 desktop:py-3 border-2 bg-white rounded ${showBorder ? correctClasses : 'border-transparent'} ${!userChoise && !disabled ? 'hover:shadow-2xl' : ''}`}
       onClick={() => (disabled || !onClick ? undefined : onClick())}
     >
       <CustomRadioButton
         caption={answer.answer}
+        disabled={disabled}
         selected={!!userChoise && userChoise === answer.id}
         noPointer
       />
