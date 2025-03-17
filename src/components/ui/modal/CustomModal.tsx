@@ -5,9 +5,9 @@ import CustomIcon from '@/components/ui/icon/CustomIcon';
 interface ICustomModalProps {
   open?: boolean;
   caption?: string;
-  header?: React.ReactNode;
-  children?: React.ReactNode;
-  footer?: React.ReactNode;
+  header?: Readonly<React.ReactNode>;
+  children?: Readonly<React.ReactNode>;
+  footer?: Readonly<React.ReactNode>;
   fullScreen?: boolean;
   type?: 'success' | 'error' | 'warning';
   onClose?: (vaL: boolean) => void;
