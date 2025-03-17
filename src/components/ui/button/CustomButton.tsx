@@ -1,11 +1,11 @@
 import { Button } from '@headlessui/react';
-import React, { ReactNode } from 'react';
-import CustomIcon from '../icon/CustomIcon';
+import React from 'react';
+import CustomIcon from '@/components/ui/icon/CustomIcon';
 
 interface ICustomButtonProps {
   text?: string;
   className?: string;
-  children?: ReactNode;
+  children?: Readonly<React.ReactNode>;
   type?: 'success' | 'error' | 'warning' | 'forward' | 'back';
   level?: 1 | 2 | 3;
   onClick?: () => void;
@@ -28,13 +28,9 @@ const CustomButton: React.FC<ICustomButtonProps> = ({
   small,
   fullWidth,
 }) => {
-  const disabledClass = disabled
-    ? 'pointer-events-none opacity-40 !bg-gray-second'
-    : '';
+  const disabledClass = disabled ? 'pointer-events-none opacity-40 !bg-gray-second' : '';
   const selectedClass = selected ? 'border-success' : 'border-transparent';
-  const sizeClasses = small
-    ? 'px-2 py-1'
-    : `px-4 py-2 ${fullWidth ? 'w-full' : ''} text-2xl`;
+  const sizeClasses = small ? 'px-2 py-1' : `px-4 py-2 ${fullWidth ? 'w-full' : ''} text-2xl`;
   const getTypeClasses = () => {
     switch (type) {
       case 'success':
@@ -58,11 +54,7 @@ const CustomButton: React.FC<ICustomButtonProps> = ({
       onClick={onClick}
     >
       {type === 'back' || type === 'forward' ? (
-        <div
-          className={
-            'w-10 h-10 flex items-center justify-center bg-white rounded-full'
-          }
-        >
+        <div className={'w-10 h-10 flex items-center justify-center bg-white rounded-full'}>
           <div className={'text-main-blue text-3xl font-bold h-max'}>
             {type === 'back' ? (
               <CustomIcon

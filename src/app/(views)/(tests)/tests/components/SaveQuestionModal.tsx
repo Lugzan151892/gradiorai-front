@@ -164,12 +164,12 @@ const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
     <CustomModal
       fullScreen
       open={open}
-      caption={'Выбрать направления вопроса'}
+      caption={'Сохранить вопрос'}
       onClose={onClose}
     >
-      <div>
+      <div className={'m-6'}>
         <div>
-          <div className={'text-2xl mb-2'}>Изменение вопроса</div>
+          <div className={'desktop:text-2xl mobile:text-xl mb-2'}>Изменение вопроса</div>
           <CustomTextarea
             value={editedQuestion.question}
             onInput={(val) => handleQuestionChange(val)}
@@ -204,15 +204,15 @@ const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
           </div>
         </div>
         <div className={'mt-3'}>
-          <div className={'text-2xl mb-2 text-center'}>Укажите уровень вопроса:</div>
+          <div className={'desktop:text-2xl mobile:text-xl mb-2 text-center'}>Укажите уровень вопроса:</div>
           <div
             className={
-              'grid grid-flow-col auto-cols-auto-fit auto-cols-[minmax(150px,200px)] justify-center w-full gap-y-2 gap-x-2'
+              'grid desktop:grid-flow-col desktop:auto-cols-auto-fit desktop:auto-cols-[minmax(150px,200px)] mobile:grid-cols-1 justify-center w-full gap-y-2 gap-x-2'
             }
           >
             {levels.map((el) => (
               <TechComponent
-                className={'mt-2'}
+                className={'desktop:mt-2 mobile:mt-1'}
                 key={el.id}
                 tech={el}
                 selected={selectedLevels.includes(el.id)}
@@ -222,10 +222,10 @@ const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
           </div>
         </div>
         <div className={'mt-3'}>
-          <div className={'text-2xl mb-2 text-center'}>Укажите направления:</div>
+          <div className={'desktop:text-2xl mobile:text-xl mb-2 text-center'}>Укажите направления:</div>
           <div
             className={
-              'grid grid-flow-col auto-cols-auto-fit auto-cols-[minmax(150px,200px)] justify-center w-full gap-y-2 gap-x-2'
+              'grid desktop:grid-flow-col desktop:auto-cols-auto-fit desktop:auto-cols-[minmax(150px,200px)] mobile:grid-cols-1 justify-center w-full gap-y-2 gap-x-2'
             }
           >
             {allTechs.map((el) => (
@@ -252,8 +252,8 @@ const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
 
         <div className={'flex'}>
           <CustomButton
-            className={'ml-auto'}
-            text={'Сохранить'}
+            className={'desktop:ml-auto mobile:mx-auto'}
+            text={'Сохранить вопрос'}
             onClick={saveQuestion}
           />
         </div>

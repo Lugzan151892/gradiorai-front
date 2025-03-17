@@ -179,7 +179,7 @@ const TestsGenerate = () => {
   };
 
   const actionsMarkup = (
-    <div className={'mt-auto ml-auto flex w-full justify-between'}>
+    <div className={'mt-auto mb-3 ml-auto flex w-full justify-between'}>
       <CustomButton
         text={'Назад'}
         type={'back'}
@@ -274,7 +274,11 @@ const TestsGenerate = () => {
             </div>
           </AdminWrapper>
           {techs.length ? (
-            <div className={'grid grid-cols-[50%_50%] w-full justify-between gap-y-2 gap-x-2 px-10'}>
+            <div
+              className={
+                'grid desktop:grid-cols-[50%_50%] mobile:grid-cols-[1fr] w-full justify-between gap-y-2 gap-x-2 px-10'
+              }
+            >
               {techs.map((el) => (
                 <TechComponent
                   key={el.id}
@@ -295,9 +299,15 @@ const TestsGenerate = () => {
           )}
         </div>
         {user?.admin ? (
-          <div className={'w-full flex mt-6'}>
+          <div className={'w-full flex desktop:mt-4 mobile:my-2'}>
             <CustomButton
-              className={'mx-auto'}
+              className={'mx-auto mobile:hidden'}
+              text={'Добавить направления'}
+              onClick={() => setAddTechModal(true)}
+            />
+            <CustomButton
+              className={'mx-auto desktop:hidden'}
+              small
               text={'Добавить направления'}
               onClick={() => setAddTechModal(true)}
             />
