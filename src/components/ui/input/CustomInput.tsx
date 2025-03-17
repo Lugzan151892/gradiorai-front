@@ -2,8 +2,7 @@
 
 import { Field, Input, Label } from '@headlessui/react';
 import React from 'react';
-import Image from 'next/image';
-import password from '@/assets/icons/password.svg';
+import CustomIcon from '@/components/ui/icon/CustomIcon';
 
 interface ICustomInputProps {
   label?: string;
@@ -43,13 +42,7 @@ const CustomInput: React.FC<ICustomInputProps> = ({
       <Field>
         {label ? <Label className={'text-xl mb-1 text-black text-nowrap'}>{label}</Label> : null}
         <div className={'flex bg-white w-full rounded-lg py-1.5 px-3 text-black border-2 ' + classes}>
-          <Image
-            className={'mr-2'}
-            src={password}
-            width={20}
-            height={20}
-            alt={'password icon'}
-          />
+          <CustomIcon name={'password'} />
           <Input
             value={value}
             placeholder={placeholder}

@@ -21,16 +21,10 @@ export const metadata: Metadata = {
   description: 'Interview Ready',
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+const RootLayout: React.FC<Readonly<{ children: React.ReactNode }>> = ({ children }) => {
   return (
     <html lang={'en'}>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased h-full w-full`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased h-full w-full`}>
         <Providers>
           {children}
           <GlobalLoader />
@@ -39,4 +33,6 @@ export default function RootLayout({
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;

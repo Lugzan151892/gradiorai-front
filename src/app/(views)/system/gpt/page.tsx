@@ -13,7 +13,6 @@ import CustomButton from '@/components/ui/button/CustomButton';
 import { openModal } from '@/store/tech/techSlice';
 import routeChecker from '@/hoc/routeChecker';
 
-//'gpt-4o-mini' | 'gpt-4o'
 interface IGptSettings {
   user_model: string;
   admin_model: string;
@@ -133,13 +132,13 @@ const SystemGptPage = () => {
   }, [loadSettings]);
 
   return (
-    <div className={'w-full h-full'}>
+    <div className={'w-full h-full overflow-y-auto overflow-x-hidden'}>
       <div className={'w-full h-full flex flex-col px-2 items-center'}>
         <div className={'mt-3'}>
           <div className={'text-2xl mb-2 text-center'}>Укажите уровень вопроса:</div>
           <div
             className={
-              'grid grid-flow-col auto-cols-auto-fit auto-cols-[minmax(150px,200px)] justify-center w-full gap-y-2 gap-x-2'
+              'grid grid-flow-col auto-cols-auto-fit desktop:auto-cols-[minmax(150px,200px)] mobile:auto-cols-[minmax(max-content,1fr)] justify-center w-full gap-y-2 gap-x-2'
             }
           >
             {specs.map((el) => (
@@ -154,12 +153,14 @@ const SystemGptPage = () => {
           </div>
         </div>
         {choosenSpec && gptSettings ? (
-          <div className={'mt-3'}>
+          <div className={'mt-3 w-full'}>
             <div className={'text-2xl mb-2 text-center'}>Настройки</div>
-            <div className={'flex gap-4'}>
+            <div className={'flex mobile:flex-col gap-4'}>
               <div className={'flex flex-col'}>
-                <div className={'text-2xl text-center'}>Настройки используемой модели GPT:</div>
-                <div className={'text-xl mb-2 text-center'}>(ТОЛЬКО gpt-4o-mini (дешевая) или gpt-4o)</div>
+                <div className={'desktop:text-2xl mobile:text-lg text-center'}>Настройки используемой модели GPT:</div>
+                <div className={'desktop:text-xl mobile:text-base mb-2 text-center'}>
+                  (ТОЛЬКО gpt-4o-mini (дешевая) или gpt-4o)
+                </div>
                 <div className={'flex flex-col gap-3'}>
                   <CustomInput
                     value={gptSettings.admin_model}
@@ -174,8 +175,10 @@ const SystemGptPage = () => {
                 </div>
               </div>
               <div className={'flex flex-col'}>
-                <div className={'text-2xl text-center'}>Настройки количества генерируемых вопросов GPT:</div>
-                <div className={'text-xl mb-2 text-center'}>(!!ТОЛЬКО ЧИСЛА)</div>
+                <div className={'desktop:text-2xl mobile:text-lg text-center'}>
+                  Настройки количества генерируемых вопросов GPT:
+                </div>
+                <div className={'desktop:text-xl mobile:text-base mb-2 text-center'}>(!!ТОЛЬКО ЧИСЛА)</div>
                 <div className={'flex flex-col gap-3'}>
                   <CustomInput
                     value={gptSettings.admin_amount}
@@ -189,12 +192,12 @@ const SystemGptPage = () => {
                   />
                 </div>
               </div>
-              <div className={'flex flex-col w-[max-content]'}>
-                <div className={'text-2xl text-center'}>Настройки температуры GPT:</div>
-                <div className={'text-xl mb-2 text-center'}>
+              <div className={'flex flex-col desktop:w-[max-content] mobile:w-full'}>
+                <div className={'desktop:text-2xl mobile:text-lg text-center'}>Настройки температуры GPT:</div>
+                <div className={'desktop:text-xl mobile:text-base mb-2 text-center'}>
                   (ТОЛЬКО ЧИСЛА ОТ 0 до 2 с десятичными значениями, например 0.2)
                 </div>
-                <div className={'flex gap-3 w-[max-content]'}>
+                <div className={'flex gap-3 desktop:w-[max-content] mobile:w-full'}>
                   <CustomInput
                     value={gptSettings.temperature}
                     label={'Температура'}
@@ -204,7 +207,7 @@ const SystemGptPage = () => {
               </div>
             </div>
             <div className={'flex flex-col'}>
-              <div className={'text-2xl mb-2 text-center'}>Промпты</div>
+              <div className={'desktop:text-2xl mobile:text-lg mb-2 text-center'}>Промпты</div>
               <div>
                 Можно использовать переменные:
                 <div className={'flex flex-col'}>
@@ -214,8 +217,8 @@ const SystemGptPage = () => {
                   <span>$QUESTION_TECHS - внутренние технологии в направлении, через запятую HTML, React, CSS</span>
                 </div>
               </div>
-              <div className={'flex w-full h-full gap-3'}>
-                <div className={'flex flex-col w-full h-full'}>
+              <div className={'flex mobile:flex-col w-full h-full gap-3'}>
+                <div className={'flex w-full h-full'}>
                   <CustomTextarea
                     className={'flex-1 h-full'}
                     rows={9}
@@ -224,7 +227,7 @@ const SystemGptPage = () => {
                     onInput={(val) => handleChangeSettings({ system_message: val })}
                   />
                 </div>
-                <div className={'flex flex-col w-full h-full'}>
+                <div className={'flex w-full h-full'}>
                   <CustomTextarea
                     value={gptSettings.user_message}
                     rows={9}

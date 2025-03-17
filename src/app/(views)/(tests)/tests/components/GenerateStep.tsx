@@ -1,12 +1,12 @@
 import CustomButton from '@/components/ui/button/CustomButton';
-import React, { ReactNode } from 'react';
+import React from 'react';
 
 interface IGenerateStepProps {
   title?: string;
   description?: string;
   options?: Array<{ id: number; text: string }>;
-  actions?: ReactNode;
-  children?: ReactNode;
+  actions?: Readonly<React.ReactNode>;
+  children?: Readonly<React.ReactNode>;
   value?: number;
   step?: number;
   onClick?: (step: number) => void;
