@@ -41,7 +41,7 @@ const AppHeader = () => {
   return (
     <header className={'h-12 w-full bg-main-blue flex items-center text-2xl px-4'}>
       <div
-        className={'cursor-pointer text-white'}
+        className={'cursor-pointer text-white hover:text-success'}
         onClick={() => router.push('/')}
       >
         Skill Test
@@ -51,10 +51,12 @@ const AppHeader = () => {
           <CustomButton
             small
             text={'Войти'}
+            color={"white"}
             onClick={handleLogin}
           />
           <CustomButton
             small
+            color={"white"}
             text={'Зарегистрироваться'}
             onClick={handleRegister}
           />
@@ -77,6 +79,7 @@ const AppHeader = () => {
           <CustomButton
             className={'mobile:hidden ml-2'}
             small
+            color={"white"}
             text={'Выйти'}
             onClick={handleLogout}
           />

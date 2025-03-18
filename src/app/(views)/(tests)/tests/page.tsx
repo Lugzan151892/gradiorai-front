@@ -18,6 +18,7 @@ import AddTechModal from './components/AddTechModal';
 import TechComponent from './components/TechComponent';
 import GeneratePasswordModal from './components/GeneratePasswordModal';
 import AdminWrapper from '@/components/admin-wrapper/AdminWrapper';
+import CustomIcon from '@/components/ui/icon/CustomIcon';
 
 interface ITechWithAmount extends ITech {
   _count: {
@@ -182,16 +183,44 @@ const TestsGenerate = () => {
     <div className={'mt-auto mb-3 ml-auto flex w-full justify-between'}>
       <CustomButton
         text={'Назад'}
-        type={'back'}
         onClick={goBack}
-      />
+      >
+        <div className={"flex items-center"}>
+          <div className={'w-10 h-10 flex items-center justify-center bg-white rounded-full'}>
+            <div className={'text-main-blue text-3xl font-bold h-max'}>
+              <CustomIcon
+                name={'arrow-left'}
+                color={'var(--main-blue)'}
+              />
+            </div>
+          </div>
+          <div className={"ml-2 mobile:hidden"}>
+            Назад
+          </div>
+        </div>
+      </CustomButton>
       <CustomButton
         className={'ml-2'}
-        type={step === ETEST_STEPS.THIRD ? 'success' : 'forward'}
         text={'Начать'}
+        type={step === ETEST_STEPS.THIRD ? 'success' : undefined}
         disabled={checkNextStep}
         onClick={goForward}
-      />
+      >
+        {step === ETEST_STEPS.THIRD ? null :
+        <div className={"flex items-center"}>
+          <div className={"mr-2 mobile:hidden"}>
+            Вперед
+          </div>
+          <div className={'w-10 h-10 flex items-center justify-center bg-white rounded-full'}>
+            <div className={'text-main-blue text-3xl font-bold h-max'}>
+              <CustomIcon
+                name={'arrow-right'}
+                color={checkNextStep ? 'var(--second-gray)' : 'var(--main-blue)'}
+              />
+            </div>
+          </div>
+        </div>}
+      </CustomButton>
     </div>
   );
 
@@ -216,11 +245,11 @@ const TestsGenerate = () => {
         options={[
           {
             id: ETEST_SPEC.FRONT,
-            text: 'Front',
+            text: 'Frontend',
           },
           {
             id: ETEST_SPEC.BACK,
-            text: 'Back',
+            text: 'Backend',
           },
           {
             id: ETEST_SPEC.QA,
