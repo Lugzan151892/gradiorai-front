@@ -18,5 +18,5 @@ deploy:
     - ssh $DEPLOY_USER@$DEPLOY_HOST "mkdir -p $DEPLOY_PATH"
     - rsync -avz --delete . $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH
     - ssh $DEPLOY_USER@$DEPLOY_HOST "cd $DEPLOY_PATH && npm install && npm run build"
-    - ssh $DEPLOY_USER@$DEPLOY_HOST "cd $DEPLOY_PATH && pm2 restart interview-ready-front --update-env || pm2 start 'npm run start' --name interview-ready-front"
+    - ssh $DEPLOY_USER@$DEPLOY_HOST "cd $DEPLOY_PATH && pm2 restart 'interview-ready-front' --update-env || pm2 start npm --name 'interview-ready-front' -- start"
     - ssh $DEPLOY_USER@$DEPLOY_HOST "pm2 save"
