@@ -8,17 +8,11 @@ deploy:
   only:
     - master
   before_script:
-    - apt update -y && apt install -y openssh-client rsync
+    - apt update -y && apt install -y openssh-client
     - eval $(ssh-agent -s)
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
     - echo "$KNOWN_HOSTS" > ~/.ssh/known_hosts
   script:
-    - ssh $DEPLOY_USER@$DEPLOY_HOST "
-      cd $DEPLOY_PATH &&
-      git pull &&
-      npm install &&
-      npm run build &&
-      pm2 restart 'interview-ready-front' --update-env || pm2 start npm --name 'interview-ready-front' -- start &&
-      pm2 save"
+    - ssh $DEPLOY_USER@$DEPLOY_HOST "cd $DEPLOY_PATH && npm install && npm run build && pm2 restart 'interview-ready-front'|| pm2 start npm --name 'interview-ready-front' -- start && pm2 save"
