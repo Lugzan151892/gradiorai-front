@@ -6,9 +6,11 @@ const AuthLayout: React.FC<{
 }> = ({ children }) => {
   return (
     <div className={'w-full h-full flex flex-col'}>
-      <AppHeader />
-      <div className={'flex justify-center w-full h-full'}>
-        <div className={'max-w-screen-sm w-full'}>{children}</div>
+      <AppHeader withState={false} />
+      <div className={'w-full h-full flex bg-main-blue'}>
+        <div className={'flex justify-center w-full items-center'}>
+          <div className={'max-w-sm w-full border-main-blue desktop:border-2 rounded bg-white p-10'}>{children}</div>
+        </div>
       </div>
     </div>
   );

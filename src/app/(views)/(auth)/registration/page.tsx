@@ -22,33 +22,19 @@ const RegistrationPage = () => {
 
   const handleRegister = async () => {
     const emailErrorMsg = email ? '' : 'Поле не заполнено';
-    const emailRegError =
-      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)
-        ? ''
-        : 'Некорректный формат';
+    const emailRegError = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email) ? '' : 'Некорректный формат';
     const passwordErrorMsg = password ? '' : 'Поле не заполнено';
     const passwordReqError = /^(?=.*[A-Z])(?=.*[\W_]).{8,}$/.test(password)
       ? ''
       : 'Пароль должен содержать минимум 8 символов, заглавную букву и спецсимвол';
-    const repeatedPasswordErrorMsg = repeatedPassword
-      ? ''
-      : 'Поле не заполнено';
+    const repeatedPasswordErrorMsg = repeatedPassword ? '' : 'Поле не заполнено';
 
-    const passwordMismatchError =
-      password !== repeatedPassword ? 'Пароли не совпадают' : '';
+    const passwordMismatchError = password !== repeatedPassword ? 'Пароли не совпадают' : '';
 
-    if (
-      emailErrorMsg ||
-      passwordErrorMsg ||
-      repeatedPasswordErrorMsg ||
-      emailRegError ||
-      passwordReqError
-    ) {
+    if (emailErrorMsg || passwordErrorMsg || repeatedPasswordErrorMsg || emailRegError || passwordReqError) {
       setEmailError(emailErrorMsg || emailRegError);
       setPasswordError(passwordErrorMsg || passwordReqError);
-      setRepeatedPasswordError(
-        passwordMismatchError || repeatedPasswordErrorMsg
-      );
+      setRepeatedPasswordError(passwordMismatchError || repeatedPasswordErrorMsg);
 
       return;
     }
@@ -79,7 +65,7 @@ const RegistrationPage = () => {
   return (
     <div className={'text-black flex w-full h-full items-center'}>
       <div className={'flex flex-col w-full gap-1 text-3xl'}>
-        <div className={'mb-6'}>Регистрация</div>
+        <div className={'mb-6 text-text-gray text-center'}>Регистрация</div>
         <CustomInput
           label={'E-mail'}
           validation
@@ -110,22 +96,20 @@ const RegistrationPage = () => {
             setRepeatedPasswordError('');
           }}
         />
-        <CustomButton
-          disabled={!!emailError || !!passwordError || !!repeatedPasswordError}
-          text={'Зарегистрироваться'}
-          onClick={handleRegister}
-        />
-        <div className={'text-xl text-center mt-2'}>
-          Уже есть аккаунт?{' '}
+        <div className={'flex text-base w-full items-center justify-center'}>
           <span
-            className={
-              'text-main-blue cursor-pointer hover:border-main-blue hover:border-b-1'
-            }
+            className={'ml-2 text-main-blue cursor-pointer'}
             onClick={handleGoLogin}
           >
-            Войти
+            Вход
           </span>
         </div>
+        <CustomButton
+          disabled={!!emailError || !!passwordError || !!repeatedPasswordError}
+          type={'success'}
+          text={'Создать'}
+          onClick={handleRegister}
+        />
       </div>
     </div>
   );

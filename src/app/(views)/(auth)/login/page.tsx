@@ -46,7 +46,7 @@ const LoginView = () => {
   return (
     <div className={'text-black flex w-full h-full items-center'}>
       <div className={'flex flex-col w-full gap-1 text-3xl'}>
-        <div className={'mb-6'}>Вход</div>
+        <div className={'mb-6 text-text-gray text-center'}>Вход</div>
         <CustomInput
           label={'E-mail'}
           validation
@@ -67,20 +67,25 @@ const LoginView = () => {
             setPasswordError('');
           }}
         />
+        <div className={'flex text-base w-full items-center justify-center'}>
+          <span
+            className={'ml-2 text-main-blue cursor-pointer hover:border-main-blue hover:border-b-1'}
+            onClick={handleGoRegistration}
+          >
+            Регистрация
+          </span>
+          <span
+            className={'ml-2 text-main-blue cursor-pointer hover:border-main-blue hover:border-b-1'}
+            onClick={handleGoRegistration}
+          >
+            Забыли пароль?
+          </span>
+        </div>
         <CustomButton
           disabled={!!emailError || !!passwordError}
           text={'Войти'}
           onClick={handleLogin}
         />
-        <div className={'text-xl text-center mt-2'}>
-          Еще нет аккаунта?
-          <span
-            className={'ml-2 text-main-blue cursor-pointer hover:border-main-blue hover:border-b-1'}
-            onClick={handleGoRegistration}
-          >
-            Зарегистрироваться
-          </span>
-        </div>
       </div>
     </div>
   );
