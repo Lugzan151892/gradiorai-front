@@ -39,6 +39,9 @@ export default {
       gridTemplateRows: {
         layout: '48px 1fr',
       },
+      boxShadow: {
+        default: '0 3px 4px -1px rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)',
+      },
     },
   },
   plugins: [],
