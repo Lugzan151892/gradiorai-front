@@ -70,6 +70,11 @@ const icons = {
       />
     </g>
   ),
+  youtube: (
+    <path
+      d={'M5.536 21.886a1.004 1.004 0 0 0 1.033-.064l13-9a1 1 0 0 0 0-1.644l-13-9A1 1 0 0 0 5 3v18a1 1 0 0 0 .536.886z'}
+    />
+  ),
 };
 
 type ICustomIconProps = {
@@ -108,6 +113,8 @@ const CustomIcon: React.FC<ICustomIconProps> = ({
         return '0 0 16 16';
       case 'password':
         return '0 0 44 48';
+      case 'youtube':
+        return '0 0 24 24';
       default:
         return `0 0 ${size} ${size}`;
     }
@@ -130,7 +137,6 @@ const CustomIcon: React.FC<ICustomIconProps> = ({
         viewBox={getViewBox()}
         fill={'none'}
         className={className}
-        xmlns={'http://www.w3.org/2000/svg'}
         onClick={onClick}
       >
         {React.cloneElement(icon, {
