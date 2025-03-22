@@ -65,20 +65,23 @@ const RegistrationPage = () => {
   return (
     <div className={'text-black flex w-full h-full items-center'}>
       <div className={'flex flex-col w-full gap-1 text-3xl'}>
-        <div className={'mb-6 text-text-gray text-center'}>Регистрация</div>
+        <div className={'mb-20 text-white text-center'}>Добро пожаловать!</div>
         <CustomInput
-          label={'E-mail'}
-          validation
+          className={'mb-6'}
           value={email}
           error={emailError}
+          placeholder={'Email'}
+          icon={'email'}
           onInput={(val) => {
             setEmail(val);
             setEmailError('');
           }}
         />
         <CustomInput
-          label={'Пароль'}
-          validation
+          className={'mb-6'}
+          type={'password'}
+          icon={'password'}
+          placeholder={'Пароль'}
           value={password}
           error={passwordError}
           onInput={(val) => {
@@ -87,8 +90,9 @@ const RegistrationPage = () => {
           }}
         />
         <CustomInput
-          label={'Повторите пароль'}
-          validation
+          type={'password'}
+          icon={'password'}
+          placeholder={'Повторите пароль'}
           value={repeatedPassword}
           error={repeatedPasswordError}
           onInput={(val) => {
@@ -96,20 +100,31 @@ const RegistrationPage = () => {
             setRepeatedPasswordError('');
           }}
         />
-        <div className={'flex text-base w-full items-center justify-center'}>
-          <span
-            className={'ml-2 text-main-blue cursor-pointer'}
-            onClick={handleGoLogin}
-          >
-            Вход
-          </span>
-        </div>
         <CustomButton
+          className={'mt-60'}
           disabled={!!emailError || !!passwordError || !!repeatedPasswordError}
           type={'success'}
           text={'Создать'}
           onClick={handleRegister}
         />
+        <div className={'flex text-base w-full items-center justify-center mt-3'}>
+          <span
+            className={
+              'ml-2 text-white cursor-pointer border-b-1 border-transparent hover:border-white hover:border-b-1'
+            }
+            onClick={handleGoLogin}
+          >
+            Вход
+          </span>
+          <span
+            className={
+              'ml-5 text-white cursor-pointer border-b-1 border-transparent hover:border-white hover:border-b-1'
+            }
+            onClick={handleGoLogin}
+          >
+            Забыли пароль?
+          </span>
+        </div>
       </div>
     </div>
   );
