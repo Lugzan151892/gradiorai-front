@@ -46,20 +46,22 @@ const LoginView = () => {
   return (
     <div className={'text-black flex w-full h-full items-center'}>
       <div className={'flex flex-col w-full gap-1 text-3xl'}>
-        <div className={'mb-6 text-text-gray text-center'}>Вход</div>
+        <div className={'mb-20 text-white text-center'}>Добро пожаловать!</div>
         <CustomInput
-          label={'E-mail'}
-          validation
+          className={'mb-6'}
           value={email}
           error={emailError}
+          placeholder={'Email'}
+          icon={'email'}
           onInput={(val) => {
             setEmail(val);
             setEmailError('');
           }}
         />
         <CustomInput
-          label={'Пароль'}
-          validation
+          type={'password'}
+          icon={'password'}
+          placeholder={'Пароль'}
           value={password}
           error={passwordError}
           onInput={(val) => {
@@ -67,25 +69,30 @@ const LoginView = () => {
             setPasswordError('');
           }}
         />
-        <div className={'flex text-base w-full items-center justify-center'}>
+        <CustomButton
+          className={'mt-60'}
+          disabled={!!emailError || !!passwordError}
+          text={'Войти'}
+          onClick={handleLogin}
+        />
+        <div className={'flex text-base w-full items-center justify-center mt-3'}>
           <span
-            className={'ml-2 text-main-blue cursor-pointer hover:border-main-blue hover:border-b-1'}
+            className={
+              'ml-2 text-white cursor-pointer border-b-1 border-transparent hover:border-white hover:border-b-1'
+            }
             onClick={handleGoRegistration}
           >
             Регистрация
           </span>
           <span
-            className={'ml-2 text-main-blue cursor-pointer hover:border-main-blue hover:border-b-1'}
+            className={
+              'ml-5 text-white cursor-pointer border-b-1 border-transparent hover:border-white hover:border-b-1'
+            }
             onClick={handleGoRegistration}
           >
             Забыли пароль?
           </span>
         </div>
-        <CustomButton
-          disabled={!!emailError || !!passwordError}
-          text={'Войти'}
-          onClick={handleLogin}
-        />
       </div>
     </div>
   );
