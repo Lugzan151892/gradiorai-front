@@ -36,7 +36,7 @@ const CustomButton: React.FC<ICustomButtonProps> = ({
     if (type) {
       switch (type) {
         case 'success':
-          return 'bg-success text-white data-[hover]:bg-white data-[hover]:text-black data-[hover]:border-success';
+          return 'bg-success text-white';
         case 'error':
           return 'bg-error text-white';
         case 'warning':
