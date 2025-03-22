@@ -4,11 +4,49 @@ interface ICustomRadioButtonProps {
   selected?: boolean;
   noPointer?: boolean;
   disabled?: boolean;
+  textLarge?: boolean;
+  type?: 'success' | 'error';
   onClick?: () => void;
 }
 
-const CustomRadioButton: React.FC<ICustomRadioButtonProps> = ({ caption, selected, noPointer, disabled, onClick }) => {
+const CustomRadioButton: React.FC<ICustomRadioButtonProps> = ({
+  caption,
+  selected,
+  noPointer,
+  disabled,
+  type,
+  textLarge,
+  onClick,
+}) => {
   const disabledClasses = disabled ? 'opacity-40 cursor-default' : '';
+
+  const getPointerMarkup = () => {
+    if (type === 'success') {
+      return (
+        <div
+          className={
+            'rounded-full flex-shrink-0 h-5 w-5 bg-success flex items-center justify-center shadow-default shadow-black'
+          }
+        >
+          ✔
+        </div>
+      );
+    }
+
+    if (type === 'error') {
+      return (
+        <div
+          className={
+            'rounded-full flex-shrink-0 h-5 w-5 bg-error flex items-center justify-center shadow-default shadow-black'
+          }
+        >
+          x
+        </div>
+      );
+    }
+
+    return <div className={'rounded-full flex-shrink-0 bg-gray h-2 w-2'} />;
+  };
 
   return (
     <div className={`flex items-center w-full py-1 ${noPointer ? '' : 'cursor-pointer'} ${disabledClasses}`}>
@@ -18,9 +56,11 @@ const CustomRadioButton: React.FC<ICustomRadioButtonProps> = ({ caption, selecte
         }
         onClick={onClick}
       >
-        {selected ? <div className={'rounded-full flex-shrink-0 bg-gray h-2 w-2'} /> : null}
+        {selected ? getPointerMarkup() : null}
       </div>
-      {caption ? <div className={'ml-4 text-black text-sm'}> {caption} </div> : null}
+      {caption ? (
+        <div className={`ml-4 text-text-gray ${textLarge ? 'text-xl mobile:text-sm' : 'text-sm'}`}> {caption} </div>
+      ) : null}
     </div>
   );
 };
