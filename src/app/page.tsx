@@ -28,7 +28,7 @@ const Home = () => {
             <div className={'text-2xl mobile:text-base mt-4'}>
               Наши AI-тесты помогут вам оценить уровень знаний, выявить слабые места и подготовиться к новым вызовам!
             </div>
-            <div className={'mt-4'}>
+            <div className={'desktop:ml-4 mt-4 max-w-md'}>
               <DescriptionListItem title={'Оценка знаний'} />
               <DescriptionListItem
                 className={'mt-4 mobile:text-base'}
