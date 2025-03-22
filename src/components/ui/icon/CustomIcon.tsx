@@ -82,6 +82,7 @@ type ICustomIconProps = {
   color?: string;
   size?: number;
   className?: string;
+  caption?: string;
   tooltip?: string;
   onClick?: () => void;
 };
@@ -92,6 +93,7 @@ const CustomIcon: React.FC<ICustomIconProps> = ({
   size = 24,
   tooltip = '',
   className,
+  caption,
   onClick,
 }) => {
   const icon = icons[name];
@@ -126,9 +128,10 @@ const CustomIcon: React.FC<ICustomIconProps> = ({
 
   return (
     <div
-      className={'relative flex items-center justify-center'}
+      className={'relative flex flex-col items-center justify-center ' + className}
       onMouseEnter={() => setShowTooltip(true)}
       onMouseLeave={() => setShowTooltip(false)}
+      onClick={onClick}
       ref={iconRef}
     >
       <svg
@@ -136,8 +139,6 @@ const CustomIcon: React.FC<ICustomIconProps> = ({
         height={size}
         viewBox={getViewBox()}
         fill={'none'}
-        className={className}
-        onClick={onClick}
       >
         {React.cloneElement(icon, {
           fill: color,
@@ -153,6 +154,7 @@ const CustomIcon: React.FC<ICustomIconProps> = ({
           {tooltip}
         </div>
       )}
+      {caption ? <div className={'text-xl text-white'}>{caption}</div> : null}
     </div>
   );
 };
