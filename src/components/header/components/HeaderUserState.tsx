@@ -17,9 +17,6 @@ const HeaderUserState = () => {
   const handleLogin = () => {
     router.push('/login');
   };
-  const handleRegister = () => {
-    router.push('/registration');
-  };
 
   const username = useMemo(() => {
     if (!user) {
@@ -44,17 +41,13 @@ const HeaderUserState = () => {
     <>
       {!user?.id ? (
         <div className={'ml-auto flex gap-2'}>
-          <CustomButton
-            small
-            text={'Войти'}
-            type={'success'}
+          <CustomIcon
+            className={'cursor-pointer'}
+            name={'user'}
+            size={36}
+            color={'var(--main-white)'}
+            caption={'Войти'}
             onClick={handleLogin}
-          />
-          <CustomButton
-            small
-            type={'success'}
-            text={'Зарегистрироваться'}
-            onClick={handleRegister}
           />
         </div>
       ) : (

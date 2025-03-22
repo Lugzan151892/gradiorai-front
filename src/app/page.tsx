@@ -18,7 +18,7 @@ const Home = () => {
           'flex flex-col w-full h-full bg-[url("../assets/images/background.png")] bg-no-repeat bg-cover bg-left'
         }
       >
-        <div className={'ml-auto px-2 py-4'}>
+        <div className={'ml-auto px-2 pr-5 py-4'}>
           <HeaderUserState />
         </div>
         <div className={'flex flex-col w-full h-full text-white desktop:px-16 mobile:px-4 desktop:w-[40%]'}>
