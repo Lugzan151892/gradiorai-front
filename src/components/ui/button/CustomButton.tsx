@@ -7,7 +7,7 @@ interface ICustomButtonProps {
   children?: Readonly<React.ReactNode>;
   type?: 'success' | 'error' | 'warning';
   level?: 1 | 2 | 3;
-  color?: 'white' | 'gray';
+  color?: 'white' | 'gray' | 'low-green';
   onClick?: () => void;
   disabled?: boolean;
   maxRounded?: boolean;
@@ -29,7 +29,7 @@ const CustomButton: React.FC<ICustomButtonProps> = ({
   fullWidth,
   color,
 }) => {
-  const disabledClass = disabled ? 'pointer-events-none opacity-40 !bg-gray-second' : '';
+  const disabledClass = disabled ? 'pointer-events-none !bg-button-disabled' : '';
   const selectedClass = selected ? 'border-success' : 'border-transparent';
   const sizeClasses = small ? 'px-2 py-1 text-base' : `px-4 py-2 ${fullWidth ? 'w-full' : ''} text-2xl`;
   const getTypeClasses = () => {
@@ -50,6 +50,8 @@ const CustomButton: React.FC<ICustomButtonProps> = ({
           return 'bg-white text-black data-[hover]:bg-gray data-[hover]:border-white';
         case 'gray':
           return 'bg-gray text-text-gray';
+        case 'low-green':
+          return 'bg-low-green text-white';
       }
     }
 

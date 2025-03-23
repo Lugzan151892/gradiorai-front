@@ -12,6 +12,7 @@
     rgba(30, 15, 95, 0.42) 100%
   );
   --main-green: #5aea6f;
+  --low-green: #00e3c9;
   --main-black: #000000;
   --main-blue: #6d8aeef2;
   --main-blue-secondary: #19b0da;
@@ -24,6 +25,7 @@
   --main-aqua: #c2fbf7;
   --text-secondary: #6f6969;
   --text-gray: #6d6b6b;
+  --disabled-button: #9a9a9a;
 }
 
 html,
