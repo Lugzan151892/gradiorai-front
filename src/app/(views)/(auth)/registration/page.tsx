@@ -9,7 +9,7 @@ import { useAppDispatch } from '@/hooks/redux';
 import { setUnAuth } from '@/store/user/userSlice';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
-import AuthConfirmButton from '../components/AuthConfirmButton';
+import AuthConfirmButton from '@/app/(views)/(auth)/components/AuthConfirmButton';
 
 const RegistrationPage = () => {
   const router = useRouter();
@@ -69,23 +69,6 @@ const RegistrationPage = () => {
     if (!handleCheckIsFieldsValid()) {
       return;
     }
-    // const emailErrorMsg = email ? '' : 'Поле не заполнено';
-    // const emailRegError = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email) ? '' : 'Некорректный формат';
-    // const passwordErrorMsg = password ? '' : 'Поле не заполнено';
-    // const passwordReqError = /^(?=.*[A-Z])(?=.*[\W_]).{8,}$/.test(password)
-    //   ? ''
-    //   : 'Пароль должен содержать минимум 8 символов, заглавную букву и спецсимвол';
-    // const repeatedPasswordErrorMsg = repeatedPassword ? '' : 'Поле не заполнено';
-
-    // const passwordMismatchError = password !== repeatedPassword ? 'Пароли не совпадают' : '';
-
-    // if (emailErrorMsg || passwordErrorMsg || repeatedPasswordErrorMsg || emailRegError || passwordReqError) {
-    //   setEmailError(emailErrorMsg || emailRegError);
-    //   setPasswordError(passwordErrorMsg || passwordReqError);
-    //   setRepeatedPasswordError(passwordMismatchError || repeatedPasswordErrorMsg);
-
-    //   return;
-    // }
 
     try {
       dispatch(setLoading(true));
