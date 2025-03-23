@@ -2,13 +2,10 @@ import SystemError from '@/utils/errors/SystemError';
 import UserError from '@/utils/errors/UserError';
 import { IResponse, IResponseSilent } from '@/core/api/interfaces';
 
-const API_PATH =
-  process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : `/api`;
+const API_PATH = process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : `/api`;
 
 type TApiMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
-type ResponseType<R, S extends boolean> = S extends true
-  ? IResponseSilent<R>
-  : IResponse<R>;
+type ResponseType<R, S extends boolean> = S extends true ? IResponseSilent<R> : IResponse<R>;
 
 class Api {
   static handleRequestStatus(status: number, silentError: boolean = false) {
@@ -19,17 +16,12 @@ class Api {
     }
   }
 
-  static request<T>(
-    path: string,
-    method: TApiMethod,
-    options: T = {} as T
-  ): Promise<Response> {
+  static request<T>(path: string, method: TApiMethod, options: T = {} as T): Promise<Response> {
     let requestParams = '';
 
     if (options && method === 'GET') {
       requestParams = Object.keys(options).reduce(
-        (acc, curr) =>
-          `${acc}${acc ? '&' : '?'}${curr}=${(options as { [key: string]: string })[curr]}`,
+        (acc, curr) => `${acc}${acc ? '&' : '?'}${curr}=${(options as { [key: string]: string })[curr]}`,
         ''
       );
     }
@@ -71,64 +63,40 @@ class Api {
     }
 
     return {
-      success: true,
+      success: response.ok,
       payload: { ...parsedResult },
     } as ResponseType<R, S>;
   }
 
-  static async get<T, R>(
-    path: string,
-    options: T = {} as T
-  ): Promise<IResponse<R>> {
+  static async get<T, R>(path: string, options: T = {} as T): Promise<IResponse<R>> {
     return await this.handleResponse<T, R, false>(path, 'GET', options);
   }
 
-  static async getSilent<T, R>(
-    path: string,
-    options: T = {} as T
-  ): Promise<IResponseSilent<R>> {
+  static async getSilent<T, R>(path: string, options: T = {} as T): Promise<IResponseSilent<R>> {
     return await this.handleResponse<T, R, true>(path, 'GET', options, true);
   }
 
-  static async post<T, R>(
-    path: string,
-    options: T = {} as T
-  ): Promise<IResponse<R>> {
+  static async post<T, R>(path: string, options: T = {} as T): Promise<IResponse<R>> {
     return await this.handleResponse<T, R, false>(path, 'POST', options);
   }
 
-  static async postSilent<T, R>(
-    path: string,
-    options: T = {} as T
-  ): Promise<IResponseSilent<R>> {
+  static async postSilent<T, R>(path: string, options: T = {} as T): Promise<IResponseSilent<R>> {
     return await this.handleResponse<T, R, true>(path, 'POST', options, true);
   }
 
-  static async put<T, R>(
-    path: string,
-    options: T = {} as T
-  ): Promise<IResponse<R>> {
+  static async put<T, R>(path: string, options: T = {} as T): Promise<IResponse<R>> {
     return await this.handleResponse<T, R, false>(path, 'PUT', options);
   }
 
-  static async putSilent<T, R>(
-    path: string,
-    options: T = {} as T
-  ): Promise<IResponseSilent<R>> {
+  static async putSilent<T, R>(path: string, options: T = {} as T): Promise<IResponseSilent<R>> {
     return await this.handleResponse<T, R, true>(path, 'PUT', options, true);
   }
 
-  static async delete<T, R>(
-    path: string,
-    options: T = {} as T
-  ): Promise<IResponse<R>> {
+  static async delete<T, R>(path: string, options: T = {} as T): Promise<IResponse<R>> {
     return await this.handleResponse<T, R, false>(path, 'DELETE', options);
   }
 
-  static async deleteSilent<T, R>(
-    path: string,
-    options: T = {} as T
-  ): Promise<IResponseSilent<R>> {
+  static async deleteSilent<T, R>(path: string, options: T = {} as T): Promise<IResponseSilent<R>> {
     return await this.handleResponse<T, R, true>(path, 'DELETE', options, true);
   }
 }

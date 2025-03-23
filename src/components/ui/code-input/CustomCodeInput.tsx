@@ -60,7 +60,7 @@ const CustomCodeInput: React.FC<{
       </div>
       <input
         ref={inputRef}
-        className={'opacity-0 h-0 w-0'}
+        className={'absolute opacity-0 pointer-events-none -z-50'}
         maxLength={length}
         onInput={handleInput}
         value={value}

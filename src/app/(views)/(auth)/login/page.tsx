@@ -45,7 +45,7 @@ const LoginView = () => {
 
   return (
     <div className={'text-black flex w-full h-full items-center'}>
-      <div className={'flex flex-col w-full gap-1 text-3xl'}>
+      <div className={'flex flex-col w-full h-full gap-1 text-3xl'}>
         <div className={'mb-20 text-white text-center'}>Добро пожаловать!</div>
         <CustomInput
           className={'mb-6'}
@@ -69,6 +69,7 @@ const LoginView = () => {
             setPasswordError('');
           }}
         />
+        <div className={'grow'} />
         <AuthConfirmButton
           disabled={!!emailError || !!passwordError}
           icon={'password'}
