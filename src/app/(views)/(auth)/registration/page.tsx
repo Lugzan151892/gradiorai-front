@@ -1,6 +1,6 @@
 'use client';
 
-import CustomButton from '@/components/ui/button/CustomButton';
+import CustomCodeInput from '@/components/ui/code-input/CustomCodeInput';
 import CustomInput from '@/components/ui/input/CustomInput';
 import Api from '@/core/api/api';
 import errorHandler from '@/core/utils/error/errorHandler';
@@ -9,6 +9,7 @@ import { useAppDispatch } from '@/hooks/redux';
 import { setUnAuth } from '@/store/user/userSlice';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
+import AuthConfirmButton from '../components/AuthConfirmButton';
 
 const RegistrationPage = () => {
   const router = useRouter();
@@ -19,6 +20,10 @@ const RegistrationPage = () => {
   const [passwordError, setPasswordError] = useState('');
   const [repeatedPassword, setRepeatedPassword] = useState('');
   const [repeatedPasswordError, setRepeatedPasswordError] = useState('');
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [showCodeBlock, setShowCodeBlock] = useState(true);
+  const [code, setCode] = useState('');
 
   const handleRegister = async () => {
     const emailErrorMsg = email ? '' : 'Поле не заполнено';
@@ -100,10 +105,21 @@ const RegistrationPage = () => {
             setRepeatedPasswordError('');
           }}
         />
-        <CustomButton
-          className={'mt-60'}
+        {showCodeBlock && (
+          <div className={'mt-24 flex flex-col text-center'}>
+            <div className={'text-white text-xl mb-2'}>Подтвердите Email</div>
+            <div className={'text-white text-sm mb-5'}>Код отправлен на адрес {email}</div>
+            <CustomCodeInput
+              className={'mx-auto rounded-input'}
+              error={code.length === 4}
+              value={code}
+              onInput={setCode}
+            />
+          </div>
+        )}
+        <AuthConfirmButton
+          className={showCodeBlock ? 'mt-10' : 'mt-60'}
           disabled={!!emailError || !!passwordError || !!repeatedPasswordError}
-          type={'success'}
           text={'Создать'}
           onClick={handleRegister}
         />

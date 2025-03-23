@@ -24,6 +24,7 @@ export default {
         white: 'var(--main-white)',
         black: 'var(--main-black)',
         green: 'var(--main-green)',
+        'low-green': 'var(--low-green)',
         'main-blue': 'var(--main-blue)',
         'blue-secondary': 'var(--main-blue-secondary)',
         error: 'var(--main-error)',

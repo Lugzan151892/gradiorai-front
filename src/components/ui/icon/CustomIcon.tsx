@@ -114,6 +114,22 @@ const icons = {
       }
     />
   ),
+  check: (
+    <g stroke={'currentColor'}>
+      <circle
+        cx={'12'}
+        cy={'12'}
+        r={'10'}
+        strokeWidth={'1.5'}
+      />
+      <path
+        d={'M8.5 12.5L10.5 14.5L15.5 9.5'}
+        strokeWidth={'1.5'}
+        strokeLinecap={'round'}
+        strokeLinejoin={'round'}
+      />
+    </g>
+  ),
 };
 
 type ICustomIconProps = {
@@ -121,6 +137,8 @@ type ICustomIconProps = {
   color?: string;
   size?: number;
   className?: string;
+  fill?: string;
+  stroke?: string;
   caption?: string;
   tooltip?: string;
   onClick?: () => void;
@@ -131,6 +149,8 @@ const CustomIcon: React.FC<ICustomIconProps> = ({
   color = 'currentColor',
   size = 24,
   tooltip = '',
+  fill,
+  stroke,
   className,
   caption,
   onClick,
@@ -156,6 +176,7 @@ const CustomIcon: React.FC<ICustomIconProps> = ({
         return '0 0 44 48';
       case 'youtube':
       case 'email':
+      case 'check':
       case 'warning':
         return '0 0 24 24';
       case 'eye-opened':
@@ -185,8 +206,8 @@ const CustomIcon: React.FC<ICustomIconProps> = ({
         fill={'none'}
       >
         {React.cloneElement(icon, {
-          fill: color,
-          stroke: color,
+          fill: fill || color,
+          stroke: stroke || color,
           width: '100%',
           height: '100%',
         })}

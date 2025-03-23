@@ -7,7 +7,7 @@ interface ICustomButtonProps {
   children?: Readonly<React.ReactNode>;
   type?: 'success' | 'error' | 'warning';
   level?: 1 | 2 | 3;
-  color?: 'white' | 'gray';
+  color?: 'white' | 'gray' | 'low-green';
   onClick?: () => void;
   disabled?: boolean;
   maxRounded?: boolean;
@@ -50,6 +50,8 @@ const CustomButton: React.FC<ICustomButtonProps> = ({
           return 'bg-white text-black data-[hover]:bg-gray data-[hover]:border-white';
         case 'gray':
           return 'bg-gray text-text-gray';
+        case 'low-green':
+          return 'bg-low-green text-white';
       }
     }
 

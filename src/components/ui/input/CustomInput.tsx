@@ -82,7 +82,7 @@ const CustomInput: React.FC<ICustomInputProps> = ({
           />
           {type === 'password' ? (
             <CustomIcon
-              className={'ml-1'}
+              className={'ml-1 cursor-pointer'}
               color={'var(--text-gray)'}
               name={currentInputType === 'password' ? 'eye-closed' : 'eye-opened'}
               onClick={handleSetType}
