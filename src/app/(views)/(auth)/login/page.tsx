@@ -1,6 +1,5 @@
 'use client';
 
-import CustomButton from '@/components/ui/button/CustomButton';
 import CustomInput from '@/components/ui/input/CustomInput';
 import Api from '@/core/api/api';
 import errorHandler from '@/core/utils/error/errorHandler';
@@ -9,6 +8,7 @@ import { useAppDispatch } from '@/hooks/redux';
 import { setUnAuth } from '@/store/user/userSlice';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
+import AuthConfirmButton from '../components/AuthConfirmButton';
 
 const LoginView = () => {
   const router = useRouter();
@@ -69,9 +69,9 @@ const LoginView = () => {
             setPasswordError('');
           }}
         />
-        <CustomButton
-          className={'mt-60'}
+        <AuthConfirmButton
           disabled={!!emailError || !!passwordError}
+          icon={'password'}
           text={'Войти'}
           onClick={handleLogin}
         />

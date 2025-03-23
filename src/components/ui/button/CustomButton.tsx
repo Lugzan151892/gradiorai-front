@@ -29,7 +29,7 @@ const CustomButton: React.FC<ICustomButtonProps> = ({
   fullWidth,
   color,
 }) => {
-  const disabledClass = disabled ? 'pointer-events-none opacity-40 !bg-gray-second' : '';
+  const disabledClass = disabled ? 'pointer-events-none !bg-button-disabled' : '';
   const selectedClass = selected ? 'border-success' : 'border-transparent';
   const sizeClasses = small ? 'px-2 py-1 text-base' : `px-4 py-2 ${fullWidth ? 'w-full' : ''} text-2xl`;
   const getTypeClasses = () => {

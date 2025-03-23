@@ -120,6 +120,7 @@ const RegistrationPage = () => {
         <AuthConfirmButton
           className={showCodeBlock ? 'mt-10' : 'mt-60'}
           disabled={!!emailError || !!passwordError || !!repeatedPasswordError}
+          icon={'password'}
           text={'Создать'}
           onClick={handleRegister}
         />

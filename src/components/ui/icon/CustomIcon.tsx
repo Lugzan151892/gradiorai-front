@@ -130,6 +130,16 @@ const icons = {
       />
     </g>
   ),
+  'open-password': (
+    <path
+      fillRule={'evenodd'}
+      clipRule={'evenodd'}
+      strokeWidth={'1.5'}
+      d={
+        'M5.2 0C3.04608 0 1.3 1.79085 1.3 4V6.66667C0.58208 6.66667 0 7.26367 0 8V14.6667C0 15.4029 0.58208 16 1.3 16H11.7C12.4179 16 13 15.4029 13 14.6667V8C13 7.26367 12.4179 6.66667 11.7 6.66667V4C11.7 1.79085 9.95392 0 7.8 0H5.2ZM9.1 6.66667H3.9V4C3.9 3.26367 4.48208 2.66667 5.2 2.66667H7.8C8.51793 2.66667 9.1 3.26367 9.1 4V6.66667ZM6.5 9.33333C5.78207 9.33333 6.5 9.33333 5.2 9.33333V12C6.5 12 5.78207 12 6.5 12C7.21793 12 6.68571 12 7.8 12V9.33333C7.05714 9.33333 7.42857 9.33333 6.5 9.33333Z'
+      }
+    />
+  ),
 };
 
 type ICustomIconProps = {
@@ -182,6 +192,8 @@ const CustomIcon: React.FC<ICustomIconProps> = ({
       case 'eye-opened':
       case 'eye-closed':
         return '0 0 32 32';
+      case 'open-password':
+        return '0 0 13 16';
       default:
         return `0 0 ${size} ${size}`;
     }

@@ -36,6 +36,7 @@ export default {
         orange: 'var(--main-orange)',
         'text-secondary': 'var(--text-secondary)',
         'text-gray': 'var(--text-gray)',
+        'button-disabled': 'var(--disabled-button)',
       },
       gridTemplateRows: {
         layout: '48px 1fr',
