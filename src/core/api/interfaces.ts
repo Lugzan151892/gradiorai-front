@@ -8,10 +8,12 @@ export interface IResponseSuccess<R> {
 }
 
 export interface IResponseError {
-  error: true;
-  errorMessage: string;
-  message?: null;
-  status: number;
+  payload: {
+    message?: string;
+    statusCode: number;
+    path?: string;
+    type?: string;
+  };
   success: false;
 }
 

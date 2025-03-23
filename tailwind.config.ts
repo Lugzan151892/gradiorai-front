@@ -24,6 +24,7 @@ export default {
         white: 'var(--main-white)',
         black: 'var(--main-black)',
         green: 'var(--main-green)',
+        'low-green': 'var(--low-green)',
         'main-blue': 'var(--main-blue)',
         'blue-secondary': 'var(--main-blue-secondary)',
         error: 'var(--main-error)',
@@ -35,6 +36,7 @@ export default {
         orange: 'var(--main-orange)',
         'text-secondary': 'var(--text-secondary)',
         'text-gray': 'var(--text-gray)',
+        'button-disabled': 'var(--disabled-button)',
       },
       gridTemplateRows: {
         layout: '48px 1fr',
