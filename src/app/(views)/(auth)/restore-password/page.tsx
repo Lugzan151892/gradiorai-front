@@ -15,7 +15,7 @@ import routeChecker from '@/hoc/routeChecker';
 const RestorePassword = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const [email, setEmail] = useState('testEmail1@gmail.com');
+  const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
