@@ -42,6 +42,9 @@ const LoginView = () => {
   const handleGoRegistration = () => {
     router.push('/registration');
   };
+  const handleRestorePassword = () => {
+    router.push('/restore-password');
+  };
 
   return (
     <div className={'text-black flex w-full h-full items-center'}>
@@ -89,7 +92,7 @@ const LoginView = () => {
             className={
               'ml-5 text-white cursor-pointer border-b-1 border-transparent hover:border-white hover:border-b-1'
             }
-            onClick={handleGoRegistration}
+            onClick={handleRestorePassword}
           >
             Забыли пароль?
           </span>
