@@ -7,6 +7,7 @@ interface IInfoModalSettings {
   buttonText: string;
   redirect: string;
   errorStatus?: number;
+  onClick?: () => void;
 }
 
 const defaultModalSettings = (): IInfoModalSettings => ({
@@ -34,6 +35,7 @@ const techSlice = createSlice({
           redirect?: string;
           type?: TInfoModalIconType;
           status?: number;
+          onClick?: () => void;
         };
       }
     ) {
@@ -41,10 +43,14 @@ const techSlice = createSlice({
       state.mainModalSettings.type = payload.type || 'success';
       state.mainModalSettings.redirect = payload.redirect || '';
       state.mainModalSettings.errorStatus = payload.status || 500;
+      state.mainModalSettings.onClick = payload.onClick;
       state.mainModal = true;
     },
     closeModal(state) {
       state.mainModal = false;
+      if (state.mainModalSettings.onClick) {
+        state.mainModalSettings.onClick();
+      }
       state.mainModalSettings = defaultModalSettings();
     },
   },
