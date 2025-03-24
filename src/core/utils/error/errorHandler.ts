@@ -1,13 +1,14 @@
-import { IResponseError } from '@/core/api/interfaces';
 import { AppDispatch } from '@/store';
 import { openModal } from '@/store/tech/techSlice';
+import SystemError from '@/utils/errors/SystemError';
+import UserError from '@/utils/errors/UserError';
 
-const errorHandler = (error: IResponseError, dispatch: AppDispatch) => {
+const errorHandler = (error: UserError | SystemError, dispatch: AppDispatch) => {
   dispatch(
     openModal({
-      text: error?.payload?.message || 'Произошла ошибка.\r\nСвяжитесь с разработчиками. asdas',
+      text: error?.message || 'Произошла ошибка.\r\nСвяжитесь с разработчиками.',
       type: 'error',
-      status: error?.payload?.statusCode || 500,
+      status: error?.status || 500,
     })
   );
 };
