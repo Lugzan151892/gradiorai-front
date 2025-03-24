@@ -6,7 +6,7 @@ import styles from '@/app/(views)/(auth)/components/styles/AuthConfirmButton.mod
 const AuthConfirmButton: React.FC<{
   text?: string;
   className?: string;
-  icon: 'check' | 'password';
+  icon: 'check' | 'password' | 'refresh';
   disabled?: boolean;
   onClick?: () => void;
 }> = ({ text = '', className = '', disabled, icon, onClick }) => {
@@ -18,15 +18,14 @@ const AuthConfirmButton: React.FC<{
       color={'low-green'}
       onClick={onClick}
     >
-      {icon === 'password' ? (
+      {icon === 'password' || icon === 'refresh' ? (
         <div className={'flex items-center justify-end w-full relative text-center'}>
           <div className={styles.text}>{text}</div>
           <div className={'h-9 w-9 flex items-center justify-center border-2 border-white rounded-full'}>
             <CustomIcon
-              name={'open-password'}
+              name={icon === 'password' ? 'open-password' : 'refresh'}
               stroke={'var(--main-white)'}
-              fill={'transparent'}
-              size={16}
+              size={icon === 'password' ? 16 : 24}
             />
           </div>
         </div>
