@@ -51,8 +51,7 @@ class Api {
 
     if (!silent && !response.ok && response.status < 500) {
       const error = await response.json();
-
-      throw new UserError(error);
+      throw new UserError({ payload: { ...error }, success: false });
     }
 
     const result = await response.text();
