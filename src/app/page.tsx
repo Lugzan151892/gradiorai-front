@@ -15,20 +15,23 @@ const Home = () => {
     <div className={'flex flex-col w-full h-full '}>
       <main
         className={
-          'flex flex-col w-full h-full bg-[url("../assets/images/background.png")] bg-no-repeat bg-cover bg-left'
+          'grid desktop:grid-cols-[1fr,max-content] mobile:grid-cols-[1fr] mobile:grid-rows-[max-content,1fr] w-full h-full bg-[url("../assets/images/background.png")] bg-no-repeat bg-cover bg-left'
         }
       >
-        <div className={'ml-auto px-2 pr-5 py-4'}>
-          <HeaderUserState />
-        </div>
-        <div className={'flex flex-col w-full h-full text-white desktop:px-16 mobile:px-4 desktop:w-[40%]'}>
-          <div className={'flex flex-col h-full'}>
-            <div className={'mt-30 text-6xl mobile:text-3xl text-center mt-10 mx-auto'}>Добро пожаловать</div>
-            <div className={'mt-30 text-6xl mobile:text-3xl text-center'}>в Skill Test</div>
-            <div className={'text-2xl mobile:text-base mt-4'}>
+        <div
+          className={
+            'flex flex-col w-full h-full text-white desktop:pr-16 desktop:pl-32 mobile:px-4 desktop:w-[100%] mobile:order-2'
+          }
+        >
+          <div className={'flex flex-col items-center h-full desktop:w-[40%]'}>
+            <div className={'desktop:mt-30 mobile:mt-3 text-6xl mobile:text-3xl text-center mt-10'}>
+              Добро пожаловать
+            </div>
+            <div className={'text-6xl mobile:text-3xl text-center'}>в Skill Test</div>
+            <div className={'text-2xl mobile:text-base mt-16 mobile:mt-10 text-center'}>
               Наши AI-тесты помогут вам оценить уровень знаний, выявить слабые места и подготовиться к новым вызовам!
             </div>
-            <div className={'desktop:ml-4 mt-4 max-w-md'}>
+            <div className={'mt-14 mobile:mt-5 max-w-md w-full'}>
               <DescriptionListItem title={'Оценка знаний'} />
               <DescriptionListItem
                 className={'mt-4 mobile:text-base'}
@@ -46,9 +49,9 @@ const Home = () => {
             <div className={'grow'} />
             <div className={'mobile:mt-auto flex mx-auto flex-col items-center mb-6'}>
               <div className={'text-2xl mobile:text-base mt-2'}>Начните проходить тест прямо сейчас!</div>
-              <div className={'w-52 flex'}>
+              <div className={'mt-3 w-[202px] h-[73px] flex'}>
                 <CustomButton
-                  className={'mt-3 mobile:mx-auto w-full py-3 rounded-2xl'}
+                  className={'mobile:mx-auto w-full py-3 !rounded-2xl'}
                   type={'success'}
                   text={'Начать'}
                   onClick={() => router.push('/tests')}
@@ -68,6 +71,9 @@ const Home = () => {
               />
             </AdminWrapper>
           </div>
+        </div>
+        <div className={'ml-auto px-2 pr-5 py-4 mobile:order-1'}>
+          <HeaderUserState />
         </div>
       </main>
     </div>
