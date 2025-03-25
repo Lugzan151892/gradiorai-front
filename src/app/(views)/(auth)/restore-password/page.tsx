@@ -179,13 +179,16 @@ const RestorePassword = () => {
           </div>
         )}
         <AuthConfirmButton
-          className={'mt-2'}
+          className={'!w-[170px] mx-auto mt-2'}
           disabled={
             !!emailError ||
             !!passwordError ||
             !!repeatedPasswordError ||
             (showCodeBlock && (code.length < 4 || codeError))
           }
+          customBorder
+          size={24}
+          iconStroke={'transparent'}
           icon={'refresh'}
           text={'Изменить'}
           onClick={handleConfirmButton}
