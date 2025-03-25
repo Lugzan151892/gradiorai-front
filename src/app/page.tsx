@@ -47,7 +47,7 @@ const Home = () => {
               />
             </div>
             <div className={'grow'} />
-            <div className={'mobile:mt-auto flex mx-auto flex-col items-center mb-14'}>
+            <div className={'mobile:mt-auto flex mx-auto flex-col items-center desktop:mb-14 mobile:mb-5'}>
               <div className={'text-2xl mobile:text-base mt-2'}>Начните проходить тест прямо сейчас!</div>
               <div className={'mt-3 w-[202px] h-[73px] flex'}>
                 <CustomButton
