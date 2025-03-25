@@ -26,14 +26,23 @@ const LoginView = () => {
     setPasswordError(passwordErrorMsg);
 
     try {
-      await Api.post('/auth/login', {
+      const result = await Api.postSilent('/auth/login', {
         email,
         password,
       });
 
-      dispatch(setUnAuth(false));
-
-      router.push('/');
+      if (result.success) {
+        dispatch(setUnAuth(false));
+        router.push('/');
+      } else {
+        if (result.payload.type === 'email') {
+          setEmailError(result.payload.message || '');
+        } else if (result.payload.type === 'password') {
+          setPasswordError(result.payload.message || '');
+        } else {
+          throw new Error(result.payload.message);
+        }
+      }
     } catch (e: any) {
       errorHandler(e, dispatch);
     }
@@ -54,6 +63,7 @@ const LoginView = () => {
           className={'mb-6'}
           value={email}
           error={emailError}
+          type={'email'}
           placeholder={'Email'}
           icon={'email'}
           onInput={(val) => {
@@ -74,8 +84,11 @@ const LoginView = () => {
         />
         <div className={'grow'} />
         <AuthConfirmButton
+          className={'!w-[170px] mx-auto'}
           disabled={!!emailError || !!passwordError}
-          icon={'password'}
+          customBorder
+          size={16}
+          icon={'open-password'}
           text={'Войти'}
           onClick={handleLogin}
         />

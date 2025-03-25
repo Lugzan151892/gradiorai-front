@@ -87,12 +87,12 @@ const RegistrationPage = () => {
       } else {
         if (result.payload.type === 'code') {
           setCodeError(true);
-        }
-        if (result.payload.type === 'password') {
+        } else if (result.payload.type === 'password') {
           setPasswordError(result.payload.message || '');
-        }
-        if (result.payload.type === 'email') {
+        } else if (result.payload.type === 'email') {
           setEmailError(result.payload.message || '');
+        } else {
+          throw new Error(result.payload.message);
         }
       }
     } catch (e: any) {
@@ -104,6 +104,10 @@ const RegistrationPage = () => {
 
   const handleGoLogin = () => {
     router.push('/login');
+  };
+
+  const handleGoRestore = () => {
+    router.push('/restore-password');
   };
 
   return (
@@ -158,7 +162,7 @@ const RegistrationPage = () => {
           </div>
         )}
         <AuthConfirmButton
-          className={'mt-2'}
+          className={'!w-[170px] mx-auto mt-2'}
           disabled={
             !!emailError ||
             !!passwordError ||
@@ -166,6 +170,8 @@ const RegistrationPage = () => {
             (showCodeBlock && (code.length < 4 || codeError))
           }
           icon={'check'}
+          size={36}
+          iconStroke={'transparent'}
           text={'Создать'}
           onClick={showCodeBlock ? handleRegister : handleRequestCode}
         />
@@ -191,7 +197,7 @@ const RegistrationPage = () => {
                 className={
                   'ml-5 text-white cursor-pointer border-b-1 border-transparent hover:border-white hover:border-b-1'
                 }
-                onClick={handleGoLogin}
+                onClick={handleGoRestore}
               >
                 Забыли пароль?
               </span>
