@@ -47,7 +47,7 @@ const Home = () => {
               />
             </div>
             <div className={'grow'} />
-            <div className={'mobile:mt-auto flex mx-auto flex-col items-center mb-6'}>
+            <div className={'mobile:mt-auto flex mx-auto flex-col items-center mb-14'}>
               <div className={'text-2xl mobile:text-base mt-2'}>Начните проходить тест прямо сейчас!</div>
               <div className={'mt-3 w-[202px] h-[73px] flex'}>
                 <CustomButton
@@ -63,13 +63,15 @@ const Home = () => {
                 </CustomButton>
               </div>
             </div>
-            <AdminWrapper className={'max-w-[max-content] mt-auto mb-4'}>
-              <CustomButton
-                type={'error'}
-                text={'Система'}
-                onClick={() => router.push('/system')}
-              />
-            </AdminWrapper>
+            <div className={'absolute left-2 desktop:top-10 mobile:top-5'}>
+              <AdminWrapper className={'absolute left-2 bottom-2 max-w-[max-content] mt-auto mb-4'}>
+                <CustomButton
+                  type={'error'}
+                  text={'Система'}
+                  onClick={() => router.push('/system')}
+                />
+              </AdminWrapper>
+            </div>
           </div>
         </div>
         <div className={'ml-auto px-2 pr-5 py-4 mobile:order-1'}>
