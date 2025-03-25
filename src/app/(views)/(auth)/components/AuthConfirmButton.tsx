@@ -6,26 +6,31 @@ import styles from '@/app/(views)/(auth)/components/styles/AuthConfirmButton.mod
 const AuthConfirmButton: React.FC<{
   text?: string;
   className?: string;
-  icon: 'check' | 'password' | 'refresh';
+  icon: 'check' | 'open-password' | 'refresh';
+  size?: number;
+  customBorder?: boolean;
+  iconFill?: string;
+  iconStroke?: string;
   disabled?: boolean;
   onClick?: () => void;
-}> = ({ text = '', className = '', disabled, icon, onClick }) => {
+}> = ({ text = '', className = '', disabled, icon, size, customBorder, iconFill, iconStroke, onClick }) => {
   return (
     <CustomButton
-      className={'!rounded-input !px-0 !py-0 ' + className}
+      className={'!rounded-input !px-0 !py-0 text-xl ' + className}
       text={text}
       disabled={disabled}
       color={'low-green'}
       onClick={onClick}
     >
-      {icon === 'password' || icon === 'refresh' ? (
+      {customBorder ? (
         <div className={'flex items-center justify-end w-full relative text-center'}>
           <div className={styles.text}>{text}</div>
           <div className={'h-9 w-9 flex items-center justify-center border-2 border-white rounded-full'}>
             <CustomIcon
-              name={icon === 'password' ? 'open-password' : 'refresh'}
-              stroke={'var(--main-white)'}
-              size={icon === 'password' ? 16 : 24}
+              name={icon}
+              stroke={iconFill}
+              fill={iconStroke}
+              size={size}
             />
           </div>
         </div>
@@ -34,9 +39,9 @@ const AuthConfirmButton: React.FC<{
           <div className={styles.text}>{text}</div>
           <CustomIcon
             name={icon}
-            stroke={'var(--main-white)'}
-            fill={'transparent'}
-            size={36}
+            stroke={iconFill}
+            fill={iconStroke}
+            size={size}
           />
         </div>
       )}

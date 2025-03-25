@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from './styles/CustomCodeInput.module.css';
 
 const CustomCodeInput: React.FC<{
@@ -6,9 +6,11 @@ const CustomCodeInput: React.FC<{
   length?: number;
   value?: string;
   className?: string;
+  noTooltip?: boolean;
   onInput?: (val: string) => void;
-}> = ({ error = false, length = 4, value = '', className = '', onInput }) => {
+}> = ({ error = false, length = 4, value = '', className = '', noTooltip, onInput }) => {
   const [inputFocused, setInputFocused] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(!!error);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleFocus = () => {
@@ -31,8 +33,14 @@ const CustomCodeInput: React.FC<{
     }
   };
 
+  useEffect(() => {
+    if (error) {
+      setShowTooltip(true);
+    }
+  }, [error]);
+
   return (
-    <section className={className}>
+    <section className={'relative ' + className}>
       <div className={'flex gap-4'}>
         {new Array(length)
           .fill(0)
@@ -55,9 +63,23 @@ const CustomCodeInput: React.FC<{
             </div>
           ))}
       </div>
-      <div className={'text-error flex flex-col text-center mt-1 ' + `${error ? '' : 'opacity-0'}`}>
-        <p className={'text-xs'}>Введен неверный код</p>
-      </div>
+      {error && !noTooltip && showTooltip && (
+        <div
+          className={
+            'absolute left-2 top-14 mt-1 bg-white text-red-600 shadow-lg rounded text-sm w-max max-w-48 p-2 z-10'
+          }
+        >
+          <div className={'absolute -top-1 left-3 w-3 h-3 bg-white transform rotate-45'} />
+          <div className={'flex items-center gap-2'}>
+            <span className={'text-xs'}>Введен неверный код</span>
+          </div>
+        </div>
+      )}
+      {noTooltip && (
+        <div className={'text-error flex flex-col text-center mt-1 ' + `${error ? '' : 'opacity-0'}`}>
+          <p className={'text-xs'}>Введен неверный код</p>
+        </div>
+      )}
       <input
         ref={inputRef}
         className={'absolute opacity-0 pointer-events-none -z-50'}
