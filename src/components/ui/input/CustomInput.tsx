@@ -42,7 +42,7 @@ const CustomInput: React.FC<ICustomInputProps> = ({
   };
   const handleSetType = () => {
     if (currentInputType === 'password') {
-      setCurrentInputType(type);
+      setCurrentInputType('text');
     } else {
       setCurrentInputType('password');
     }
@@ -55,7 +55,7 @@ const CustomInput: React.FC<ICustomInputProps> = ({
   }, [error]);
 
   const errorsList = Array.isArray(error) ? error : [error];
-  const classes = error && errorsList?.length ? 'border-error' : 'border-gray';
+  const classes = error && errorsList?.length ? 'border-error' : 'border-transparent';
   const inputError = error && 'text-error';
   return (
     <div className={'w-full ' + (className || '')}>
@@ -84,7 +84,7 @@ const CustomInput: React.FC<ICustomInputProps> = ({
             onChange={handleChange}
             type={currentInputType}
             className={
-              `w-full pl-3 ${icon ? 'border-l-2' : ''} text-base focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25 ${inputError} ` +
+              `w-full pl-3 ${icon ? 'border-l-2 !border-gray' : ''} text-base focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25 ${inputError} ` +
               classes
             }
           />
