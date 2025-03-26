@@ -45,8 +45,17 @@ const RestorePassword = () => {
 
     try {
       dispatch(setLoading(true));
-      await Api.get('/auth/restore-code-request', { email });
-      setShowCodeBlock(true);
+      const result = await Api.getSilent('/auth/restore-code-request', { email });
+
+      if (!result.success) {
+        if (result.payload.type === 'email') {
+          setEmailError(result.payload.message || '');
+        } else {
+          throw new Error(result.payload.message);
+        }
+      } else {
+        setShowCodeBlock(true);
+      }
     } catch (e: any) {
       errorHandler(e, dispatch);
     } finally {
@@ -162,6 +171,7 @@ const RestorePassword = () => {
             icon={'email'}
             onInput={(val) => {
               setEmail(val);
+              setEmailError('');
             }}
           />
         ) : null}
