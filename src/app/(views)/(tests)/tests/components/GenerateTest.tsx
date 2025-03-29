@@ -2,20 +2,19 @@ import React, { useState } from 'react';
 import AnswerComponent from '@/app/(views)/(tests)/tests/components/AnswerComponent';
 import CustomButton from '@/components/ui/button/CustomButton';
 import { useRouter } from 'next/navigation';
-import { ITest } from '@/app/(views)/(tests)/tests/interfaces';
 import SaveQuestionModal from '@/app/(views)/(tests)/tests/components/SaveQuestionModal';
 import AdminWrapper from '@/components/admin-wrapper/AdminWrapper';
 import { RootState } from '@/store';
 import { useAppSelector } from '@/hooks/redux';
 import Api from '@/core/api/api';
+import { ITest } from '@/core/interfaces/types';
 
 const GenerateTest: React.FC<{
   tests: ITest[];
   level: number;
-  spec: number;
   techs: Array<number>;
   onReset: () => void;
-}> = ({ tests, level, spec, techs, onReset }) => {
+}> = ({ tests, level, techs, onReset }) => {
   const [currentQuestion, setCurrentQuestion] = useState<number>(1);
   const [userChoise, setUserChoise] = useState<number>();
   const [userResult, setUserResult] = useState<number>(0);
@@ -137,7 +136,6 @@ const GenerateTest: React.FC<{
         </div>
         <SaveQuestionModal
           techs={techs}
-          spec={spec}
           level={level}
           question={tests[currentQuestion - 1]}
           open={saveQuestionModal}

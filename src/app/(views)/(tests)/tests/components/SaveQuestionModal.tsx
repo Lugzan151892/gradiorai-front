@@ -1,7 +1,7 @@
 import CustomButton from '@/components/ui/button/CustomButton';
 import CustomModal from '@/components/ui/modal/CustomModal';
 import React, { useEffect, useState } from 'react';
-import { ITech, ITest } from '@/app/(views)/(tests)/tests/interfaces';
+import { ITech } from '@/app/(views)/(tests)/tests/interfaces';
 import TechComponent from '@/app/(views)/(tests)/tests/components/TechComponent';
 import Api from '@/core/api/api';
 import { useAppDispatch } from '@/hooks/redux';
@@ -12,13 +12,14 @@ import AddTechModal from '@/app/(views)/(tests)/tests/components/AddTechModal';
 import CustomTextarea from '@/components/ui/textarea/CustomTextarea';
 import CustomInput from '@/components/ui/input/CustomInput';
 import { ESKILL_LEVEL } from '@/core/interfaces/enums';
+import { ITest } from '@/core/interfaces/types';
 
 interface ISaveQuestionModalProps {
   open?: boolean;
   onClose?: () => void;
-  spec: number;
+  spec?: number;
   question: ITest;
-  techs: Array<number>;
+  techs?: Array<number>;
   level: number;
 }
 
@@ -45,7 +46,7 @@ const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
   useEffect(() => {
     setEditedQuestion(question);
     setSelectedLevels([level]);
-    setSelectedTechs(techs);
+    setSelectedTechs(techs || []);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [question]);
 
@@ -136,17 +137,16 @@ const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
   };
 
   const loadTechs = async () => {
-    if (!spec) {
-      return;
-    }
-
     try {
       dispatch(setLoading(true));
-      const result = await Api.get<{ spec: number }, { techs: ITech[] }>('/questions/get-techs', { spec });
+      const result = await Api.get<{ spec: number }, { techs: ITech[] }>(
+        '/questions/get-techs',
+        spec ? { spec } : undefined
+      );
 
       if (result.payload) {
         setAllTechs(result.payload.techs);
-        setSelectedTechs(techs);
+        setSelectedTechs(techs || []);
       }
     } catch (e: any) {
       errorHandler(e, dispatch);
@@ -158,7 +158,7 @@ const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
   useEffect(() => {
     loadTechs();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [question]);
 
   return (
     <CustomModal

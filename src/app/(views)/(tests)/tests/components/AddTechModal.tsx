@@ -15,7 +15,7 @@ interface IAddTechModalProps {
   onClose?: () => void;
 }
 
-const AddTechModal: React.FC<IAddTechModalProps> = ({ spec, open = false, onClose }) => {
+const AddTechModal: React.FC<IAddTechModalProps> = ({ open = false, onClose }) => {
   const [tech, setTech] = useState('');
   const dispatch = useAppDispatch();
 
@@ -27,7 +27,7 @@ const AddTechModal: React.FC<IAddTechModalProps> = ({ spec, open = false, onClos
   };
 
   const saveTech = async () => {
-    if (!spec || !tech) {
+    if (!tech) {
       return;
     }
 
@@ -35,7 +35,6 @@ const AddTechModal: React.FC<IAddTechModalProps> = ({ spec, open = false, onClos
       dispatch(setLoading(true));
       await Api.post('/questions/add-tech', {
         name: tech,
-        spec,
       });
 
       closeModal();
