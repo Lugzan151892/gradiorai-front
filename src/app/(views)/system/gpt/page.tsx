@@ -5,8 +5,6 @@ import errorHandler from '@/core/utils/error/errorHandler';
 import { setLoading } from '@/features/loading/loadingSlice';
 import { useAppDispatch } from '@/hooks/redux';
 import React, { useCallback, useEffect, useState } from 'react';
-import TechComponent from '@/app/(views)/(tests)/tests/components/TechComponent';
-import { ETEST_SPEC } from '@/core/interfaces/enums';
 import CustomInput from '@/components/ui/input/CustomInput';
 import CustomTextarea from '@/components/ui/textarea/CustomTextarea';
 import CustomButton from '@/components/ui/button/CustomButton';
@@ -27,31 +25,18 @@ interface IGptSettings {
 const SystemGptPage = () => {
   const dispatch = useAppDispatch();
   const [gptSettings, setGptSettings] = useState<IGptSettings>();
-  const specs = [
-    { id: ETEST_SPEC.QA, name: ETEST_SPEC[ETEST_SPEC.QA] },
-    { id: ETEST_SPEC.FRONT, name: ETEST_SPEC[ETEST_SPEC.FRONT] },
-    { id: ETEST_SPEC.BACK, name: ETEST_SPEC[ETEST_SPEC.BACK] },
-  ];
-  const [choosenSpec, setChoosenSpec] = useState<ETEST_SPEC>();
 
   const loadSettings = useCallback(async () => {
-    if (!choosenSpec) {
-      return;
-    }
     try {
       dispatch(setLoading(true));
-      const result = await Api.get<any, IGptSettings>('/system/gpt-settings', { spec: choosenSpec });
+      const result = await Api.get<any, IGptSettings>('/system/gpt-settings');
       setGptSettings(result.payload);
     } catch (e: any) {
       errorHandler(e, dispatch);
     } finally {
       dispatch(setLoading(false));
     }
-  }, [choosenSpec, dispatch]);
-
-  const handleSetSpec = (spec: ETEST_SPEC) => {
-    setChoosenSpec(spec);
-  };
+  }, [dispatch]);
 
   const handleChangeSettings = (value: Partial<IGptSettings>) => {
     // @ts-expect-error ne budet undefined
@@ -132,27 +117,9 @@ const SystemGptPage = () => {
   }, [loadSettings]);
 
   return (
-    <div className={'w-full h-full overflow-y-auto overflow-x-hidden'}>
+    <div className={'w-full h-full bg-main-blue overflow-y-auto overflow-x-hidden'}>
       <div className={'w-full h-full flex flex-col px-2 items-center'}>
-        <div className={'mt-3'}>
-          <div className={'text-2xl mb-2 text-center'}>Укажите уровень вопроса:</div>
-          <div
-            className={
-              'grid grid-flow-col auto-cols-auto-fit desktop:auto-cols-[minmax(150px,200px)] mobile:auto-cols-[minmax(max-content,1fr)] justify-center w-full gap-y-2 gap-x-2'
-            }
-          >
-            {specs.map((el) => (
-              <TechComponent
-                className={'mt-2'}
-                key={el.id}
-                tech={el}
-                selected={choosenSpec === el.id}
-                onClick={() => handleSetSpec(el.id)}
-              />
-            ))}
-          </div>
-        </div>
-        {choosenSpec && gptSettings ? (
+        {gptSettings ? (
           <div className={'mt-3 w-full'}>
             <div className={'text-2xl mb-2 text-center'}>Настройки</div>
             <div className={'flex mobile:flex-col gap-4'}>
@@ -213,7 +180,7 @@ const SystemGptPage = () => {
                 <div className={'flex flex-col'}>
                   <span>$PASSED_QUESTIONS - вопросы из базы, которые пройдены пользователем, 20 штук.</span>
                   <span>$QUESTIONS_AMOUNT - количество генерируемых вопросов</span>
-                  <span>$SKILL_LEVEL - уровень senior/junior $SPECIALIZATION - направление front/back/qa</span>
+                  <span>$SKILL_LEVEL - уровень senior/junior</span>
                   <span>$QUESTION_TECHS - внутренние технологии в направлении, через запятую HTML, React, CSS</span>
                 </div>
               </div>

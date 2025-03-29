@@ -45,14 +45,6 @@ const GenerateStep: React.FC<IGenerateStepProps> = ({
           >
             2
           </div>
-          <div
-            className={
-              'w-[60px] h-[60px] rounded-full flex items-center justify-center text-white text-3xl ' +
-              `${step >= 3 ? 'bg-success' : 'bg-gray-second'}`
-            }
-          >
-            3
-          </div>
         </div>
       </div>
       <div className={'mb-5 text-xl text-text-gray'}>{description}</div>

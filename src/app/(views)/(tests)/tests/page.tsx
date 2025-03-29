@@ -2,7 +2,7 @@
 
 import React, { useMemo, useState } from 'react';
 import GenerateStep from '@/app/(views)/(tests)/tests/components/GenerateStep';
-import { ETEST_STEPS, ITech, ITest, ITestParams } from '@/app/(views)/(tests)/tests/interfaces';
+import { ETEST_STEPS, ITech, ITestParams } from '@/app/(views)/(tests)/tests/interfaces';
 import CustomButton from '@/components/ui/button/CustomButton';
 import { useRouter } from 'next/navigation';
 import TestsPrepareLayout from '@/app/(views)/(tests)/tests/components/TestsPrepareLayout';
@@ -10,7 +10,7 @@ import Api from '@/core/api/api';
 import GenerateTest from './components/GenerateTest';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { setLoading } from '@/features/loading/loadingSlice';
-import { ESKILL_LEVEL, ETEST_SPEC } from '@/core/interfaces/enums';
+import { ESKILL_LEVEL } from '@/core/interfaces/enums';
 import { RootState } from '@/store';
 import { shuffleArray } from '@/core/utils/array';
 import errorHandler from '@/core/utils/error/errorHandler';
@@ -19,6 +19,7 @@ import TechComponent from './components/TechComponent';
 import GeneratePasswordModal from './components/GeneratePasswordModal';
 import AdminWrapper from '@/components/admin-wrapper/AdminWrapper';
 import CustomIcon from '@/components/ui/icon/CustomIcon';
+import { ITest } from '@/core/interfaces/types';
 
 interface ITechWithAmount extends ITech {
   _count: {
@@ -28,7 +29,6 @@ interface ITechWithAmount extends ITech {
 
 const TestsGenerate = () => {
   const [step, setStep] = useState(ETEST_STEPS.FIRST);
-  const [spec, setSpec] = useState<ETEST_SPEC>();
   const [level, setLevel] = useState<ESKILL_LEVEL>();
   const router = useRouter();
   const [techs, setTechs] = useState<ITechWithAmount[]>([]);
@@ -43,7 +43,6 @@ const TestsGenerate = () => {
 
   const resetState = () => {
     setStep(ETEST_STEPS.FIRST);
-    setSpec(undefined);
     setLevel(undefined);
     setTechs([]);
     setSelectedTechs([]);
@@ -51,15 +50,10 @@ const TestsGenerate = () => {
   };
 
   const loadTechs = async () => {
-    if (!spec) {
-      return;
-    }
-
     try {
       dispatch(setLoading(true));
       const result = await Api.get<{ spec: number }, { techs: ITechWithAmount[]; questions_amount: number }>(
-        '/questions/get-techs',
-        { spec }
+        '/questions/get-techs'
       );
 
       if (result.payload) {
@@ -75,29 +69,21 @@ const TestsGenerate = () => {
 
   const checkNextStep = useMemo(() => {
     if (step === ETEST_STEPS.FIRST) {
-      return !spec;
-    }
-    if (step === ETEST_STEPS.SECOND) {
       return !level;
     }
-    if (step === ETEST_STEPS.THIRD) {
+    if (step === ETEST_STEPS.SECOND) {
       return !selectedTechs.length;
     }
-  }, [step, spec, level, selectedTechs]);
+  }, [step, level, selectedTechs]);
 
   const goForward = async () => {
     if (step === ETEST_STEPS.FIRST) {
-      setStep(step + 1);
-      return;
-    }
-
-    if (step === ETEST_STEPS.SECOND) {
       await loadTechs();
       setStep(step + 1);
       return;
     }
 
-    if (step === ETEST_STEPS.THIRD) {
+    if (step === ETEST_STEPS.SECOND) {
       if (user?.admin) {
         generateTests();
       } else {
@@ -113,11 +99,6 @@ const TestsGenerate = () => {
     }
 
     if (step === ETEST_STEPS.SECOND) {
-      setStep(step - 1);
-      return;
-    }
-
-    if (step === ETEST_STEPS.THIRD) {
       setSelectedTechs([]);
       setTechs([]);
       setStep(step - 1);
@@ -146,7 +127,7 @@ const TestsGenerate = () => {
   };
 
   const generateTests = async (password?: string) => {
-    if (!selectedTechs.length || !level || !spec) {
+    if (!selectedTechs.length || !level) {
       return;
     }
 
@@ -154,7 +135,6 @@ const TestsGenerate = () => {
       password,
       techs: selectedTechs,
       level,
-      spec,
     };
 
     try {
@@ -185,7 +165,7 @@ const TestsGenerate = () => {
         text={'Назад'}
         onClick={goBack}
       >
-        <div className={"flex items-center"}>
+        <div className={'flex items-center'}>
           <div className={'w-10 h-10 flex items-center justify-center bg-white rounded-full'}>
             <div className={'text-main-blue text-3xl font-bold h-max'}>
               <CustomIcon
@@ -194,42 +174,38 @@ const TestsGenerate = () => {
               />
             </div>
           </div>
-          <div className={"ml-2 mobile:hidden"}>
-            Назад
-          </div>
+          <div className={'ml-2 mobile:hidden'}>Назад</div>
         </div>
       </CustomButton>
       <CustomButton
         className={'ml-2'}
         text={'Начать'}
-        type={step === ETEST_STEPS.THIRD ? 'success' : undefined}
+        type={step === ETEST_STEPS.SECOND ? 'success' : undefined}
         disabled={checkNextStep}
         onClick={goForward}
       >
-        {step === ETEST_STEPS.THIRD ? null :
-        <div className={"flex items-center"}>
-          <div className={"mr-2 mobile:hidden"}>
-            Вперед
-          </div>
-          <div className={'w-10 h-10 flex items-center justify-center bg-white rounded-full'}>
-            <div className={'text-main-blue text-3xl font-bold h-max'}>
-              <CustomIcon
-                name={'arrow-right'}
-                color={checkNextStep ? 'var(--second-gray)' : 'var(--main-blue)'}
-              />
+        {step === ETEST_STEPS.SECOND ? null : (
+          <div className={'flex items-center'}>
+            <div className={'mr-2 mobile:hidden'}>Вперед</div>
+            <div className={'w-10 h-10 flex items-center justify-center bg-white rounded-full'}>
+              <div className={'text-main-blue text-3xl font-bold h-max'}>
+                <CustomIcon
+                  name={'arrow-right'}
+                  color={checkNextStep ? 'var(--second-gray)' : 'var(--main-blue)'}
+                />
+              </div>
             </div>
           </div>
-        </div>}
+        )}
       </CustomButton>
     </div>
   );
 
-  if (step === ETEST_STEPS.TEST && level && spec) {
+  if (step === ETEST_STEPS.TEST && level) {
     return (
       <GenerateTest
         techs={selectedTechs}
         level={level}
-        spec={spec}
         tests={tests}
         onReset={resetState}
       />
@@ -240,33 +216,7 @@ const TestsGenerate = () => {
   if (step === ETEST_STEPS.FIRST) {
     stepMarkup = (
       <GenerateStep
-        step={1}
-        description={'Выберите специализацию'}
-        options={[
-          {
-            id: ETEST_SPEC.FRONT,
-            text: 'Frontend',
-          },
-          {
-            id: ETEST_SPEC.BACK,
-            text: 'Backend',
-          },
-          {
-            id: ETEST_SPEC.QA,
-            text: 'QA',
-          },
-        ]}
-        value={spec}
-        actions={actionsMarkup}
-        onClick={setSpec}
-      />
-    );
-  }
-
-  if (step === ETEST_STEPS.SECOND) {
-    stepMarkup = (
-      <GenerateStep
-        step={2}
+        step={ETEST_STEPS.FIRST}
         description={'Выберите уровень вопросов'}
         options={[
           {
@@ -289,10 +239,10 @@ const TestsGenerate = () => {
     );
   }
 
-  if (step === ETEST_STEPS.THIRD) {
+  if (step === ETEST_STEPS.SECOND) {
     stepMarkup = (
       <GenerateStep
-        step={3}
+        step={ETEST_STEPS.SECOND}
         description={'Выберите направления'}
         actions={actionsMarkup}
       >
@@ -350,7 +300,6 @@ const TestsGenerate = () => {
     <TestsPrepareLayout>
       <div className={'flex flex-col h-full'}>{stepMarkup}</div>
       <AddTechModal
-        spec={spec}
         open={addTechModal}
         onClose={closeSaveTechModal}
       />
