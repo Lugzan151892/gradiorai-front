@@ -5,3 +5,13 @@ export interface IUser {
   created_at: string;
   updated_at: string;
 }
+
+export interface ITest {
+  id?: number;
+  question: string;
+  responses: Array<{
+    answer: string;
+    correct: boolean;
+    id: number;
+  }>;
+}

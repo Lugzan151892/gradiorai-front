@@ -18,6 +18,11 @@ const SystemPage = () => {
       text: 'Настройки ГПТ',
       href: 'system/gpt',
     },
+    {
+      id: 3,
+      text: 'Список вопросов',
+      href: 'system/questions',
+    },
   ];
   return (
     <div className={'flex items-center h-full w-full justify-center'}>
