@@ -6,9 +6,10 @@ const CustomCodeInput: React.FC<{
   length?: number;
   value?: string;
   className?: string;
+  valueType?: 'letters' | 'numbers';
   noTooltip?: boolean;
   onInput?: (val: string) => void;
-}> = ({ error = false, length = 4, value = '', className = '', noTooltip, onInput }) => {
+}> = ({ error = false, length = 4, value = '', className = '', noTooltip, valueType = 'numbers', onInput }) => {
   const [inputFocused, setInputFocused] = useState(false);
   const [showTooltip, setShowTooltip] = useState(!!error);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -17,6 +18,14 @@ const CustomCodeInput: React.FC<{
     if (!inputRef.current) return;
 
     inputRef.current.focus();
+  };
+
+  const isOnlyNumbers = (str: string) => {
+    return /^\d+$/.test(str);
+  };
+
+  const isOnlyLetters = (str: string) => {
+    return /^[A-Za-z]+$/.test(str);
   };
 
   const isFieldActive = (fieldIndex: number) => {
@@ -29,6 +38,14 @@ const CustomCodeInput: React.FC<{
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (onInput) {
+      if (valueType === 'letters' && !isOnlyLetters(e.target.value)) {
+        return;
+      }
+
+      if (valueType === 'numbers' && !isOnlyNumbers(e.target.value)) {
+        return;
+      }
+
       onInput(e.target.value);
     }
   };
