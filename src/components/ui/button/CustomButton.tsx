@@ -51,7 +51,7 @@ const CustomButton: React.FC<ICustomButtonProps> = ({
         case 'gray':
           return 'bg-gray text-text-gray';
         case 'low-green':
-          return 'bg-low-green text-white';
+          return 'bg-low-green text-white data-[hover]:bg-hover-low-green data-[hover]:border-hover-low-green';
       }
     }
 
