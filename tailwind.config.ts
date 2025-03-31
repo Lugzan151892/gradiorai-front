@@ -25,6 +25,7 @@ export default {
         black: 'var(--main-black)',
         green: 'var(--main-green)',
         'low-green': 'var(--low-green)',
+        'hover-low-green': 'var(--hover-low-green)',
         'main-blue': 'var(--main-blue)',
         'blue-secondary': 'var(--main-blue-secondary)',
         error: 'var(--main-error)',
