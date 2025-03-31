@@ -56,7 +56,7 @@ const CustomInput: React.FC<ICustomInputProps> = ({
 
   const errorsList = Array.isArray(error) ? error : [error];
   const classes = error && errorsList?.length ? 'border-error' : 'border-transparent';
-  const inputError = error && 'text-error';
+  const inputError = error && 'text-error placeholder:text-error';
   return (
     <div className={'w-full ' + (className || '')}>
       <Field
@@ -73,7 +73,7 @@ const CustomInput: React.FC<ICustomInputProps> = ({
           {icon ? (
             <CustomIcon
               className={'mr-2'}
-              color={'var(--text-gray)'}
+              color={error ? 'var(--main-error)' : 'var(--text-gray)'}
               name={icon}
             />
           ) : null}
@@ -84,7 +84,7 @@ const CustomInput: React.FC<ICustomInputProps> = ({
             onChange={handleChange}
             type={currentInputType}
             className={
-              `w-full pl-3 ${icon ? 'border-l-2 !border-gray' : ''} text-base focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25 ${inputError} ` +
+              `w-full pl-3 ${icon ? `border-l-2 ${error ? '!border-error' : '!border-gray'}` : ''} text-base focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25 ${inputError} ` +
               classes
             }
           />
