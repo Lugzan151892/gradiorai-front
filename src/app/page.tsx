@@ -86,7 +86,7 @@ const Home = () => {
     //   </main>
     // </div>
     <div className={'w-full h-full bg-[url("../assets/images/auth-bg.png")] bg-no-repeat bg-cover flex flex-col bg-left"'}>
-      <div className={"px-10 pt-12 flex"}>
+      <div className={"desktop:px-10 mobile:px-5 mobile:pt-3 pt-12 flex"}>
         <div className={"text-white text-6xl"}>
           Gradior
         </div>
@@ -104,16 +104,16 @@ const Home = () => {
           </div>
         }
       </div>
-      <div className={"my-auto grid grid-cols-2 grid-rows-[max-content,max-content] desktop:ml-36"}>
+      <div className={"desktop:my-auto mobile:h-full mobile:mt-16 desktop:grid desktop:grid-cols-2 desktop:gap-x-2 desktop:grid-rows-[max-content,max-content] mobile:flex mobile:flex-col mobile:items-center desktop:ml-36 mobile:px-5"}>
         <div className={"text-white max-w-[690px]"}>
-          <div className={"text-5xl"}>
+          <div className={"desktop:text-5xl mobile:text-3xl"}>
             AI Тестирование
           </div>
-          <div className={"text-2xl"}>
+          <div className={"desktop:text-2xl mobile:text-xl mt-4"}>
             От новичка до эксперта - наши AI-тесты помогут вам оценить уровень знаний и найти точки роста. Выбирайте направление, отвечайте на вопросы, развивайтесь. Прокачивайте навыки с нами!
           </div>
         </div>
-        <div className={"max-w-[540px] desktop:row-span-2 desktop:mt-16"}>
+        <div className={"max-w-[540px] mobile:w-full desktop:row-span-2 desktop:mt-16 mobile:mt-5 desktop:mr-4"}>
           <DescriptionListItem title={'Оценка знаний'} />           
           <DescriptionListItem
             className={'mt-4 mobile:text-base'}
@@ -128,11 +128,15 @@ const Home = () => {
             title={'Обучение'}
           />
         </div>
-        <div className={"text-white desktop:m-36"}>
-          <div>
+        <div className={"grow desktop:hidden"} />
+        <div className={"text-white desktop:mt-36 mobile:mb-5 desktop:max-w-[450px]"}>
+          <div className={"desktop:hidden text-2xl"}>
+            Начните прямо сейчас!
+          </div>
+          <div className={"mobile:hidden text-2xl"}>
             Начните проходить тест прямо сейчас!
           </div>
-          <div className={'mt-3 w-[202px] h-[73px] flex'}>
+          <div className={'mt-3 w-[202px] h-[73px] flex mx-auto'}>
             <CustomButton
               className={'mobile:mx-auto w-full py-3 !rounded-2xl'}
               type={'success'}
