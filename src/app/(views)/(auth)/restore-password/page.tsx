@@ -219,7 +219,7 @@ const RestorePassword = () => {
                 }
                 onClick={handleGoLogin}
               >
-                Войти
+                Вход
               </span>
               <span
                 className={
@@ -227,7 +227,7 @@ const RestorePassword = () => {
                 }
                 onClick={handleGoRegistration}
               >
-                Зарегистрироваться
+                Регистрация
               </span>
             </>
           )}
