@@ -13,10 +13,10 @@ const AuthLayout: React.FC<{
       className={'w-full h-full flex flex-col bg-[url("../assets/images/auth-bg.png")] bg-no-repeat bg-cover bg-left'}
     >
       <div
-        className={'cursor-pointer text-white h-12 text-2xl px-4 py-4'}
+        className={'cursor-pointer text-white text-2xl px-4 py-4 max-w-max hover:text-low-green'}
         onClick={() => router.push('/')}
       >
-        Skill Test
+        Gradior
       </div>
       <div className={'w-full h-full flex'}>
         <div className={'flex justify-center w-full h-full items-center'}>
