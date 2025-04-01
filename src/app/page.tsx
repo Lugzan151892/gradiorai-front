@@ -17,7 +17,7 @@ const Home = () => {
     router.push('/login');
   };
   return (
-    <div className={'min-w-full min-h-full bg-[url("../assets/images/auth-bg.png")] bg-no-repeat bg-cover flex flex-col bg-left"'}>
+    <div className={'min-w-full min-h-full flex flex-col'}>
       <div className={"desktop:px-10 mobile:px-5 mobile:pt-3 pt-12 flex"}>
         <div className={"text-white text-6xl mobile:text-5xl hover:text-low-green cursor-pointer"}>
           Gradior
