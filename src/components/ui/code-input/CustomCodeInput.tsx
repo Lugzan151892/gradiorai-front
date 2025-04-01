@@ -21,11 +21,11 @@ const CustomCodeInput: React.FC<{
   };
 
   const isOnlyNumbers = (str: string) => {
-    return /^\d+$/.test(str);
+    return /^\d+$/.test(str) || str === '';
   };
 
   const isOnlyLetters = (str: string) => {
-    return /^[A-Za-z]+$/.test(str);
+    return /^[A-Za-z]+$/.test(str) || str === '';
   };
 
   const isFieldActive = (fieldIndex: number) => {
