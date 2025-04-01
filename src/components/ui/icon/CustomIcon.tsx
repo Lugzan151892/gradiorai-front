@@ -176,7 +176,6 @@ const CustomIcon: React.FC<ICustomIconProps> = ({
         return '0 0 16 16';
       case 'password':
         return '0 0 18 24';
-      // return '0 0 44 48';
       case 'youtube':
       case 'email':
       case 'check':
@@ -225,7 +224,7 @@ const CustomIcon: React.FC<ICustomIconProps> = ({
           {tooltip}
         </div>
       )}
-      {caption ? <div className={'text-xl text-white'}>{caption}</div> : null}
+      {caption ? <div className={'desktop:text-xl mobile:text-sm text-white'}>{caption}</div> : null}
     </div>
   );
 };
