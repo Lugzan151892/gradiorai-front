@@ -1,38 +1,45 @@
-import { Checkbox } from '@headlessui/react';
+'use client';
+
 import React from 'react';
+import { Checkbox } from '@headlessui/react';
 
 interface ICustomInputProps {
-  onChange?: (val: boolean) => void;
-  value?: boolean;
+  onChange?: () => void;
+  caption?: string;
+  className?: string;
+  children?: React.ReactNode;
+  selected?: boolean;
 }
 
-const CustomCheckbox: React.FC<ICustomInputProps> = ({
-  value = false,
-  onChange,
-}) => {
+const CustomCheckbox: React.FC<ICustomInputProps> = ({ selected, caption, className, children, onChange }) => {
+  const selectedClasses = selected ? '' : 'hover:border-low-green';
   return (
-    <Checkbox
-      checked={value}
-      onChange={onChange}
-      className={
-        'group size-6 flex-shrink-0 rounded-md bg-white p-1 ring-1 ring-white/15 ring-inset data-[checked]:bg-white cursor-pointer h-6 w-6'
-      }
+    <div
+      className={className}
+      onClick={onChange}
     >
-      <svg
+      <Checkbox
+        checked={selected}
         className={
-          'stroke-main-blue opacity-0 group-data-[checked]:opacity-100'
+          'border-1 border-white group flex-shrink-0 cursor-pointer h-5 w-5 flex items-center justify-center ' +
+          selectedClasses
         }
-        viewBox={'0 0 14 14'}
-        fill={'none'}
       >
-        <path
-          d={'M3 8L6 11L11 3.5'}
-          strokeWidth={2}
-          strokeLinecap={'round'}
-          strokeLinejoin={'round'}
-        />
-      </svg>
-    </Checkbox>
+        <svg
+          className={'stroke-white opacity-0 group-data-[checked]:opacity-100 h-4 w-4'}
+          viewBox={'0 0 14 14'}
+          fill={'none'}
+        >
+          <path
+            d={'M3 8L6 11L11 3.5'}
+            strokeWidth={2}
+            strokeLinecap={'round'}
+            strokeLinejoin={'round'}
+          />
+        </svg>
+      </Checkbox>
+      {caption && !children && <div>{caption}</div>}
+    </div>
   );
 };
 
