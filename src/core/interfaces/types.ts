@@ -15,3 +15,16 @@ export interface ITest {
     id: number;
   }>;
 }
+
+export interface ITechnology {
+  id: number;
+  name: string;
+  description?: string;
+  specialization: ISpecialization[];
+}
+
+export interface ISpecialization {
+  id: number;
+  name: string;
+  technology: string[];
+}

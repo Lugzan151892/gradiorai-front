@@ -1,30 +1,73 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import SettingsBlock from './components/SettingsBlock';
 import { ESKILL_LEVEL } from '@/core/interfaces/enums';
 import CustomFilterButton from '@/components/ui/filter-button/CustomFilterButton';
 import TechComponent from '../../(tests)/tests/components/TechComponent';
+import AdminWrapper from '@/components/admin-wrapper/AdminWrapper';
+import CustomButton from '@/components/ui/button/CustomButton';
+import AddSpecModal from '@/components/specialization-modals/AddSpecModal';
+import { useAppDispatch } from '@/hooks/redux';
+import { setLoading } from '@/features/loading/loadingSlice';
+import Api from '@/core/api/api';
+import { ISpecialization, ITechnology } from '@/core/interfaces/types';
+import errorHandler from '@/core/utils/error/errorHandler';
+import AddTechnologyModal from '@/components/technology-modals/AddTechnologyModal';
 
 const TestsView = () => {
-  const [questionsLevel, setQuestionsLevel] = useState<ESKILL_LEVEL[]>([]);
-  const [questionsSpec, setQuestionsSpec] = useState<ESKILL_LEVEL[]>([]);
+  const dispatch = useAppDispatch();
+  const [specs, setSpecs] = useState<ISpecialization[]>([]);
+  const [techs, setTechs] = useState<ITechnology[]>([]);
+  const [questionsLevel, setQuestionsLevel] = useState<ESKILL_LEVEL>(ESKILL_LEVEL.JUNIOR);
+  const [questionsSpecs, setQuestionsSpecs] = useState<ESKILL_LEVEL[]>([]);
+  const [questionsTechs, setQuestionsTechs] = useState<number[]>([]);
+  const [openAddSpecModal, setOpenAddSpecModal] = useState(false);
+  const [openAddTechModal, setOpenAddTechModal] = useState(false);
 
   const handleSetQuestionsLevel = (val: ESKILL_LEVEL) => {
-    if (questionsLevel.includes(val)) {
-      setQuestionsLevel([...questionsLevel.filter((el) => el !== val)]);
-    } else {
-      setQuestionsLevel([...questionsLevel, val]);
-    }
+    setQuestionsLevel(val);
   };
 
   const handleSetQuestionsSpec = (val: ESKILL_LEVEL) => {
-    if (questionsSpec.includes(val)) {
-      setQuestionsSpec([...questionsSpec.filter((el) => el !== val)]);
+    if (questionsSpecs.includes(val)) {
+      setQuestionsSpecs([...questionsSpecs.filter((el) => el !== val)]);
     } else {
-      setQuestionsSpec([...questionsSpec, val]);
+      setQuestionsSpecs([...questionsSpecs, val]);
     }
   };
+
+  const handleSetQuestionsTechs = (val: number) => {
+    if (questionsTechs.includes(val)) {
+      setQuestionsTechs([...questionsTechs.filter((el) => el !== val)]);
+    } else {
+      setQuestionsTechs([...questionsTechs, val]);
+    }
+  };
+
+  const loadSpecs = useCallback(async () => {
+    try {
+      dispatch(setLoading(true));
+      const result = await Api.get<null, ISpecialization[]>('/questions/get-specs');
+      setSpecs(result.payload);
+    } catch (e: any) {
+      errorHandler(e, dispatch);
+    } finally {
+      dispatch(setLoading(false));
+    }
+  }, [dispatch]);
+
+  const loadTechs = useCallback(async () => {
+    try {
+      dispatch(setLoading(true));
+      const result = await Api.get<null, { techs: ITechnology[]; questions_amount: number }>('/questions/get-techs');
+      setTechs(result.payload.techs);
+    } catch (e: any) {
+      errorHandler(e, dispatch);
+    } finally {
+      dispatch(setLoading(false));
+    }
+  }, [dispatch]);
 
   const skillOptions = [
     {
@@ -41,20 +84,10 @@ const TestsView = () => {
     },
   ];
 
-  const specs = [
-    {
-      id: ESKILL_LEVEL.JUNIOR,
-      name: 'Junior',
-    },
-    {
-      id: ESKILL_LEVEL.MIDDLE,
-      name: 'Middle',
-    },
-    {
-      id: ESKILL_LEVEL.SENIOR,
-      name: 'Senior',
-    },
-  ];
+  useEffect(() => {
+    loadSpecs();
+    loadTechs();
+  }, [loadSpecs, loadTechs]);
 
   return (
     <div className={'flex flex-col w-full h-full gap-y-8'}>
@@ -67,7 +100,7 @@ const TestsView = () => {
             <CustomFilterButton
               text={level.text}
               key={level.id}
-              selected={questionsLevel.includes(level.id)}
+              selected={questionsLevel === level.id}
               onClick={() => handleSetQuestionsLevel(level.id)}
             />
           ))}
@@ -77,15 +110,26 @@ const TestsView = () => {
         icon={'monitor'}
         title={'Специализация'}
         description={'Здесь вы можете отфильтровать направления подходящие под  специализацию '}
+        captionAfter={
+          <div>
+            <AdminWrapper>
+              <CustomButton
+                small
+                text={'Создать специализацию'}
+                onClick={() => setOpenAddSpecModal(true)}
+              />
+            </AdminWrapper>
+          </div>
+        }
       >
         {specs.length ? (
           <div className={'flex gap-5 mt-9'}>
-            {specs.map((tech) => (
+            {specs.map((spec) => (
               <TechComponent
-                tech={tech}
-                key={tech.id}
-                selected={questionsSpec.includes(tech.id)}
-                onClick={() => handleSetQuestionsSpec(tech.id)}
+                tech={spec}
+                key={spec.id}
+                selected={questionsSpecs.includes(spec.id)}
+                onClick={() => handleSetQuestionsSpec(spec.id)}
               />
             ))}
           </div>
@@ -97,10 +141,48 @@ const TestsView = () => {
         icon={'hut'}
         title={'Направления'}
         description={'Каждое направление включает в себя набор вопросов'}
+        captionAfter={
+          <div>
+            <AdminWrapper>
+              <CustomButton
+                small
+                text={'Создать направление'}
+                onClick={() => setOpenAddTechModal(true)}
+              />
+            </AdminWrapper>
+          </div>
+        }
       >
-        first block
+        {techs.length ? (
+          <div className={'flex gap-5 mt-9'}>
+            {techs.map((tech) => (
+              <TechComponent
+                tech={tech}
+                key={tech.id}
+                selected={questionsTechs.includes(tech.id)}
+                onClick={() => handleSetQuestionsTechs(tech.id)}
+              />
+            ))}
+          </div>
+        ) : (
+          <div>Специализации не найдены</div>
+        )}
       </SettingsBlock>
       <SettingsBlock icon={'rocket'}>first block</SettingsBlock>
+      <AddSpecModal
+        open={openAddSpecModal}
+        onClose={() => {
+          setOpenAddSpecModal(false);
+          loadSpecs();
+        }}
+      />
+      <AddTechnologyModal
+        open={openAddTechModal}
+        onClose={() => {
+          setOpenAddTechModal(false);
+          loadTechs();
+        }}
+      />
     </div>
   );
 };
