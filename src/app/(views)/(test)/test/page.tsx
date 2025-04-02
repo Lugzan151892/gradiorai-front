@@ -8,12 +8,18 @@ import TechComponent from '../../(tests)/tests/components/TechComponent';
 import AdminWrapper from '@/components/admin-wrapper/AdminWrapper';
 import CustomButton from '@/components/ui/button/CustomButton';
 import AddSpecModal from '@/components/specialization-modals/AddSpecModal';
-import { useAppDispatch } from '@/hooks/redux';
+import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { setLoading } from '@/features/loading/loadingSlice';
 import Api from '@/core/api/api';
-import { ISpecialization, ITechnology } from '@/core/interfaces/types';
+import { ISpecialization, ITechnology, ITest } from '@/core/interfaces/types';
 import errorHandler from '@/core/utils/error/errorHandler';
 import AddTechnologyModal from '@/components/technology-modals/AddTechnologyModal';
+import AuthConfirmButton from '@/app/(views)/(auth)/components/AuthConfirmButton';
+import { RootState } from '@/store';
+import { ITestParams } from '@/app/(views)/(tests)/tests/interfaces';
+import { shuffleArray } from '@/core/utils/array';
+import GeneratePasswordModal from '@/app/(views)/(tests)/tests/components/GeneratePasswordModal';
+import GenerateTest from '@/app/(views)/(tests)/tests/components/GenerateTest';
 
 const TestsView = () => {
   const dispatch = useAppDispatch();
@@ -24,6 +30,12 @@ const TestsView = () => {
   const [questionsTechs, setQuestionsTechs] = useState<number[]>([]);
   const [openAddSpecModal, setOpenAddSpecModal] = useState(false);
   const [openAddTechModal, setOpenAddTechModal] = useState(false);
+  const [tests, setTests] = useState<ITest[]>([]);
+
+  const { user } = useAppSelector((state: RootState) => state.user);
+
+  const [showTest, setShowTest] = useState(false);
+  const [passwordModal, setPasswordModal] = useState(false);
 
   const handleSetQuestionsLevel = (val: ESKILL_LEVEL) => {
     setQuestionsLevel(val);
@@ -35,6 +47,8 @@ const TestsView = () => {
     } else {
       setQuestionsSpecs([...questionsSpecs, val]);
     }
+
+    setQuestionsTechs([]);
   };
 
   const handleSetQuestionsTechs = (val: number) => {
@@ -60,14 +74,21 @@ const TestsView = () => {
   const loadTechs = useCallback(async () => {
     try {
       dispatch(setLoading(true));
-      const result = await Api.get<null, { techs: ITechnology[]; questions_amount: number }>('/questions/get-techs');
+      const result = await Api.get<{ specs: Array<number> }, { techs: ITechnology[]; questions_amount: number }>(
+        '/questions/get-techs',
+        questionsSpecs.length
+          ? {
+              specs: questionsSpecs,
+            }
+          : undefined
+      );
       setTechs(result.payload.techs);
     } catch (e: any) {
       errorHandler(e, dispatch);
     } finally {
       dispatch(setLoading(false));
     }
-  }, [dispatch]);
+  }, [dispatch, questionsSpecs]);
 
   const skillOptions = [
     {
@@ -84,10 +105,69 @@ const TestsView = () => {
     },
   ];
 
+  const generateTests = async (password?: string) => {
+    if (!questionsTechs.length) {
+      return;
+    }
+
+    const data: ITestParams = {
+      password,
+      techs: questionsTechs,
+      level: questionsLevel,
+    };
+
+    try {
+      dispatch(setLoading(true));
+      const result = await Api.post<ITestParams, { response: { questions: ITest[] }; usage: any }>(
+        '/gpt/generate',
+        data
+      );
+
+      if (result.success) {
+        const shuffledTests = result.payload.response.questions.map((question) => ({
+          ...question,
+          responses: shuffleArray(question.responses),
+        }));
+        setTests(shuffleArray(shuffledTests));
+        setShowTest(true);
+      }
+    } catch (e: any) {
+      errorHandler(e, dispatch);
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
+
+  const handleStart = () => {
+    if (user?.admin) {
+      generateTests();
+    } else {
+      setPasswordModal(true);
+    }
+  };
+
   useEffect(() => {
     loadSpecs();
     loadTechs();
   }, [loadSpecs, loadTechs]);
+
+  const resetState = () => {
+    setQuestionsLevel(ESKILL_LEVEL.JUNIOR);
+    setQuestionsSpecs([]);
+    setQuestionsTechs([]);
+    setTests([]);
+  };
+
+  if (showTest) {
+    return (
+      <GenerateTest
+        techs={questionsTechs}
+        level={questionsLevel}
+        tests={tests}
+        onReset={resetState}
+      />
+    );
+  }
 
   return (
     <div className={'flex flex-col w-full h-full gap-y-8'}>
@@ -168,7 +248,23 @@ const TestsView = () => {
           <div>Специализации не найдены</div>
         )}
       </SettingsBlock>
-      <SettingsBlock icon={'rocket'}>first block</SettingsBlock>
+      <SettingsBlock
+        icon={'rocket'}
+        title={'Начать'}
+        description={'После того как вы определили конфигурацию тестов мы готовы их составить!'}
+      >
+        <div className={'w-full flex items-center mt-10'}>
+          <AuthConfirmButton
+            className={'!w-[170px] mx-auto'}
+            customBorder
+            disabled={!questionsTechs.length}
+            size={24}
+            icon={'check'}
+            text={'Начать'}
+            onClick={handleStart}
+          />
+        </div>
+      </SettingsBlock>
       <AddSpecModal
         open={openAddSpecModal}
         onClose={() => {
@@ -182,6 +278,11 @@ const TestsView = () => {
           setOpenAddTechModal(false);
           loadTechs();
         }}
+      />
+      <GeneratePasswordModal
+        open={passwordModal}
+        onClose={() => setPasswordModal(false)}
+        generate={generateTests}
       />
     </div>
   );

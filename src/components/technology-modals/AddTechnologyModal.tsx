@@ -81,8 +81,10 @@ const AddTechnologyModal: React.FC<IAddTechModalProps> = ({ open = false, onClos
   };
 
   useEffect(() => {
-    loadSpecs();
-  }, [loadSpecs]);
+    if (open) {
+      loadSpecs();
+    }
+  }, [loadSpecs, open]);
 
   return (
     <CustomModal
