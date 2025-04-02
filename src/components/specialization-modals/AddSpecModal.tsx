@@ -96,7 +96,7 @@ const AddSpecModal: React.FC<IAddSpecModalProps> = ({ open = false, onClose }) =
         />
         <div>
           <div>Список тенологий</div>
-          <div className={'flex gap-5 mt-2'}>
+          <div className={'flex gap-5 flex-wrap mt-2'}>
             {techs.length ? (
               techs.map((tech) => (
                 <TechComponent

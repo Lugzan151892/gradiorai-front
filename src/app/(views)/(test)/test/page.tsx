@@ -4,7 +4,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import SettingsBlock from './components/SettingsBlock';
 import { ESKILL_LEVEL } from '@/core/interfaces/enums';
 import CustomFilterButton from '@/components/ui/filter-button/CustomFilterButton';
-import TechComponent from '../../(tests)/tests/components/TechComponent';
+import TechComponent from '@/app/(views)/(tests)/tests/components/TechComponent';
 import AdminWrapper from '@/components/admin-wrapper/AdminWrapper';
 import CustomButton from '@/components/ui/button/CustomButton';
 import AddSpecModal from '@/components/specialization-modals/AddSpecModal';
@@ -175,7 +175,7 @@ const TestsView = () => {
         icon={'search-book'}
         title={'Уровень вопросов'}
       >
-        <div className={'flex gap-10 mt-9'}>
+        <div className={'flex gap-10 flex-wrap mt-9'}>
           {skillOptions.map((level) => (
             <CustomFilterButton
               text={level.text}
@@ -203,7 +203,7 @@ const TestsView = () => {
         }
       >
         {specs.length ? (
-          <div className={'flex gap-5 mt-9'}>
+          <div className={'flex flex-wrap gap-5 mt-9'}>
             {specs.map((spec) => (
               <TechComponent
                 tech={spec}

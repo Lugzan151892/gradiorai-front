@@ -23,6 +23,11 @@ const SystemPage = () => {
       text: 'Список вопросов',
       href: 'system/questions',
     },
+    {
+      id: 4,
+      text: 'Изменение сущностей',
+      href: 'system/edit-entities',
+    },
   ];
   return (
     <div className={'flex items-center h-full w-full justify-center'}>

@@ -62,7 +62,7 @@ const AddTechnologyModal: React.FC<IAddTechModalProps> = ({ open = false, onClos
       dispatch(setLoading(true));
       await Api.post('/questions/add-tech', {
         name: techName,
-        desciption: techDescr,
+        description: techDescr,
         specs: selectedSpecs,
       });
 
@@ -107,7 +107,7 @@ const AddTechnologyModal: React.FC<IAddTechModalProps> = ({ open = false, onClos
         />
         <div>
           <div>Список тенологий</div>
-          <div className={'flex gap-5 mt-2'}>
+          <div className={'flex flex-wrap gap-5 mt-2 max-h-[300px] overflow-auto'}>
             {specs.length ? (
               specs.map((spec) => (
                 <TechComponent
