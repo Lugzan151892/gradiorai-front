@@ -12,6 +12,7 @@ interface ICustomInputProps {
   error?: string[] | string;
   icon?: 'password' | 'email';
   type?: TInputType;
+  success?: boolean;
   className?: string;
   onInput?: (val: string) => void;
   onChange?: (val: string) => void;
@@ -23,6 +24,7 @@ const CustomInput: React.FC<ICustomInputProps> = ({
   value = '',
   type = 'text',
   icon,
+  success,
   error,
   className,
   onInput,
@@ -55,7 +57,7 @@ const CustomInput: React.FC<ICustomInputProps> = ({
   }, [error]);
 
   const errorsList = Array.isArray(error) ? error : [error];
-  const classes = error && errorsList?.length ? 'border-error' : 'border-transparent';
+  const classes = error && errorsList?.length ? 'border-error' : success ? 'border-success' : 'border-transparent';
   const inputError = error && 'text-error placeholder:text-error';
   return (
     <div className={'w-full ' + (className || '')}>
