@@ -9,12 +9,20 @@ import { setLoading } from '@/features/loading/loadingSlice';
 import Api from '@/core/api/api';
 import errorHandler from '@/core/utils/error/errorHandler';
 import { ISpecialization, ITechnology } from '@/core/interfaces/types';
+import { openModal } from '@/store/tech/techSlice';
+import AddSpecModal from '@/components/specialization-modals/AddSpecModal';
+import AddTechnologyModal from '@/components/technology-modals/AddTechnologyModal';
 
 const EditEntitiesView = () => {
   const [choosenEntitie, setChoosenEntitie] = useState<EEDITED_ENTITIE>();
   const [specs, setSpecs] = useState<ISpecialization[]>([]);
   const [techs, setTechs] = useState<ITechnology[]>([]);
   const dispatch = useAppDispatch();
+
+  const [currentSpecialization, setCurrentSpecialization] = useState<null | ISpecialization>(null);
+  const [openSpecModal, setOpenSpecModal] = useState(false);
+  const [currentTechnology, setCurrentTechnology] = useState<null | ITechnology>(null);
+  const [openTechModal, setOpenTechModal] = useState(false);
 
   const loadSpecs = useCallback(async () => {
     try {
@@ -55,6 +63,54 @@ const EditEntitiesView = () => {
     }
   }, [choosenEntitie, loadSpecs, loadTechs]);
 
+  const handleEditTechnology = (tech: ITechnology) => {
+    if (!tech) {
+      return;
+    }
+    setCurrentTechnology(tech);
+    setOpenTechModal(true);
+  };
+
+  const handleDeleteTechnology = async (id: number) => {
+    try {
+      const result = await Api.delete<{ id: number }, { message: string }>('/questions/delete-tech', { id });
+
+      dispatch(
+        openModal({
+          text: result.payload.message,
+        })
+      );
+
+      loadEntitie();
+    } catch (e: any) {
+      errorHandler(e, dispatch);
+    }
+  };
+
+  const handleEditSpecialization = (spec: ISpecialization) => {
+    if (!spec) {
+      return;
+    }
+    setCurrentSpecialization(spec);
+    setOpenSpecModal(true);
+  };
+
+  const handleDeleteSpecialization = async (id: number) => {
+    try {
+      const result = await Api.delete<{ id: number }, { message: string }>('/questions/delete-spec', { id });
+
+      dispatch(
+        openModal({
+          text: result.payload.message,
+        })
+      );
+
+      loadEntitie();
+    } catch (e: any) {
+      errorHandler(e, dispatch);
+    }
+  };
+
   useEffect(() => {
     loadEntitie();
   }, [loadEntitie]);
@@ -82,17 +138,19 @@ const EditEntitiesView = () => {
           specs.map((spec) => (
             <div
               key={spec.id}
-              className={'border-1 w-full flex justify-between items-center px-4'}
+              className={'border-1 w-full flex justify-between items-center px-4 py-1'}
             >
               <div className={'text-3xl'}>{spec.name}</div>
               <div className={'flex flex-col'}>
                 <CustomButton
                   text={'Изменить'}
                   className={'mb-2'}
+                  onClick={() => handleEditSpecialization(spec)}
                 />
                 <CustomButton
                   type={'error'}
                   text={'Удалить'}
+                  onClick={() => handleDeleteSpecialization(spec.id)}
                 />
               </div>
             </div>
@@ -101,7 +159,7 @@ const EditEntitiesView = () => {
           techs.map((tech) => (
             <div
               key={tech.id}
-              className={'border-1 w-full flex justify-between items-center'}
+              className={'border-1 w-full flex justify-between items-center px-4 py-1'}
             >
               <div className={'text-3xl mr-4'}>{tech.name}</div>
               <div className={'text-2xl'}>{`Описание: ${tech.description || 'Не заполнено'}`}</div>
@@ -109,15 +167,39 @@ const EditEntitiesView = () => {
                 <CustomButton
                   text={'Изменить'}
                   className={'mb-2'}
+                  onClick={() => handleEditTechnology(tech)}
                 />
                 <CustomButton
                   type={'error'}
                   text={'Удалить'}
+                  onClick={() => handleDeleteTechnology(tech.id)}
                 />
               </div>
             </div>
           ))}
       </div>
+      {currentSpecialization && (
+        <AddSpecModal
+          type={'edit'}
+          specialization={currentSpecialization}
+          open={openSpecModal}
+          onClose={() => {
+            setOpenSpecModal(false);
+            loadEntitie();
+          }}
+        />
+      )}
+      {currentTechnology && (
+        <AddTechnologyModal
+          type={'edit'}
+          technology={currentTechnology}
+          open={openTechModal}
+          onClose={() => {
+            setOpenTechModal(false);
+            loadEntitie();
+          }}
+        />
+      )}
     </div>
   );
 };

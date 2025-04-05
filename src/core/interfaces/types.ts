@@ -26,5 +26,5 @@ export interface ITechnology {
 export interface ISpecialization {
   id: number;
   name: string;
-  technology: string[];
+  technology: ITechnology[];
 }

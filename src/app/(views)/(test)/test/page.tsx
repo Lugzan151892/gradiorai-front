@@ -189,7 +189,7 @@ const TestsView = () => {
       <SettingsBlock
         icon={'monitor'}
         title={'Специализация'}
-        description={'Здесь вы можете отфильтровать направления подходящие под  специализацию '}
+        description={'Здесь вы можете отфильтровать направления подходящие под специализацию '}
         captionAfter={
           <div>
             <AdminWrapper>
@@ -203,7 +203,7 @@ const TestsView = () => {
         }
       >
         {specs.length ? (
-          <div className={'flex flex-wrap gap-5 mt-9'}>
+          <div className={'grid grid-cols-[repeat(auto-fit,minmax(200px,max-content))] gap-5 mt-9'}>
             {specs.map((spec) => (
               <TechComponent
                 tech={spec}
@@ -234,7 +234,7 @@ const TestsView = () => {
         }
       >
         {techs.length ? (
-          <div className={'flex gap-5 mt-9'}>
+          <div className={'grid grid-cols-[repeat(auto-fit,minmax(150px,max-content))] gap-5 mt-9'}>
             {techs.map((tech) => (
               <TechComponent
                 tech={tech}
