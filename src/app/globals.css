@@ -28,6 +28,9 @@
   --text-secondary: #6f6969;
   --text-gray: #6d6b6b;
   --disabled-button: #9a9a9a;
+  --bg-transparent-none: rgba(210, 210, 210, 1);
+  --bg-transparent-50: rgba(210, 210, 210, 0.5);
+  --bg-transparent-25: rgba(210, 210, 210, 0.25);
 }
 
 html,
@@ -36,7 +39,7 @@ body {
 }
 
 body {
-  color: var(--main-black);
+  color: var(--main-white);
   background: var(--main-white);
   font-family: Arial, Helvetica, sans-serif;
 }
