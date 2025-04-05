@@ -55,7 +55,7 @@ const CustomModal: React.FC<ICustomModalProps> = ({
               }
             >
               {header || (
-                <div className={'grid grid-cols-[1fr_40px] items-center justify-items-center border-b-1'}>
+                <div className={'grid grid-cols-[1fr_40px] items-center py-2 justify-items-center border-b-1'}>
                   <DialogTitle
                     as={'h3'}
                     className={'desktop:text-2xl text-center mobile:text-xl mobile:px-2 mobile:py-2 font-medium'}
@@ -63,7 +63,7 @@ const CustomModal: React.FC<ICustomModalProps> = ({
                     {caption}
                   </DialogTitle>
                   <CustomIcon
-                    color={'var(--main-black)'}
+                    color={'var(--main-white)'}
                     name={'cross'}
                     className={'cursor-pointer'}
                     onClick={onClose ? () => onClose(false) : undefined}

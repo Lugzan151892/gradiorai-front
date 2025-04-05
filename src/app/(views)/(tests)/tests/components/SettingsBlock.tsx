@@ -36,7 +36,7 @@ const SettingsBlock: React.FC<Readonly<ISettingsBlockProps>> = ({
         </div>
 
         {description && <div className={'text-xl mt-2'}>{description}</div>}
-        <div className={'flex flex-wrap'}>{children}</div>
+        <div className={'w-full'}>{children}</div>
       </div>
     </div>
   );
