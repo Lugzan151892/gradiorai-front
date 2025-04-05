@@ -17,8 +17,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Interview Ready',
-  description: 'Interview Ready',
+  title: 'Gradior AI',
+  description: 'Gradior AI',
 };
 
 const RootLayout: React.FC<Readonly<{ children: React.ReactNode }>> = ({ children }) => {
