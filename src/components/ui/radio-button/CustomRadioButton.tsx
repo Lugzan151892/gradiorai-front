@@ -59,7 +59,7 @@ const CustomRadioButton: React.FC<ICustomRadioButtonProps> = ({
         {selected ? getPointerMarkup() : null}
       </div>
       {caption ? (
-        <div className={`ml-4 text-text-gray ${textLarge ? 'text-xl mobile:text-sm' : 'text-sm'}`}> {caption} </div>
+        <div className={`ml-4 text-white ${textLarge ? 'text-xl mobile:text-sm' : 'text-sm'}`}> {caption} </div>
       ) : null}
     </div>
   );
