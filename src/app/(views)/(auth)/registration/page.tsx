@@ -171,7 +171,6 @@ const RegistrationPage = () => {
           }
           icon={'check'}
           size={36}
-          iconStroke={'transparent'}
           text={'Создать'}
           onClick={showCodeBlock ? handleRegister : handleRequestCode}
         />
