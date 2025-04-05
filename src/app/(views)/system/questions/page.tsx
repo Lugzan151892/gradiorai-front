@@ -2,7 +2,7 @@
 
 import CustomButton from '@/components/ui/button/CustomButton';
 import Api from '@/core/api/api';
-import { ITest } from '@/core/interfaces/types';
+import { ITechnology, ITest } from '@/core/interfaces/types';
 import errorHandler from '@/core/utils/error/errorHandler';
 import { setLoading } from '@/features/loading/loadingSlice';
 import { useAppDispatch } from '@/hooks/redux';
@@ -11,10 +11,7 @@ import SaveQuestionModal from '@/app/(views)/(tests)/tests/components/SaveQuesti
 
 interface IFullQuestion extends ITest {
   level: number;
-  technologies: Array<{
-    questionId: number;
-    technologyId: number;
-  }>;
+  technologies?: ITechnology[];
 }
 
 const SystemQuestions = () => {
@@ -97,9 +94,9 @@ const SystemQuestions = () => {
       </div>
       {currentQuestion && (
         <SaveQuestionModal
-          techs={currentQuestion.technologies.map((el) => el.technologyId)}
           level={currentQuestion.level}
           question={currentQuestion}
+          isExistedQuestion
           open={openEditModal}
           onClose={() => setOpenEditModal(false)}
         />

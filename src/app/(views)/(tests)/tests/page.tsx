@@ -2,7 +2,7 @@
 
 import React, { useMemo, useState } from 'react';
 import GenerateStep from '@/app/(views)/(tests)/tests/components/GenerateStep';
-import { ETEST_STEPS, ITech, ITestParams } from '@/app/(views)/(tests)/tests/interfaces';
+import { ETEST_STEPS } from '@/app/(views)/(tests)/tests/interfaces';
 import CustomButton from '@/components/ui/button/CustomButton';
 import { useRouter } from 'next/navigation';
 import TestsPrepareLayout from '@/app/(views)/(tests)/tests/components/TestsPrepareLayout';
@@ -19,7 +19,7 @@ import TechComponent from './components/TechComponent';
 import GeneratePasswordModal from './components/GeneratePasswordModal';
 import AdminWrapper from '@/components/admin-wrapper/AdminWrapper';
 import CustomIcon from '@/components/ui/icon/CustomIcon';
-import { ITest } from '@/core/interfaces/types';
+import { ITech, ITest, ITestParams } from '@/core/interfaces/types';
 
 interface ITechWithAmount extends ITech {
   _count: {

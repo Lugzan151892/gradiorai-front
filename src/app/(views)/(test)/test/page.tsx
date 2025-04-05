@@ -1,25 +1,24 @@
 'use client';
 
 import React, { useCallback, useEffect, useState } from 'react';
-import SettingsBlock from './components/SettingsBlock';
+import SettingsBlock from '@/app/(views)/(test)/test/components/SettingsBlock';
 import { ESKILL_LEVEL } from '@/core/interfaces/enums';
 import CustomFilterButton from '@/components/ui/filter-button/CustomFilterButton';
-import TechComponent from '@/app/(views)/(tests)/tests/components/TechComponent';
 import AdminWrapper from '@/components/admin-wrapper/AdminWrapper';
 import CustomButton from '@/components/ui/button/CustomButton';
 import AddSpecModal from '@/components/specialization-modals/AddSpecModal';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { setLoading } from '@/features/loading/loadingSlice';
 import Api from '@/core/api/api';
-import { ISpecialization, ITechnology, ITest } from '@/core/interfaces/types';
+import { ISpecialization, ITechnology, ITest, ITestParams } from '@/core/interfaces/types';
 import errorHandler from '@/core/utils/error/errorHandler';
 import AddTechnologyModal from '@/components/technology-modals/AddTechnologyModal';
 import AuthConfirmButton from '@/app/(views)/(auth)/components/AuthConfirmButton';
 import { RootState } from '@/store';
-import { ITestParams } from '@/app/(views)/(tests)/tests/interfaces';
 import { shuffleArray } from '@/core/utils/array';
-import GeneratePasswordModal from '@/app/(views)/(tests)/tests/components/GeneratePasswordModal';
-import GenerateTest from '@/app/(views)/(tests)/tests/components/GenerateTest';
+import GenerateTest from '@/app/(views)/(test)/test/components/GenerateTest';
+import GeneratePasswordModal from '@/components/generate-password-modal/GeneratePasswordModal';
+import TechComponent from '@/components/tech-component/TechComponent';
 
 const TestsView = () => {
   const dispatch = useAppDispatch();

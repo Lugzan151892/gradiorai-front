@@ -1,7 +1,6 @@
 import CustomButton from '@/components/ui/button/CustomButton';
 import CustomModal from '@/components/ui/modal/CustomModal';
 import React, { useEffect, useState } from 'react';
-import { ITech } from '@/app/(views)/(tests)/tests/interfaces';
 import TechComponent from '@/app/(views)/(tests)/tests/components/TechComponent';
 import Api from '@/core/api/api';
 import { useAppDispatch } from '@/hooks/redux';
@@ -11,7 +10,7 @@ import { openModal } from '@/store/tech/techSlice';
 import CustomTextarea from '@/components/ui/textarea/CustomTextarea';
 import CustomInput from '@/components/ui/input/CustomInput';
 import { ESKILL_LEVEL } from '@/core/interfaces/enums';
-import { ITest } from '@/core/interfaces/types';
+import { ITech, ITest } from '@/core/interfaces/types';
 import AddTechnologyModal from '@/components/technology-modals/AddTechnologyModal';
 
 interface ISaveQuestionModalProps {
