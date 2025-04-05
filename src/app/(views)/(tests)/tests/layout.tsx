@@ -1,11 +1,11 @@
-import React from 'react';
 import AppHeader from '@/components/header/AppHeader';
+import React from 'react';
 
 const TestsLayout: React.FC<Readonly<{ children: React.ReactNode }>> = ({ children }) => {
   return (
-    <div className={'grid grid-cols-1 grid-rows-layout h-full'}>
+    <div className={'w-full h-full flex flex-col'}>
       <AppHeader />
-      {children}
+      <div className={'max-w-5xl mx-auto w-full h-full overflow-auto flex py-4'}>{children}</div>
     </div>
   );
 };

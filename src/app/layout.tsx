@@ -24,7 +24,9 @@ export const metadata: Metadata = {
 const RootLayout: React.FC<Readonly<{ children: React.ReactNode }>> = ({ children }) => {
   return (
     <html lang={'en'}>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased h-full w-full`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased w-full h-full overflow-hidden bg-[url("../assets/images/main-bg.png")] bg-no-repeat bg-cover bg-left`}
+      >
         <Providers>
           {children}
           <GlobalLoader />

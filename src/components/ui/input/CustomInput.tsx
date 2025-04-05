@@ -12,6 +12,7 @@ interface ICustomInputProps {
   error?: string[] | string;
   icon?: 'password' | 'email';
   type?: TInputType;
+  success?: boolean;
   className?: string;
   onInput?: (val: string) => void;
   onChange?: (val: string) => void;
@@ -23,6 +24,7 @@ const CustomInput: React.FC<ICustomInputProps> = ({
   value = '',
   type = 'text',
   icon,
+  success,
   error,
   className,
   onInput,
@@ -55,7 +57,7 @@ const CustomInput: React.FC<ICustomInputProps> = ({
   }, [error]);
 
   const errorsList = Array.isArray(error) ? error : [error];
-  const classes = error && errorsList?.length ? 'border-error' : 'border-transparent';
+  const classes = error && errorsList?.length ? 'border-error' : success ? 'border-success' : 'border-transparent';
   const inputError = error && 'text-error placeholder:text-error';
   return (
     <div className={'w-full ' + (className || '')}>
@@ -64,9 +66,9 @@ const CustomInput: React.FC<ICustomInputProps> = ({
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
       >
-        {label ? <Label className={'text-xl mb-1 text-black text-nowrap'}>{label}</Label> : null}
+        {label ? <Label className={'text-xl text-nowrap'}>{label}</Label> : null}
         <div
-          className={'flex bg-white w-full rounded-input pl-5 pr-3 py-3 text-black border-[3px] ' + classes}
+          className={'flex bg-white w-full rounded-input pl-5 pr-3 py-3 border-[3px] ' + classes}
           onMouseEnter={() => setShowTooltip(true)}
           onMouseLeave={() => setShowTooltip(false)}
         >
@@ -84,7 +86,7 @@ const CustomInput: React.FC<ICustomInputProps> = ({
             onChange={handleChange}
             type={currentInputType}
             className={
-              `w-full pl-3 ${icon ? `border-l-2 ${error ? '!border-error' : '!border-gray'}` : ''} text-base focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25 ${inputError} ` +
+              `w-full pl-3 ${icon ? `border-l-2 ${error ? '!border-error' : '!border-gray'}` : ''} text-black text-base focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25 ${inputError} ` +
               classes
             }
           />
