@@ -1,7 +1,6 @@
 import CustomButton from '@/components/ui/button/CustomButton';
 import CustomModal from '@/components/ui/modal/CustomModal';
 import React, { useEffect, useState } from 'react';
-import TechComponent from '@/app/(views)/(tests)/tests/components/TechComponent';
 import Api from '@/core/api/api';
 import { useAppDispatch } from '@/hooks/redux';
 import { setLoading } from '@/features/loading/loadingSlice';
@@ -12,6 +11,7 @@ import CustomInput from '@/components/ui/input/CustomInput';
 import { ESKILL_LEVEL } from '@/core/interfaces/enums';
 import { ITech, ITest } from '@/core/interfaces/types';
 import AddTechnologyModal from '@/components/technology-modals/AddTechnologyModal';
+import TechComponent from '../tech-component/TechComponent';
 
 interface ISaveQuestionModalProps {
   open?: boolean;

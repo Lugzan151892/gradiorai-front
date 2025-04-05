@@ -1,140 +1,118 @@
 'use client';
 
-import React, { useMemo, useState } from 'react';
-import GenerateStep from '@/app/(views)/(tests)/tests/components/GenerateStep';
-import { ETEST_STEPS } from '@/app/(views)/(tests)/tests/interfaces';
+import React, { useCallback, useEffect, useState } from 'react';
+import SettingsBlock from '@/app/(views)/(tests)/tests/components/SettingsBlock';
+import { ESKILL_LEVEL } from '@/core/interfaces/enums';
+import CustomFilterButton from '@/components/ui/filter-button/CustomFilterButton';
+import AdminWrapper from '@/components/admin-wrapper/AdminWrapper';
 import CustomButton from '@/components/ui/button/CustomButton';
-import { useRouter } from 'next/navigation';
-import TestsPrepareLayout from '@/app/(views)/(tests)/tests/components/TestsPrepareLayout';
-import Api from '@/core/api/api';
-import GenerateTest from './components/GenerateTest';
+import AddSpecModal from '@/components/specialization-modals/AddSpecModal';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { setLoading } from '@/features/loading/loadingSlice';
-import { ESKILL_LEVEL } from '@/core/interfaces/enums';
+import Api from '@/core/api/api';
+import { ISpecialization, ITechnology, ITest, ITestParams } from '@/core/interfaces/types';
+import errorHandler from '@/core/utils/error/errorHandler';
+import AddTechnologyModal from '@/components/technology-modals/AddTechnologyModal';
+import AuthConfirmButton from '@/app/(views)/(auth)/components/AuthConfirmButton';
 import { RootState } from '@/store';
 import { shuffleArray } from '@/core/utils/array';
-import errorHandler from '@/core/utils/error/errorHandler';
-import AddTechModal from './components/AddTechModal';
-import TechComponent from './components/TechComponent';
-import GeneratePasswordModal from './components/GeneratePasswordModal';
-import AdminWrapper from '@/components/admin-wrapper/AdminWrapper';
-import CustomIcon from '@/components/ui/icon/CustomIcon';
-import { ITech, ITest, ITestParams } from '@/core/interfaces/types';
+import GenerateTest from '@/app/(views)/(tests)/tests/components/GenerateTest';
+import GeneratePasswordModal from '@/components/generate-password-modal/GeneratePasswordModal';
+import TechComponent from '@/components/tech-component/TechComponent';
 
-interface ITechWithAmount extends ITech {
-  _count: {
-    questions: number;
-  };
-}
-
-const TestsGenerate = () => {
-  const [step, setStep] = useState(ETEST_STEPS.FIRST);
-  const [level, setLevel] = useState<ESKILL_LEVEL>();
-  const router = useRouter();
-  const [techs, setTechs] = useState<ITechWithAmount[]>([]);
-  const [selectedTechs, setSelectedTechs] = useState<number[]>([]);
-  const [passwordModal, setPasswordModal] = useState(false);
-  const [addTechModal, setAddTechModal] = useState(false);
-  const [questionsAmount, setQuestionsAmount] = useState(0);
-
+const TestsView = () => {
   const dispatch = useAppDispatch();
+  const [specs, setSpecs] = useState<ISpecialization[]>([]);
+  const [techs, setTechs] = useState<ITechnology[]>([]);
+  const [questionsLevel, setQuestionsLevel] = useState<ESKILL_LEVEL>(ESKILL_LEVEL.JUNIOR);
+  const [questionsSpecs, setQuestionsSpecs] = useState<ESKILL_LEVEL[]>([]);
+  const [questionsTechs, setQuestionsTechs] = useState<number[]>([]);
+  const [openAddSpecModal, setOpenAddSpecModal] = useState(false);
+  const [openAddTechModal, setOpenAddTechModal] = useState(false);
   const [tests, setTests] = useState<ITest[]>([]);
+
   const { user } = useAppSelector((state: RootState) => state.user);
 
-  const resetState = () => {
-    setStep(ETEST_STEPS.FIRST);
-    setLevel(undefined);
-    setTechs([]);
-    setSelectedTechs([]);
-    setTests([]);
+  const [showTest, setShowTest] = useState(false);
+  const [passwordModal, setPasswordModal] = useState(false);
+
+  const handleSetQuestionsLevel = (val: ESKILL_LEVEL) => {
+    setQuestionsLevel(val);
   };
 
-  const loadTechs = async () => {
-    try {
-      dispatch(setLoading(true));
-      const result = await Api.get<{ spec: number }, { techs: ITechWithAmount[]; questions_amount: number }>(
-        '/questions/get-techs'
-      );
-
-      if (result.payload) {
-        setTechs(result.payload.techs);
-        setQuestionsAmount(result.payload.questions_amount);
-      }
-    } catch (e: any) {
-      errorHandler(e, dispatch);
-    } finally {
-      dispatch(setLoading(false));
-    }
-  };
-
-  const checkNextStep = useMemo(() => {
-    if (step === ETEST_STEPS.FIRST) {
-      return !level;
-    }
-    if (step === ETEST_STEPS.SECOND) {
-      return !selectedTechs.length;
-    }
-  }, [step, level, selectedTechs]);
-
-  const goForward = async () => {
-    if (step === ETEST_STEPS.FIRST) {
-      await loadTechs();
-      setStep(step + 1);
-      return;
-    }
-
-    if (step === ETEST_STEPS.SECOND) {
-      if (user?.admin) {
-        generateTests();
-      } else {
-        setPasswordModal(true);
-      }
-    }
-  };
-
-  const goBack = async () => {
-    if (step === ETEST_STEPS.FIRST) {
-      router.push('/');
-      return;
-    }
-
-    if (step === ETEST_STEPS.SECOND) {
-      setSelectedTechs([]);
-      setTechs([]);
-      setStep(step - 1);
-      return;
-    }
-  };
-
-  const changeTechs = (techId: number) => {
-    if (selectedTechs.includes(techId)) {
-      setSelectedTechs(selectedTechs.filter((el) => el !== techId));
+  const handleSetQuestionsSpec = (val: ESKILL_LEVEL) => {
+    if (questionsSpecs.includes(val)) {
+      setQuestionsSpecs([...questionsSpecs.filter((el) => el !== val)]);
     } else {
-      setSelectedTechs([...selectedTechs, techId]);
+      setQuestionsSpecs([...questionsSpecs, val]);
+    }
+
+    setQuestionsTechs([]);
+  };
+
+  const handleSetQuestionsTechs = (val: number) => {
+    if (questionsTechs.includes(val)) {
+      setQuestionsTechs([...questionsTechs.filter((el) => el !== val)]);
+    } else {
+      setQuestionsTechs([...questionsTechs, val]);
     }
   };
 
-  const closeSaveTechModal = async () => {
+  const loadSpecs = useCallback(async () => {
     try {
       dispatch(setLoading(true));
-      await loadTechs();
+      const result = await Api.get<null, ISpecialization[]>('/questions/get-specs');
+      setSpecs(result.payload);
     } catch (e: any) {
       errorHandler(e, dispatch);
     } finally {
       dispatch(setLoading(false));
-      setAddTechModal(false);
     }
-  };
+  }, [dispatch]);
+
+  const loadTechs = useCallback(async () => {
+    try {
+      dispatch(setLoading(true));
+      const result = await Api.get<{ specs: Array<number> }, { techs: ITechnology[]; questions_amount: number }>(
+        '/questions/get-techs',
+        questionsSpecs.length
+          ? {
+              specs: questionsSpecs,
+            }
+          : undefined
+      );
+      setTechs(result.payload.techs);
+    } catch (e: any) {
+      errorHandler(e, dispatch);
+    } finally {
+      dispatch(setLoading(false));
+    }
+  }, [dispatch, questionsSpecs]);
+
+  const skillOptions = [
+    {
+      id: ESKILL_LEVEL.JUNIOR,
+      text: 'Junior',
+    },
+    {
+      id: ESKILL_LEVEL.MIDDLE,
+      text: 'Middle',
+    },
+    {
+      id: ESKILL_LEVEL.SENIOR,
+      text: 'Senior',
+    },
+  ];
 
   const generateTests = async (password?: string) => {
-    if (!selectedTechs.length || !level) {
+    if (!questionsTechs.length) {
       return;
     }
 
     const data: ITestParams = {
       password,
-      techs: selectedTechs,
-      level,
+      techs: questionsTechs,
+      level: questionsLevel,
     };
 
     try {
@@ -150,7 +128,7 @@ const TestsGenerate = () => {
           responses: shuffleArray(question.responses),
         }));
         setTests(shuffleArray(shuffledTests));
-        setStep(ETEST_STEPS.TEST);
+        setShowTest(true);
       }
     } catch (e: any) {
       errorHandler(e, dispatch);
@@ -159,157 +137,154 @@ const TestsGenerate = () => {
     }
   };
 
-  const actionsMarkup = (
-    <div className={'mt-auto mb-3 ml-auto flex w-full justify-between'}>
-      <CustomButton
-        text={'Назад'}
-        onClick={goBack}
-      >
-        <div className={'flex items-center'}>
-          <div className={'w-10 h-10 flex items-center justify-center bg-white rounded-full'}>
-            <div className={'text-main-blue text-3xl font-bold h-max'}>
-              <CustomIcon
-                name={'arrow-left'}
-                color={'var(--main-blue)'}
-              />
-            </div>
-          </div>
-          <div className={'ml-2 mobile:hidden'}>Назад</div>
-        </div>
-      </CustomButton>
-      <CustomButton
-        className={'ml-2'}
-        text={'Начать'}
-        type={step === ETEST_STEPS.SECOND ? 'success' : undefined}
-        disabled={checkNextStep}
-        onClick={goForward}
-      >
-        {step === ETEST_STEPS.SECOND ? null : (
-          <div className={'flex items-center'}>
-            <div className={'mr-2 mobile:hidden'}>Вперед</div>
-            <div className={'w-10 h-10 flex items-center justify-center bg-white rounded-full'}>
-              <div className={'text-main-blue text-3xl font-bold h-max'}>
-                <CustomIcon
-                  name={'arrow-right'}
-                  color={checkNextStep ? 'var(--second-gray)' : 'var(--main-blue)'}
-                />
-              </div>
-            </div>
-          </div>
-        )}
-      </CustomButton>
-    </div>
-  );
+  const handleStart = () => {
+    if (user?.admin) {
+      generateTests();
+    } else {
+      setPasswordModal(true);
+    }
+  };
 
-  if (step === ETEST_STEPS.TEST && level) {
+  useEffect(() => {
+    loadSpecs();
+    loadTechs();
+  }, [loadSpecs, loadTechs]);
+
+  const resetState = () => {
+    setQuestionsLevel(ESKILL_LEVEL.JUNIOR);
+    setQuestionsSpecs([]);
+    setQuestionsTechs([]);
+    setTests([]);
+  };
+
+  if (showTest) {
     return (
       <GenerateTest
-        techs={selectedTechs}
-        level={level}
+        techs={questionsTechs}
+        level={questionsLevel}
         tests={tests}
         onReset={resetState}
       />
     );
   }
 
-  let stepMarkup = null;
-  if (step === ETEST_STEPS.FIRST) {
-    stepMarkup = (
-      <GenerateStep
-        step={ETEST_STEPS.FIRST}
-        description={'Выберите уровень вопросов'}
-        options={[
-          {
-            id: ESKILL_LEVEL.JUNIOR,
-            text: 'Junior',
-          },
-          {
-            id: ESKILL_LEVEL.MIDDLE,
-            text: 'Middle',
-          },
-          {
-            id: ESKILL_LEVEL.SENIOR,
-            text: 'Senior',
-          },
-        ]}
-        value={level}
-        actions={actionsMarkup}
-        onClick={setLevel}
-      />
-    );
-  }
-
-  if (step === ETEST_STEPS.SECOND) {
-    stepMarkup = (
-      <GenerateStep
-        step={ETEST_STEPS.SECOND}
-        description={'Выберите направления'}
-        actions={actionsMarkup}
-      >
-        <div className={'flex flex-col items-center'}>
-          <AdminWrapper className={'w-[max-content]'}>
-            <div className={'font-semibold text-center mb-3 mr-5'}>
-              Общее количество вопросов в базе: {questionsAmount}
-            </div>
-          </AdminWrapper>
-          {techs.length ? (
-            <div
-              className={
-                'grid desktop:grid-cols-[50%_50%] mobile:grid-cols-[1fr] w-full justify-between gap-y-2 gap-x-2 px-10'
-              }
-            >
-              {techs.map((el) => (
-                <TechComponent
-                  key={el.id}
-                  tech={el}
-                  selected={selectedTechs.includes(el.id)}
-                  onClick={() => changeTechs(el.id)}
-                >
-                  <AdminWrapper className={'ml-auto'}>
-                    <div className={'ml-2 mr-5 font-semibold'}>{el._count.questions || 0}</div>
-                  </AdminWrapper>
-                </TechComponent>
-              ))}
-            </div>
-          ) : (
-            <div>
-              <div className={'text-3xl text-error'}>Направления не найдены!</div>
-            </div>
-          )}
-        </div>
-        {user?.admin ? (
-          <div className={'w-full flex desktop:mt-4 mobile:my-2'}>
-            <CustomButton
-              className={'mx-auto mobile:hidden'}
-              text={'Добавить направления'}
-              onClick={() => setAddTechModal(true)}
-            />
-            <CustomButton
-              className={'mx-auto desktop:hidden'}
-              small
-              text={'Добавить направления'}
-              onClick={() => setAddTechModal(true)}
-            />
-          </div>
-        ) : null}
-      </GenerateStep>
-    );
-  }
-
   return (
-    <TestsPrepareLayout>
-      <div className={'flex flex-col h-full'}>{stepMarkup}</div>
-      <AddTechModal
-        open={addTechModal}
-        onClose={closeSaveTechModal}
+    <div className={'flex flex-col w-full h-full gap-y-8'}>
+      <SettingsBlock
+        icon={'search-book'}
+        title={'Уровень вопросов'}
+      >
+        <div className={'flex gap-10 flex-wrap mt-9'}>
+          {skillOptions.map((level) => (
+            <CustomFilterButton
+              text={level.text}
+              key={level.id}
+              selected={questionsLevel === level.id}
+              onClick={() => handleSetQuestionsLevel(level.id)}
+            />
+          ))}
+        </div>
+      </SettingsBlock>
+      <SettingsBlock
+        icon={'monitor'}
+        title={'Специализация'}
+        description={'Здесь вы можете отфильтровать направления подходящие под специализацию '}
+        captionAfter={
+          <div>
+            <AdminWrapper>
+              <CustomButton
+                small
+                text={'Создать специализацию'}
+                onClick={() => setOpenAddSpecModal(true)}
+              />
+            </AdminWrapper>
+          </div>
+        }
+      >
+        {specs.length ? (
+          <div className={'grid grid-cols-[repeat(auto-fit,minmax(200px,max-content))] gap-5 mt-9'}>
+            {specs.map((spec) => (
+              <TechComponent
+                tech={spec}
+                key={spec.id}
+                selected={questionsSpecs.includes(spec.id)}
+                onClick={() => handleSetQuestionsSpec(spec.id)}
+              />
+            ))}
+          </div>
+        ) : (
+          <div>Специализации не найдены</div>
+        )}
+      </SettingsBlock>
+      <SettingsBlock
+        icon={'hut'}
+        title={'Направления'}
+        description={'Каждое направление включает в себя набор вопросов'}
+        captionAfter={
+          <div>
+            <AdminWrapper>
+              <CustomButton
+                small
+                text={'Создать направление'}
+                onClick={() => setOpenAddTechModal(true)}
+              />
+            </AdminWrapper>
+          </div>
+        }
+      >
+        {techs.length ? (
+          <div className={'grid grid-cols-[repeat(auto-fit,minmax(150px,max-content))] gap-5 mt-9'}>
+            {techs.map((tech) => (
+              <TechComponent
+                tech={tech}
+                key={tech.id}
+                selected={questionsTechs.includes(tech.id)}
+                onClick={() => handleSetQuestionsTechs(tech.id)}
+              />
+            ))}
+          </div>
+        ) : (
+          <div>Специализации не найдены</div>
+        )}
+      </SettingsBlock>
+      <SettingsBlock
+        icon={'rocket'}
+        title={'Начать'}
+        description={'После того как вы определили конфигурацию тестов мы готовы их составить!'}
+      >
+        <div className={'w-full flex items-center mt-10'}>
+          <AuthConfirmButton
+            className={'!w-[170px] mx-auto'}
+            customBorder
+            disabled={!questionsTechs.length}
+            size={24}
+            icon={'check'}
+            text={'Начать'}
+            onClick={handleStart}
+          />
+        </div>
+      </SettingsBlock>
+      <AddSpecModal
+        open={openAddSpecModal}
+        onClose={() => {
+          setOpenAddSpecModal(false);
+          loadSpecs();
+        }}
+      />
+      <AddTechnologyModal
+        open={openAddTechModal}
+        onClose={() => {
+          setOpenAddTechModal(false);
+          loadTechs();
+        }}
       />
       <GeneratePasswordModal
         open={passwordModal}
         onClose={() => setPasswordModal(false)}
-        saveTech={generateTests}
+        generate={generateTests}
       />
-    </TestsPrepareLayout>
+    </div>
   );
 };
 
-export default TestsGenerate;
+export default TestsView;

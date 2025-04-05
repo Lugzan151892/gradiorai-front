@@ -1,4 +1,3 @@
-import TechComponent from '@/app/(views)/(tests)/tests/components/TechComponent';
 import CustomButton from '@/components/ui/button/CustomButton';
 import CustomInput from '@/components/ui/input/CustomInput';
 import CustomModal from '@/components/ui/modal/CustomModal';
@@ -9,6 +8,7 @@ import { setLoading } from '@/features/loading/loadingSlice';
 import { useAppDispatch } from '@/hooks/redux';
 import { openModal } from '@/store/tech/techSlice';
 import React, { useEffect, useState } from 'react';
+import TechComponent from '@/components/tech-component/TechComponent';
 
 interface IAddSpecModalProps {
   type?: 'create';

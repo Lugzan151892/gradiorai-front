@@ -1,5 +1,6 @@
 'use client';
 
+import SaveQuestionModal from '@/components/save-question-modal/SaveQuestionModal';
 import CustomButton from '@/components/ui/button/CustomButton';
 import Api from '@/core/api/api';
 import { ITechnology, ITest } from '@/core/interfaces/types';
@@ -7,7 +8,6 @@ import errorHandler from '@/core/utils/error/errorHandler';
 import { setLoading } from '@/features/loading/loadingSlice';
 import { useAppDispatch } from '@/hooks/redux';
 import React, { useCallback, useEffect, useState } from 'react';
-import SaveQuestionModal from '@/app/(views)/(tests)/tests/components/SaveQuestionModal';
 
 interface IFullQuestion extends ITest {
   level: number;
