@@ -6,14 +6,10 @@ import React, { useState } from 'react';
 interface IGeneratePasswordModalProps {
   open?: boolean;
   onClose?: () => void;
-  saveTech?: (password: string) => void;
+  generate?: (password: string) => void;
 }
 
-const GeneratePasswordModal: React.FC<IGeneratePasswordModalProps> = ({
-  open = false,
-  onClose,
-  saveTech,
-}) => {
+const GeneratePasswordModal: React.FC<IGeneratePasswordModalProps> = ({ open = false, onClose, generate }) => {
   const [password, setPasword] = useState('');
   return (
     <CustomModal
@@ -23,8 +19,7 @@ const GeneratePasswordModal: React.FC<IGeneratePasswordModalProps> = ({
     >
       <div>
         <p className={'mt-2 text-sm/6 text-black'}>
-          Введите временный пароль для генерации теста. Пароль можно посмотреть
-          в документации к сервису.
+          Введите временный пароль для генерации теста. Пароль можно посмотреть в документации к сервису.
         </p>
         <CustomInput
           className={'mb-10'}
@@ -36,7 +31,7 @@ const GeneratePasswordModal: React.FC<IGeneratePasswordModalProps> = ({
           <CustomButton
             className={'ml-auto'}
             text={'Сгенерировать'}
-            onClick={saveTech ? () => saveTech(password) : undefined}
+            onClick={generate ? () => generate(password) : undefined}
           />
         </div>
       </div>

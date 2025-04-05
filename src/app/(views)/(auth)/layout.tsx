@@ -10,7 +10,7 @@ const AuthLayout: React.FC<{
 
   return (
     <div
-      className={'w-full h-full flex flex-col bg-[url("../assets/images/auth-bg.png")] bg-no-repeat bg-cover bg-left'}
+      className={'w-full h-full flex flex-col'}
     >
       <div
         className={'cursor-pointer text-white text-2xl px-4 py-4 max-w-max hover:text-low-green'}
@@ -22,7 +22,7 @@ const AuthLayout: React.FC<{
         <div className={'flex justify-center w-full h-full items-center'}>
           <div
             className={
-              'max-w-sm w-full h-full max-h-[700px] rounded-3xl bg-transparent p-10 bg-[url("../assets/images/auth-bg.png")] bg-no-repeat bg-center bg-origin-content'
+              'max-w-sm w-full h-full max-h-[700px] rounded-3xl bg-transparent p-10 bg-[url("../assets/images/main-bg.png")] bg-no-repeat bg-center bg-origin-content'
             }
           >
             {children}

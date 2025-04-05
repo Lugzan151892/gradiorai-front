@@ -1,5 +1,5 @@
 import React from 'react';
-import CustomCheckbox from '@/components/ui/checkbox/CustomCheckbox';
+import CustomIcon from '@/components/ui/icon/CustomIcon';
 
 interface ITechComponentProps {
   tech: { id: number; name: string };
@@ -16,15 +16,33 @@ const TechComponent: React.FC<ITechComponentProps> = ({
   onClick,
   children,
 }) => {
-  const classes = selected ? 'bg-main-blue text-white ' : 'bg-gray-second text-text-gray ';
   return (
     <div
       key={tech.id}
-      className={'flex px-2 py-[10px] rounded-lg cursor-pointer items-center h-11 text-ellipsis ' + classes + className}
+      className={`flex px-2 py-[10px] rounded group cursor-pointer items-center h-11 text-ellipsis border border-1 
+        ${selected ? 'bg-low-green border-low-green' : 'border-white hover:border-low-green group-hover:border-low-green'}
+        ${className}`}
       onClick={onClick}
     >
-      <CustomCheckbox value={selected} />
-      <div className={'ml-4 text-sm font-semibold text-nowrap truncate mw-full'}>{tech.name}</div>
+      <div
+        className={`border border-1 flex items-center p-1 mr-4 rounded 
+          ${selected ? 'border-white' : 'border-white group-hover:border-low-green'}`}
+      >
+        <CustomIcon
+          className={selected ? 'opacity-100' : 'opacity-0'}
+          name={'check'}
+          color={'var(--main-white)'}
+          size={16}
+        />
+      </div>
+      <div
+        className={
+          'mx-auto text-2xl text-white text-nowrap truncate mw-full ' +
+          `${selected ? '' : ' group-hover:text-low-green'}`
+        }
+      >
+        {tech.name}
+      </div>
       {children}
     </div>
   );

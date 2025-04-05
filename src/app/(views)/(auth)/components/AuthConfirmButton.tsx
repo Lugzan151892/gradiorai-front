@@ -9,11 +9,9 @@ const AuthConfirmButton: React.FC<{
   icon: 'check' | 'open-password' | 'refresh';
   size?: number;
   customBorder?: boolean;
-  iconFill?: string;
-  iconStroke?: string;
   disabled?: boolean;
   onClick?: () => void;
-}> = ({ text = '', className = '', disabled, icon, size, customBorder, iconFill, iconStroke, onClick }) => {
+}> = ({ text = '', className = '', disabled, icon, size, customBorder, onClick }) => {
   return (
     <CustomButton
       className={'!rounded-input !px-0 !py-0 text-xl ' + className}
@@ -28,8 +26,7 @@ const AuthConfirmButton: React.FC<{
           <div className={'h-9 w-9 flex items-center justify-center border-2 border-white rounded-full'}>
             <CustomIcon
               name={icon}
-              stroke={iconFill}
-              fill={iconStroke}
+              color={'var(--main-white)'}
               size={size}
             />
           </div>
@@ -39,8 +36,7 @@ const AuthConfirmButton: React.FC<{
           <div className={styles.text}>{text}</div>
           <CustomIcon
             name={icon}
-            stroke={iconFill}
-            fill={iconStroke}
+            color={'var(--main-white)'}
             size={size}
           />
         </div>
