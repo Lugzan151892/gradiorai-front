@@ -198,7 +198,6 @@ const RestorePassword = () => {
           }
           customBorder
           size={24}
-          iconStroke={'transparent'}
           icon={'refresh'}
           text={'Изменить'}
           onClick={handleConfirmButton}
