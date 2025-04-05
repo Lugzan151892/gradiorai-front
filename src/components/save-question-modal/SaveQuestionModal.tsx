@@ -1,24 +1,24 @@
 import CustomButton from '@/components/ui/button/CustomButton';
 import CustomModal from '@/components/ui/modal/CustomModal';
 import React, { useEffect, useState } from 'react';
-import { ITech } from '@/app/(views)/(tests)/tests/interfaces';
-import TechComponent from '@/app/(views)/(tests)/tests/components/TechComponent';
 import Api from '@/core/api/api';
 import { useAppDispatch } from '@/hooks/redux';
 import { setLoading } from '@/features/loading/loadingSlice';
 import errorHandler from '@/core/utils/error/errorHandler';
 import { openModal } from '@/store/tech/techSlice';
-import AddTechModal from '@/app/(views)/(tests)/tests/components/AddTechModal';
 import CustomTextarea from '@/components/ui/textarea/CustomTextarea';
 import CustomInput from '@/components/ui/input/CustomInput';
 import { ESKILL_LEVEL } from '@/core/interfaces/enums';
-import { ITest } from '@/core/interfaces/types';
+import { ITech, ITest } from '@/core/interfaces/types';
+import AddTechnologyModal from '@/components/technology-modals/AddTechnologyModal';
+import TechComponent from '../tech-component/TechComponent';
 
 interface ISaveQuestionModalProps {
   open?: boolean;
   onClose?: () => void;
-  spec?: number;
   question: ITest;
+  isExistedQuestion?: boolean;
+  isEdit?: boolean;
   techs?: Array<number>;
   level: number;
 }
@@ -26,8 +26,8 @@ interface ISaveQuestionModalProps {
 const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
   open = false,
   onClose,
-  spec,
   question,
+  isExistedQuestion,
   level,
   techs,
 }) => {
@@ -42,13 +42,6 @@ const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
     { id: ESKILL_LEVEL.MIDDLE, name: ESKILL_LEVEL[ESKILL_LEVEL.MIDDLE] },
     { id: ESKILL_LEVEL.SENIOR, name: ESKILL_LEVEL[ESKILL_LEVEL.SENIOR] },
   ];
-
-  useEffect(() => {
-    setEditedQuestion(question);
-    setSelectedLevels([level]);
-    setSelectedTechs(techs || []);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [question]);
 
   const handleQuestionChange = (value: string) => {
     setEditedQuestion((prev) => ({
@@ -65,6 +58,10 @@ const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
   };
 
   const changeLevels = (levelId: number) => {
+    if (isExistedQuestion) {
+      setSelectedLevels([levelId]);
+      return;
+    }
     if (selectedLevels.includes(levelId)) {
       setSelectedLevels(selectedLevels.filter((el) => el !== levelId));
     } else {
@@ -115,10 +112,9 @@ const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
 
     try {
       dispatch(setLoading(true));
-      await Api.post('/questions/save', {
+      await Api.post(isExistedQuestion ? '/questions/edit' : '/questions/save', {
         ...editedQuestion,
         level: selectedLevels,
-        type: spec,
         techs: selectedTechs,
       });
 
@@ -139,14 +135,13 @@ const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
   const loadTechs = async () => {
     try {
       dispatch(setLoading(true));
-      const result = await Api.get<{ spec: number }, { techs: ITech[] }>(
-        '/questions/get-techs',
-        spec ? { spec } : undefined
-      );
+      const result = await Api.get<{ spec: number }, { techs: ITech[] }>('/questions/get-techs');
 
       if (result.payload) {
         setAllTechs(result.payload.techs);
-        setSelectedTechs(techs || []);
+        if (!isExistedQuestion) {
+          setSelectedTechs(techs || []);
+        }
       }
     } catch (e: any) {
       errorHandler(e, dispatch);
@@ -156,9 +151,21 @@ const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
   };
 
   useEffect(() => {
+    if (!open) {
+      return;
+    }
+
+    setEditedQuestion(question);
+    setSelectedLevels([level]);
     loadTechs();
+
+    if (isExistedQuestion) {
+      setSelectedTechs((question.technologies || []).map((el) => el.id));
+    } else {
+      setSelectedTechs(techs || []);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [question]);
+  }, [open]);
 
   return (
     <CustomModal
@@ -174,34 +181,19 @@ const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
             value={editedQuestion.question}
             onInput={(val) => handleQuestionChange(val)}
           />
-          <div className={'mt-2 flex gap-2 items-center'}>
-            <div className={'text-nowrap'}>Ответ 1:</div>
-            <CustomInput
-              value={editedQuestion.responses[0].answer}
-              onInput={(val) => handleResponseChange(0, val)}
-            />
-          </div>
-          <div className={'mt-2 flex gap-2 items-center'}>
-            <div className={'text-nowrap'}>Ответ 2:</div>
-            <CustomInput
-              value={editedQuestion.responses[1].answer}
-              onInput={(val) => handleResponseChange(1, val)}
-            />
-          </div>
-          <div className={'mt-2 flex gap-2 items-center'}>
-            <div className={'text-nowrap'}>Ответ 3:</div>
-            <CustomInput
-              value={editedQuestion.responses[2].answer}
-              onInput={(val) => handleResponseChange(2, val)}
-            />
-          </div>
-          <div className={'mt-2 flex gap-2 items-center'}>
-            <div className={'text-nowrap'}>Ответ 4:</div>
-            <CustomInput
-              value={editedQuestion.responses[3].answer}
-              onInput={(val) => handleResponseChange(3, val)}
-            />
-          </div>
+          {editedQuestion.responses.map((response, iResponse) => (
+            <div
+              key={response.id}
+              className={'mt-2 flex gap-2 items-center'}
+            >
+              <div className={'text-nowrap'}>Ответ {iResponse + 1}:</div>
+              <CustomInput
+                success={response.correct}
+                value={response.answer}
+                onInput={(val) => handleResponseChange(iResponse, val)}
+              />
+            </div>
+          ))}
         </div>
         <div className={'mt-3'}>
           <div className={'desktop:text-2xl mobile:text-xl mb-2 text-center'}>Укажите уровень вопроса:</div>
@@ -258,8 +250,7 @@ const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
           />
         </div>
       </div>
-      <AddTechModal
-        spec={spec}
+      <AddTechnologyModal
         open={addTechModal}
         onClose={closeSaveTechModal}
       />

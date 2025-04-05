@@ -1,3 +1,5 @@
+import { ESKILL_LEVEL } from '@/core/interfaces/enums';
+
 export interface IUser {
   id: number;
   email: string;
@@ -14,4 +16,30 @@ export interface ITest {
     correct: boolean;
     id: number;
   }>;
+  technologies?: ITechnology[];
+}
+
+export interface ITechnology {
+  id: number;
+  name: string;
+  description?: string;
+  specialization: ISpecialization[];
+}
+
+export interface ISpecialization {
+  id: number;
+  name: string;
+  technology: ITechnology[];
+}
+
+export interface ITestParams {
+  password?: string;
+  techs: Array<number>;
+  level: ESKILL_LEVEL;
+}
+
+export interface ITech {
+  id: number;
+  name: string;
+  spec: number;
 }

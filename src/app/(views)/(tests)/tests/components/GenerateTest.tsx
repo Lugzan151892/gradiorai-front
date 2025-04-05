@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import AnswerComponent from '@/app/(views)/(tests)/tests/components/AnswerComponent';
 import CustomButton from '@/components/ui/button/CustomButton';
 import { useRouter } from 'next/navigation';
-import SaveQuestionModal from '@/app/(views)/(tests)/tests/components/SaveQuestionModal';
 import AdminWrapper from '@/components/admin-wrapper/AdminWrapper';
 import { RootState } from '@/store';
 import { useAppSelector } from '@/hooks/redux';
 import Api from '@/core/api/api';
 import { ITest } from '@/core/interfaces/types';
+import AnswerComponent from '@/app/(views)/(tests)/tests/components/AnswerComponent';
+import SaveQuestionModal from '@/components/save-question-modal/SaveQuestionModal';
 
 const GenerateTest: React.FC<{
   tests: ITest[];

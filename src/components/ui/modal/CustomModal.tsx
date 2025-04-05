@@ -49,23 +49,21 @@ const CustomModal: React.FC<ICustomModalProps> = ({
             <DialogPanel
               transition
               className={
-                'rounded-xl bg-white border-2 flex flex-col backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0 overflow-hidden ' +
+                'rounded-xl bg-black border-2 text-white flex flex-col backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0 overflow-hidden ' +
                 `border-${typeColor()} ` +
                 widthClasses
               }
             >
               {header || (
-                <div className={'grid grid-cols-[1fr_40px] items-center justify-items-center border-b-1'}>
+                <div className={'grid grid-cols-[1fr_40px] items-center py-2 justify-items-center border-b-1'}>
                   <DialogTitle
                     as={'h3'}
-                    className={
-                      'desktop:text-2xl text-center mobile:text-xl mobile:px-2 mobile:py-2 font-medium text-black'
-                    }
+                    className={'desktop:text-2xl text-center mobile:text-xl mobile:px-2 mobile:py-2 font-medium'}
                   >
                     {caption}
                   </DialogTitle>
                   <CustomIcon
-                    color={'var(--main-black)'}
+                    color={'var(--main-white)'}
                     name={'cross'}
                     className={'cursor-pointer'}
                     onClick={onClose ? () => onClose(false) : undefined}
