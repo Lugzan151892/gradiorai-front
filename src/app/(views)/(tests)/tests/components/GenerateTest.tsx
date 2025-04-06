@@ -8,6 +8,8 @@ import Api from '@/core/api/api';
 import { ITest } from '@/core/interfaces/types';
 import AnswerComponent from '@/app/(views)/(tests)/tests/components/AnswerComponent';
 import SaveQuestionModal from '@/components/save-question-modal/SaveQuestionModal';
+import AuthConfirmButton from '@/app/(views)/(auth)/components/AuthConfirmButton';
+import ProgressBar from '@/components/ui/progress-bar/ProgressBar';
 
 const GenerateTest: React.FC<{
   tests: ITest[];
@@ -59,12 +61,12 @@ const GenerateTest: React.FC<{
   if (showResults) {
     return (
       <div className={'h-full flex flex-grow w-full'}>
-        <div className={'my-7 mx-3 rounded-lg bg-gray w-full p-4 flex flex-col items-center'}>
+        <div className={'my-7 bg-bg-transparent-25 mx-3 rounded-lg w-full p-4 flex flex-col items-center'}>
           <div className={'text-4xl mb-4'}>Ваш результат:</div>
-          <div className={'text-4xl mb-4'}>{`Вы ответили правильно на ${userResult} из ${tests.length} вопросов!`}</div>
-          <div className={'text-4xl'}>
-            {`У Вас ${Math.round((100 / tests.length) * userResult)}% правильных ответов!`}
-          </div>
+          <ProgressBar
+            score={userResult}
+            maxScore={tests.length}
+          />
           <div className={'mt-auto w-full flex'}>
             <CustomButton
               className={'ml-auto'}
@@ -120,16 +122,12 @@ const GenerateTest: React.FC<{
               onClick={saveQuestion}
             />
           </AdminWrapper>
-          <CustomButton
-            className={'ml-auto desktop:hidden'}
-            small
-            text={currentQuestion === tests.length ? 'Завершить' : 'Продолжить'}
-            disabled={!userChoise}
-            onClick={handleSetQuestion}
-          />
-          <CustomButton
-            className={'ml-auto mobile:hidden'}
-            text={currentQuestion === tests.length ? 'Завершить' : 'Продолжить'}
+          <AuthConfirmButton
+            icon={currentQuestion === tests.length ? 'sand-clock' : 'arrow-right'}
+            customBorder
+            className={'!w-[180px] ml-auto h-max self-end'}
+            size={24}
+            text={currentQuestion === tests.length ? 'Завершить' : 'Далее'}
             disabled={!userChoise}
             onClick={handleSetQuestion}
           />
