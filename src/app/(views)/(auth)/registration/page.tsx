@@ -170,7 +170,8 @@ const RegistrationPage = () => {
             (showCodeBlock && (code.length < 4 || codeError))
           }
           icon={'check'}
-          size={36}
+          customBorder
+          size={32}
           text={'Создать'}
           onClick={showCodeBlock ? handleRegister : handleRequestCode}
         />

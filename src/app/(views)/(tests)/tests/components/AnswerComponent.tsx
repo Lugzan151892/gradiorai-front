@@ -14,7 +14,7 @@ const AnswerComponent: React.FC<{
   const showBorder = userChoise && (userChoise === answer.id || answer.correct);
   return (
     <div
-      className={`desktop:px-10 mobile:px-2 desktop:py-3 border-2 bg-white rounded ${showBorder ? correctClasses : 'border-transparent'} ${!userChoise && !disabled ? 'hover:shadow-2xl' : ''}`}
+      className={`desktop:px-10 mobile:px-2 desktop:py-3 rounded-input cursor-pointer text-white ${showBorder ? correctClasses : 'border-transparent'} ${!userChoise && !disabled ? 'hover:shadow-2xl' : ''}`}
       onClick={() => (disabled || !onClick ? undefined : onClick())}
     >
       <CustomRadioButton
