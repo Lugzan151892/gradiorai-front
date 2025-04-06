@@ -1,5 +1,6 @@
 'use client';
 
+import AppHeader from '@/components/header/AppHeader';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
@@ -9,15 +10,8 @@ const AuthLayout: React.FC<{
   const router = useRouter();
 
   return (
-    <div
-      className={'w-full h-full flex flex-col'}
-    >
-      <div
-        className={'cursor-pointer text-white text-2xl px-4 py-4 max-w-max hover:text-low-green'}
-        onClick={() => router.push('/')}
-      >
-        Gradior
-      </div>
+    <div className={'w-full h-full flex flex-col'}>
+      <AppHeader withState={false} />
       <div className={'w-full h-full flex'}>
         <div className={'flex justify-center w-full h-full items-center'}>
           <div

@@ -83,13 +83,13 @@ const GenerateTest: React.FC<{
   }
 
   return (
-    <div className={'h-full flex flex-grow w-full overflow-auto'}>
-      <div className={'my-7 mx-3 rounded-lg bg-gray w-full p-4 flex flex-col'}>
+    <div className={'h-full flex flex-grow w-full overflow-auto text-white'}>
+      <div className={'my-7 mx-3 bg-bg-transparent-25 rounded-10 w-full p-4 flex flex-col'}>
         <div className={'flex gap-4'}>
-          <div className={'h-24 w-24 bg-aqua rounded flex items-center justify-center text-xl text-text-secondary'}>
+          <div className={'h-24 w-24 rounded flex items-center justify-center text-xl border-1 border-white'}>
             {`${currentQuestion} / ${tests.length}`}
           </div>
-          <div className={'w-full flex items-center bg-white rounded text-black p-3 desktop:text-2xl mobile:text-base'}>
+          <div className={'w-full flex items-center rounded p-3 desktop:text-2xl mobile:text-base'}>
             {tests[currentQuestion - 1].question}
           </div>
         </div>

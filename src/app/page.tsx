@@ -5,46 +5,15 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 import DescriptionListItem from '@/components/description-list-item/DescriptionListItem';
 import CustomIcon from '@/components/ui/icon/CustomIcon';
-import { RootState } from '@/store';
-import { useAppSelector } from '@/hooks/redux';
+import AppHeader from '@/components/header/AppHeader';
 
 const Home = () => {
   const router = useRouter();
-  const { user } = useAppSelector((state: RootState) => state.user);
   useUser();
 
-  const handleLogin = () => {
-    router.push('/login');
-  };
   return (
     <div className={'min-w-full min-h-full flex flex-col'}>
-      <div className={'desktop:px-10 mobile:px-5 mobile:pt-3 pt-12 flex'}>
-        <div className={'text-white text-6xl mobile:text-5xl hover:text-low-green cursor-pointer'}>Gradior</div>
-        {!user?.id && (
-          <>
-            <div className={'ml-auto flex gap-2 desktop:hidden'}>
-              <CustomIcon
-                className={'cursor-pointer'}
-                name={'user'}
-                size={30}
-                color={'var(--main-white)'}
-                caption={'Войти'}
-                onClick={handleLogin}
-              />
-            </div>
-            <div className={'ml-auto flex gap-2 mobile:hidden'}>
-              <CustomIcon
-                className={'cursor-pointer'}
-                name={'user'}
-                size={36}
-                color={'var(--main-white)'}
-                caption={'Войти'}
-                onClick={handleLogin}
-              />
-            </div>
-          </>
-        )}
-      </div>
+      <AppHeader />
       <div
         className={
           'desktop:my-auto mobile:h-full mobile:mt-20 desktop:grid desktop:grid-cols-2 desktop:gap-x-2 desktop:grid-rows-[max-content,max-content] mobile:flex mobile:flex-col mobile:items-center desktop:ml-36 mobile:px-5'
