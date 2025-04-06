@@ -43,7 +43,7 @@ const CustomIcon: React.FC<ICustomIconProps> = ({
         width={size}
         height={size}
         viewBox={getIconViewBox(name, size)}
-        style={{ color }}
+        style={{ color, textAlign: 'center', margin: '0 auto' }}
       >
         {icon}
       </svg>
