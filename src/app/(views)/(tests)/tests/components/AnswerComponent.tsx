@@ -1,5 +1,4 @@
 import React from 'react';
-import CustomRadioButton from '@/components/ui/radio-button/CustomRadioButton';
 
 const AnswerComponent: React.FC<{
   answer: { answer: string; correct: boolean; id: number };
@@ -7,22 +6,21 @@ const AnswerComponent: React.FC<{
   userChoise?: number;
   onClick?: () => void;
 }> = ({ answer, onClick, disabled, userChoise }) => {
-  const correctClasses =
-    (userChoise === answer.id && answer.correct) || (userChoise !== answer.id && answer.correct)
-      ? 'border-success'
-      : 'border-error';
+  const isCorrect = (userChoise === answer.id && answer.correct) || (userChoise !== answer.id && answer.correct);
+  const correctClasses = isCorrect ? 'border-low-green bg-low-green' : 'border-error bg-error';
   const showBorder = userChoise && (userChoise === answer.id || answer.correct);
   return (
     <div
-      className={`desktop:px-10 mobile:px-2 desktop:py-3 rounded-input cursor-pointer text-white ${showBorder ? correctClasses : 'border-transparent'} ${!userChoise && !disabled ? 'hover:shadow-2xl' : ''}`}
+      className={`desktop:px-10 mobile:px-2 desktop:py-3 rounded-input cursor-pointer border-1 text-white ${showBorder ? correctClasses : 'border-white'} ${!userChoise && !disabled ? 'hover:shadow-2xl' : ''}`}
       onClick={() => (disabled || !onClick ? undefined : onClick())}
     >
-      <CustomRadioButton
-        caption={answer.answer}
-        disabled={disabled}
-        selected={!!userChoise && userChoise === answer.id}
-        noPointer
-      />
+      <div className={`flex items-center w-full py-1 rounded-input`}>
+        <div className={'rounded-full border-1 h-6 w-6 border-white flex items-center justify-center mr-10'}>
+          {showBorder && !isCorrect && <div className={'rotate-90'}>x</div>}
+          {isCorrect && showBorder && <div>✔</div>}
+        </div>
+        <div>{answer.answer}</div>
+      </div>
     </div>
   );
 };

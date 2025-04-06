@@ -29,6 +29,7 @@ export default {
         'hard-green': 'var(--hard-green)',
         'main-blue': 'var(--main-blue)',
         'blue-secondary': 'var(--main-blue-secondary)',
+        yellow: 'var(--main-yellow)',
         error: 'var(--main-error)',
         success: 'var(--main-success)',
         warning: 'var(--main-warning)',

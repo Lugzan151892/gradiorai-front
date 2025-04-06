@@ -13,8 +13,8 @@
   );
   --main-green: #5aea6f;
   --low-green: #00e3c9;
-  --hard-green: #2E9C12;
-  --hover-low-green: #00A895;
+  --hard-green: #2e9c12;
+  --hover-low-green: #00a895;
   --main-black: #000000;
   --main-blue: #6d8aeef2;
   --main-blue-secondary: #19b0da;
@@ -22,6 +22,7 @@
   --main-success: #50fb26;
   --main-warning: #f2ac57;
   --main-orange: #ffb43d;
+  --main-yellow: #ffef3d;
   --main-gray: #d8d3d3;
   --second-gray: #eaeaea;
   --main-aqua: #c2fbf7;
