@@ -13,11 +13,12 @@ const getIconViewBox = (name: keyof typeof IconMarkup, size: number) => {
       return '0 0 32 32';
     case 'user':
       return '0 0 16 16';
+    case 'refresh':
+      return '0 0 21 21';
     case 'password':
     case 'youtube':
     case 'email':
     case 'check':
-    case 'refresh':
     case 'warning':
     case 'eye-opened':
     case 'eye-closed':

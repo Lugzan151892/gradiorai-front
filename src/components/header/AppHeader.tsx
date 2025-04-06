@@ -2,12 +2,18 @@
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import HeaderUserState from '@/components/header/components/HeaderUserState';
+import CustomIcon from '../ui/icon/CustomIcon';
 
 const AppHeader: React.FC<{ withState?: boolean }> = ({ withState = true }) => {
   const router = useRouter();
 
   return (
-    <header className={'desktop:px-6 mobile:px-5 mobile:pt-3 pt-6 flex'}>
+    <header className={'desktop:px-6 mobile:px-5 mobile:pt-1 desktop:pt-2 flex'}>
+      <CustomIcon
+        name={'owl'}
+        size={64}
+        color={'var(--low-green)'}
+      />
       <div
         className={'cursor-pointer text-white text-6xl mobile:text-5xl max-w-max hover:text-low-green'}
         onClick={() => router.push('/')}

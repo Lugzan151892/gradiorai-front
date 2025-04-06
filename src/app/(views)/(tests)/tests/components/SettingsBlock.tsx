@@ -31,7 +31,7 @@ const SettingsBlock: React.FC<Readonly<ISettingsBlockProps>> = ({
       </div>
       <div className={'flex flex-col'}>
         <div className={'flex items-center'}>
-          {title && <div className={'text-4xl'}>{title}</div>}
+          {title && <div className={'desktop:text-3xl'}>{title}</div>}
           {captionAfter && <div className={'ml-2'}>{captionAfter}</div>}
         </div>
 
