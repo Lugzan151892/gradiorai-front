@@ -155,6 +155,7 @@ const TestsView = () => {
     setQuestionsSpecs([]);
     setQuestionsTechs([]);
     setTests([]);
+    setShowTest(false);
   };
 
   if (showTest) {
