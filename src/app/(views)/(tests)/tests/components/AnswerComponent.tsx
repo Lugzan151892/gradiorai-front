@@ -11,12 +11,12 @@ const AnswerComponent: React.FC<{
   const showBorder = userChoise && (userChoise === answer.id || answer.correct);
   return (
     <div
-      className={`desktop:px-10 mobile:px-2 desktop:py-3 rounded-input cursor-pointer border-1 text-white ${showBorder ? correctClasses : 'border-white'} ${!userChoise && !disabled ? 'hover:shadow-2xl' : ''}`}
+      className={`desktop:px-10 mobile:px-2 desktop:py-3 rounded-input cursor-pointer border-1 text-white ${showBorder ? correctClasses : 'border-white'} ${!userChoise && !disabled ? 'hover:bg-bg-transparent-50' : ''}`}
       onClick={() => (disabled || !onClick ? undefined : onClick())}
     >
       <div className={`flex items-center w-full py-1 rounded-input`}>
         <div className={'rounded-full border-1 h-6 w-6 border-white flex items-center justify-center mr-10'}>
-          {showBorder && !isCorrect && <div className={'rotate-90'}>x</div>}
+          {showBorder && !isCorrect && <div className={'text-base'}>✖</div>}
           {isCorrect && showBorder && <div>✔</div>}
         </div>
         <div>{answer.answer}</div>
