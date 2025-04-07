@@ -8,7 +8,7 @@ import arrowRight from '@/assets/icons/arrow-right.svg';
 const AuthConfirmButton: React.FC<{
   text?: string;
   className?: string;
-  icon: 'check' | 'open-password' | 'refresh' | 'sand-clock' | 'arrow-right';
+  icon: 'check' | 'open-password' | 'refresh' | 'sand-clock' | 'arrow-right' | 'reload';
   size?: number;
   customBorder?: boolean;
   disabled?: boolean;

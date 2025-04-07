@@ -15,6 +15,8 @@ const getIconViewBox = (name: keyof typeof IconMarkup, size: number) => {
       return '0 0 16 16';
     case 'refresh':
       return '0 0 21 21';
+    case 'reload':
+      return '0 0 16 16';
     case 'password':
     case 'youtube':
     case 'email':
@@ -23,6 +25,8 @@ const getIconViewBox = (name: keyof typeof IconMarkup, size: number) => {
     case 'eye-opened':
     case 'eye-closed':
       return '0 0 24 24';
+    case 'star':
+      return '0 0 1920 1920';
     case 'sand-clock':
       return '0 0 19 21';
     case 'open-password':
