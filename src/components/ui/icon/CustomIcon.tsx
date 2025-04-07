@@ -12,6 +12,8 @@ type ICustomIconProps = {
   caption?: string;
   tooltip?: string;
   onClick?: () => void;
+  onMouseEnter?: () => void;
+  onMouseLeave?: () => void;
 };
 
 const CustomIcon: React.FC<ICustomIconProps> = ({
@@ -20,6 +22,8 @@ const CustomIcon: React.FC<ICustomIconProps> = ({
   size = 24,
   tooltip = '',
   className,
+  onMouseEnter,
+  onMouseLeave,
   caption,
   onClick,
 }) => {
@@ -34,8 +38,18 @@ const CustomIcon: React.FC<ICustomIconProps> = ({
   return (
     <div
       className={'relative flex flex-col items-center justify-center ' + className}
-      onMouseEnter={() => setShowTooltip(true)}
-      onMouseLeave={() => setShowTooltip(false)}
+      onMouseEnter={() => {
+        setShowTooltip(true);
+        if (onMouseEnter) {
+          onMouseEnter();
+        }
+      }}
+      onMouseLeave={() => {
+        setShowTooltip(false);
+        if (onMouseLeave) {
+          onMouseLeave();
+        }
+      }}
       onClick={onClick}
       ref={iconRef}
     >
@@ -43,7 +57,7 @@ const CustomIcon: React.FC<ICustomIconProps> = ({
         width={size}
         height={size}
         viewBox={getIconViewBox(name, size)}
-        style={{ color, textAlign: 'center', margin: '0 auto' }}
+        style={{ color }}
       >
         {icon}
       </svg>
