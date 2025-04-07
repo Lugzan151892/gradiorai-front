@@ -3,23 +3,17 @@ import { IUser } from '@/core/interfaces/types';
 import { setLoading } from '@/features/loading/loadingSlice';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-export const getUserData = createAsyncThunk(
-  'user/getUserData',
-  async (_, { dispatch, rejectWithValue }) => {
-    try {
-      dispatch(setLoading(true));
-      const user = await Api.get<
-        undefined,
-        { data: IUser; accessToken: string }
-      >('/auth/user');
-      return user;
-    } catch (e) {
-      return rejectWithValue(e);
-    } finally {
-      dispatch(setLoading(false));
-    }
+export const getUserData = createAsyncThunk('user/getUserData', async (_, { dispatch, rejectWithValue }) => {
+  try {
+    dispatch(setLoading(true));
+    const user = await Api.get<undefined, { data: IUser; accessToken: string }>('/user/user');
+    return user;
+  } catch (e) {
+    return rejectWithValue(e);
+  } finally {
+    dispatch(setLoading(false));
   }
-);
+});
 
 const userSlice = createSlice({
   name: 'user',
