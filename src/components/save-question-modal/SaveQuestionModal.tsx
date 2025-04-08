@@ -12,6 +12,7 @@ import { ESKILL_LEVEL } from '@/core/interfaces/enums';
 import { ITech, ITest } from '@/core/interfaces/types';
 import AddTechnologyModal from '@/components/technology-modals/AddTechnologyModal';
 import TechComponent from '../tech-component/TechComponent';
+import CustomCheckbox from '../ui/checkbox/CustomCheckbox';
 
 interface ISaveQuestionModalProps {
   open?: boolean;
@@ -55,6 +56,24 @@ const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
       ...prev,
       responses: prev.responses.map((resp, i) => (i === index ? { ...resp, answer: value } : resp)),
     }));
+  };
+
+  const handleChangeCorrectQuestion = (index: number) => {
+    const resultWithoutCorrect = {
+      ...editedQuestion,
+      responses: editedQuestion.responses.map((el) => ({
+        ...el,
+        correct: false,
+      })),
+    };
+
+    setEditedQuestion({
+      ...resultWithoutCorrect,
+      responses: resultWithoutCorrect.responses.map((response, iResponse) => ({
+        ...response,
+        correct: iResponse === index,
+      })),
+    });
   };
 
   const changeLevels = (levelId: number) => {
@@ -186,6 +205,10 @@ const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
               key={response.id}
               className={'mt-2 flex gap-2 items-center'}
             >
+              <CustomCheckbox
+                selected={response.correct}
+                onChange={() => handleChangeCorrectQuestion(iResponse)}
+              />
               <div className={'text-nowrap'}>Ответ {iResponse + 1}:</div>
               <CustomInput
                 success={response.correct}
