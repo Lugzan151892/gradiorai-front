@@ -21,10 +21,38 @@ const SystemQuestions = () => {
   const [questions, setQuestions] = useState<IFullQuestion[]>([]);
   const [currentQuestion, setCurrentQuestion] = useState<IFullQuestion | null>(null);
   const [openEditModal, setOpenEditModal] = useState(false);
+  const [openCreateModal, setOpenCreateModal] = useState(false);
 
   const openQuestionModal = (question: IFullQuestion) => {
     setCurrentQuestion(question);
     setOpenEditModal(true);
+  };
+
+  const emptyQuestion = {
+    question: '',
+    responses: [
+      {
+        answer: '',
+        correct: true,
+        id: 1,
+      },
+      {
+        answer: '',
+        correct: false,
+        id: 2,
+      },
+      {
+        answer: '',
+        correct: false,
+        id: 3,
+      },
+      {
+        answer: '',
+        correct: false,
+        id: 4,
+      },
+    ],
+    technologies: [],
   };
 
   const loadQuestions = useCallback(async () => {
@@ -66,6 +94,13 @@ const SystemQuestions = () => {
             setOnlyMine(!onlyMine);
           }}
         />
+        <CustomButton
+          className={'ml-auto'}
+          type={'error'}
+          small
+          text={'Добавить новый вопрос'}
+          onClick={() => setOpenCreateModal(true)}
+        />
       </div>
       <div>Вопросы:</div>
       <div className={'flex flex-col gap-0.5 px-4'}>
@@ -101,6 +136,12 @@ const SystemQuestions = () => {
           onClose={() => setOpenEditModal(false)}
         />
       )}
+      <SaveQuestionModal
+        level={1}
+        question={emptyQuestion}
+        open={openCreateModal}
+        onClose={() => setOpenCreateModal(false)}
+      />
     </div>
   );
 };
