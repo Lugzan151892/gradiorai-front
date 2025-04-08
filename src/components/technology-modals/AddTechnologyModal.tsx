@@ -72,7 +72,7 @@ const AddTechnologyModal: React.FC<TModalProps> = (props) => {
       closeModal();
       dispatch(
         openModal({
-          text: `Специализация ${techName} успешно обновлена.`,
+          text: `Направление ${techName} успешно обновлено.`,
           type: 'success',
         })
       );
@@ -99,7 +99,7 @@ const AddTechnologyModal: React.FC<TModalProps> = (props) => {
       closeModal();
       dispatch(
         openModal({
-          text: `Технология ${techName} успешно добавлена.`,
+          text: `Направление ${techName} успешно добавлено.`,
           type: 'success',
         })
       );
@@ -150,24 +150,24 @@ const AddTechnologyModal: React.FC<TModalProps> = (props) => {
   return (
     <CustomModal
       open={open}
-      caption={isEdit ? 'Изменить технологию' : 'Создать технологию'}
+      caption={isEdit ? 'Изменить направление' : 'Создать направление'}
       onClose={closeModal}
     >
       <div className={'p-6'}>
         <CustomInput
           className={'mb-10'}
-          label={'Название технологии'}
+          label={'Название направления'}
           value={techName}
           onInput={setTechName}
         />
         <CustomInput
           className={'mb-10'}
-          label={'Описание технологии'}
+          label={'Описание направления'}
           value={techDescr}
           onInput={setTechDescr}
         />
         <div>
-          <div>Список тенологий</div>
+          <div>Список специализаций</div>
           <div className={'flex flex-wrap gap-5 mt-2 max-h-[300px] overflow-auto'}>
             {specs.length ? (
               specs.map((spec) => (
@@ -179,7 +179,7 @@ const AddTechnologyModal: React.FC<TModalProps> = (props) => {
                 />
               ))
             ) : (
-              <div>Технологии не найдены</div>
+              <div>Специализации не найдены</div>
             )}
           </div>
         </div>
