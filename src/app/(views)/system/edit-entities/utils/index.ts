@@ -3,7 +3,7 @@ import { EEDITED_ENTITIE } from '@/app/(views)/system/edit-entities/interfaces';
 export const entitiesListButtons = [
   {
     id: EEDITED_ENTITIE.TECH,
-    text: 'Технологии',
+    text: 'Направления',
   },
   {
     id: EEDITED_ENTITIE.SPEC,
