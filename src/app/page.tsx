@@ -48,9 +48,9 @@ const Home = () => {
         <div className={'text-white desktop:mt-36 mobile:mb-5 mobile:mt-5 desktop:max-w-[450px]'}>
           <div className={'desktop:hidden text-xl'}>Начните прямо сейчас!</div>
           <div className={'mobile:hidden text-2xl'}>Начните проходить тест прямо сейчас!</div>
-          <div className={'mt-3 w-[202px] h-[73px] flex mx-auto'}>
+          <div className={'mt-3 w-[202px] h-[50px] flex mx-auto'}>
             <CustomButton
-              className={'mobile:mx-auto w-full py-3 !rounded-2xl'}
+              className={'mobile:mx-auto w-full !py-1 !rounded-2xl'}
               type={'success'}
               text={'Начать'}
               onClick={() => router.push('/tests')}
@@ -58,7 +58,7 @@ const Home = () => {
               <CustomIcon
                 name={'youtube'}
                 color={'var(--main-white)'}
-                size={40}
+                size={30}
               />
             </CustomButton>
           </div>

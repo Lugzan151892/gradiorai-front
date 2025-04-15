@@ -37,6 +37,7 @@ export default {
         'gray-second': 'var(--second-gray)',
         aqua: 'var(--main-aqua)',
         orange: 'var(--main-orange)',
+        'hover-gray': 'var(--hover-gray)',
         'text-secondary': 'var(--text-secondary)',
         'text-gray': 'var(--text-gray)',
         'button-disabled': 'var(--disabled-button)',
