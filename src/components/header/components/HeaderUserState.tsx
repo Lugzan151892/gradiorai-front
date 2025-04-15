@@ -7,12 +7,18 @@ import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { RootState } from '@/store';
 import { logout } from '@/store/user/userSlice';
 import { useRouter } from 'next/navigation';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
+import MenuItem, { IMenuItemProps } from '@/components/header/components/MenuItem';
+
+interface IMenuItem extends IMenuItemProps {
+  id: number;
+}
 
 const HeaderUserState = () => {
   const router = useRouter();
   const { user } = useAppSelector((state: RootState) => state.user);
   const dispatch = useAppDispatch();
+  const [showMenu, setShowMenu] = useState(false);
 
   const handleLogin = () => {
     router.push('/login');
@@ -37,41 +43,78 @@ const HeaderUserState = () => {
     router.push('/login');
   };
 
+  const menuItems: IMenuItem[] = [
+    {
+      id: 1,
+      text: 'Подписка',
+      icon: 'wallet',
+    },
+    {
+      id: 2,
+      text: 'Поддержка',
+      icon: 'question-outline',
+    },
+    {
+      id: 3,
+      text: 'Выход',
+      icon: 'turn-off',
+      className: 'mt-auto',
+      onClick: handleLogout,
+    },
+  ];
+
   return (
     <>
       {!user?.id ? (
         <div className={'ml-auto flex gap-2'}>
-          <CustomIcon
-            className={'cursor-pointer'}
-            name={'user'}
-            size={36}
-            color={'var(--main-white)'}
-            caption={'Войти'}
+          <CustomButton
+            className={'!rounded-10 !px-3 !py-2 text-xl h-max '}
+            color={'low-green'}
+            text={'Вход'}
             onClick={handleLogin}
-          />
+          >
+            <div className={'flex'}>
+              <CustomIcon
+                className={'mr-6'}
+                name={'user-login'}
+                size={25}
+                color={'var(--main-white)'}
+              />
+              <div>Вход</div>
+            </div>
+          </CustomButton>
         </div>
       ) : (
         <div className={'ml-auto flex items-center'}>
           <CustomIcon
+            className={'cursor-pointer'}
             size={30}
-            name={'user'}
+            name={'user-login'}
             color={'var(--main-white)'}
-            tooltip={username || ''}
+            onClick={() => setShowMenu(!showMenu)}
           />
-          <CustomIcon
-            className={'cursor-pointer desktop:hidden ml-2'}
-            name={'login'}
-            size={30}
-            color={'var(--main-white)'}
-            onClick={handleLogout}
-          />
-          <CustomButton
-            className={'mobile:hidden ml-2'}
-            small
-            color={'gray'}
-            text={'Выйти'}
-            onClick={handleLogout}
-          />
+          {showMenu && (
+            <div
+              className={
+                'p-4 bg-black rounded-10 flex flex-col overflow-hidden w-[400px] max-w-full h-[500px] max-h-[calc(100vh-60px)] absolute top-[60px] mobile:mx-4 desktop:right-[30px] mobile:right-0'
+              }
+            >
+              <div className={'flex items-center mb-10'}>
+                <CustomIcon
+                  name={'user'}
+                  color={'var(--main-white)'}
+                  size={30}
+                />
+                <div className={'ml-3'}>{username}</div>
+              </div>
+              {menuItems.map((item) => (
+                <MenuItem
+                  key={item.id}
+                  {...item}
+                />
+              ))}
+            </div>
+          )}
         </div>
       )}
     </>
