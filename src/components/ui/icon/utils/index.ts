@@ -7,7 +7,6 @@ const getIconViewBox = (name: keyof typeof IconMarkup, size: number) => {
     case 'arrow-right':
       return '0 0 26 23';
     case 'cross':
-    case 'search-book':
       return `0 0 ${size} ${size}`;
     case 'login':
       return '0 0 32 32';
@@ -25,7 +24,12 @@ const getIconViewBox = (name: keyof typeof IconMarkup, size: number) => {
     case 'eye-opened':
     case 'eye-closed':
     case 'question-outline':
+    case 'monitor':
+    case 'search-book':
+    case 'rocket':
       return '0 0 24 24';
+    case 'hat':
+      return '0 0 20 20';
     case 'star':
       return '0 0 1920 1920';
     case 'sand-clock':

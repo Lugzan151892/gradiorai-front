@@ -12,6 +12,7 @@ import MenuItem, { IMenuItemProps } from '@/components/header/components/MenuIte
 
 interface IMenuItem extends IMenuItemProps {
   id: number;
+  show?: boolean;
 }
 
 const HeaderUserState = () => {
@@ -48,11 +49,13 @@ const HeaderUserState = () => {
       id: 1,
       text: 'Подписка',
       icon: 'wallet',
+      show: !!user?.admin,
     },
     {
       id: 2,
       text: 'Поддержка',
       icon: 'question-outline',
+      show: !!user?.admin,
     },
     {
       id: 3,
@@ -60,6 +63,7 @@ const HeaderUserState = () => {
       icon: 'turn-off',
       className: 'mt-auto',
       onClick: handleLogout,
+      show: true,
     },
   ];
 
@@ -70,17 +74,16 @@ const HeaderUserState = () => {
           <CustomButton
             className={'!rounded-10 !px-3 !py-2 text-xl h-max '}
             color={'low-green'}
-            text={'Вход'}
             onClick={handleLogin}
           >
             <div className={'flex'}>
               <CustomIcon
-                className={'mr-6'}
+                className={'desktop:mr-6'}
                 name={'user-login'}
                 size={25}
                 color={'var(--main-white)'}
               />
-              <div>Вход</div>
+              <div className={'mobile:hidden'}>Вход</div>
             </div>
           </CustomButton>
         </div>
@@ -107,12 +110,14 @@ const HeaderUserState = () => {
                 />
                 <div className={'ml-3'}>{username}</div>
               </div>
-              {menuItems.map((item) => (
-                <MenuItem
-                  key={item.id}
-                  {...item}
-                />
-              ))}
+              {menuItems
+                .filter((e) => e.show)
+                .map((item) => (
+                  <MenuItem
+                    key={item.id}
+                    {...item}
+                  />
+                ))}
             </div>
           )}
         </div>
