@@ -170,12 +170,12 @@ const TestsView = () => {
   }
 
   return (
-    <div className={'flex flex-col w-full h-full gap-y-8'}>
+    <div className={'flex flex-col w-full h-full gap-y-8 pb-4'}>
       <SettingsBlock
         icon={'search-book'}
         title={'Уровень вопросов'}
       >
-        <div className={'flex gap-10 flex-wrap mt-9'}>
+        <div className={'flex gap-10 flex-wrap mt-9 mobile:justify-center'}>
           {skillOptions.map((level) => (
             <CustomFilterButton
               text={level.text}
@@ -203,7 +203,9 @@ const TestsView = () => {
         }
       >
         {specs.length ? (
-          <div className={'grid grid-cols-[repeat(auto-fit,minmax(200px,max-content))] gap-5 mt-9'}>
+          <div
+            className={'grid grid-cols-[repeat(auto-fit,minmax(140px,max-content))] gap-5 mt-9 mobile:justify-center'}
+          >
             {specs.map((spec) => (
               <TechComponent
                 tech={spec}
@@ -218,7 +220,7 @@ const TestsView = () => {
         )}
       </SettingsBlock>
       <SettingsBlock
-        icon={'hut'}
+        icon={'hat'}
         title={'Направления'}
         description={'Каждое направление включает в себя набор вопросов'}
         captionAfter={
@@ -234,7 +236,9 @@ const TestsView = () => {
         }
       >
         {techs.length ? (
-          <div className={'grid grid-cols-[repeat(auto-fit,minmax(150px,max-content))] gap-5 mt-9'}>
+          <div
+            className={'grid grid-cols-[repeat(auto-fit,minmax(130px,max-content))] gap-5 mt-9 mobile:justify-center'}
+          >
             {techs.map((tech) => (
               <TechComponent
                 tech={tech}
@@ -249,6 +253,7 @@ const TestsView = () => {
         )}
       </SettingsBlock>
       <SettingsBlock
+        className={'mobile:hidden'}
         icon={'rocket'}
         title={'Начать'}
         description={'После того как вы определили конфигурацию тестов мы готовы их составить!'}
@@ -265,6 +270,17 @@ const TestsView = () => {
           />
         </div>
       </SettingsBlock>
+      <div className={'desktop:hiddenw-full flex items-center mt-2'}>
+        <AuthConfirmButton
+          className={'!w-[170px] mx-auto'}
+          customBorder
+          disabled={!questionsTechs.length}
+          size={24}
+          icon={'check'}
+          text={'Начать'}
+          onClick={handleStart}
+        />
+      </div>
       <AddSpecModal
         open={openAddSpecModal}
         onClose={() => {
