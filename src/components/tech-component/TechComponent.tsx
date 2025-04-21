@@ -37,7 +37,7 @@ const TechComponent: React.FC<ITechComponentProps> = ({
       </div>
       <div
         className={
-          'mx-auto text-2xl text-white text-nowrap truncate mw-full ' +
+          'mx-auto desktop:text-2xl mobile:text-base text-white text-nowrap truncate mw-full ' +
           `${selected ? '' : ' group-hover:text-low-green'}`
         }
       >
