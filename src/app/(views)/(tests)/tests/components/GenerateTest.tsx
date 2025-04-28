@@ -140,7 +140,7 @@ const GenerateTest: React.FC<{
   }
 
   return (
-    <div className={'h-full flex flex-grow w-full overflow-auto text-white'}>
+    <div className={'h-full flex flex-grow w-full scroll-container overflow-auto text-white'}>
       <div className={'my-7 mx-3 bg-bg-transparent-25 rounded-10 w-full p-4 flex flex-col'}>
         <div className={'flex gap-4'}>
           <div className={'h-24 w-24 rounded flex items-center justify-center text-xl border-1 border-white'}>

@@ -45,3 +45,41 @@ body {
   background: var(--main-white);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.scroll-container {
+  overflow: auto;
+  position: relative;
+}
+
+/* Скрываем скроллбар по умолчанию */
+.scroll-container::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
+/* Настройки ползунка */
+.scroll-container::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+
+/* Настройки трека */
+.scroll-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Стрелочки убираем */
+.scroll-container::-webkit-scrollbar-button {
+  display: none;
+}
+
+/* Активное состояние — показываем скролл */
+.scroll-container.show-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scroll-container.show-scrollbar::-webkit-scrollbar-thumb {
+  background-color: white;
+}

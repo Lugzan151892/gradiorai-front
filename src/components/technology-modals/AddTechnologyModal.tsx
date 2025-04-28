@@ -168,7 +168,7 @@ const AddTechnologyModal: React.FC<TModalProps> = (props) => {
         />
         <div>
           <div>Список специализаций</div>
-          <div className={'flex flex-wrap gap-5 mt-2 max-h-[300px] overflow-auto'}>
+          <div className={'flex flex-wrap gap-5 mt-2 max-h-[300px] overflow-auto scroll-container'}>
             {specs.length ? (
               specs.map((spec) => (
                 <TechComponent

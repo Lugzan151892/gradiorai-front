@@ -270,7 +270,7 @@ const TestsView = () => {
           />
         </div>
       </SettingsBlock>
-      <div className={'desktop:hiddenw-full flex items-center mt-2'}>
+      <div className={'desktop:hidden w-full flex items-center mt-2'}>
         <AuthConfirmButton
           className={'!w-[170px] mx-auto'}
           customBorder

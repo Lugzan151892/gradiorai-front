@@ -133,7 +133,7 @@ const EditEntitiesView = () => {
           />
         ))}
       </div>
-      <div className={'overflow-auto w-full px-4 mt-4'}>
+      <div className={'overflow-auto scroll-container w-full px-4 mt-4'}>
         {choosenEntitie === EEDITED_ENTITIE.SPEC &&
           specs.map((spec) => (
             <div
