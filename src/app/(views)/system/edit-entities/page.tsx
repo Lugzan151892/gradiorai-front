@@ -12,6 +12,7 @@ import { ISpecialization, ITechnology } from '@/core/interfaces/types';
 import { openModal } from '@/store/tech/techSlice';
 import AddSpecModal from '@/components/specialization-modals/AddSpecModal';
 import AddTechnologyModal from '@/components/technology-modals/AddTechnologyModal';
+import ScrollContainer from '@/components/ui/scrollarea/CustomScrollarea';
 
 const EditEntitiesView = () => {
   const [choosenEntitie, setChoosenEntitie] = useState<EEDITED_ENTITIE>();
@@ -133,50 +134,52 @@ const EditEntitiesView = () => {
           />
         ))}
       </div>
-      <div className={'overflow-auto w-full px-4 mt-4'}>
-        {choosenEntitie === EEDITED_ENTITIE.SPEC &&
-          specs.map((spec) => (
-            <div
-              key={spec.id}
-              className={'border-1 w-full flex justify-between items-center px-4 py-1'}
-            >
-              <div className={'text-3xl'}>{spec.name}</div>
-              <div className={'flex flex-col'}>
-                <CustomButton
-                  text={'Изменить'}
-                  className={'mb-2'}
-                  onClick={() => handleEditSpecialization(spec)}
-                />
-                <CustomButton
-                  type={'error'}
-                  text={'Удалить'}
-                  onClick={() => handleDeleteSpecialization(spec.id)}
-                />
+      <div className={'w-full px-4 mt-4'}>
+        <ScrollContainer>
+          {choosenEntitie === EEDITED_ENTITIE.SPEC &&
+            specs.map((spec) => (
+              <div
+                key={spec.id}
+                className={'border-1 w-full flex justify-between items-center px-4 py-1'}
+              >
+                <div className={'text-3xl'}>{spec.name}</div>
+                <div className={'flex flex-col'}>
+                  <CustomButton
+                    text={'Изменить'}
+                    className={'mb-2'}
+                    onClick={() => handleEditSpecialization(spec)}
+                  />
+                  <CustomButton
+                    type={'error'}
+                    text={'Удалить'}
+                    onClick={() => handleDeleteSpecialization(spec.id)}
+                  />
+                </div>
               </div>
-            </div>
-          ))}
-        {choosenEntitie === EEDITED_ENTITIE.TECH &&
-          techs.map((tech) => (
-            <div
-              key={tech.id}
-              className={'border-1 w-full flex justify-between items-center px-4 py-1'}
-            >
-              <div className={'text-3xl mr-4'}>{tech.name}</div>
-              <div className={'text-2xl'}>{`Описание: ${tech.description || 'Не заполнено'}`}</div>
-              <div className={'flex flex-col'}>
-                <CustomButton
-                  text={'Изменить'}
-                  className={'mb-2'}
-                  onClick={() => handleEditTechnology(tech)}
-                />
-                <CustomButton
-                  type={'error'}
-                  text={'Удалить'}
-                  onClick={() => handleDeleteTechnology(tech.id)}
-                />
+            ))}
+          {choosenEntitie === EEDITED_ENTITIE.TECH &&
+            techs.map((tech) => (
+              <div
+                key={tech.id}
+                className={'border-1 w-full flex justify-between items-center px-4 py-1'}
+              >
+                <div className={'text-3xl mr-4'}>{tech.name}</div>
+                <div className={'text-2xl'}>{`Описание: ${tech.description || 'Не заполнено'}`}</div>
+                <div className={'flex flex-col'}>
+                  <CustomButton
+                    text={'Изменить'}
+                    className={'mb-2'}
+                    onClick={() => handleEditTechnology(tech)}
+                  />
+                  <CustomButton
+                    type={'error'}
+                    text={'Удалить'}
+                    onClick={() => handleDeleteTechnology(tech.id)}
+                  />
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+        </ScrollContainer>
       </div>
       {currentSpecialization && (
         <AddSpecModal
