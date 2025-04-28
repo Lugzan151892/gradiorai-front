@@ -51,35 +51,34 @@ body {
   position: relative;
 }
 
-/* Скрываем скроллбар по умолчанию */
+/* ВСЕГДА фиксированная ширина скролла */
 .scroll-container::-webkit-scrollbar {
-  width: 0px;
-  height: 0px;
-}
-
-/* Настройки ползунка */
-.scroll-container::-webkit-scrollbar-thumb {
-  background-color: transparent;
-  border-radius: 10px;
-  transition: background-color 0.3s ease;
-}
-
-/* Настройки трека */
-.scroll-container::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-/* Стрелочки убираем */
-.scroll-container::-webkit-scrollbar-button {
-  display: none;
-}
-
-/* Активное состояние — показываем скролл */
-.scroll-container.show-scrollbar::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
+/* Ползунок */
+.scroll-container::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  border-radius: 10px;
+  transition:
+    background-color 0.3s ease,
+    opacity 0.5s ease;
+  opacity: 0;
+}
+
+/* Трек */
+.scroll-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Стрелочки */
+.scroll-container::-webkit-scrollbar-button {
+  display: none;
+}
+
+/* Показываем скроллбар когда активен класс */
 .scroll-container.show-scrollbar::-webkit-scrollbar-thumb {
   background-color: white;
+  opacity: 1;
 }
