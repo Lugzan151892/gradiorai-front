@@ -9,6 +9,7 @@ import { useAppDispatch } from '@/hooks/redux';
 import { openModal } from '@/store/tech/techSlice';
 import React, { useEffect, useState } from 'react';
 import TechComponent from '../tech-component/TechComponent';
+import ScrollContainer from '../ui/scrollarea/CustomScrollarea';
 
 interface IAddTechnologyModalProps {
   type?: 'create';
@@ -168,19 +169,23 @@ const AddTechnologyModal: React.FC<TModalProps> = (props) => {
         />
         <div>
           <div>Список специализаций</div>
-          <div className={'flex flex-wrap gap-5 mt-2 max-h-[300px] overflow-auto'}>
-            {specs.length ? (
-              specs.map((spec) => (
-                <TechComponent
-                  tech={spec}
-                  key={spec.id}
-                  selected={selectedSpecs.includes(spec.id)}
-                  onClick={() => handleSetSelectedSpecs(spec.id)}
-                />
-              ))
-            ) : (
-              <div>Специализации не найдены</div>
-            )}
+          <div className={'flex mt-2 max-h-[300px]'}>
+            <ScrollContainer>
+              <div className={'flex flex-wrap gap-5'}>
+                {specs.length ? (
+                  specs.map((spec) => (
+                    <TechComponent
+                      tech={spec}
+                      key={spec.id}
+                      selected={selectedSpecs.includes(spec.id)}
+                      onClick={() => handleSetSelectedSpecs(spec.id)}
+                    />
+                  ))
+                ) : (
+                  <div>Специализации не найдены</div>
+                )}
+              </div>
+            </ScrollContainer>
           </div>
         </div>
         <div className={'flex'}>
