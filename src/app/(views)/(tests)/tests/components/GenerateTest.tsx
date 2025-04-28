@@ -13,6 +13,7 @@ import CustomTextarea from '@/components/ui/textarea/CustomTextarea';
 import CustomIcon from '@/components/ui/icon/CustomIcon';
 import errorHandler from '@/core/utils/error/errorHandler';
 import { setLoading } from '@/features/loading/loadingSlice';
+import ScrollContainer from '@/components/ui/scrollarea/CustomScrollarea';
 
 const GenerateTest: React.FC<{
   tests: ITest[];
@@ -140,61 +141,65 @@ const GenerateTest: React.FC<{
   }
 
   return (
-    <div className={'h-full flex flex-grow w-full overflow-auto text-white'}>
-      <div className={'my-7 mx-3 bg-bg-transparent-25 rounded-10 w-full p-4 flex flex-col'}>
-        <div className={'flex gap-4'}>
-          <div className={'h-24 w-24 rounded flex items-center justify-center text-xl border-1 border-white'}>
-            {`${currentQuestion} / ${tests.length}`}
+    <div className={'h-full flex flex-grow w-full text-white'}>
+      <ScrollContainer>
+        <div className={'flex flex-grow'}>
+          <div className={'my-7 mx-3 bg-bg-transparent-25 rounded-10 w-full p-4 flex flex-col'}>
+            <div className={'flex gap-4'}>
+              <div className={'h-24 w-24 rounded flex items-center justify-center text-xl border-1 border-white'}>
+                {`${currentQuestion} / ${tests.length}`}
+              </div>
+              <div className={'w-full flex items-center rounded p-3 desktop:text-2xl mobile:text-base'}>
+                {tests[currentQuestion - 1].question}
+              </div>
+            </div>
+            <div className={'flex flex-col mt-3 gap-3'}>
+              {tests[currentQuestion - 1].responses.map((answer) => (
+                <AnswerComponent
+                  key={answer.id}
+                  answer={answer}
+                  disabled={!!userChoise && userChoise !== answer.id}
+                  userChoise={userChoise}
+                  onClick={() => handleSetUserChoise(answer)}
+                />
+              ))}
+            </div>
+            <div className={'w-full mt-auto flex'}>
+              <AdminWrapper>
+                <CustomButton
+                  className={'desktop:hidden'}
+                  small
+                  disabled={!!tests[currentQuestion - 1].id || disableSave}
+                  text={'Сохранить вопрос'}
+                  onClick={saveQuestion}
+                />
+                <CustomButton
+                  className={'mobile:hidden'}
+                  disabled={!!tests[currentQuestion - 1].id || disableSave}
+                  text={'Сохранить вопрос'}
+                  onClick={saveQuestion}
+                />
+              </AdminWrapper>
+              <AuthConfirmButton
+                icon={currentQuestion === tests.length ? 'sand-clock' : 'arrow-right'}
+                customBorder
+                className={'!w-[180px] ml-auto h-max self-end'}
+                size={24}
+                text={currentQuestion === tests.length ? 'Завершить' : 'Далее'}
+                disabled={!userChoise}
+                onClick={handleSetQuestion}
+              />
+            </div>
+            <SaveQuestionModal
+              techs={techs}
+              level={level}
+              question={tests[currentQuestion - 1]}
+              open={saveQuestionModal}
+              onClose={() => setSaveQuestionModal(false)}
+            />
           </div>
-          <div className={'w-full flex items-center rounded p-3 desktop:text-2xl mobile:text-base'}>
-            {tests[currentQuestion - 1].question}
-          </div>
         </div>
-        <div className={'flex flex-col mt-3 gap-3'}>
-          {tests[currentQuestion - 1].responses.map((answer) => (
-            <AnswerComponent
-              key={answer.id}
-              answer={answer}
-              disabled={!!userChoise && userChoise !== answer.id}
-              userChoise={userChoise}
-              onClick={() => handleSetUserChoise(answer)}
-            />
-          ))}
-        </div>
-        <div className={'w-full mt-auto flex'}>
-          <AdminWrapper>
-            <CustomButton
-              className={'desktop:hidden'}
-              small
-              disabled={!!tests[currentQuestion - 1].id || disableSave}
-              text={'Сохранить вопрос'}
-              onClick={saveQuestion}
-            />
-            <CustomButton
-              className={'mobile:hidden'}
-              disabled={!!tests[currentQuestion - 1].id || disableSave}
-              text={'Сохранить вопрос'}
-              onClick={saveQuestion}
-            />
-          </AdminWrapper>
-          <AuthConfirmButton
-            icon={currentQuestion === tests.length ? 'sand-clock' : 'arrow-right'}
-            customBorder
-            className={'!w-[180px] ml-auto h-max self-end'}
-            size={24}
-            text={currentQuestion === tests.length ? 'Завершить' : 'Далее'}
-            disabled={!userChoise}
-            onClick={handleSetQuestion}
-          />
-        </div>
-        <SaveQuestionModal
-          techs={techs}
-          level={level}
-          question={tests[currentQuestion - 1]}
-          open={saveQuestionModal}
-          onClose={() => setSaveQuestionModal(false)}
-        />
-      </div>
+      </ScrollContainer>
     </div>
   );
 };
