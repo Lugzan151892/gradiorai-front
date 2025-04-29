@@ -8,7 +8,7 @@ const AppHeader: React.FC<{ withState?: boolean }> = ({ withState = true }) => {
   const router = useRouter();
 
   return (
-    <header className={'desktop:px-6 mobile:px-5 mobile:pt-2 desktop:pt-2 flex items-center'}>
+    <header className={'desktop:px-6 mobile:px-5 mobile:py-2 desktop:py-5 flex items-center'}>
       <CustomIcon
         name={'owl'}
         size={64}

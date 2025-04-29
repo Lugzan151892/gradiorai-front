@@ -175,7 +175,7 @@ const TestsView = () => {
         icon={'search-book'}
         title={'Уровень вопросов'}
       >
-        <div className={'flex gap-10 flex-wrap mt-9 mobile:justify-center'}>
+        <div className={'grid grid-cols-[repeat(auto-fit,minmax(140px,max-content))] gap-5 mt-9 mobile:justify-center'}>
           {skillOptions.map((level) => (
             <CustomFilterButton
               text={level.text}
@@ -190,17 +190,6 @@ const TestsView = () => {
         icon={'monitor'}
         title={'Специализация'}
         description={'Здесь вы можете отфильтровать направления подходящие под специализацию '}
-        captionAfter={
-          <div>
-            <AdminWrapper>
-              <CustomButton
-                small
-                text={'Создать специализацию'}
-                onClick={() => setOpenAddSpecModal(true)}
-              />
-            </AdminWrapper>
-          </div>
-        }
       >
         {specs.length ? (
           <div
@@ -218,31 +207,30 @@ const TestsView = () => {
         ) : (
           <div>Специализации не найдены</div>
         )}
+        <div className={'mx-auto w-max mt-2'}>
+          <AdminWrapper>
+            <CustomButton
+              small
+              text={'Создать специализацию'}
+              onClick={() => setOpenAddSpecModal(true)}
+            />
+          </AdminWrapper>
+        </div>
       </SettingsBlock>
       <SettingsBlock
         icon={'hat'}
         title={'Направления'}
         description={'Каждое направление включает в себя набор вопросов'}
-        captionAfter={
-          <div>
-            <AdminWrapper>
-              <CustomButton
-                small
-                text={'Создать направление'}
-                onClick={() => setOpenAddTechModal(true)}
-              />
-            </AdminWrapper>
-          </div>
-        }
       >
         {techs.length ? (
           <div
-            className={'grid grid-cols-[repeat(auto-fit,minmax(130px,max-content))] gap-5 mt-9 mobile:justify-center'}
+            className={'grid grid-cols-[repeat(auto-fit,minmax(130px,max-content))] gap-5 mt-7 mobile:justify-center'}
           >
             {techs.map((tech) => (
               <TechComponent
                 tech={tech}
                 key={tech.id}
+                small
                 selected={questionsTechs.includes(tech.id)}
                 onClick={() => handleSetQuestionsTechs(tech.id)}
               />
@@ -251,6 +239,15 @@ const TestsView = () => {
         ) : (
           <div>Специализации не найдены</div>
         )}
+        <div className={'mx-auto w-max mt-2'}>
+          <AdminWrapper>
+            <CustomButton
+              small
+              text={'Создать направление'}
+              onClick={() => setOpenAddTechModal(true)}
+            />
+          </AdminWrapper>
+        </div>
       </SettingsBlock>
       <SettingsBlock
         className={'mobile:hidden'}
@@ -258,7 +255,7 @@ const TestsView = () => {
         title={'Начать'}
         description={'После того как вы определили конфигурацию тестов мы готовы их составить!'}
       >
-        <div className={'w-full flex items-center mt-10'}>
+        <div className={'w-[calc(100%-160px)] flex items-center mt-10'}>
           <AuthConfirmButton
             className={'!w-[170px] mx-auto'}
             customBorder
@@ -270,7 +267,7 @@ const TestsView = () => {
           />
         </div>
       </SettingsBlock>
-      <div className={'desktop:hidden w-full flex items-center mt-2'}>
+      <div className={'desktop:hidden w-full flex items-center mt-2 pb-2'}>
         <AuthConfirmButton
           className={'!w-[170px] mx-auto'}
           customBorder

@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { RootState } from '@/store';
 import { logout } from '@/store/user/userSlice';
 import { useRouter } from 'next/navigation';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import MenuItem, { IMenuItemProps } from '@/components/header/components/MenuItem';
 
 interface IMenuItem extends IMenuItemProps {
@@ -20,6 +20,8 @@ const HeaderUserState = () => {
   const { user } = useAppSelector((state: RootState) => state.user);
   const dispatch = useAppDispatch();
   const [showMenu, setShowMenu] = useState(false);
+
+  const menuRef = useRef<HTMLDivElement>(null);
 
   const handleLogin = () => {
     router.push('/login');
@@ -67,6 +69,22 @@ const HeaderUserState = () => {
     },
   ];
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setShowMenu(false);
+      }
+    };
+
+    if (showMenu) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showMenu]);
+
   return (
     <>
       {!user?.id ? (
@@ -88,7 +106,10 @@ const HeaderUserState = () => {
           </CustomButton>
         </div>
       ) : (
-        <div className={'ml-auto flex items-center'}>
+        <div
+          className={'ml-auto flex items-center'}
+          ref={menuRef}
+        >
           <CustomIcon
             className={'cursor-pointer'}
             size={30}
@@ -99,7 +120,7 @@ const HeaderUserState = () => {
           {showMenu && (
             <div
               className={
-                'p-4 bg-black rounded-10 flex flex-col overflow-hidden w-[400px] max-w-full h-[500px] max-h-[calc(100vh-60px)] absolute top-[60px] mobile:mx-4 desktop:right-[30px] mobile:right-0'
+                'z-50 p-4 bg-black rounded-10 flex flex-col overflow-hidden desktop:w-[400px] mobile:w-full max-w-full desktop:h-[500px] mobile:h-full max-h-[calc(100vh-60px)] absolute top-[60px] desktop:right-[30px] mobile:right-0'
               }
             >
               <div className={'flex items-center mb-10'}>

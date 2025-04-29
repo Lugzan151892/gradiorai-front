@@ -18,7 +18,7 @@ const ScrollContainer = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div
-      className={`scroll-container ${showScrollbar ? 'show-scrollbar' : ''}`}
+      className={`scroll-container w-full ${showScrollbar ? 'show-scrollbar' : ''}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >

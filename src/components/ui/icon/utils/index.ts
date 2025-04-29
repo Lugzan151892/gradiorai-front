@@ -10,8 +10,6 @@ const getIconViewBox = (name: keyof typeof IconMarkup, size: number) => {
       return `0 0 ${size} ${size}`;
     case 'login':
       return '0 0 32 32';
-    case 'user':
-      return '0 0 16 16';
     case 'refresh':
       return '0 0 21 21';
     case 'reload':
@@ -27,6 +25,7 @@ const getIconViewBox = (name: keyof typeof IconMarkup, size: number) => {
     case 'monitor':
     case 'search-book':
     case 'rocket':
+    case 'user':
       return '0 0 24 24';
     case 'hat':
       return '0 0 20 20';
