@@ -43,12 +43,38 @@ const iconMarkup = {
   ),
   /** @todo fix me */
   user: (
-    <g fill={'currentColor'}>
+    <>
       <path
-        d={'M8 7C9.65685 7 11 5.65685 11 4C11 2.34315 9.65685 1 8 1C6.34315 1 5 2.34315 5 4C5 5.65685 6.34315 7 8 7Z'}
+        d={
+          'M18.14 21.62C17.26 21.88 16.22 22 15 22H8.99998C7.77998 22 6.73999 21.88 5.85999 21.62C6.07999 19.02 8.74998 16.97 12 16.97C15.25 16.97 17.92 19.02 18.14 21.62Z'
+        }
+        stroke={'currentColor'}
+        strokeWidth={'1.2'}
+        fill={'none'}
+        strokeLinecap={'round'}
+        strokeLinejoin={'round'}
       />
-      <path d={'M14 12C14 10.3431 12.6569 9 11 9H5C3.34315 9 2 10.3431 2 12V15H14V12Z'} />
-    </g>
+      <path
+        d={
+          'M15 2H9C4 2 2 4 2 9V15C2 18.78 3.14 20.85 5.86 21.62C6.08 19.02 8.75 16.97 12 16.97C15.25 16.97 17.92 19.02 18.14 21.62C20.86 20.85 22 18.78 22 15V9C22 4 20 2 15 2ZM12 14.17C10.02 14.17 8.42 12.56 8.42 10.58C8.42 8.60002 10.02 7 12 7C13.98 7 15.58 8.60002 15.58 10.58C15.58 12.56 13.98 14.17 12 14.17Z'
+        }
+        stroke={'currentColor'}
+        strokeWidth={'1.2'}
+        fill={'none'}
+        strokeLinecap={'round'}
+        strokeLinejoin={'round'}
+      />
+      <path
+        d={
+          'M15.58 10.58C15.58 12.56 13.98 14.17 12 14.17C10.02 14.17 8.42004 12.56 8.42004 10.58C8.42004 8.60002 10.02 7 12 7C13.98 7 15.58 8.60002 15.58 10.58Z'
+        }
+        stroke={'currentColor'}
+        fill={'none'}
+        strokeWidth={'1.2'}
+        strokeLinecap={'round'}
+        strokeLinejoin={'round'}
+      />
+    </>
   ),
   password: (
     <path
@@ -366,12 +392,13 @@ const iconMarkup = {
     </>
   ),
   'question-outline': (
-    <g>
+    <>
       <path
         d={
           'M2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C22 4.92893 22 7.28595 22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12Z'
         }
         stroke={'currentColor'}
+        fill={'none'}
         strokeWidth={'1.5'}
       />
       <path
@@ -380,6 +407,7 @@ const iconMarkup = {
         }
         stroke={'currentColor'}
         strokeWidth={'1.5'}
+        fill={'none'}
         strokeLinecap={'round'}
       />
       <circle
@@ -388,18 +416,19 @@ const iconMarkup = {
         r={'1'}
         fill={'currentColor'}
       />
-    </g>
+    </>
   ),
   'turn-off': (
-    <g>
+    <>
       <path
         stroke={'currentColor'}
+        fill={'none'}
         strokeLinecap={'round'}
         strokeLinejoin={'round'}
         strokeWidth={'2'}
         d={'M22.5 4.742a13 13 0 11-13 0M16 3v10'}
       />
-    </g>
+    </>
   ),
 };
 

@@ -21,7 +21,12 @@ const SettingsBlock: React.FC<Readonly<ISettingsBlockProps>> = ({
   captionAfter,
 }) => {
   return (
-    <div className={'w-full h-full bg-bg-transparent-25 rounded-10 flex py-6 px-10 ' + className}>
+    <div
+      className={
+        'w-full h-full bg-bg-transparent-25 desktop:hover:bg-bg-transparent-50 rounded-10 flex py-5 desktop:px-10 mobile:px-2 ' +
+        className
+      }
+    >
       <div className={'mobile:hidden w-20 h-full mr-20'}>
         {icon && (
           <CustomIcon
@@ -33,7 +38,7 @@ const SettingsBlock: React.FC<Readonly<ISettingsBlockProps>> = ({
       </div>
       <div className={'flex flex-col mobile:w-full'}>
         <div className={'flex'}>
-          <div className={'desktop:hidden w-20 h-full mr-4'}>
+          <div className={'desktop:hidden desktop:w-20 h-full mr-4'}>
             {icon && (
               <CustomIcon
                 name={icon}
@@ -44,7 +49,7 @@ const SettingsBlock: React.FC<Readonly<ISettingsBlockProps>> = ({
           </div>
           <div className={'flex flex-col'}>
             <div className={'flex items-center'}>
-              {title && <div className={'desktop:text-3xl mobile:text-2xl'}>{title}</div>}
+              {title && <div className={'desktop:text-4xl mobile:text-2xl'}>{title}</div>}
               {captionAfter && <div className={'ml-2'}>{captionAfter}</div>}
             </div>
 
