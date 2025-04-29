@@ -106,7 +106,10 @@ const HeaderUserState = () => {
           </CustomButton>
         </div>
       ) : (
-        <div className={'ml-auto flex items-center'}>
+        <div
+          className={'ml-auto flex items-center'}
+          ref={menuRef}
+        >
           <CustomIcon
             className={'cursor-pointer'}
             size={30}
@@ -116,9 +119,8 @@ const HeaderUserState = () => {
           />
           {showMenu && (
             <div
-              ref={menuRef}
               className={
-                'p-4 bg-black rounded-10 flex flex-col overflow-hidden w-[400px] max-w-full h-[500px] max-h-[calc(100vh-60px)] absolute top-[60px] mobile:mx-4 desktop:right-[30px] mobile:right-0'
+                'z-50 p-4 bg-black rounded-10 flex flex-col overflow-hidden desktop:w-[400px] mobile:w-full max-w-full desktop:h-[500px] mobile:h-full max-h-[calc(100vh-60px)] absolute top-[60px] desktop:right-[30px] mobile:right-0'
               }
             >
               <div className={'flex items-center mb-10'}>

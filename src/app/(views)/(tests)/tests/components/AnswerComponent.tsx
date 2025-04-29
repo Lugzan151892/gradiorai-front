@@ -15,7 +15,11 @@ const AnswerComponent: React.FC<{
       onClick={() => (disabled || !onClick ? undefined : onClick())}
     >
       <div className={`flex items-center w-full py-1 rounded-input`}>
-        <div className={'rounded-full border-1 h-6 w-6 border-white flex items-center justify-center mr-10'}>
+        <div
+          className={
+            'rounded-full border-1 min-w-6 min-h-6 h-6 w-6 border-white flex items-center justify-center mr-10'
+          }
+        >
           {showBorder && !isCorrect && <div className={'text-base'}>✖</div>}
           {isCorrect && showBorder && <div>✔</div>}
         </div>

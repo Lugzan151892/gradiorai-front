@@ -111,7 +111,7 @@ const ProgressBar: React.FC<Readonly<ProgressBarProps>> = ({
           style={{ width: `${currentPercent}%` }}
         />
       </div>
-      <div className={'text-4xl mt-4 text-center max-w-4xl'}>{caption()}</div>
+      <div className={'deskop:text-3xl mobile:text-base mt-4 text-center max-w-4xl'}>{caption()}</div>
     </div>
   );
 };
