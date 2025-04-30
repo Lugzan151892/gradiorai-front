@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Gradior AI',
+  title: 'Gradior',
   description: 'Gradior AI',
 };
 

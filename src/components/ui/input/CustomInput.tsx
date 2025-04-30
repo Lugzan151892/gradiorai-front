@@ -1,6 +1,6 @@
 'use client';
 
-import { Field, Input, Label } from '@headlessui/react';
+import { Field, Label } from '@headlessui/react';
 import React, { useEffect, useState } from 'react';
 import CustomIcon from '@/components/ui/icon/CustomIcon';
 
@@ -79,12 +79,14 @@ const CustomInput: React.FC<ICustomInputProps> = ({
               name={icon}
             />
           ) : null}
-          <Input
+          <input
             value={value}
             placeholder={placeholder}
             onInput={handleInput}
             onChange={handleChange}
             type={currentInputType}
+            name={type}
+            autoComplete={type}
             className={
               `w-full pl-3 ${icon ? `border-l-2 ${error ? '!border-error' : '!border-gray'}` : ''} text-black text-base focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25 ${inputError} ` +
               classes

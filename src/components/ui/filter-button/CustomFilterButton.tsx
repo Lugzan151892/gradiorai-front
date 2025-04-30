@@ -12,7 +12,10 @@ const CustomInpuButton: React.FC<
     : 'hover:text-low-green hover:text-low-green hover:border-low-green';
   return (
     <div
-      className={'py-1 px-8 rounded-input border-1 max-w-max text-2xl cursor-pointer ' + selectedClasses}
+      className={
+        'py-1 desktop:px-8 mobile:px-5 rounded-input border-1 max-w-max desktop:text-2xl mobile:text-base cursor-pointer ' +
+        selectedClasses
+      }
       onClick={onClick}
     >
       <div>{text}</div>

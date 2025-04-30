@@ -120,7 +120,7 @@ const HeaderUserState = () => {
           {showMenu && (
             <div
               className={
-                'z-50 p-4 bg-black rounded-10 flex flex-col overflow-hidden desktop:w-[400px] mobile:w-full max-w-full desktop:h-[500px] mobile:h-full max-h-[calc(100vh-60px)] absolute top-[60px] desktop:right-[30px] mobile:right-0'
+                'z-50 p-4 bg-black rounded-10 flex flex-col overflow-hidden desktop:w-[400px] mobile:w-full max-w-full desktop:h-[300px] mobile:h-full max-h-[calc(100vh-80px)] absolute top-[80px] desktop:right-[30px] mobile:right-0'
               }
             >
               <div className={'flex items-center mb-10'}>
