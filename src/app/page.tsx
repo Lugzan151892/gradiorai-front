@@ -16,7 +16,7 @@ const Home = () => {
       <AppHeader />
       <div
         className={
-          'desktop:my-auto mobile:h-full mobile:mt-20 desktop:grid desktop:grid-cols-2 desktop:gap-x-2 desktop:grid-rows-[max-content,max-content] mobile:flex mobile:flex-col mobile:items-center desktop:ml-36 mobile:px-5'
+          'desktop:my-auto mobile:h-full mobile:mt-10 desktop:grid desktop:grid-cols-2 desktop:gap-x-2 desktop:grid-rows-[max-content,max-content] mobile:flex mobile:flex-col mobile:items-center desktop:ml-36 mobile:px-5'
         }
       >
         <div className={'text-white max-w-[690px]'}>
