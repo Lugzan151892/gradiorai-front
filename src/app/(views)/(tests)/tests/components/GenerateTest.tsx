@@ -89,17 +89,17 @@ const GenerateTest: React.FC<{
   if (showResults) {
     return (
       <div className={'h-full flex flex-grow w-full'}>
-        <div className={'my-7 bg-bg-transparent-25 mx-3 rounded-lg w-full p-4 flex flex-col items-center'}>
-          <div className={'text-4xl mb-4'}>Ваш результат</div>
+        <div className={'my-8 bg-bg-transparent-25 mx-3 rounded-lg w-full p-4 flex flex-col items-center'}>
+          <div className={'text-4xl mobile:mb-4 desktop:mb-10'}>Ваш результат</div>
           <ProgressBar
             score={userResult}
             maxScore={tests.length}
           />
           <div className={'flex flex-col max-w-lg w-full mt-10'}>
             <div>
-              <div className={'text-base'}>Оцените тестирование</div>
+              <div className={'desktop:text-xl mobile:text-base'}>Оцените тестирование</div>
               <div
-                className={'mobile:hidden flex gap-5 mt-2'}
+                className={'mobile:hidden flex gap-7 mt-2'}
                 onMouseLeave={() => setUserHover(0)}
               >
                 {stars.map((star) => (
@@ -107,7 +107,7 @@ const GenerateTest: React.FC<{
                     key={star}
                     className={'cursor-pointer'}
                     name={'star'}
-                    size={86}
+                    size={79}
                     color={userHover >= star || userRating >= star ? 'var(--low-green)' : 'var(--main-white)'}
                     onMouseEnter={() => setUserHover(star)}
                     onClick={() => setUserRating(star)}
@@ -132,7 +132,7 @@ const GenerateTest: React.FC<{
               </div>
             </div>
             <div className={'mt-10'}>
-              <div className={'text-base'}>Отзыв</div>
+              <div className={'desktop:text-xl mobile:text-base mb-2'}>Отзыв</div>
               <CustomTextarea
                 value={comment}
                 rows={4}

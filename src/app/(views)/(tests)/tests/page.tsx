@@ -19,6 +19,7 @@ import { shuffleArray } from '@/core/utils/array';
 import GenerateTest from '@/app/(views)/(tests)/tests/components/GenerateTest';
 import GeneratePasswordModal from '@/components/generate-password-modal/GeneratePasswordModal';
 import TechComponent from '@/components/tech-component/TechComponent';
+import { useBreakpoint } from '@/hooks/useBreakpoints';
 
 const TestsView = () => {
   const dispatch = useAppDispatch();
@@ -30,6 +31,9 @@ const TestsView = () => {
   const [openAddSpecModal, setOpenAddSpecModal] = useState(false);
   const [openAddTechModal, setOpenAddTechModal] = useState(false);
   const [tests, setTests] = useState<ITest[]>([]);
+
+  const screen = useBreakpoint();
+  const isMobile = screen.xs || screen.sm || screen.md;
 
   const { user } = useAppSelector((state: RootState) => state.user);
 
@@ -175,7 +179,11 @@ const TestsView = () => {
         icon={'search-book'}
         title={'Уровень вопросов'}
       >
-        <div className={'grid grid-cols-[repeat(auto-fit,minmax(140px,max-content))] gap-5 mt-9 mobile:justify-center'}>
+        <div
+          className={
+            'grid mobile:grid-cols-[repeat(auto-fit,minmax(88px,max-content))] desktop:grid-cols-[repeat(auto-fit,minmax(125px,max-content))] desktop:gap-5 mobile:gap-2 desktop:mt-9 mobile:mt-5 mobile:justify-center'
+          }
+        >
           {skillOptions.map((level) => (
             <CustomFilterButton
               text={level.text}
@@ -189,11 +197,13 @@ const TestsView = () => {
       <SettingsBlock
         icon={'monitor'}
         title={'Специализация'}
-        description={'Здесь вы можете отфильтровать направления подходящие под специализацию '}
+        description={`Здесь вы можете отфильтровать направления${isMobile ? '' : ' подходящие под специализацию'}`}
       >
         {specs.length ? (
           <div
-            className={'grid grid-cols-[repeat(auto-fit,minmax(140px,max-content))] gap-5 mt-9 mobile:justify-center'}
+            className={
+              'grid grid-cols-[repeat(auto-fit,minmax(160px,max-content))] desktop:gap-5 mobile:gap-2 desktop:mt-9 mobile:mt-5 mobile:justify-center'
+            }
           >
             {specs.map((spec) => (
               <TechComponent
@@ -220,11 +230,13 @@ const TestsView = () => {
       <SettingsBlock
         icon={'hat'}
         title={'Направления'}
-        description={'Каждое направление включает в себя набор вопросов'}
+        description={`${isMobile ? 'Направление' : 'Каждое направление'} включает в себя набор вопросов`}
       >
         {techs.length ? (
           <div
-            className={'grid grid-cols-[repeat(auto-fit,minmax(130px,max-content))] gap-5 mt-7 mobile:justify-center'}
+            className={
+              'grid grid-cols-[repeat(auto-fit,minmax(160px,max-content))] desktop:gap-5 mobile:gap-2 mt-6 mobile:justify-center'
+            }
           >
             {techs.map((tech) => (
               <TechComponent
