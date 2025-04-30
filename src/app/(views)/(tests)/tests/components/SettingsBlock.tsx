@@ -36,7 +36,7 @@ const SettingsBlock: React.FC<Readonly<ISettingsBlockProps>> = ({
           />
         )}
       </div>
-      <div className={'flex flex-col mobile:w-full'}>
+      <div className={'flex flex-col w-full'}>
         <div className={'flex'}>
           <div className={'desktop:hidden desktop:w-20 h-full mr-4'}>
             {icon && (
