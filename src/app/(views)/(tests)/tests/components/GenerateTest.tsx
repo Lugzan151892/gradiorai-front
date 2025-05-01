@@ -181,7 +181,8 @@ const GenerateTest: React.FC<{
             />
           ))}
         </div>
-        <div className={'w-full mt-auto flex'}>
+        <div className={'flex-grow'} />
+        <div className={'w-full mt-4 flex'}>
           <AdminWrapper>
             <CustomButton
               className={'desktop:hidden'}
