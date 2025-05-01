@@ -140,7 +140,8 @@ const GenerateTest: React.FC<{
               />
             </div>
           </div>
-          <div className={'mt-auto w-full flex'}>
+          <div className={'flex-grow'} />
+          <div className={'mt-4 w-full flex'}>
             <AuthConfirmButton
               icon={'reload'}
               customBorder
@@ -156,8 +157,12 @@ const GenerateTest: React.FC<{
   }
 
   return (
-    <div className={'h-full max-h-[1032px] flex flex-grow w-full text-white'}>
-      <div className={'my-7 mx-3 bg-bg-transparent-25 rounded-10 w-full desktop:p-12 mobile:p-4 flex flex-col'}>
+    <div className={'h-full desktop:max-h-[1032px] flex flex-grow w-full text-white'}>
+      <div
+        className={
+          'my-7 mx-3 bg-bg-transparent-25 rounded-10 w-full h-full desktop:p-12 desktop:pb-6 mobile:p-4 flex flex-col'
+        }
+      >
         <div className={'flex mobile:flex-col mobile:gap-2 desktop:gap-4'}>
           <div
             className={
@@ -182,7 +187,7 @@ const GenerateTest: React.FC<{
           ))}
         </div>
         <div className={'flex-grow'} />
-        <div className={'w-full mt-4 flex mobile:flex-col mobile:items-center'}>
+        <div className={'w-full desktop:mt-6 mobile:mt-4 flex mobile:flex-col mobile:items-center'}>
           <AdminWrapper>
             <CustomButton
               className={'desktop:hidden'}
