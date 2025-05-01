@@ -20,6 +20,7 @@ const DescriptionListItem: React.FC<{
             }
           >
             <Image
+              className={'mt-[1px]'}
               src={checkMainPage}
               alt={'check'}
             />
