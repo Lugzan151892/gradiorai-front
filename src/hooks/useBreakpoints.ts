@@ -13,7 +13,7 @@ const breakpoints = {
 
 type Breakpoint = keyof typeof breakpoints;
 
-export function useBreakpoint(): Record<Breakpoint, boolean> {
+export function useBreakpoint(): { isMobile: boolean; screen: Record<Breakpoint, boolean> } {
   const [breakpoint, setBreakpoint] = useState<Breakpoint>('xs');
 
   useEffect(() => {
@@ -50,5 +50,9 @@ export function useBreakpoint(): Record<Breakpoint, boolean> {
     return screens;
   }, [breakpoint]);
 
-  return screen;
+  const isMobile = useMemo(() => {
+    return screen.xs || screen.sm || screen.md;
+  }, [screen]);
+
+  return { isMobile, screen };
 }

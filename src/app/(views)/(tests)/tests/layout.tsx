@@ -8,7 +8,7 @@ const TestsLayout: React.FC<Readonly<{ children: React.ReactNode }>> = ({ childr
       <AppHeader />
       <div className={'flex max-w-full max-h-full h-full overflow-hidden'}>
         <ScrollContainer>
-          <div className={'w-[1362px] flex max-w-full max-h-full h-full flex-grow mx-auto'}>
+          <div className={'w-[1362px] flex flex-grow max-w-full flex-grow mx-auto'}>
             <div className={'flex h-full w-full mobile:px-2'}>{children}</div>
           </div>
         </ScrollContainer>
