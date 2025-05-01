@@ -131,7 +131,7 @@ const GenerateTest: React.FC<{
                 ))}
               </div>
             </div>
-            <div className={'mt-10'}>
+            <div className={'desktop:mt-10 mobile:mt-5'}>
               <div className={'desktop:text-xl mobile:text-base mb-2'}>Отзыв</div>
               <CustomTextarea
                 value={comment}
@@ -144,7 +144,7 @@ const GenerateTest: React.FC<{
             <AuthConfirmButton
               icon={'reload'}
               customBorder
-              className={'!w-[180px] ml-auto h-max self-end'}
+              className={'!w-[180px] desktop:ml-auto mobile:mx-auto h-max self-end '}
               size={24}
               text={'Еще раз'}
               onClick={handleReview}
@@ -158,15 +158,15 @@ const GenerateTest: React.FC<{
   return (
     <div className={'h-full max-h-[1032px] flex flex-grow w-full text-white'}>
       <div className={'my-7 mx-3 bg-bg-transparent-25 rounded-10 w-full desktop:p-12 mobile:p-4 flex flex-col'}>
-        <div className={'flex gap-4'}>
+        <div className={'flex mobile:flex-col mobile:gap-2 desktop:gap-4'}>
           <div
             className={
-              'min-w-24 min-h-24 h-24 w-24 rounded flex items-center justify-center text-xl border-1 border-white'
+              'desktop:min-w-24 desktop:min-h-24 desktop:h-24 desktop:w-24 mobile:w-max mobile:p-2 rounded flex items-center justify-center text-xl border-1 border-white'
             }
           >
             {`${currentQuestion} / ${tests.length}`}
           </div>
-          <div className={'w-full flex items-center rounded p-3 desktop:text-2xl mobile:text-base'}>
+          <div className={'w-full flex items-center rounded desktop:p-3 mobile:py-3 desktop:text-2xl mobile:text-base'}>
             {tests[currentQuestion - 1].question}
           </div>
         </div>
@@ -182,7 +182,7 @@ const GenerateTest: React.FC<{
           ))}
         </div>
         <div className={'flex-grow'} />
-        <div className={'w-full mt-4 flex'}>
+        <div className={'w-full mt-4 flex mobile:flex-col mobile:items-center'}>
           <AdminWrapper>
             <CustomButton
               className={'desktop:hidden'}
@@ -201,7 +201,7 @@ const GenerateTest: React.FC<{
           <AuthConfirmButton
             icon={currentQuestion === tests.length ? 'sand-clock' : 'arrow-right'}
             customBorder
-            className={'!w-[180px] ml-auto h-max self-end'}
+            className={'!w-[180px] desktop:ml-auto mobile:mx-auto mobile:mt-2 h-max self-end'}
             size={24}
             text={currentQuestion === tests.length ? 'Завершить' : 'Далее'}
             disabled={!userChoise}
