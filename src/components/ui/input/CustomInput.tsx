@@ -88,7 +88,7 @@ const CustomInput: React.FC<ICustomInputProps> = ({
             name={type}
             autoComplete={type}
             className={
-              `w-full pl-3 ${icon ? `border-l-2 ${error ? '!border-error' : '!border-gray'}` : ''} text-black text-base focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25 ${inputError} ` +
+              `w-full pl-3 ${icon ? `border-l-2 rounded-none ${error ? '!border-error' : '!border-gray'}` : ''} text-black text-base focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25 ${inputError} ` +
               classes
             }
           />
