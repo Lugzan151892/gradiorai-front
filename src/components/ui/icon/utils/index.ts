@@ -1,6 +1,6 @@
 import IconMarkup from '@/components/ui/icon/utils/IconMarkup';
 
-const getIconViewBox = (name: keyof typeof IconMarkup, size: number) => {
+const getIconViewBox = (name: keyof typeof IconMarkup, size?: number) => {
   switch (name) {
     case 'arrow-left':
       return '0 0 22 16';
@@ -14,20 +14,6 @@ const getIconViewBox = (name: keyof typeof IconMarkup, size: number) => {
       return '0 0 21 21';
     case 'reload':
       return '0 0 16 16';
-    case 'password':
-    case 'youtube':
-    case 'email':
-    case 'check':
-    case 'warning':
-    case 'eye-opened':
-    case 'eye-closed':
-    case 'question-outline':
-    case 'monitor':
-    case 'search-book':
-    case 'rocket':
-    case 'user':
-    case 'check-small':
-      return '0 0 24 24';
     case 'hat':
       return '0 0 20 20';
     case 'star':
@@ -42,8 +28,10 @@ const getIconViewBox = (name: keyof typeof IconMarkup, size: number) => {
       return '0 0 30 30';
     case 'turn-off':
       return '0 0 32 32';
-    default:
+    case 'owl':
       return `0 0 ${size} ${size}`;
+    default:
+      return '0 0 24 24';
   }
 };
 
