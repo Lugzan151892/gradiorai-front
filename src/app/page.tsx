@@ -45,7 +45,7 @@ const Home = () => {
           />
         </div>
         <div className={'grow desktop:hidden'} />
-        <div className={'text-white desktop:mt-36 mobile:mb-5 mobile:mt-5 desktop:max-w-[450px]'}>
+        <div className={'text-white desktop:mt-36 mobile:mb-5 mobile:mt-10 desktop:max-w-[450px]'}>
           <div className={'desktop:hidden text-xl'}>Начните прямо сейчас!</div>
           <div className={'mobile:hidden text-2xl'}>Начните проходить тест прямо сейчас!</div>
           <div className={'mt-3 w-[202px] h-[50px] flex mx-auto'}>

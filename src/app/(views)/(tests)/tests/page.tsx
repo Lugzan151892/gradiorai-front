@@ -208,6 +208,7 @@ const TestsView = () => {
             {specs.map((spec) => (
               <TechComponent
                 tech={spec}
+                small
                 key={spec.id}
                 selected={questionsSpecs.includes(spec.id)}
                 onClick={() => handleSetQuestionsSpec(spec.id)}

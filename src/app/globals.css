@@ -47,14 +47,8 @@ body {
 }
 
 .scroll-container {
-  overflow: auto;
+  overflow: overlay;
   position: relative;
-}
-
-/* ВСЕГДА фиксированная ширина скролла */
-.scroll-container::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
 }
 
 /* Ползунок */
