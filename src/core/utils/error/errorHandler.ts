@@ -3,7 +3,7 @@ import { openModal } from '@/store/tech/techSlice';
 import SystemError from '@/utils/errors/SystemError';
 import UserError from '@/utils/errors/UserError';
 
-const errorHandler = (error: UserError | SystemError, dispatch: AppDispatch) => {
+const errorHandler = (error: UserError | SystemError | any, dispatch: AppDispatch) => {
   dispatch(
     openModal({
       text: error?.message || 'Произошла ошибка.\r\nСвяжитесь с разработчиками.',
