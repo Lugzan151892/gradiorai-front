@@ -49,7 +49,7 @@ const CustomModal: React.FC<ICustomModalProps> = ({
             <DialogPanel
               transition
               className={
-                'rounded-xl bg-black border-2 text-white flex flex-col backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0 overflow-hidden ' +
+                'rounded-input border-2 text-white flex flex-col backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0 overflow-hidden ' +
                 `border-${typeColor()} ` +
                 widthClasses
               }
