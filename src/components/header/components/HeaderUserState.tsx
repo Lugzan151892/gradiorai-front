@@ -9,9 +9,10 @@ import { logout } from '@/store/user/userSlice';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import MenuItem, { IMenuItemProps } from '@/components/header/components/MenuItem';
+import { EMENU_ITEM } from '@/components/header/interfaces';
 
 interface IMenuItem extends IMenuItemProps {
-  id: number;
+  id: EMENU_ITEM;
   show?: boolean;
 }
 
@@ -48,19 +49,26 @@ const HeaderUserState = () => {
 
   const menuItems: IMenuItem[] = [
     {
-      id: 1,
+      id: EMENU_ITEM.SUBSCRIBE,
       text: 'Подписка',
       icon: 'wallet',
       show: !!user?.admin,
     },
     {
-      id: 2,
+      id: EMENU_ITEM.SUPPORT,
       text: 'Поддержка',
       icon: 'question-outline',
       show: !!user?.admin,
     },
     {
-      id: 3,
+      id: EMENU_ITEM.SYSTEM,
+      text: 'Система',
+      icon: 'settings',
+      onClick: () => router.push('/system'),
+      show: !!user?.admin,
+    },
+    {
+      id: EMENU_ITEM.QUIT,
       text: 'Выход',
       icon: 'turn-off',
       className: 'mt-auto',
@@ -123,14 +131,12 @@ const HeaderUserState = () => {
                 'z-50 p-4 bg-black rounded-10 flex flex-col overflow-hidden desktop:w-[400px] mobile:w-full max-w-full desktop:h-[300px] mobile:h-full max-h-[calc(100vh-80px)] absolute top-[80px] desktop:right-[30px] mobile:right-0'
               }
             >
-              <div className={'flex items-center mb-10'}>
-                <CustomIcon
-                  name={'user'}
-                  color={'var(--main-white)'}
-                  size={30}
-                />
-                <div className={'ml-3'}>{username}</div>
-              </div>
+              <MenuItem
+                className={'mb-10'}
+                icon={'user'}
+                text={username || ''}
+                isStatic
+              />
               {menuItems
                 .filter((e) => e.show)
                 .map((item) => (
