@@ -12,7 +12,7 @@ const AnswerComponent: React.FC<{
   const showBorder = userChoise && (userChoise === answer.id || answer.correct);
   return (
     <div
-      className={`desktop:px-10 mobile:px-2 desktop:py-7 rounded-input cursor-pointer border-1 text-white ${showBorder ? correctClasses : 'border-white'} ${!userChoise && !disabled ? 'hover:bg-bg-transparent-50' : ''}`}
+      className={`desktop:px-10 mobile:px-4 desktop:py-7 mobile:py-3 rounded-input cursor-pointer border-1 text-white ${showBorder ? correctClasses : 'border-white'} ${!userChoise && !disabled ? 'hover:bg-bg-transparent-50' : ''}`}
       onClick={() => (disabled || !onClick ? undefined : onClick())}
     >
       <div className={`flex items-center w-full py-1 rounded-input`}>
@@ -25,14 +25,14 @@ const AnswerComponent: React.FC<{
             <CustomIcon
               name={'cross'}
               color={'var(--main-white)'}
-              size={20}
+              size={25}
             />
           )}
           {isCorrect && showBorder && (
             <CustomIcon
               name={'check-small'}
               color={'var(--main-white)'}
-              size={20}
+              size={25}
             />
           )}
         </div>
