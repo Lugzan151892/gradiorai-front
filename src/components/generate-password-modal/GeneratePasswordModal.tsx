@@ -31,7 +31,14 @@ const GeneratePasswordModal: React.FC<IGeneratePasswordModalProps> = ({ open = f
           <CustomButton
             className={'ml-auto'}
             text={'Сгенерировать'}
-            onClick={generate ? () => generate(password) : undefined}
+            onClick={
+              generate
+                ? () => {
+                    if (onClose) onClose();
+                    generate(password);
+                  }
+                : undefined
+            }
           />
         </div>
       </div>
