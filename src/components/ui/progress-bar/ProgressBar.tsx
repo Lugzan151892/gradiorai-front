@@ -102,7 +102,7 @@ const ProgressBar: React.FC<Readonly<ProgressBarProps>> = ({
 
   return (
     <div className={'w-full flex flex-col items-center'}>
-      <div className={'text-4xl mb-5'}>
+      <div className={'desktop:text-4xl mobile:text-2xl mb-4'}>
         {score} из {maxScore}
       </div>
       <div className={'w-full bg-gray-200 rounded-2xl overflow-hidden shadow-inner max-w-md bg-white h-5'}>

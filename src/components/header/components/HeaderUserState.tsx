@@ -95,7 +95,7 @@ const HeaderUserState = () => {
 
   return (
     <>
-      {!user?.id ? (
+      {!user?.id || false ? (
         <div className={'ml-auto flex gap-2'}>
           <CustomButton
             className={'!rounded-10 !px-3 !py-2 text-xl h-max '}
@@ -136,7 +136,7 @@ const HeaderUserState = () => {
           {showMenu && (
             <div
               className={
-                'z-50 p-4 bg-black rounded-10 flex flex-col overflow-hidden desktop:w-[400px] mobile:w-full max-w-full desktop:h-[300px] mobile:h-full max-h-[calc(100vh-80px)] absolute top-[80px] desktop:right-[30px] mobile:right-0'
+                'z-50 p-4 bg-black rounded-10 flex flex-col overflow-hidden desktop:w-[400px] mobile:w-full max-w-full desktop:h-[300px] mobile:h-full max-h-[calc(100%-80px)] absolute top-[80px] desktop:right-[30px] mobile:right-0'
               }
             >
               <MenuItem
