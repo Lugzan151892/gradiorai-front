@@ -6,7 +6,7 @@ import React from 'react';
 interface ISettingsBlockProps {
   children: React.ReactNode;
   captionAfter?: React.ReactNode;
-  icon?: 'search-book' | 'monitor' | 'hat' | 'rocket';
+  icon?: 'search-book' | 'monitor' | 'hat';
   className?: string;
   title?: string;
   description?: string;
@@ -21,12 +21,7 @@ const SettingsBlock: React.FC<Readonly<ISettingsBlockProps>> = ({
   captionAfter,
 }) => {
   return (
-    <div
-      className={
-        'w-full h-full bg-bg-transparent-25 desktop:hover:bg-bg-transparent-50 rounded-10 flex py-5 desktop:px-10 mobile:px-2 ' +
-        className
-      }
-    >
+    <div className={'w-full h-max bg-bg-transparent-25 rounded-10 flex py-5 desktop:px-10 mobile:px-2 ' + className}>
       <div className={'mobile:hidden w-20 h-full mr-20'}>
         {icon && (
           <CustomIcon

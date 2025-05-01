@@ -90,7 +90,7 @@ const GenerateTest: React.FC<{
     return (
       <div className={'h-full flex flex-grow w-full'}>
         <div className={'my-8 bg-bg-transparent-25 mx-3 rounded-lg w-full p-4 flex flex-col items-center'}>
-          <div className={'text-4xl mobile:mb-4 desktop:mb-10'}>Ваш результат</div>
+          <div className={'desktop:text-6xl mobile:text-4xl mobile:mb-4 desktop:mb-10'}>Ваш результат</div>
           <ProgressBar
             score={userResult}
             maxScore={tests.length}

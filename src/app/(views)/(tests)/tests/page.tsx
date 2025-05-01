@@ -174,7 +174,7 @@ const TestsView = () => {
   }
 
   return (
-    <div className={'flex flex-col w-full h-full gap-y-8 pb-4'}>
+    <div className={'flex flex-col w-[1069px] max-w-full h-full gap-y-8 pb-4 mx-auto'}>
       <SettingsBlock
         icon={'search-book'}
         title={'Уровень вопросов'}
@@ -217,7 +217,7 @@ const TestsView = () => {
         ) : (
           <div>Специализации не найдены</div>
         )}
-        <div className={'mx-auto w-max mt-2'}>
+        <div className={'mx-auto w-max mt-4'}>
           <AdminWrapper>
             <CustomButton
               small
@@ -251,7 +251,7 @@ const TestsView = () => {
         ) : (
           <div>Специализации не найдены</div>
         )}
-        <div className={'mx-auto w-max mt-2'}>
+        <div className={'mx-auto w-max mt-4'}>
           <AdminWrapper>
             <CustomButton
               small
@@ -261,25 +261,7 @@ const TestsView = () => {
           </AdminWrapper>
         </div>
       </SettingsBlock>
-      <SettingsBlock
-        className={'mobile:hidden'}
-        icon={'rocket'}
-        title={'Начать'}
-        description={'После того как вы определили конфигурацию тестов мы готовы их составить!'}
-      >
-        <div className={'w-[calc(100%-160px)] flex items-center mt-10'}>
-          <AuthConfirmButton
-            className={'!w-[170px] mx-auto'}
-            customBorder
-            disabled={!questionsTechs.length}
-            size={24}
-            icon={'check'}
-            text={'Начать'}
-            onClick={handleStart}
-          />
-        </div>
-      </SettingsBlock>
-      <div className={'desktop:hidden w-full flex items-center mt-2 pb-2'}>
+      <div className={'w-full flex items-center mt-2 pb-2'}>
         <AuthConfirmButton
           className={'!w-[170px] mx-auto'}
           customBorder
