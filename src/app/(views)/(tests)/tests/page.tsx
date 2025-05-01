@@ -32,9 +32,7 @@ const TestsView = () => {
   const [openAddTechModal, setOpenAddTechModal] = useState(false);
   const [tests, setTests] = useState<ITest[]>([]);
 
-  const screen = useBreakpoint();
-  const isMobile = screen.xs || screen.sm || screen.md;
-
+  const { isMobile } = useBreakpoint();
   const { user } = useAppSelector((state: RootState) => state.user);
 
   const [showTest, setShowTest] = useState(false);
