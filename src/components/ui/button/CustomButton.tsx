@@ -7,7 +7,7 @@ interface ICustomButtonProps {
   children?: Readonly<React.ReactNode>;
   type?: 'success' | 'error' | 'warning';
   level?: 1 | 2 | 3;
-  color?: 'white' | 'gray' | 'low-green';
+  color?: 'white' | 'gray' | 'low-green' | 'red';
   onClick?: () => void;
   disabled?: boolean;
   maxRounded?: boolean;

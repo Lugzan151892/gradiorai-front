@@ -118,13 +118,21 @@ const HeaderUserState = () => {
           className={'ml-auto flex items-center'}
           ref={menuRef}
         >
-          <CustomIcon
-            className={'cursor-pointer'}
-            size={30}
-            name={'user-login'}
-            color={'var(--main-white)'}
+          <div
+            className={'flex items-center cursor-pointer'}
             onClick={() => setShowMenu(!showMenu)}
-          />
+          >
+            <CustomIcon
+              size={30}
+              name={'user-login'}
+              color={'var(--main-white)'}
+            />
+            <CustomIcon
+              name={'menu-arrow'}
+              color={'var(--main-white)'}
+              className={`ml-1 transform transition-transform duration-300 ${showMenu ? 'rotate-180' : ''}`}
+            />
+          </div>
           {showMenu && (
             <div
               className={
