@@ -10,15 +10,17 @@ const AuthConfirmButton: React.FC<{
   className?: string;
   icon: 'check' | 'open-password' | 'refresh' | 'sand-clock' | 'arrow-right' | 'reload';
   size?: number;
+  type?: 'default' | 'error';
   customBorder?: boolean;
   disabled?: boolean;
   onClick?: () => void;
-}> = ({ text = '', className = '', disabled, icon, size, customBorder, onClick }) => {
+}> = ({ text = '', className = '', disabled, icon, size, customBorder, type = 'default', onClick }) => {
   const isCustomIcon = icon === 'arrow-right';
   return (
     <CustomButton
       className={'!rounded-input !px-0 !py-0 text-xl ' + className}
       text={text}
+      type={type === 'error' ? 'error' : undefined}
       disabled={disabled}
       color={'low-green'}
       onClick={onClick}
