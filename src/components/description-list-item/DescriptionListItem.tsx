@@ -1,4 +1,6 @@
+import Image from 'next/image';
 import React from 'react';
+import checkMainPage from '@/assets/icons/check-main-page.svg';
 
 const DescriptionListItem: React.FC<{
   title?: string;
@@ -17,12 +19,13 @@ const DescriptionListItem: React.FC<{
               'rounded-full flex-shrink-0 h-5 w-5 bg-success flex items-center justify-center shadow-default shadow-black mobile:text-sm text-white'
             }
           >
-            ✔
+            <Image
+              src={checkMainPage}
+              alt={'check'}
+            />
           </div>
         </div>
-        {title ? (
-          <div className={`ml-4 text-text-gray`}> {title} </div>
-        ) : null}
+        {title ? <div className={`ml-4 text-text-gray`}> {title} </div> : null}
       </div>
     </div>
   );
