@@ -6,10 +6,16 @@ import React from 'react';
 interface IInfoModalProps {
   opened?: boolean;
   text?: string;
+  onClose?: () => void;
   children?: React.ReactNode;
 }
 
-const InfoModal: React.FC<Readonly<IInfoModalProps>> = ({ opened, text, children }) => {
+const InfoModal: React.FC<Readonly<IInfoModalProps>> = ({ opened, text, children, onClose }) => {
+  const close = () => {
+    if (onClose) {
+      onClose();
+    }
+  };
   return (
     <>
       <Dialog
