@@ -13,6 +13,7 @@ import CustomTextarea from '@/components/ui/textarea/CustomTextarea';
 import CustomIcon from '@/components/ui/icon/CustomIcon';
 import errorHandler from '@/core/utils/error/errorHandler';
 import { setLoading } from '@/features/loading/loadingSlice';
+import { useBreakpoint } from '@/hooks/useBreakpoints';
 
 const GenerateTest: React.FC<{
   tests: ITest[];
@@ -27,6 +28,8 @@ const GenerateTest: React.FC<{
   const [disableSave, setDisableSave] = useState(false);
   const [saveQuestionModal, setSaveQuestionModal] = useState(false);
   const { user } = useAppSelector((state: RootState) => state.user);
+
+  const { isMobile } = useBreakpoint();
 
   const dispatch = useAppDispatch();
 
@@ -89,13 +92,17 @@ const GenerateTest: React.FC<{
   if (showResults) {
     return (
       <div className={'h-full flex flex-grow w-full'}>
-        <div className={'my-8 bg-bg-transparent-25 mx-3 rounded-lg w-full p-4 flex flex-col items-center'}>
+        <div
+          className={
+            'desktop:my-8 mobile:my-4 bg-bg-transparent-25 desktop:mx-3 rounded-lg w-full p-4 flex flex-col items-center'
+          }
+        >
           <div className={'desktop:text-6xl mobile:text-4xl mobile:mb-4 desktop:mb-10'}>Ваш результат</div>
           <ProgressBar
             score={userResult}
             maxScore={tests.length}
           />
-          <div className={'flex flex-col max-w-lg w-full mt-10'}>
+          <div className={'flex flex-col max-w-lg w-full desktop:mt-10 mobile:mt-7'}>
             <div>
               <div className={'desktop:text-xl mobile:text-base'}>Оцените тестирование</div>
               <div
@@ -135,7 +142,7 @@ const GenerateTest: React.FC<{
               <div className={'desktop:text-xl mobile:text-base mb-2'}>Отзыв</div>
               <CustomTextarea
                 value={comment}
-                rows={4}
+                rows={isMobile ? 3 : 4}
                 onInput={setComment}
               />
             </div>
