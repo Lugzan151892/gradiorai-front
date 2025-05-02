@@ -157,11 +157,9 @@ const GenerateTest: React.FC<{
   }
 
   return (
-    <div className={'h-full desktop:max-h-[1032px] flex flex-grow w-full text-white'}>
+    <div className={'desktop:max-h-[1032px] flex flex-grow w-full text-white'}>
       <div
-        className={
-          'desktop:my-7 mobile:my-3 mx-3 bg-bg-transparent-25 rounded-10 w-full h-full desktop:p-12 desktop:pb-6 mobile:p-4 flex flex-col'
-        }
+        className={'bg-bg-transparent-25 rounded-10 w-full h-full desktop:p-12 desktop:pb-6 mobile:p-4 flex flex-col'}
       >
         <div className={'flex mobile:flex-col mobile:gap-2 desktop:gap-4'}>
           <div
@@ -175,7 +173,7 @@ const GenerateTest: React.FC<{
             {tests[currentQuestion - 1].question}
           </div>
         </div>
-        <div className={'flex flex-col desktop:mt-10 mobile:mt-3 gap-3'}>
+        <div className={'flex flex-col desktop:mt-7 mobile:mt-2 gap-2'}>
           {tests[currentQuestion - 1].responses.map((answer) => (
             <AnswerComponent
               key={answer.id}
