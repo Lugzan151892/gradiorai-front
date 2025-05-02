@@ -20,6 +20,9 @@ import GenerateTest from '@/app/(views)/(tests)/tests/components/GenerateTest';
 import GeneratePasswordModal from '@/components/generate-password-modal/GeneratePasswordModal';
 import TechComponent from '@/components/tech-component/TechComponent';
 import { useBreakpoint } from '@/hooks/useBreakpoints';
+import InfoModal from '@/components/ui/modal/InfoModal';
+import CustomIcon from '@/components/ui/icon/CustomIcon';
+import { useRouter } from 'next/navigation';
 
 const TestsView = () => {
   const dispatch = useAppDispatch();
@@ -30,7 +33,9 @@ const TestsView = () => {
   const [questionsTechs, setQuestionsTechs] = useState<number[]>([]);
   const [openAddSpecModal, setOpenAddSpecModal] = useState(false);
   const [openAddTechModal, setOpenAddTechModal] = useState(false);
+  const [unauthGenerateModal, setUnauthGenerateModal] = useState(false);
   const [tests, setTests] = useState<ITest[]>([]);
+  const router = useRouter();
 
   const { isMobile } = useBreakpoint();
   const { user } = useAppSelector((state: RootState) => state.user);
@@ -119,7 +124,7 @@ const TestsView = () => {
 
     try {
       dispatch(setLoading(true));
-      const result = await Api.post<ITestParams, { response: { questions: ITest[] }; usage: any }>(
+      const result = await Api.postSilent<ITestParams, { response: { questions: ITest[] }; usage: any }>(
         '/gpt/generate',
         data
       );
@@ -131,6 +136,12 @@ const TestsView = () => {
         }));
         setTests(shuffleArray(shuffledTests));
         setShowTest(true);
+      } else {
+        if (result.payload.type === 'generate') {
+          setUnauthGenerateModal(true);
+        } else {
+          throw new Error(result.payload.message);
+        }
       }
     } catch (e: any) {
       errorHandler(e, dispatch);
@@ -158,6 +169,10 @@ const TestsView = () => {
     setQuestionsTechs([]);
     setTests([]);
     setShowTest(false);
+  };
+
+  const handleLogin = () => {
+    router.push('/login');
   };
 
   if (showTest) {
@@ -290,6 +305,26 @@ const TestsView = () => {
         onClose={() => setPasswordModal(false)}
         generate={generateTests}
       />
+      <InfoModal
+        opened={unauthGenerateModal}
+        text={'Для продолжения, пожалуйста, авторизуйтесь.'}
+      >
+        <CustomButton
+          className={'!rounded-10 !px-3 !py-2 text-xl h-max mx-auto '}
+          color={'low-green'}
+          onClick={handleLogin}
+        >
+          <div className={'flex'}>
+            <CustomIcon
+              className={'mr-6'}
+              name={'user-login'}
+              size={25}
+              color={'var(--main-white)'}
+            />
+            <div className={'mr-4'}>Вход</div>
+          </div>
+        </CustomButton>
+      </InfoModal>
     </div>
   );
 };
