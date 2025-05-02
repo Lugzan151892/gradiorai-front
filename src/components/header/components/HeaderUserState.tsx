@@ -47,24 +47,47 @@ const HeaderUserState = () => {
     router.push('/login');
   };
 
+  const handleMenuClick = (id: EMENU_ITEM) => {
+    console.log(id);
+
+    switch (id) {
+      case EMENU_ITEM.SYSTEM: {
+        setShowMenu(false);
+        router.push('/system');
+        break;
+      }
+      case EMENU_ITEM.QUIT: {
+        setShowMenu(false);
+        handleLogout();
+        break;
+      }
+      default: {
+        setShowMenu(false);
+        break;
+      }
+    }
+  };
+
   const menuItems: IMenuItem[] = [
     {
       id: EMENU_ITEM.SUBSCRIBE,
       text: 'Подписка',
       icon: 'wallet',
+      onClick: () => handleMenuClick(EMENU_ITEM.SUBSCRIBE),
       show: !!user?.admin,
     },
     {
       id: EMENU_ITEM.SUPPORT,
       text: 'Поддержка',
       icon: 'question-outline',
+      onClick: () => handleMenuClick(EMENU_ITEM.SUPPORT),
       show: !!user?.admin,
     },
     {
       id: EMENU_ITEM.SYSTEM,
       text: 'Система',
       icon: 'settings',
-      onClick: () => router.push('/system'),
+      onClick: () => handleMenuClick(EMENU_ITEM.SYSTEM),
       show: !!user?.admin,
     },
     {
@@ -72,7 +95,7 @@ const HeaderUserState = () => {
       text: 'Выход',
       icon: 'turn-off',
       className: 'mt-auto',
-      onClick: handleLogout,
+      onClick: () => handleMenuClick(EMENU_ITEM.QUIT),
       show: true,
     },
   ];
