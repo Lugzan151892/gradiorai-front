@@ -1,6 +1,6 @@
 import IconMarkup from '@/components/ui/icon/utils/IconMarkup';
 
-const getIconViewBox = (name: keyof typeof IconMarkup, size?: number) => {
+const getIconViewBox = (name: keyof typeof IconMarkup) => {
   switch (name) {
     case 'arrow-left':
       return '0 0 22 16';
@@ -29,7 +29,7 @@ const getIconViewBox = (name: keyof typeof IconMarkup, size?: number) => {
     case 'turn-off':
       return '0 0 32 32';
     case 'owl':
-      return `0 0 ${size} ${size}`;
+      return '0 0 512 512';
     default:
       return '0 0 24 24';
   }

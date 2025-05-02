@@ -160,7 +160,7 @@ const GenerateTest: React.FC<{
     <div className={'h-full desktop:max-h-[1032px] flex flex-grow w-full text-white'}>
       <div
         className={
-          'my-7 mx-3 bg-bg-transparent-25 rounded-10 w-full h-full desktop:p-12 desktop:pb-6 mobile:p-4 flex flex-col'
+          'desktop:my-7 mobile:my-3 mx-3 bg-bg-transparent-25 rounded-10 w-full h-full desktop:p-12 desktop:pb-6 mobile:p-4 flex flex-col'
         }
       >
         <div className={'flex mobile:flex-col mobile:gap-2 desktop:gap-4'}>
