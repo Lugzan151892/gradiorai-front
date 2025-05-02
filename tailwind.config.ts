@@ -44,6 +44,7 @@ export default {
         'bg-transparent-none': 'var(--bg-transparent-none)',
         'bg-transparent-50': 'var(--bg-transparent-50)',
         'bg-transparent-25': 'var(--bg-transparent-25)',
+        modal: 'var(--modal-bg)',
       },
       gridTemplateRows: {
         layout: '108px 1fr',

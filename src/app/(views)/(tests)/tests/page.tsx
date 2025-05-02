@@ -275,6 +275,7 @@ const TestsView = () => {
           </AdminWrapper>
         </div>
       </SettingsBlock>
+      <div className={'flex-grow'} />
       <div className={'w-full flex items-center mt-2 pb-2'}>
         <AuthConfirmButton
           className={'!w-[170px] mx-auto'}

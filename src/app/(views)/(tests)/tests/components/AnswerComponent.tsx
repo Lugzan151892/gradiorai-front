@@ -14,7 +14,7 @@ const AnswerComponent: React.FC<{
   const { isMobile } = useBreakpoint();
   return (
     <div
-      className={`desktop:px-10 mobile:px-4 py-2 min-h-[90px] rounded-input cursor-pointer border-1 flex items-center text-white ${showBorder ? correctClasses : 'border-white'} ${!userChoise && !disabled ? 'hover:bg-bg-transparent-50' : ''}`}
+      className={`desktop:px-10 mobile:px-4 py-2 desktop:min-h-[90px] mobile:min-h-[70px] rounded-input cursor-pointer border-1 flex items-center text-white ${showBorder ? correctClasses : 'border-white'} ${!userChoise && !disabled ? 'hover:bg-bg-transparent-50' : ''}`}
       onClick={() => (disabled || !onClick ? undefined : onClick())}
     >
       <div className={`flex h-full items-center w-full py-1 rounded-input`}>
