@@ -48,8 +48,6 @@ const HeaderUserState = () => {
   };
 
   const handleMenuClick = (id: EMENU_ITEM) => {
-    console.log(id);
-
     switch (id) {
       case EMENU_ITEM.SYSTEM: {
         setShowMenu(false);
