@@ -42,11 +42,11 @@ const LogsPage = () => {
   }, []);
 
   return (
-    <div className={'text-black px-2 py-3'}>
+    <div className={'text-white px-2 py-3'}>
       {logs
         ? logs.map((log, iLog) => (
             <div
-              className={'grid grid-cols-[10%_10%_1fr_10%] border-1 mb-2'}
+              className={'grid grid-cols-[10%_10%_1fr_10%] border-1 border-white mb-2'}
               key={iLog}
             >
               <div>{log.context}</div>
