@@ -30,7 +30,7 @@ const ErrorModal = () => {
             <DialogPanel
               transition
               className={
-                'w-full max-w-md flex flex-col rounded-input bg-transparent p-6 border-[3px] min-h-[180px] backdrop-blur-2xl duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0 ' +
+                'w-full max-w-md flex flex-col rounded-input bg-modal p-6 border-[3px] min-h-[180px] duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0 ' +
                 `border-${settings.type === 'error' ? 'error' : 'white'}`
               }
             >
