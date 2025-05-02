@@ -71,6 +71,22 @@ const SystemQuestions = () => {
     }
   }, [dispatch, onlyMine, withoutSpecs]);
 
+  const handleDeleteQuestion = async (questionId?: number) => {
+    if (!questionId) {
+      return;
+    }
+
+    try {
+      setLoading(true);
+      await Api.delete<{ id: number }, any>('/questions/delete', { id: questionId });
+      loadQuestions();
+    } catch (e) {
+      errorHandler(e, dispatch);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     loadQuestions();
   }, [loadQuestions]);
@@ -117,11 +133,17 @@ const SystemQuestions = () => {
                 ))}
               </div>
             </div>
-            <div>
+            <div className={'flex flex-col gap-1 py-2'}>
               <CustomButton
                 small
                 text={'Изменить'}
                 onClick={() => openQuestionModal(question)}
+              />
+              <CustomButton
+                type={'error'}
+                small
+                text={'Удалить'}
+                onClick={() => handleDeleteQuestion(question.id)}
               />
             </div>
           </div>
