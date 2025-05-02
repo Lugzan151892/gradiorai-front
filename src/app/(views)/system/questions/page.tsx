@@ -155,6 +155,7 @@ const SystemQuestions = () => {
           question={currentQuestion}
           isExistedQuestion
           open={openEditModal}
+          onSave={loadQuestions}
           onClose={() => setOpenEditModal(false)}
         />
       )}

@@ -11,12 +11,13 @@ import CustomInput from '@/components/ui/input/CustomInput';
 import { ESKILL_LEVEL } from '@/core/interfaces/enums';
 import { ITech, ITest } from '@/core/interfaces/types';
 import AddTechnologyModal from '@/components/technology-modals/AddTechnologyModal';
-import TechComponent from '../tech-component/TechComponent';
-import CustomCheckbox from '../ui/checkbox/CustomCheckbox';
+import TechComponent from '@/components/tech-component/TechComponent';
+import CustomCheckbox from '@/components/ui/checkbox/CustomCheckbox';
 
 interface ISaveQuestionModalProps {
   open?: boolean;
   onClose?: () => void;
+  onSave?: () => void;
   question: ITest;
   isExistedQuestion?: boolean;
   isEdit?: boolean;
@@ -27,6 +28,7 @@ interface ISaveQuestionModalProps {
 const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
   open = false,
   onClose,
+  onSave,
   question,
   isExistedQuestion,
   level,
@@ -140,6 +142,10 @@ const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
       dispatch(openModal({ type: 'success', text: 'Вопрос успешно сохранен!' }));
 
       setSelectedTechs([]);
+
+      if (onSave) {
+        onSave();
+      }
 
       if (onClose) {
         onClose();
