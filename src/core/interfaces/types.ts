@@ -26,6 +26,12 @@ export interface ITechnology {
   specialization: ISpecialization[];
 }
 
+export interface ITechWithCount extends ITechnology {
+  _count?: {
+    questions: number;
+  };
+}
+
 export interface ISpecialization {
   id: number;
   name: string;
