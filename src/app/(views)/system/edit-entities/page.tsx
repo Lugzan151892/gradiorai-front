@@ -8,7 +8,7 @@ import { useAppDispatch } from '@/hooks/redux';
 import { setLoading } from '@/features/loading/loadingSlice';
 import Api from '@/core/api/api';
 import errorHandler from '@/core/utils/error/errorHandler';
-import { ISpecialization, ITechnology } from '@/core/interfaces/types';
+import { ISpecialization, ITechWithCount } from '@/core/interfaces/types';
 import { openModal } from '@/store/tech/techSlice';
 import AddSpecModal from '@/components/specialization-modals/AddSpecModal';
 import AddTechnologyModal from '@/components/technology-modals/AddTechnologyModal';
@@ -17,12 +17,12 @@ import ScrollContainer from '@/components/ui/scrollarea/CustomScrollarea';
 const EditEntitiesView = () => {
   const [choosenEntitie, setChoosenEntitie] = useState<EEDITED_ENTITIE>();
   const [specs, setSpecs] = useState<ISpecialization[]>([]);
-  const [techs, setTechs] = useState<ITechnology[]>([]);
+  const [techs, setTechs] = useState<ITechWithCount[]>([]);
   const dispatch = useAppDispatch();
 
   const [currentSpecialization, setCurrentSpecialization] = useState<null | ISpecialization>(null);
   const [openSpecModal, setOpenSpecModal] = useState(false);
-  const [currentTechnology, setCurrentTechnology] = useState<null | ITechnology>(null);
+  const [currentTechnology, setCurrentTechnology] = useState<null | ITechWithCount>(null);
   const [openTechModal, setOpenTechModal] = useState(false);
 
   const loadSpecs = useCallback(async () => {
@@ -40,7 +40,7 @@ const EditEntitiesView = () => {
   const loadTechs = useCallback(async () => {
     try {
       dispatch(setLoading(true));
-      const result = await Api.get<null, { techs: ITechnology[]; questions_amount: number }>('/questions/get-techs');
+      const result = await Api.get<null, { techs: ITechWithCount[]; questions_amount: number }>('/questions/get-techs');
       setTechs(result.payload.techs);
     } catch (e: any) {
       errorHandler(e, dispatch);
@@ -64,7 +64,7 @@ const EditEntitiesView = () => {
     }
   }, [choosenEntitie, loadSpecs, loadTechs]);
 
-  const handleEditTechnology = (tech: ITechnology) => {
+  const handleEditTechnology = (tech: ITechWithCount) => {
     if (!tech) {
       return;
     }
@@ -166,6 +166,7 @@ const EditEntitiesView = () => {
                 >
                   <div className={'text-3xl mr-4'}>{tech.name}</div>
                   <div className={'text-2xl'}>{`Описание: ${tech.description || 'Не заполнено'}`}</div>
+                  <div className={'text-2xl'}>{`Вопросов в базе: ${tech._count?.questions || '0'}`}</div>
                   <div className={'flex flex-col'}>
                     <CustomButton
                       text={'Изменить'}
