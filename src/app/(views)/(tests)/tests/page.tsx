@@ -215,7 +215,7 @@ const TestsView = () => {
         {specs.length ? (
           <div
             className={
-              'grid grid-cols-[repeat(auto-fit,minmax(160px,max-content))] desktop:gap-5 mobile:gap-2 desktop:mt-9 mobile:mt-5 mobile:justify-center'
+              'grid grid-cols-[repeat(auto-fit,minmax(160px,max-content))] desktop:gap-x-5 desktop:gap-y-2 mobile:gap-2 desktop:mt-6 mobile:mt-3 mobile:justify-center'
             }
           >
             {specs.map((spec) => (
@@ -249,7 +249,7 @@ const TestsView = () => {
         {techs.length ? (
           <div
             className={
-              'grid grid-cols-[repeat(auto-fit,minmax(160px,max-content))] desktop:gap-5 mobile:gap-2 mt-6 mobile:justify-center'
+              'grid grid-cols-[repeat(auto-fit,minmax(160px,max-content))] desktop:gap-x-5 desktop:gap-y-2 mobile:gap-2 desktop:mt-6 mobile:mt-3 mobile:justify-center'
             }
           >
             {techs.map((tech) => (
