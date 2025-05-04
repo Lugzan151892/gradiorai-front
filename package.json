@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "next-sitemap",
     "start": "next start",
     "lint": "next lint",
     "build-static": "next build && next export"
@@ -14,6 +15,7 @@
     "@reduxjs/toolkit": "^2.6.0",
     "@tailwindcss/postcss": "^4.0.12",
     "next": "15.1.7",
+    "next-sitemap": "^4.2.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-redux": "^9.2.0"
