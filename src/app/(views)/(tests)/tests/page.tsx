@@ -23,6 +23,7 @@ import { useBreakpoint } from '@/hooks/useBreakpoints';
 import InfoModal from '@/components/ui/modal/InfoModal';
 import CustomIcon from '@/components/ui/icon/CustomIcon';
 import { useRouter } from 'next/navigation';
+import GenerateModal from '@/features/loading/GenerateModal';
 
 const TestsView = () => {
   const dispatch = useAppDispatch();
@@ -36,6 +37,7 @@ const TestsView = () => {
   const [unauthGenerateModal, setUnauthGenerateModal] = useState(false);
   const [tests, setTests] = useState<ITest[]>([]);
   const router = useRouter();
+  const [generateModal, setGenerateModal] = useState(false);
 
   const { isMobile } = useBreakpoint();
   const { user } = useAppSelector((state: RootState) => state.user);
@@ -123,7 +125,7 @@ const TestsView = () => {
     };
 
     try {
-      dispatch(setLoading(true));
+      setGenerateModal(true);
       const result = await Api.postSilent<ITestParams, { response: { questions: ITest[] }; usage: any }>(
         '/gpt/generate',
         data
@@ -146,7 +148,7 @@ const TestsView = () => {
     } catch (e: any) {
       errorHandler(e, dispatch);
     } finally {
-      dispatch(setLoading(false));
+      setGenerateModal(false);
     }
   };
 
@@ -326,6 +328,10 @@ const TestsView = () => {
           </div>
         </CustomButton>
       </InfoModal>
+      <GenerateModal
+        text={'Тест генерируется, пожалуйста подождите.'}
+        opened={generateModal}
+      />
     </div>
   );
 };
