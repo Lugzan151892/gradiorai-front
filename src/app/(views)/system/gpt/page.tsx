@@ -50,11 +50,11 @@ const SystemGptPage = () => {
     if (!gptSettings) {
       return;
     }
-    const models = ['gpt-4o-mini', 'gpt-4o'];
+    const models = ['gpt-4.1', 'gpt-4.1-mini', 'gpt-4.1-nano', 'gpt-4.5-preview', 'gpt-4o', 'gpt-4o-mini', 'gpt-4o'];
     if (!models.includes(gptSettings?.admin_model) || !models.includes(gptSettings?.user_model)) {
       dispatch(
         openModal({
-          text: 'Некорректно указана модель. ТОЛЬКО gpt-4o-mini или gpt-4o',
+          text: 'Некорректно указана модель. ТОЛЬКО модели из списка ' + models.join(', '),
           type: 'error',
         })
       );
