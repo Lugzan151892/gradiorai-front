@@ -25,13 +25,13 @@ export const metadata: Metadata = {
 const RootLayout: React.FC<Readonly<{ children: React.ReactNode }>> = ({ children }) => {
   return (
     <html lang={'en'}>
+      <HeadMeta
+        title={'Gradior'}
+        description={'Gradior AI - тесты для подготовки к интервью по IT специальностям'}
+      />
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased w-full h-full overflow-hidden bg-[url("../assets/images/main-bg.png")] bg-no-repeat bg-cover bg-left`}
       >
-        <HeadMeta
-          title={'Gradior'}
-          description={'Gradior AI - тесты для подготовки к интервью по IT специальностям'}
-        />
         <Providers>
           {children}
           <GlobalLoader />
