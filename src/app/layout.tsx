@@ -5,7 +5,6 @@ import './globals.css';
 import GlobalLoader from '@/features/loading/GlobalBusy';
 import Providers from '@/app/providers';
 import ErrorModal from '@/features/error-modal/ErrorModal';
-import HeadMeta from '@/components/head-meta/HeadMeta';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -20,15 +19,12 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: 'Gradior',
   description: 'Gradior AI',
+  creator: 'Denis G.',
 };
 
 const RootLayout: React.FC<Readonly<{ children: React.ReactNode }>> = ({ children }) => {
   return (
     <html lang={'en'}>
-      <HeadMeta
-        title={'Gradior'}
-        description={'Gradior AI - тесты для подготовки к интервью по IT специальностям'}
-      />
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased w-full h-full overflow-hidden bg-[url("../assets/images/main-bg.png")] bg-no-repeat bg-cover bg-left`}
       >
