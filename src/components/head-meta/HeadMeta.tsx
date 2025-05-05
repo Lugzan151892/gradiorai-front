@@ -11,6 +11,10 @@ const HeadMeta: React.FC<Readonly<IHeadMetaProps>> = ({ title, description, url 
   <Head>
     <title>{title}</title>
     <meta
+      name={'yandex-verification'}
+      content={'93977f41416139bf'}
+    />
+    <meta
       name={'description'}
       content={description}
     />
