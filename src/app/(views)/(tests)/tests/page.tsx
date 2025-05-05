@@ -7,17 +7,15 @@ import CustomFilterButton from '@/components/ui/filter-button/CustomFilterButton
 import AdminWrapper from '@/components/admin-wrapper/AdminWrapper';
 import CustomButton from '@/components/ui/button/CustomButton';
 import AddSpecModal from '@/components/specialization-modals/AddSpecModal';
-import { useAppDispatch, useAppSelector } from '@/hooks/redux';
+import { useAppDispatch } from '@/hooks/redux';
 import { setLoading } from '@/features/loading/loadingSlice';
 import Api from '@/core/api/api';
 import { ISpecialization, ITechnology, ITest, ITestParams } from '@/core/interfaces/types';
 import errorHandler from '@/core/utils/error/errorHandler';
 import AddTechnologyModal from '@/components/technology-modals/AddTechnologyModal';
 import AuthConfirmButton from '@/app/(views)/(auth)/components/AuthConfirmButton';
-import { RootState } from '@/store';
 import { shuffleArray } from '@/core/utils/array';
 import GenerateTest from '@/app/(views)/(tests)/tests/components/GenerateTest';
-import GeneratePasswordModal from '@/components/generate-password-modal/GeneratePasswordModal';
 import TechComponent from '@/components/tech-component/TechComponent';
 import { useBreakpoint } from '@/hooks/useBreakpoints';
 import InfoModal from '@/components/ui/modal/InfoModal';
@@ -40,10 +38,8 @@ const TestsView = () => {
   const [generateModal, setGenerateModal] = useState(false);
 
   const { isMobile } = useBreakpoint();
-  const { user } = useAppSelector((state: RootState) => state.user);
 
   const [showTest, setShowTest] = useState(false);
-  const [passwordModal, setPasswordModal] = useState(false);
 
   const handleSetQuestionsLevel = (val: ESKILL_LEVEL) => {
     setQuestionsLevel(val);
@@ -113,13 +109,12 @@ const TestsView = () => {
     },
   ];
 
-  const generateTests = async (password?: string) => {
+  const generateTests = async () => {
     if (!questionsTechs.length) {
       return;
     }
 
     const data: ITestParams = {
-      password,
       techs: questionsTechs,
       level: questionsLevel,
     };
@@ -149,14 +144,6 @@ const TestsView = () => {
       errorHandler(e, dispatch);
     } finally {
       setGenerateModal(false);
-    }
-  };
-
-  const handleStart = () => {
-    if (user?.admin) {
-      generateTests();
-    } else {
-      setPasswordModal(true);
     }
   };
 
@@ -286,7 +273,7 @@ const TestsView = () => {
           size={24}
           icon={'check'}
           text={'Начать'}
-          onClick={handleStart}
+          onClick={generateTests}
         />
       </div>
       <AddSpecModal
@@ -302,11 +289,6 @@ const TestsView = () => {
           setOpenAddTechModal(false);
           loadTechs();
         }}
-      />
-      <GeneratePasswordModal
-        open={passwordModal}
-        onClose={() => setPasswordModal(false)}
-        generate={generateTests}
       />
       <InfoModal
         opened={unauthGenerateModal}
