@@ -32,9 +32,7 @@ const SystemPage = () => {
   return (
     <div className={'flex items-center h-full w-full justify-center'}>
       <div
-        className={
-          'grid grid-flow-col auto-cols-auto-fit auto-cols-[minmax(150px,max-content)] justify-center w-full gap-y-2 gap-x-2'
-        }
+        className={'grid grid-cols-[repeat(auto-fit,minmax(250px,max-content))] justify-center w-full gap-y-2 gap-x-2'}
       >
         {buttons.map((button) => (
           <CustomButton
