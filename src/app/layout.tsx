@@ -19,7 +19,15 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: 'Gradior',
   description: 'Gradior AI',
-  creator: 'Denis G.',
+  other: {
+    'yandex-verification': '93977f41416139bf',
+    'twitter:card': 'summary_large_image',
+  },
+  openGraph: {
+    title: 'Gradior',
+    description: 'Gradior AI - тесты для подготовки к интервью по IT специальностям',
+    url: 'https://gradiorai.ru/',
+  },
 };
 
 const RootLayout: React.FC<Readonly<{ children: React.ReactNode }>> = ({ children }) => {
