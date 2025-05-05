@@ -6,6 +6,14 @@ export interface IUser {
   admin: boolean;
   created_at: string;
   updated_at: string;
+  last_ip?: string;
+  last_login?: string;
+  ip_log?: Array<{
+    createdAt: string;
+    id: number;
+    ip: string;
+    userId: number;
+  }>;
 }
 
 export interface ITest {

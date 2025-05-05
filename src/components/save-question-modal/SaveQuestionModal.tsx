@@ -246,7 +246,7 @@ const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
           <div className={'desktop:text-2xl mobile:text-xl mb-2 text-center'}>Укажите направления:</div>
           <div
             className={
-              'grid desktop:grid-flow-col desktop:auto-cols-auto-fit desktop:auto-cols-[minmax(150px,200px)] mobile:grid-cols-1 justify-center w-full gap-y-2 gap-x-2'
+              'grid desktop:grid-cols-[repeat(auto-fit,minmax(150px,200px))] mobile:grid-cols-1 justify-center w-full gap-y-2 gap-x-2'
             }
           >
             {allTechs.map((el) => (
