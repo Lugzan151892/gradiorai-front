@@ -52,12 +52,16 @@ const techSlice = createSlice({
         state.mainModalSettings.onClick();
       }
 
-      setTimeout(() => {
-        state.mainModalSettings = defaultModalSettings();
-      }, 500);
+      // setTimeout(() => {
+      //   state.mainModalSettings = defaultModalSettings();
+      // }, 500);
+    },
+
+    resetModalSettings(state) {
+      state.mainModalSettings = defaultModalSettings();
     },
   },
 });
 
-export const { openModal, closeModal } = techSlice.actions;
+export const { openModal, closeModal, resetModalSettings } = techSlice.actions;
 export default techSlice.reducer;
