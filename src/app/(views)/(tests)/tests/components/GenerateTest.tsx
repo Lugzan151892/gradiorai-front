@@ -65,7 +65,7 @@ const GenerateTest: React.FC<{
   };
 
   const handleReview = async () => {
-    if (!user?.id || (!userRating && !comment)) {
+    if (!userRating && !comment) {
       goToTests();
       return;
     }
