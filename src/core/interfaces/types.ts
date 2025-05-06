@@ -14,6 +14,11 @@ export interface IUser {
     ip: string;
     userId: number;
   }>;
+  questions_passed?: Array<{
+    passed_at: string;
+    question_id: number;
+    user_id: number;
+  }>;
 }
 
 export interface ITest {

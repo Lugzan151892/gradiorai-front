@@ -3,9 +3,9 @@
 import AuthConfirmButton from '@/app/(views)/(auth)/components/AuthConfirmButton';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { RootState } from '@/store';
-import { closeModal } from '@/store/tech/techSlice';
+import { closeModal, resetModalSettings } from '@/store/tech/techSlice';
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 const ErrorModal = () => {
   const dispatch = useAppDispatch();
@@ -15,6 +15,16 @@ const ErrorModal = () => {
   function close() {
     dispatch(closeModal());
   }
+
+  useEffect(() => {
+    if (!isOpen) {
+      const timer = setTimeout(() => {
+        dispatch(resetModalSettings());
+      }, 500);
+
+      return () => clearTimeout(timer);
+    }
+  }, [isOpen, dispatch]);
 
   return (
     <>
