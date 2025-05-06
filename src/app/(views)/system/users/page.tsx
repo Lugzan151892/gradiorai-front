@@ -38,7 +38,7 @@ const SystemUsers = () => {
           <div className={'mb-4 relative bg-modal'}>
             <div
               className={
-                'sticky top-0 left-0 border-1 grid grid-cols-[5%,25%,15%,15%,15%,15%,10%] min-h-8 border-1 bg-modal'
+                'sticky top-0 left-0 border-1 grid grid-cols-[3%,15%,12%,15%,10%,10%,19%,16%] min-h-8 border-1 bg-modal'
               }
             >
               <div className={'text-2xl border-r-1 text-center'}>ID</div>
@@ -47,13 +47,14 @@ const SystemUsers = () => {
               <div className={'text-2xl border-r-1 px-2'}>Последний вход</div>
               <div className={'text-2xl border-r-1 px-2'}>Последний IP</div>
               <div className={'text-2xl border-r-1 px-2'}>3 последних IP</div>
+              <div className={'text-2xl border-r-1 px-2'}>Кол-во пройденных вопросов</div>
               <div className={'text-2xl text-center'}>STATUS</div>
             </div>
             {users.length &&
               users.map((user) => (
                 <div
                   key={user.id}
-                  className={'border-1 w-full grid grid-cols-[5%,25%,15%,15%,15%,15%,10%]'}
+                  className={'border-1 w-full grid grid-cols-[3%,15%,12%,15%,10%,10%,19%,16%]'}
                 >
                   <div className={'text-xl border-r-1 text-center'}>{user.id}</div>
                   <div className={'text-xl border-r-1 px-2'}>{user.email}</div>
@@ -74,6 +75,7 @@ const SystemUsers = () => {
                         ))
                       : ''}
                   </div>
+                  <div className={'text-xl border-r-1 text-center'}>{user.questions_passed?.length || 0}</div>
                   <div className={'text-xl text-center'}>{user.admin ? 'ADMIN' : 'USER'}</div>
                 </div>
               ))}
