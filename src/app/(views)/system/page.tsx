@@ -33,6 +33,11 @@ const SystemPage = () => {
       text: 'Список пользователей',
       href: 'system/users',
     },
+    {
+      id: 6,
+      text: 'Отзывы пользователей',
+      href: 'system/reviews',
+    },
   ];
   return (
     <div className={'flex items-center h-full w-full justify-center'}>
