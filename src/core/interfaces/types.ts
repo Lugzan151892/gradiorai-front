@@ -21,6 +21,20 @@ export interface IUser {
   }>;
 }
 
+export interface IUserReview {
+  id: number;
+  created_at: string;
+  text: string;
+  rating: number | null;
+  checked: boolean;
+  saved_by: {
+    id: number;
+    email: string;
+    admin: boolean;
+  } | null;
+  ip: string | null;
+}
+
 export interface ITest {
   id?: number;
   question: string;
