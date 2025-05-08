@@ -15,7 +15,7 @@ const getIconViewBox = (name: keyof typeof IconMarkup) => {
     case 'reload':
       return '0 0 16 16';
     case 'hat':
-      return '0 0 20 20';
+      return '0 0 80 80';
     case 'star':
       return '0 0 1920 1920';
     case 'sand-clock':
