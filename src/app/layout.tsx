@@ -90,7 +90,7 @@ const RootLayout: React.FC<Readonly<{ children: React.ReactNode }>> = ({ childre
   return (
     <html lang={'en'}>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased w-full h-full overflow-hidden bg-[url("../assets/images/main-bg.png")] bg-no-repeat bg-cover bg-left`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#030b1b] w-full h-full overflow-hidden bg-[url("../assets/images/main-bg.png")] bg-no-repeat bg-cover bg-left`}
       >
         <Providers>
           {children}
