@@ -22,6 +22,7 @@ import InfoModal from '@/components/ui/modal/InfoModal';
 import CustomIcon from '@/components/ui/icon/CustomIcon';
 import { useRouter } from 'next/navigation';
 import GenerateModal from '@/features/loading/GenerateModal';
+import { sleep } from '@/core/utils/common';
 
 const TestsView = () => {
   const dispatch = useAppDispatch();
@@ -120,6 +121,7 @@ const TestsView = () => {
     };
 
     try {
+      const startTime = new Date().getTime();
       setGenerateModal(true);
       const result = await Api.postSilent<ITestParams, { response: { questions: ITest[] }; usage: any }>(
         '/gpt/generate',
@@ -132,6 +134,13 @@ const TestsView = () => {
           responses: shuffleArray(question.responses),
         }));
         setTests(shuffleArray(shuffledTests));
+        const plannedEndTime = startTime + 2000;
+        const timeLeft = plannedEndTime - new Date().getTime();
+
+        if (timeLeft > 0) {
+          await sleep(timeLeft);
+        }
+
         setShowTest(true);
       } else {
         if (result.payload.type === 'generate') {
