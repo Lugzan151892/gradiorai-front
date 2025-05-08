@@ -70,7 +70,6 @@ body {
   opacity: 1 !important;
 }
 
-/* Стрелочки */
 .scroll-container::-webkit-scrollbar-button {
   display: none;
 }
