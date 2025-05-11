@@ -119,7 +119,7 @@ const SystemQuestions = () => {
         />
       </div>
       <div>Вопросы:</div>
-      <div className={'flex flex-col gap-0.5 px-4'}>
+      <div className={'flex flex-col gap-0.5 mx-4 bg-modal'}>
         {questions.map((question) => (
           <div
             key={question.id}

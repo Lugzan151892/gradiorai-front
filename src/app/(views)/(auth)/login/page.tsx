@@ -25,6 +25,10 @@ const LoginView = () => {
     setEmailError(emailErrorMsg);
     setPasswordError(passwordErrorMsg);
 
+    // if (emailErrorMsg || passwordErrorMsg) {
+    //   return;
+    // }
+
     try {
       const result = await Api.postSilent('/auth/login', {
         email,
