@@ -104,7 +104,7 @@ const CustomInput: React.FC<ICustomInputProps> = ({
         {error && errorsList?.length && showTooltip && (
           <div
             className={
-              'absolute right-0 -top-10 mt-1 bg-white text-red-600 shadow-lg rounded text-sm w-max max-w-48 p-2 z-10'
+              'absolute right-0 bottom-[60px] bg-white text-red-600 shadow-lg rounded text-sm w-max max-w-48 p-2 z-10'
             }
           >
             <div className={'absolute -bottom-1 right-5 w-3 h-3 bg-white transform rotate-45'} />
