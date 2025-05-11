@@ -43,19 +43,21 @@ const LogsPage = () => {
 
   return (
     <div className={'text-white px-2 py-3'}>
-      {logs
-        ? logs.map((log, iLog) => (
-            <div
-              className={'grid grid-cols-[10%_10%_1fr_10%] border-1 border-white mb-2'}
-              key={iLog}
-            >
-              <div>{log.context}</div>
-              <div>{log.level}</div>
-              <div>{log.message}</div>
-              <div>{log.timestamp}</div>
-            </div>
-          ))
-        : null}
+      <div className={'bg-modal'}>
+        {logs
+          ? logs.map((log, iLog) => (
+              <div
+                className={'grid grid-cols-[10%_10%_1fr_10%] border-1 border-white mb-2'}
+                key={iLog}
+              >
+                <div>{log.context}</div>
+                <div>{log.level}</div>
+                <div>{log.message}</div>
+                <div>{log.timestamp}</div>
+              </div>
+            ))
+          : null}
+      </div>
     </div>
   );
 };
