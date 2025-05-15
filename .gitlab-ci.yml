@@ -63,6 +63,6 @@ deploy_test:
         git pull
         npm install
         npm run build
-        pm2 restart 'interview-ready-front-preprod' --port 3001 || pm2 start npm --name 'interview-ready-front-preprod' -- start --port 3001
+        pm2 restart 'interview-ready-front-preprod' || pm2 start npm --name="interview-ready-front-preprod" -- run start -- --port 3001
         pm2 save
       "
