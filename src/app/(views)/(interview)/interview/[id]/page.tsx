@@ -7,6 +7,8 @@ import { interviewMock } from '@/app/(views)/(interview)/interview/utils';
 import ScrollContainer from '@/components/ui/scrollarea/CustomScrollarea';
 import CustomInput from '@/components/ui/input/CustomInput';
 import InterviewMessage from '@/app/(views)/(interview)/interview/[id]/components/InterviewMessage';
+import Api from '@/core/api/api';
+import CustomButton from '@/components/ui/button/CustomButton';
 
 const CurrentInterviewPage = () => {
   const { id } = useParams();
@@ -14,6 +16,61 @@ const CurrentInterviewPage = () => {
   const [interview, setInterview] = useState<IInterview>();
   const [userMessage, setUserMessage] = useState('');
   const messageEndRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    let partialMessage = '';
+    const eventSource = new EventSource('http://localhost:5000/gpt/interview/stream');
+
+    eventSource.onmessage = (event: MessageEvent) => {
+      console.log(event);
+
+      const content = JSON.parse(event.data) as { text: string; type: 'chunk' | 'done' };
+      partialMessage += content.text;
+
+      if (content.type === 'chunk') {
+        setInterview((prev) => {
+          if (!prev) return prev;
+
+          const updatedMessages = [...prev.messages];
+          const last = updatedMessages[updatedMessages.length - 1];
+
+          if (last && last.type === 'GPT') {
+            last.text = partialMessage;
+          } else {
+            updatedMessages.push({
+              id: Date.now(),
+              created_at: new Date().toISOString(),
+              type: 'GPT',
+              text: partialMessage,
+            });
+          }
+
+          return {
+            ...prev,
+            messages: updatedMessages,
+          };
+        });
+      }
+
+      if (content.type === 'done') {
+        console.log('Конец сообщения');
+      }
+    };
+
+    // eventSource.addEventListener('done', () => {
+    //   console.log('GPT закончил сообщение');
+    // });
+
+    return () => eventSource.close();
+  }, []);
+
+  const sendMessage = async () => {
+    const result = await Api.post('/gpt/interview/message', {
+      content: 'test content',
+    });
+
+    console.log(result);
+  };
 
   const loadInterview = useCallback(async () => {
     console.log(id);
@@ -53,6 +110,10 @@ const CurrentInterviewPage = () => {
             onInput={setUserMessage}
           />
         </div>
+        <CustomButton
+          text={'test'}
+          onClick={sendMessage}
+        />
       </div>
     </div>
   );
