@@ -40,9 +40,9 @@ export const metadata: Metadata = {
 
 const InterviewLayout: React.FC<Readonly<{ children: React.ReactNode }>> = ({ children }) => {
   return (
-    <div className={'w-full h-full flex flex-col'}>
+    <div className={'w-full h-screen flex flex-col'}>
       <AppHeader />
-      <div className={'flex max-w-full max-h-full h-full'}>{children}</div>
+      <div className={'flex-grow flex-col overflow-hidden mb-4'}>{children}</div>
     </div>
   );
 };

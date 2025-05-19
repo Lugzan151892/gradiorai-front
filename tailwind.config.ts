@@ -44,6 +44,8 @@ export default {
         'bg-transparent-none': 'var(--bg-transparent-none)',
         'bg-transparent-50': 'var(--bg-transparent-50)',
         'bg-transparent-25': 'var(--bg-transparent-25)',
+        'message-gray': 'var(--message-gray)',
+        'message-blue': 'var(--message-blue)',
         modal: 'var(--modal-bg)',
       },
       gridTemplateRows: {
