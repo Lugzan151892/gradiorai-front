@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import MenuItem, { IMenuItemProps } from '@/components/header/components/MenuItem';
 import { EMENU_ITEM } from '@/components/header/interfaces';
+import ScrollContainer from '@/components/ui/scrollarea/CustomScrollarea';
 
 interface IMenuItem extends IMenuItemProps {
   id: EMENU_ITEM;
@@ -54,6 +55,11 @@ const HeaderUserState = () => {
         router.push('/system');
         break;
       }
+      case EMENU_ITEM.INTERVIEW: {
+        setShowMenu(false);
+        router.push('/interview');
+        break;
+      }
       case EMENU_ITEM.QUIT: {
         setShowMenu(false);
         handleLogout();
@@ -86,6 +92,13 @@ const HeaderUserState = () => {
       text: 'Система',
       icon: 'settings',
       onClick: () => handleMenuClick(EMENU_ITEM.SYSTEM),
+      show: !!user?.admin,
+    },
+    {
+      id: EMENU_ITEM.INTERVIEW,
+      text: 'Пройти собес',
+      icon: 'settings',
+      onClick: () => handleMenuClick(EMENU_ITEM.INTERVIEW),
       show: !!user?.admin,
     },
     {
@@ -166,14 +179,16 @@ const HeaderUserState = () => {
                 text={username || ''}
                 isStatic
               />
-              {menuItems
-                .filter((e) => e.show)
-                .map((item) => (
-                  <MenuItem
-                    key={item.id}
-                    {...item}
-                  />
-                ))}
+              <ScrollContainer>
+                {menuItems
+                  .filter((e) => e.show)
+                  .map((item) => (
+                    <MenuItem
+                      key={item.id}
+                      {...item}
+                    />
+                  ))}
+              </ScrollContainer>
             </div>
           )}
         </div>
