@@ -8,7 +8,7 @@ export enum EMESSAGE_TYPE {
 export interface IInterviewMessage {
   id: number;
   text: string;
-  type: 'USER' | 'GPT';
+  is_human: boolean;
   created_at: string;
 }
 
