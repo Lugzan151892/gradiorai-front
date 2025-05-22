@@ -14,9 +14,10 @@ export interface IInterviewMessage {
 
 export interface IInterview {
   id: string;
+  created_at: string;
   user: IUser;
   files: Array<any>;
-  user_description: string;
+  user_prompt: string;
   messages: Array<IInterviewMessage>;
   result: string;
   recomendations: string;

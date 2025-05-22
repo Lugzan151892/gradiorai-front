@@ -18,26 +18,30 @@ const CurrentInterviewPage = () => {
   const [interview, setInterview] = useState<IInterview>();
   const [userMessage, setUserMessage] = useState('');
   const messageEndRef = useRef<HTMLDivElement>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
 
   const dispatch = useAppDispatch();
 
-  const continueChat = async () => {
+  const continueChat = useCallback(async () => {
     try {
       dispatch(setLoading(true));
       await Api.post<{ interviewId: any }, IInterview>('/interview/chat/continue', {
         interviewId: id,
       });
+      messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     } catch (e) {
       errorHandler(e, dispatch);
     } finally {
       dispatch(setLoading(false));
     }
-  };
+  }, [dispatch, id]);
 
   const sendMessage = async () => {
     if (!userMessage) {
       return;
     }
+
+    setIsGenerating(true);
 
     try {
       dispatch(setLoading(true));
@@ -60,6 +64,10 @@ const CurrentInterviewPage = () => {
   };
 
   const loadInterview = useCallback(async () => {
+    if (interview) {
+      return;
+    }
+
     try {
       dispatch(setLoading(true));
       const result = await Api.get<any, IInterview>('/interview/interview', { id });
@@ -70,20 +78,20 @@ const CurrentInterviewPage = () => {
       if ((!lastMessage || lastMessage.is_human) && !result.payload.finished) {
         continueChat();
       }
+
+      messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     } catch (e) {
       errorHandler(e, dispatch);
     } finally {
       dispatch(setLoading(false));
     }
-  }, [dispatch, id]);
+  }, [dispatch, id, interview, continueChat]);
 
   useEffect(() => {
     let partialMessage = '';
     const eventSource = Api.createEvent('/interview/stream');
 
     eventSource.onmessage = (event: MessageEvent) => {
-      console.log(event);
-
       const content = JSON.parse(event.data) as {
         text: string;
         type: 'chunk' | 'done' | 'data';
@@ -92,6 +100,7 @@ const CurrentInterviewPage = () => {
       partialMessage += content.text;
 
       if (content.type === 'chunk') {
+        setIsGenerating(true);
         setInterview((prev) => {
           if (!prev) return prev;
 
@@ -116,13 +125,10 @@ const CurrentInterviewPage = () => {
         });
       }
 
-      if (content.type === 'done') {
-        console.log('Конец сообщения');
-        console.log('END: ', content.text);
-      }
-
       if (content.type === 'data') {
         setInterview(content.interview);
+        setIsGenerating(false);
+        messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
       }
     };
 
@@ -147,6 +153,12 @@ const CurrentInterviewPage = () => {
                     message={message}
                   />
                 ))}
+              {interview?.finished && (
+                <div>
+                  <div className={'text-2xl mb-4'}>Результат интервью:</div>
+                  <div>{interview.recomendations}</div>
+                </div>
+              )}
               <div ref={messageEndRef} />
             </div>
           </ScrollContainer>
@@ -155,11 +167,15 @@ const CurrentInterviewPage = () => {
           <CustomInput
             value={userMessage}
             onInput={setUserMessage}
+            onChange={sendMessage}
+            disabled={isGenerating || interview?.finished}
           />
         </div>
+        {isGenerating && <div>Генерируем ответ</div>}
         <CustomButton
           text={'Отправить'}
           onClick={sendMessage}
+          disabled={isGenerating || interview?.finished}
         />
       </div>
     </div>
