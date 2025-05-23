@@ -5,11 +5,41 @@ import ScrollContainer from '@/components/ui/scrollarea/CustomScrollarea';
 import CustomTextarea from '@/components/ui/textarea/CustomTextarea';
 import React, { useState } from 'react';
 import AuthConfirmButton from '@/app/(views)/(auth)/components/AuthConfirmButton';
+import { setLoading } from '@/features/loading/loadingSlice';
+import errorHandler from '@/core/utils/error/errorHandler';
+import { useAppDispatch } from '@/hooks/redux';
+import Api from '@/core/api/api';
+import { useRouter } from 'next/navigation';
 
 const InterviewView = () => {
   const [vakanciesFile, setVakanciesFile] = useState<null | File>(null);
   const [userCV, setUserCV] = useState<null | File>(null);
-  const [userDescription, setUserDescription] = useState('');
+  const [userDescription, setUserDescription] = useState('Меня зовут Денис, backend python developer');
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+
+  const startInterview = async () => {
+    if (!userDescription) {
+      return;
+    }
+
+    try {
+      dispatch(setLoading(true));
+      const result = await Api.post<{ user_prompt: string }, { id: string }>('/interview/create', {
+        user_prompt: userDescription,
+      });
+
+      console.log(result);
+
+      if (result.payload.id) {
+        router.push(`/interview/${result.payload.id}`);
+      }
+    } catch (e) {
+      errorHandler(e, dispatch);
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
 
   return (
     <div className={'w-full max-w-[1360px] mx-auto flex flex-col overflow-hidden'}>
@@ -55,6 +85,7 @@ const InterviewView = () => {
           size={24}
           icon={'check'}
           text={'Начать'}
+          onClick={startInterview}
         />
       </div>
     </div>
