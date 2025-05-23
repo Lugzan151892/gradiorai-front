@@ -14,7 +14,7 @@ import { useRouter } from 'next/navigation';
 const InterviewView = () => {
   const [vakanciesFile, setVakanciesFile] = useState<null | File>(null);
   const [userCV, setUserCV] = useState<null | File>(null);
-  const [userDescription, setUserDescription] = useState('Меня зовут Денис, backend python developer');
+  const [userDescription, setUserDescription] = useState('');
   const dispatch = useAppDispatch();
   const router = useRouter();
 
@@ -84,6 +84,7 @@ const InterviewView = () => {
           customBorder
           size={24}
           icon={'check'}
+          disabled={!userDescription}
           text={'Начать'}
           onClick={startInterview}
         />
