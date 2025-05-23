@@ -38,11 +38,16 @@ const SystemPage = () => {
       text: 'Отзывы пользователей',
       href: 'system/reviews',
     },
+    {
+      id: 7,
+      text: 'Мои собеседования',
+      href: 'system/interviews',
+    },
   ];
   return (
     <div className={'flex items-center h-full w-full justify-center'}>
       <div
-        className={'grid grid-cols-[repeat(auto-fit,minmax(250px,max-content))] justify-center w-full gap-y-2 gap-x-2'}
+        className={'grid grid-cols-[repeat(auto-fit,minmax(350px,max-content))] justify-center w-full gap-y-2 gap-x-2'}
       >
         {buttons.map((button) => (
           <CustomButton

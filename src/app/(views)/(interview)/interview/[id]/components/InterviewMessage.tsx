@@ -5,7 +5,7 @@ const InterviewMessage: React.FC<Readonly<{ message: IInterviewMessage; classNam
   message,
   className,
 }) => {
-  const dynamicClasses = message.type === 'USER' ? 'bg-message-blue' : 'bg-message-gray';
+  const dynamicClasses = message.is_human ? 'bg-message-blue' : 'bg-message-gray';
 
   return (
     <div className={`rounded-input p-4 ${dynamicClasses} ${className}`}>

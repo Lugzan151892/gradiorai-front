@@ -98,6 +98,10 @@ class Api {
   static async deleteSilent<T, R>(path: string, options: T = {} as T): Promise<IResponseSilent<R>> {
     return await this.handleResponse<T, R, true>(path, 'DELETE', options, true);
   }
+
+  static createEvent(path: string) {
+    return new EventSource(API_PATH + path);
+  }
 }
 
 export default Api;
