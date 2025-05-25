@@ -29,7 +29,7 @@ const SystemGptPage = () => {
   const loadSettings = useCallback(async () => {
     try {
       dispatch(setLoading(true));
-      const result = await Api.get<any, IGptSettings>('/system/gpt-settings');
+      const result = await Api.get<any, IGptSettings>('/system/gpt-settings', { type: 'TEST' });
       setGptSettings(result.payload);
     } catch (e: any) {
       errorHandler(e, dispatch);
@@ -99,6 +99,7 @@ const SystemGptPage = () => {
           user_amount: +gptSettings.user_amount,
           temperature: +gptSettings.temperature,
         },
+        type: 'TEST',
       });
 
       if (result.payload) {
