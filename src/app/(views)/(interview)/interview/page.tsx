@@ -29,8 +29,6 @@ const InterviewView = () => {
         user_prompt: userDescription,
       });
 
-      console.log(result);
-
       if (result.payload.id) {
         router.push(`/interview/${result.payload.id}`);
       }
