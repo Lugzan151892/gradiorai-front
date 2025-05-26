@@ -19,7 +19,7 @@ const SystemReviews = () => {
       const result = await Api.get<any, IUserReview[]>('/user/reviews');
 
       setReviews(result.payload);
-    } catch (e: any) {
+    } catch (e) {
       errorHandler(e, dispatch);
     } finally {
       dispatch(setLoading(false));

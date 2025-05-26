@@ -18,10 +18,10 @@ const SystemInterviews = () => {
   const loadInterviews = useCallback(async () => {
     try {
       dispatch(setLoading(true));
-      const result = await Api.get<any, IInterview[]>('/interview/user-interviews');
+      const result = await Api.get<undefined, IInterview[]>('/interview/user-interviews');
 
       setInterviews(result.payload);
-    } catch (e: any) {
+    } catch (e) {
       errorHandler(e, dispatch);
     } finally {
       dispatch(setLoading(false));
@@ -39,7 +39,7 @@ const SystemInterviews = () => {
       );
 
       loadInterviews();
-    } catch (e: any) {
+    } catch (e) {
       errorHandler(e, dispatch);
     }
   };

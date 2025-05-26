@@ -77,7 +77,7 @@ const AddTechnologyModal: React.FC<TModalProps> = (props) => {
           type: 'success',
         })
       );
-    } catch (e: any) {
+    } catch (e) {
       errorHandler(e, dispatch);
     } finally {
       dispatch(setLoading(false));
@@ -104,7 +104,7 @@ const AddTechnologyModal: React.FC<TModalProps> = (props) => {
           type: 'success',
         })
       );
-    } catch (e: any) {
+    } catch (e) {
       errorHandler(e, dispatch);
     } finally {
       dispatch(setLoading(false));
@@ -132,13 +132,13 @@ const AddTechnologyModal: React.FC<TModalProps> = (props) => {
     const loadSpecs = async () => {
       try {
         dispatch(setLoading(true));
-        const result = await Api.get<null, ISpecialization[]>('/questions/get-specs');
+        const result = await Api.get<undefined, ISpecialization[]>('/questions/get-specs');
         setSpecs(result.payload);
 
         if (isEditModalProps(props)) {
           setSelectedSpecs(props.technology.specialization.map((el) => el.id));
         }
-      } catch (e: any) {
+      } catch (e) {
         errorHandler(e, dispatch);
       } finally {
         dispatch(setLoading(false));

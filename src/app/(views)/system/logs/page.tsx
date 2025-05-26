@@ -21,7 +21,7 @@ const LogsPage = () => {
   const getLogs = async () => {
     try {
       dispatch(setLoading(true));
-      const result = await Api.get<any, { [key: number]: string }>('/system/logs');
+      const result = await Api.get<undefined, { [key: number]: string }>('/system/logs');
       const parsedLogs: ILog[] = result.payload[0]
         .trim()
         .split('\n')
@@ -29,7 +29,7 @@ const LogsPage = () => {
         .reverse();
 
       setLogs(parsedLogs);
-    } catch (e: any) {
+    } catch (e) {
       errorHandler(e, dispatch);
     } finally {
       dispatch(setLoading(false));

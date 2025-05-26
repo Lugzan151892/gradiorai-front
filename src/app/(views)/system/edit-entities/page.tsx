@@ -30,7 +30,7 @@ const EditEntitiesView = () => {
       dispatch(setLoading(true));
       const result = await Api.get<object, ISpecialization[]>('/questions/get-specs');
       setSpecs(result.payload);
-    } catch (e: any) {
+    } catch (e) {
       errorHandler(e, dispatch);
     } finally {
       dispatch(setLoading(false));
@@ -44,7 +44,7 @@ const EditEntitiesView = () => {
         '/questions/get-techs'
       );
       setTechs(result.payload.techs);
-    } catch (e: any) {
+    } catch (e) {
       errorHandler(e, dispatch);
     } finally {
       dispatch(setLoading(false));
@@ -85,7 +85,7 @@ const EditEntitiesView = () => {
       );
 
       loadEntitie();
-    } catch (e: any) {
+    } catch (e) {
       errorHandler(e, dispatch);
     }
   };
@@ -109,7 +109,7 @@ const EditEntitiesView = () => {
       );
 
       loadEntitie();
-    } catch (e: any) {
+    } catch (e) {
       errorHandler(e, dispatch);
     }
   };

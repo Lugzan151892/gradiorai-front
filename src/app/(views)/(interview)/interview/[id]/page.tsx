@@ -71,7 +71,7 @@ const CurrentInterviewPage = () => {
 
     try {
       dispatch(setLoading(true));
-      const result = await Api.get<any, IInterview>('/interview/interview', { id });
+      const result = await Api.get<{ id: any }, IInterview>('/interview/interview', { id });
       setInterview(result.payload);
       if (!result.payload.messages?.length) {
         continueChat();

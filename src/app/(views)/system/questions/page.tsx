@@ -58,13 +58,16 @@ const SystemQuestions = () => {
   const loadQuestions = useCallback(async () => {
     try {
       dispatch(setLoading(true));
-      const result = await Api.get<any, IFullQuestion[]>('/questions/questions-list', {
-        only_mine: onlyMine,
-        only_without_specs: withoutSpecs,
-      });
+      const result = await Api.get<{ only_mine: boolean; only_without_specs: boolean }, IFullQuestion[]>(
+        '/questions/questions-list',
+        {
+          only_mine: onlyMine,
+          only_without_specs: withoutSpecs,
+        }
+      );
 
       setQuestions(result.payload);
-    } catch (e: any) {
+    } catch (e) {
       errorHandler(e, dispatch);
     } finally {
       dispatch(setLoading(false));
@@ -78,7 +81,7 @@ const SystemQuestions = () => {
 
     try {
       setLoading(true);
-      await Api.delete<{ id: number }, any>('/questions/delete', { id: questionId });
+      await Api.delete<{ id: number }, undefined>('/questions/delete', { id: questionId });
       loadQuestions();
     } catch (e) {
       errorHandler(e, dispatch);

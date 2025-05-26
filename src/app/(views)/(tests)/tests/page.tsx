@@ -67,9 +67,9 @@ const TestsView = () => {
   const loadSpecs = useCallback(async () => {
     try {
       dispatch(setLoading(true));
-      const result = await Api.get<null, ISpecialization[]>('/questions/get-specs');
+      const result = await Api.get<undefined, ISpecialization[]>('/questions/get-specs');
       setSpecs(result.payload);
-    } catch (e: any) {
+    } catch (e) {
       errorHandler(e, dispatch);
     } finally {
       dispatch(setLoading(false));
@@ -88,7 +88,7 @@ const TestsView = () => {
           : undefined
       );
       setTechs(result.payload.techs);
-    } catch (e: any) {
+    } catch (e) {
       errorHandler(e, dispatch);
     } finally {
       dispatch(setLoading(false));
@@ -149,7 +149,7 @@ const TestsView = () => {
           throw new Error(result.payload.message);
         }
       }
-    } catch (e: any) {
+    } catch (e) {
       errorHandler(e, dispatch);
     } finally {
       setGenerateModal(false);
