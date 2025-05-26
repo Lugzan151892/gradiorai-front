@@ -10,6 +10,7 @@ import CustomTextarea from '@/components/ui/textarea/CustomTextarea';
 import CustomButton from '@/components/ui/button/CustomButton';
 import { openModal } from '@/store/tech/techSlice';
 import routeChecker from '@/hoc/routeChecker';
+import ScrollContainer from '@/components/ui/scrollarea/CustomScrollarea';
 
 interface IGptSettings {
   user_model: string;
@@ -23,20 +24,42 @@ interface IGptSettings {
 }
 
 const SystemGptPage = () => {
+  const [settingsType, setSettingsType] = useState<'TEST' | 'INTERVIEW'>('TEST');
   const dispatch = useAppDispatch();
   const [gptSettings, setGptSettings] = useState<IGptSettings>();
+
+  const availableGptModels = [
+    'gpt-4.1',
+    'gpt-4.1-mini',
+    'gpt-4.1-nano',
+    'gpt-4.5-preview',
+    'gpt-4o',
+    'gpt-4o-mini',
+    'gpt-4o',
+  ];
+
+  const gptTypeButtons: Array<{ id: 'TEST' | 'INTERVIEW'; text: string }> = [
+    {
+      id: 'TEST',
+      text: 'Настройки для тестов',
+    },
+    {
+      id: 'INTERVIEW',
+      text: 'Настройки для интервью',
+    },
+  ];
 
   const loadSettings = useCallback(async () => {
     try {
       dispatch(setLoading(true));
-      const result = await Api.get<any, IGptSettings>('/system/gpt-settings', { type: 'TEST' });
+      const result = await Api.get<any, IGptSettings>('/system/gpt-settings', { type: settingsType });
       setGptSettings(result.payload);
     } catch (e: any) {
       errorHandler(e, dispatch);
     } finally {
       dispatch(setLoading(false));
     }
-  }, [dispatch]);
+  }, [dispatch, settingsType]);
 
   const handleChangeSettings = (value: Partial<IGptSettings>) => {
     // @ts-expect-error ne budet undefined
@@ -50,11 +73,13 @@ const SystemGptPage = () => {
     if (!gptSettings) {
       return;
     }
-    const models = ['gpt-4.1', 'gpt-4.1-mini', 'gpt-4.1-nano', 'gpt-4.5-preview', 'gpt-4o', 'gpt-4o-mini', 'gpt-4o'];
-    if (!models.includes(gptSettings?.admin_model) || !models.includes(gptSettings?.user_model)) {
+    if (
+      !availableGptModels.includes(gptSettings?.admin_model) ||
+      !availableGptModels.includes(gptSettings?.user_model)
+    ) {
       dispatch(
         openModal({
-          text: 'Некорректно указана модель. ТОЛЬКО модели из списка ' + models.join(', '),
+          text: 'Некорректно указана модель. ТОЛЬКО модели из списка ' + availableGptModels.join(', '),
           type: 'error',
         })
       );
@@ -74,10 +99,11 @@ const SystemGptPage = () => {
     }
 
     if (
-      isNaN(+gptSettings.user_amount) ||
-      isNaN(+gptSettings.admin_amount) ||
-      +gptSettings.user_amount < 0 ||
-      +gptSettings.admin_amount < 0
+      settingsType === 'TEST' &&
+      (isNaN(+gptSettings.user_amount) ||
+        isNaN(+gptSettings.admin_amount) ||
+        +gptSettings.user_amount < 0 ||
+        +gptSettings.admin_amount < 0)
     ) {
       dispatch(
         openModal({
@@ -99,7 +125,7 @@ const SystemGptPage = () => {
           user_amount: +gptSettings.user_amount,
           temperature: +gptSettings.temperature,
         },
-        type: 'TEST',
+        type: settingsType,
       });
 
       if (result.payload) {
@@ -118,103 +144,127 @@ const SystemGptPage = () => {
   }, [loadSettings]);
 
   return (
-    <div className={'w-full h-full bg-main-blue overflow-y-auto overflow-x-hidden'}>
-      <div className={'w-full h-full flex flex-col px-2 items-center'}>
-        {gptSettings ? (
-          <div className={'mt-3 w-full'}>
-            <div className={'text-2xl mb-2 text-center'}>Настройки</div>
-            <div className={'flex mobile:flex-col gap-4'}>
-              <div className={'flex flex-col'}>
-                <div className={'desktop:text-2xl mobile:text-lg text-center'}>Настройки используемой модели GPT:</div>
-                <div className={'desktop:text-xl mobile:text-base mb-2 text-center'}>
-                  (ТОЛЬКО gpt-4o-mini (дешевая) или gpt-4o)
-                </div>
-                <div className={'flex flex-col gap-3'}>
-                  <CustomInput
-                    value={gptSettings.admin_model}
-                    label={'Модель админа'}
-                    onInput={(val) => handleChangeSettings({ admin_model: val })}
-                  />
-                  <CustomInput
-                    value={gptSettings.user_model}
-                    label={'Модель пользователя'}
-                    onInput={(val) => handleChangeSettings({ user_model: val })}
-                  />
-                </div>
-              </div>
-              <div className={'flex flex-col'}>
-                <div className={'desktop:text-2xl mobile:text-lg text-center'}>
-                  Настройки количества генерируемых вопросов GPT:
-                </div>
-                <div className={'desktop:text-xl mobile:text-base mb-2 text-center'}>(!!ТОЛЬКО ЧИСЛА)</div>
-                <div className={'flex flex-col gap-3'}>
-                  <CustomInput
-                    value={gptSettings.admin_amount}
-                    label={'Количество вопросов для админа'}
-                    onInput={(val) => handleChangeSettings({ admin_amount: val })}
-                  />
-                  <CustomInput
-                    value={gptSettings.user_amount}
-                    label={'Количество вопросов для пользователя'}
-                    onInput={(val) => handleChangeSettings({ user_amount: val })}
-                  />
-                </div>
-              </div>
-              <div className={'flex flex-col desktop:w-[max-content] mobile:w-full'}>
-                <div className={'desktop:text-2xl mobile:text-lg text-center'}>Настройки температуры GPT:</div>
-                <div className={'desktop:text-xl mobile:text-base mb-2 text-center'}>
-                  (ТОЛЬКО ЧИСЛА ОТ 0 до 2 с десятичными значениями, например 0.2)
-                </div>
-                <div className={'flex gap-3 desktop:w-[max-content] mobile:w-full'}>
-                  <CustomInput
-                    value={gptSettings.temperature}
-                    label={'Температура'}
-                    onInput={(val) => handleChangeSettings({ temperature: val })}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className={'flex flex-col'}>
-              <div className={'desktop:text-2xl mobile:text-lg mb-2 text-center'}>Промпты</div>
-              <div>
-                Можно использовать переменные:
-                <div className={'flex flex-col'}>
-                  <span>$PASSED_QUESTIONS - вопросы из базы, которые пройдены пользователем, 20 штук.</span>
-                  <span>$QUESTIONS_AMOUNT - количество генерируемых вопросов</span>
-                  <span>$SKILL_LEVEL - уровень senior/junior</span>
-                  <span>$QUESTION_TECHS - внутренние технологии в направлении, через запятую HTML, React, CSS</span>
-                </div>
-              </div>
-              <div className={'flex mobile:flex-col w-full h-full gap-3'}>
-                <div className={'flex w-full h-full'}>
-                  <CustomTextarea
-                    className={'flex-1 h-full'}
-                    rows={9}
-                    value={gptSettings.system_message}
-                    label={'Системное сообщение'}
-                    onInput={(val) => handleChangeSettings({ system_message: val })}
-                  />
-                </div>
-                <div className={'flex w-full h-full'}>
-                  <CustomTextarea
-                    value={gptSettings.user_message}
-                    rows={9}
-                    label={'Пользовательское сообщение'}
-                    onInput={(val) => handleChangeSettings({ user_message: val })}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className={'flex items-center w-full mt-2 mb-2'}>
-              <CustomButton
-                className={'mx-auto'}
-                text={'Сохранить'}
-                onClick={saveGptSettings}
-              />
-            </div>
-          </div>
-        ) : null}
+    <div className={'w-full h-full flex flex-col overflow-hidden'}>
+      <div className={'text-2xl mb-2 text-center'}>Настройки</div>
+      <div
+        className={
+          'grid grid-flow-col auto-cols-auto-fit auto-cols-[minmax(150px,max-content)] justify-center w-full gap-y-2 gap-x-2 mt-4'
+        }
+      >
+        {gptTypeButtons.map((button) => (
+          <CustomButton
+            text={button.text}
+            key={button.id}
+            selected={button.id === settingsType}
+            onClick={() => setSettingsType(button.id)}
+          />
+        ))}
       </div>
+      <ScrollContainer>
+        <div className={'flex flex-col px-2 items-center mb-4'}>
+          {gptSettings ? (
+            <div className={'mt-3 w-full'}>
+              <div className={'flex mobile:flex-col gap-4'}>
+                <div className={'flex flex-col'}>
+                  <div className={'desktop:text-2xl mobile:text-lg text-center'}>
+                    Настройки используемой модели GPT:
+                  </div>
+                  <div className={'desktop:text-xl mobile:text-base mb-2 text-center'}>
+                    {`(ТОЛЬКО ${availableGptModels.map((model) => `'${model}'`).join(' || ')})`}
+                  </div>
+                  <div className={'flex flex-col gap-3'}>
+                    <CustomInput
+                      value={gptSettings.admin_model}
+                      label={'Модель админа'}
+                      onInput={(val) => handleChangeSettings({ admin_model: val })}
+                    />
+                    <CustomInput
+                      value={gptSettings.user_model}
+                      label={'Модель пользователя'}
+                      onInput={(val) => handleChangeSettings({ user_model: val })}
+                    />
+                  </div>
+                </div>
+                {settingsType === 'TEST' && (
+                  <div className={'flex flex-col'}>
+                    <div className={'desktop:text-2xl mobile:text-lg text-center'}>
+                      Настройки количества генерируемых вопросов GPT:
+                    </div>
+                    <div className={'desktop:text-xl mobile:text-base mb-2 text-center'}>(!!ТОЛЬКО ЧИСЛА)</div>
+                    <div className={'flex flex-col gap-3'}>
+                      <CustomInput
+                        value={gptSettings.admin_amount}
+                        label={'Количество вопросов для админа'}
+                        onInput={(val) => handleChangeSettings({ admin_amount: val })}
+                      />
+                      <CustomInput
+                        value={gptSettings.user_amount}
+                        label={'Количество вопросов для пользователя'}
+                        onInput={(val) => handleChangeSettings({ user_amount: val })}
+                      />
+                    </div>
+                  </div>
+                )}
+                <div className={'flex flex-col desktop:w-[max-content] mobile:w-full'}>
+                  <div className={'desktop:text-2xl mobile:text-lg text-center'}>Настройки температуры GPT:</div>
+                  <div className={'desktop:text-xl mobile:text-base mb-2 text-center'}>
+                    (ТОЛЬКО ЧИСЛА ОТ 0 до 2 с десятичными значениями, например 0.2)
+                  </div>
+                  <div className={'flex gap-3 desktop:w-[max-content] mobile:w-full'}>
+                    <CustomInput
+                      value={gptSettings.temperature}
+                      label={'Температура'}
+                      onInput={(val) => handleChangeSettings({ temperature: val })}
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className={'flex flex-col mb-10'}>
+                <div className={'desktop:text-2xl mobile:text-lg mb-2 text-center'}>Промпты</div>
+                {settingsType === 'TEST' && (
+                  <div>
+                    Можно использовать переменные:
+                    <div className={'flex flex-col'}>
+                      <span>$PASSED_QUESTIONS - вопросы из базы, которые пройдены пользователем, 20 штук.</span>
+                      <span>$QUESTIONS_AMOUNT - количество генерируемых вопросов</span>
+                      <span>$SKILL_LEVEL - уровень senior/junior</span>
+                      <span>$QUESTION_TECHS - внутренние технологии в направлении, через запятую HTML, React, CSS</span>
+                    </div>
+                  </div>
+                )}
+                <div className={'flex mobile:flex-col w-full h-full gap-3'}>
+                  <div className={'flex w-full h-full'}>
+                    <CustomTextarea
+                      className={'flex-1 h-full'}
+                      rows={9}
+                      value={gptSettings.system_message}
+                      label={'Системное сообщение'}
+                      onInput={(val) => handleChangeSettings({ system_message: val })}
+                    />
+                  </div>
+                  {settingsType === 'TEST' && (
+                    <div className={'flex w-full h-full'}>
+                      <CustomTextarea
+                        value={gptSettings.user_message}
+                        rows={9}
+                        label={'Пользовательское сообщение'}
+                        onInput={(val) => handleChangeSettings({ user_message: val })}
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
+              <div className={'flex items-center w-full mt-2 mb-2'}>
+                <CustomButton
+                  className={'mx-auto'}
+                  text={'Сохранить'}
+                  onClick={saveGptSettings}
+                />
+              </div>
+            </div>
+          ) : null}
+        </div>
+      </ScrollContainer>
     </div>
   );
 };
