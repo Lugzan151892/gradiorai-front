@@ -76,7 +76,7 @@ const SystemInterviews = () => {
                     {interview.created_at ? normalizeServerDate(interview.created_at) : ''}
                   </div>
                   <div className={'text-xl border-r-1 text-center'}>{interview.id}</div>
-                  <div className={'text-xl border-r-1 px-2'}>{interview.user_prompt}</div>
+                  <div className={'text-xl border-r-1 px-2 truncate'}>{interview.user_prompt}</div>
                   <a
                     className={'text-xl text-center border-r-1 border-white hover:text-main-blue hover:underline'}
                     href={`/interview/${interview.id}`}

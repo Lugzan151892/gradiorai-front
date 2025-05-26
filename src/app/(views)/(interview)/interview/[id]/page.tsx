@@ -17,6 +17,7 @@ const CurrentInterviewPage = () => {
 
   const [interview, setInterview] = useState<IInterview>();
   const [userMessage, setUserMessage] = useState('');
+  const [generatedMessage, setGeneratedMessage] = useState('');
   const messageEndRef = useRef<HTMLDivElement>(null);
   const [isGenerating, setIsGenerating] = useState(false);
 
@@ -91,38 +92,18 @@ const CurrentInterviewPage = () => {
     eventSource.onmessage = (event: MessageEvent) => {
       const content = JSON.parse(event.data) as {
         text: string;
-        type: 'chunk' | 'done' | 'data';
+        type: 'chunk' | 'data' | 'result';
         interview: IInterview;
       };
       partialMessage += content.text;
 
       if (content.type === 'chunk') {
         setIsGenerating(true);
-        setInterview((prev) => {
-          if (!prev) return prev;
-
-          const updatedMessages = [...prev.messages];
-          const last = updatedMessages[updatedMessages.length - 1];
-
-          if (last && !last.is_human) {
-            last.text = partialMessage;
-          } else {
-            updatedMessages.push({
-              id: Date.now(),
-              created_at: new Date().toISOString(),
-              is_human: false,
-              text: partialMessage,
-            });
-          }
-
-          return {
-            ...prev,
-            messages: updatedMessages,
-          };
-        });
+        setGeneratedMessage(partialMessage);
       }
 
-      if (content.type === 'data') {
+      if (content.type === 'data' || content.type === 'result') {
+        setGeneratedMessage('');
         setInterview(content.interview);
         setIsGenerating(false);
         messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -147,11 +128,19 @@ const CurrentInterviewPage = () => {
                   <InterviewMessage
                     key={message.id}
                     className={`max-w-[70%] mb-2 ${message.is_human ? 'ml-auto' : 'mr-auto'}`}
-                    message={message}
+                    message={message.text}
+                    isHuman={message.is_human}
                   />
                 ))}
+              {isGenerating && !!generatedMessage && (
+                <InterviewMessage
+                  className={`max-w-[70%] mb-2 'mr-auto'`}
+                  message={generatedMessage}
+                  isHuman={false}
+                />
+              )}
               {interview?.finished && (
-                <div>
+                <div className={'bg-message-gray p-4 rounded-input'}>
                   <div className={'text-2xl mb-4'}>Результат интервью:</div>
                   <div>{interview.recomendations}</div>
                 </div>

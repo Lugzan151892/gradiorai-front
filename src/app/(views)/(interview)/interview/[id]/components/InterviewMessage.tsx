@@ -1,15 +1,15 @@
 import React from 'react';
-import { IInterviewMessage } from '@/app/(views)/(interview)/interview/types';
 
-const InterviewMessage: React.FC<Readonly<{ message: IInterviewMessage; className?: string }>> = ({
+const InterviewMessage: React.FC<Readonly<{ message: string; isHuman?: boolean; className?: string }>> = ({
   message,
+  isHuman,
   className,
 }) => {
-  const dynamicClasses = message.is_human ? 'bg-message-blue' : 'bg-message-gray';
+  const dynamicClasses = isHuman ? 'bg-message-blue' : 'bg-message-gray';
 
   return (
     <div className={`rounded-input p-4 ${dynamicClasses} ${className}`}>
-      <div className={'break-all'}>{message.text}</div>
+      <div>{message}</div>
     </div>
   );
 };
