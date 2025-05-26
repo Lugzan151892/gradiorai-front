@@ -72,10 +72,7 @@ const CurrentInterviewPage = () => {
       dispatch(setLoading(true));
       const result = await Api.get<any, IInterview>('/interview/interview', { id });
       setInterview(result.payload);
-      const lastMessage = result.payload.messages?.length
-        ? result.payload.messages[result.payload.messages.length - 1]
-        : null;
-      if ((!lastMessage || lastMessage.is_human) && !result.payload.finished) {
+      if (!result.payload.messages?.length) {
         continueChat();
       }
 

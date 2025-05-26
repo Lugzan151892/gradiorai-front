@@ -28,7 +28,7 @@ const EditEntitiesView = () => {
   const loadSpecs = useCallback(async () => {
     try {
       dispatch(setLoading(true));
-      const result = await Api.get<null, ISpecialization[]>('/questions/get-specs');
+      const result = await Api.get<object, ISpecialization[]>('/questions/get-specs');
       setSpecs(result.payload);
     } catch (e: any) {
       errorHandler(e, dispatch);
@@ -40,7 +40,9 @@ const EditEntitiesView = () => {
   const loadTechs = useCallback(async () => {
     try {
       dispatch(setLoading(true));
-      const result = await Api.get<null, { techs: ITechWithCount[]; questions_amount: number }>('/questions/get-techs');
+      const result = await Api.get<object, { techs: ITechWithCount[]; questions_amount: number }>(
+        '/questions/get-techs'
+      );
       setTechs(result.payload.techs);
     } catch (e: any) {
       errorHandler(e, dispatch);
