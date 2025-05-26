@@ -9,7 +9,7 @@ const InterviewMessage: React.FC<Readonly<{ message: IInterviewMessage; classNam
 
   return (
     <div className={`rounded-input p-4 ${dynamicClasses} ${className}`}>
-      <div>{message.text}</div>
+      <div className={'break-all'}>{message.text}</div>
     </div>
   );
 };

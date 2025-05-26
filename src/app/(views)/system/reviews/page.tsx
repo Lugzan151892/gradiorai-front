@@ -13,10 +13,10 @@ const SystemReviews = () => {
   const [reviews, setReviews] = useState<IUserReview[]>([]);
   const dispatch = useAppDispatch();
 
-  const loadUsers = useCallback(async () => {
+  const loadReviews = useCallback(async () => {
     try {
       dispatch(setLoading(true));
-      const result = await Api.get<null, IUserReview[]>('/user/reviews');
+      const result = await Api.get<any, IUserReview[]>('/user/reviews');
 
       setReviews(result.payload);
     } catch (e: any) {
@@ -27,8 +27,8 @@ const SystemReviews = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    loadUsers();
-  }, [loadUsers]);
+    loadReviews();
+  }, [loadReviews]);
 
   const getStatusText = (review: IUserReview) => {
     if (review.saved_by) {

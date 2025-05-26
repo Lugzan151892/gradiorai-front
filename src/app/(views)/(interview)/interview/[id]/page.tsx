@@ -4,13 +4,13 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { IInterview } from '@/app/(views)/(interview)/interview/types';
 import { useParams } from 'next/navigation';
 import ScrollContainer from '@/components/ui/scrollarea/CustomScrollarea';
-import CustomInput from '@/components/ui/input/CustomInput';
 import InterviewMessage from '@/app/(views)/(interview)/interview/[id]/components/InterviewMessage';
 import Api from '@/core/api/api';
 import CustomButton from '@/components/ui/button/CustomButton';
 import errorHandler from '@/core/utils/error/errorHandler';
 import { useAppDispatch } from '@/hooks/redux';
 import { setLoading } from '@/features/loading/loadingSlice';
+import CustomTextarea from '@/components/ui/textarea/CustomTextarea';
 
 const CurrentInterviewPage = () => {
   const { id } = useParams();
@@ -161,7 +161,7 @@ const CurrentInterviewPage = () => {
           </ScrollContainer>
         </div>
         <div className={'mt-2'}>
-          <CustomInput
+          <CustomTextarea
             value={userMessage}
             onInput={setUserMessage}
             onChange={sendMessage}
