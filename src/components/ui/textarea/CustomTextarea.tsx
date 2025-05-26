@@ -41,7 +41,7 @@ const CustomTextarea: React.FC<ICustomTextareaProps> = ({
   return (
     <div className={'w-full ' + (className || '')}>
       <Field>
-        {label ? <Label className={'text-xl mb-1 text-black'}>{label}</Label> : null}
+        {label ? <Label className={'text-xl mb-1 text-white'}>{label}</Label> : null}
         <div className={'flex bg-white w-full rounded-lg py-1.5 px-3 text-black border-2 ' + classes}>
           <Textarea
             className={
