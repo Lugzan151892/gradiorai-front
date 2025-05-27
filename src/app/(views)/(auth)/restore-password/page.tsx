@@ -56,7 +56,7 @@ const RestorePassword = () => {
       } else {
         setShowCodeBlock(true);
       }
-    } catch (e: any) {
+    } catch (e) {
       errorHandler(e, dispatch);
     } finally {
       dispatch(setLoading(false));
@@ -87,7 +87,7 @@ const RestorePassword = () => {
           onClick: () => router.push('/login'),
         })
       );
-    } catch (e: any) {
+    } catch (e) {
       errorHandler(e, dispatch);
     } finally {
       dispatch(setLoading(false));
@@ -107,7 +107,7 @@ const RestorePassword = () => {
       } else {
         setStep(2);
       }
-    } catch (e: any) {
+    } catch (e) {
       errorHandler(e, dispatch);
     } finally {
       dispatch(setLoading(false));

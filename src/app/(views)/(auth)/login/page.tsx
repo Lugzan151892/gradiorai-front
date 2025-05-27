@@ -47,7 +47,7 @@ const LoginView = () => {
           throw new Error(result.payload.message);
         }
       }
-    } catch (e: any) {
+    } catch (e) {
       errorHandler(e, dispatch);
     }
   };
