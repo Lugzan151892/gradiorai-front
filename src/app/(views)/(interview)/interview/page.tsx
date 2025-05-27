@@ -25,9 +25,22 @@ const InterviewView = () => {
 
     try {
       dispatch(setLoading(true));
-      const result = await Api.post<{ user_prompt: string }, { id: string }>('/interview/create', {
-        user_prompt: userDescription,
-      });
+      const resultFiles = [];
+      if (userCV) {
+        resultFiles.push(userCV);
+      }
+
+      if (vakanciesFile) {
+        resultFiles.push(vakanciesFile);
+      }
+      const result = await Api.postFormData<{ user_prompt: string; cv: File | null; vac: File | null }, { id: string }>(
+        '/interview/create',
+        {
+          user_prompt: userDescription,
+          cv: userCV,
+          vac: vakanciesFile,
+        }
+      );
 
       if (result.payload.id) {
         router.push(`/interview/${result.payload.id}`);
@@ -40,7 +53,7 @@ const InterviewView = () => {
   };
 
   return (
-    <div className={'w-full max-w-[1360px] mx-auto flex flex-col overflow-hidden'}>
+    <div className={'w-full max-w-[1360px] mx-auto flex flex-col'}>
       <h1 className={'text-5xl mb-2'}>Настройки генерации</h1>
       <h2 className={'text-xl'}>Укажите конфигурацию параметров для составления контекста собеседования</h2>
       <div className={'bg-bg-transparent-25 rounded-10 p-4 mt-9 flex-grow mb-9 overflow-hidden'}>

@@ -4,19 +4,20 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { IInterview } from '@/app/(views)/(interview)/interview/types';
 import { useParams } from 'next/navigation';
 import ScrollContainer from '@/components/ui/scrollarea/CustomScrollarea';
-import CustomInput from '@/components/ui/input/CustomInput';
 import InterviewMessage from '@/app/(views)/(interview)/interview/[id]/components/InterviewMessage';
 import Api from '@/core/api/api';
 import CustomButton from '@/components/ui/button/CustomButton';
 import errorHandler from '@/core/utils/error/errorHandler';
 import { useAppDispatch } from '@/hooks/redux';
 import { setLoading } from '@/features/loading/loadingSlice';
+import CustomTextarea from '@/components/ui/textarea/CustomTextarea';
 
 const CurrentInterviewPage = () => {
   const { id } = useParams();
 
   const [interview, setInterview] = useState<IInterview>();
   const [userMessage, setUserMessage] = useState('');
+  const [generatedMessage, setGeneratedMessage] = useState('');
   const messageEndRef = useRef<HTMLDivElement>(null);
   const [isGenerating, setIsGenerating] = useState(false);
 
@@ -70,12 +71,9 @@ const CurrentInterviewPage = () => {
 
     try {
       dispatch(setLoading(true));
-      const result = await Api.get<any, IInterview>('/interview/interview', { id });
+      const result = await Api.get<{ id: any }, IInterview>('/interview/interview', { id });
       setInterview(result.payload);
-      const lastMessage = result.payload.messages?.length
-        ? result.payload.messages[result.payload.messages.length - 1]
-        : null;
-      if ((!lastMessage || lastMessage.is_human) && !result.payload.finished) {
+      if (!result.payload.messages?.length) {
         continueChat();
       }
 
@@ -94,38 +92,18 @@ const CurrentInterviewPage = () => {
     eventSource.onmessage = (event: MessageEvent) => {
       const content = JSON.parse(event.data) as {
         text: string;
-        type: 'chunk' | 'done' | 'data';
+        type: 'chunk' | 'data' | 'result';
         interview: IInterview;
       };
       partialMessage += content.text;
 
       if (content.type === 'chunk') {
         setIsGenerating(true);
-        setInterview((prev) => {
-          if (!prev) return prev;
-
-          const updatedMessages = [...prev.messages];
-          const last = updatedMessages[updatedMessages.length - 1];
-
-          if (last && !last.is_human) {
-            last.text = partialMessage;
-          } else {
-            updatedMessages.push({
-              id: Date.now(),
-              created_at: new Date().toISOString(),
-              is_human: false,
-              text: partialMessage,
-            });
-          }
-
-          return {
-            ...prev,
-            messages: updatedMessages,
-          };
-        });
+        setGeneratedMessage(partialMessage);
       }
 
-      if (content.type === 'data') {
+      if (content.type === 'data' || content.type === 'result') {
+        setGeneratedMessage('');
         setInterview(content.interview);
         setIsGenerating(false);
         messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -150,11 +128,19 @@ const CurrentInterviewPage = () => {
                   <InterviewMessage
                     key={message.id}
                     className={`max-w-[70%] mb-2 ${message.is_human ? 'ml-auto' : 'mr-auto'}`}
-                    message={message}
+                    message={message.text}
+                    isHuman={message.is_human}
                   />
                 ))}
+              {isGenerating && !!generatedMessage && (
+                <InterviewMessage
+                  className={`max-w-[70%] mb-2 'mr-auto'`}
+                  message={generatedMessage}
+                  isHuman={false}
+                />
+              )}
               {interview?.finished && (
-                <div>
+                <div className={'bg-message-gray p-4 rounded-input'}>
                   <div className={'text-2xl mb-4'}>Результат интервью:</div>
                   <div>{interview.recomendations}</div>
                 </div>
@@ -164,7 +150,7 @@ const CurrentInterviewPage = () => {
           </ScrollContainer>
         </div>
         <div className={'mt-2'}>
-          <CustomInput
+          <CustomTextarea
             value={userMessage}
             onInput={setUserMessage}
             onChange={sendMessage}

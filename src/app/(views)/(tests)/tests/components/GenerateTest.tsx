@@ -78,7 +78,7 @@ const GenerateTest: React.FC<{
       });
 
       goToTests();
-    } catch (e: any) {
+    } catch (e) {
       errorHandler(e, dispatch);
     } finally {
       dispatch(setLoading(false));

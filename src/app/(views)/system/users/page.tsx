@@ -16,10 +16,10 @@ const SystemUsers = () => {
   const loadUsers = useCallback(async () => {
     try {
       dispatch(setLoading(true));
-      const result = await Api.get<null, IUser[]>('/user/users');
+      const result = await Api.get<undefined, IUser[]>('/user/users');
 
       setUsers(result.payload);
-    } catch (e: any) {
+    } catch (e) {
       errorHandler(e, dispatch);
     } finally {
       dispatch(setLoading(false));
