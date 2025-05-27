@@ -102,7 +102,7 @@ const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
     try {
       dispatch(setLoading(true));
       await loadTechs();
-    } catch (e: any) {
+    } catch (e) {
       errorHandler(e, dispatch);
     } finally {
       dispatch(setLoading(false));
@@ -150,7 +150,7 @@ const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
       if (onClose) {
         onClose();
       }
-    } catch (e: any) {
+    } catch (e) {
       errorHandler(e, dispatch);
     } finally {
       dispatch(setLoading(false));
@@ -168,7 +168,7 @@ const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
           setSelectedTechs(techs || []);
         }
       }
-    } catch (e: any) {
+    } catch (e) {
       errorHandler(e, dispatch);
     } finally {
       dispatch(setLoading(false));

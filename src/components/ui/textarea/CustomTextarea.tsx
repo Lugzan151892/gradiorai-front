@@ -1,7 +1,7 @@
 'use client';
 
 import { Field, Label, Textarea } from '@headlessui/react';
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 
 interface ICustomTextareaProps {
   label?: string;
@@ -10,6 +10,7 @@ interface ICustomTextareaProps {
   error?: string;
   validation?: boolean;
   className?: string;
+  disabled?: boolean;
   rows?: number;
   onInput?: (val: string) => void;
   onChange?: (val: string) => void;
@@ -21,41 +22,66 @@ const CustomTextarea: React.FC<ICustomTextareaProps> = ({
   value = '',
   error,
   validation,
-  className,
-  rows,
+  className = '',
+  rows = 1,
+  disabled = false,
   onInput,
   onChange,
 }) => {
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+
+  const autoResize = () => {
+    const el = textareaRef.current;
+    if (el) {
+      el.style.height = 'auto'; // сброс
+      el.style.height = `${el.scrollHeight}px`; // установка новой высоты
+    }
+  };
+
+  useEffect(() => {
+    autoResize();
+  }, [value]);
+
   const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    if (onInput) {
-      onInput(e.target.value);
+    autoResize();
+    onInput?.(e.target.value);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      onChange?.(e.currentTarget.value);
     }
   };
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    if (onChange) {
-      onChange(e.target.value);
-    }
-  };
-  const classes = error && validation ? 'border-error' : 'border-gray';
-  const errorTextClasses = error && validation ? '' : 'opacity-100';
+
+  const borderColor = error && validation ? 'border-error' : 'border-gray-300';
+  const errorTextVisible = error && validation;
+
   return (
-    <div className={'w-full ' + (className || '')}>
+    <div className={`w-full ${className}`}>
       <Field>
-        {label ? <Label className={'text-xl mb-1 text-white'}>{label}</Label> : null}
-        <div className={'flex bg-white w-full rounded-lg py-1.5 px-3 text-black border-2 ' + classes}>
+        {label && <Label className={'text-xl mb-1 text-white block'}>{label}</Label>}
+
+        <div className={`flex w-full rounded-lg py-1.5 px-3 border-2 bg-white text-black ${borderColor}`}>
           <Textarea
-            className={
-              'w-full pl-3 text-sm/6 focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25 ' +
-              classes
-            }
+            ref={textareaRef}
+            className={`w-full resize-none overflow-hidden text-sm focus:outline-none disabled:opacity-50`}
             value={value}
             rows={rows}
+            disabled={disabled}
             placeholder={placeholder}
             onInput={handleInput}
-            onChange={handleChange}
+            onKeyDown={handleKeyDown}
           />
         </div>
-        {validation ? <div className={'text-error text-xs h-5 pt-1' + errorTextClasses}>{error}</div> : ''}
+
+        <div
+          className={`text-error text-xs h-5 pt-1 transition-opacity duration-200 ${
+            errorTextVisible ? 'opacity-100' : 'opacity-0'
+          }`}
+        >
+          {error}
+        </div>
       </Field>
     </div>
   );
