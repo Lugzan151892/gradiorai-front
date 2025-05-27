@@ -52,9 +52,11 @@ const SystemGptPage = () => {
   const loadSettings = useCallback(async () => {
     try {
       dispatch(setLoading(true));
-      const result = await Api.get<any, IGptSettings>('/system/gpt-settings', { type: settingsType });
+      const result = await Api.get<{ type: 'TEST' | 'INTERVIEW' }, IGptSettings>('/system/gpt-settings', {
+        type: settingsType,
+      });
       setGptSettings(result.payload);
-    } catch (e: any) {
+    } catch (e) {
       errorHandler(e, dispatch);
     } finally {
       dispatch(setLoading(false));
@@ -132,7 +134,7 @@ const SystemGptPage = () => {
         await loadSettings();
         dispatch(openModal({ text: 'Настройки успешно сохранены!' }));
       }
-    } catch (e: any) {
+    } catch (e) {
       errorHandler(e, dispatch);
     } finally {
       dispatch(setLoading(false));

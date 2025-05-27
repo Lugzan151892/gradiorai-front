@@ -59,7 +59,7 @@ const RegistrationPage = () => {
       dispatch(setLoading(true));
       await Api.get('/auth/code-request', { email });
       setShowCodeBlock(true);
-    } catch (e: any) {
+    } catch (e) {
       errorHandler(e, dispatch);
     } finally {
       dispatch(setLoading(false));
@@ -95,7 +95,7 @@ const RegistrationPage = () => {
           throw new Error(result.payload.message);
         }
       }
-    } catch (e: any) {
+    } catch (e) {
       errorHandler(e, dispatch);
     } finally {
       dispatch(setLoading(false));
