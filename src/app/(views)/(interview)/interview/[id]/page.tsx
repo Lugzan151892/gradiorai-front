@@ -11,6 +11,7 @@ import errorHandler from '@/core/utils/error/errorHandler';
 import { useAppDispatch } from '@/hooks/redux';
 import { setLoading } from '@/features/loading/loadingSlice';
 import CustomTextarea from '@/components/ui/textarea/CustomTextarea';
+import { useSpeechRecognition } from '@/hooks/speech-recognition/useSpeechRecognition';
 
 const CurrentInterviewPage = () => {
   const { id } = useParams();
@@ -20,6 +21,12 @@ const CurrentInterviewPage = () => {
   const [generatedMessage, setGeneratedMessage] = useState('');
   const messageEndRef = useRef<HTMLDivElement>(null);
   const [isGenerating, setIsGenerating] = useState(false);
+
+  const { isListening, startListening, stopListening, interimTranscript, canUseRecognition } = useSpeechRecognition(
+    (finalPart) => {
+      setUserMessage((prev) => `${prev} ${finalPart}`.trim());
+    }
+  );
 
   const dispatch = useAppDispatch();
 
@@ -77,7 +84,9 @@ const CurrentInterviewPage = () => {
         continueChat();
       }
 
-      messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+      setTimeout(() => {
+        messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+      }, 500);
     } catch (e) {
       errorHandler(e, dispatch);
     } finally {
@@ -151,13 +160,23 @@ const CurrentInterviewPage = () => {
         </div>
         <div className={'mt-2'}>
           <CustomTextarea
-            value={userMessage}
+            value={isListening ? `${userMessage} ${interimTranscript}`.trim() : userMessage}
             onInput={setUserMessage}
             onChange={sendMessage}
-            disabled={isGenerating || interview?.finished}
+            disabled={isGenerating || interview?.finished || isListening}
           />
         </div>
-        {isGenerating && <div>Генерируем ответ</div>}
+        {isListening && <div>Записываем голос ...</div>}
+        {isGenerating && <div>Генерируем ответ ...</div>}
+        {canUseRecognition && (
+          <CustomButton
+            className={'mb-2'}
+            text={isListening ? 'Завершить диктовку' : userMessage ? 'Продолжить диктовку' : 'Начать диктовку'}
+            type={isListening ? 'error' : 'success'}
+            onClick={isListening ? stopListening : startListening}
+            disabled={isGenerating || interview?.finished}
+          />
+        )}
         <CustomButton
           text={'Отправить'}
           onClick={sendMessage}
