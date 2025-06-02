@@ -109,6 +109,8 @@ const CurrentInterviewPage = () => {
       if (content.type === 'chunk') {
         setIsGenerating(true);
         setGeneratedMessage(partialMessage);
+
+        messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
       }
 
       if (content.type === 'data' || content.type === 'result') {
