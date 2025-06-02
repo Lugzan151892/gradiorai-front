@@ -24,12 +24,19 @@ const eslintConfig = [
     rules: {
       semi: ['error', 'always'], // Всегда требовать точку с запятой
       'react/jsx-max-props-per-line': ['error', { maximum: 1 }], // Один атрибут на строку
-      'react/jsx-curly-brace-presence': [
-        'error',
-        { props: 'always', children: 'never' },
-      ], // Всегда использовать {} в props, но не в дочерних элементах
+      'react/jsx-curly-brace-presence': ['error', { props: 'always', children: 'never' }], // Всегда использовать {} в props, но не в дочерних элементах
       '@typescript-eslint/explicit-function-return-type': 'off', // Отключаем явное указание типа возврата
-      '@typescript-eslint/no-unused-vars': ['error'], // Запрещаем неиспользуемые переменные
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          args: 'all',
+          argsIgnorePattern: '^_+',
+          caughtErrors: 'all',
+          caughtErrorsIgnorePattern: '^_+',
+          destructuredArrayIgnorePattern: '^_+',
+          varsIgnorePattern: '^_+',
+        },
+      ],
       'no-console': ['warn', { allow: ['warn', 'error'] }], // Предупреждение для console.log, кроме console.warn и console.error
       'react/self-closing-comp': ['error', { component: true, html: true }], // Автозакрывающиеся теги, если нет контента
       'react/jsx-boolean-value': ['error', 'never'], // Не указывать `={true}` у булевых пропсов
