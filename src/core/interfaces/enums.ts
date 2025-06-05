@@ -9,3 +9,9 @@ export enum ETEST_SPEC {
   BACK,
   QA,
 }
+
+export enum EGPT_SETTINGS_TYPE {
+  TEST = 'TEST',
+  INTERVIEW = 'INTERVIEW',
+  RESUME_CHECK = 'RESUME_CHECK',
+}
