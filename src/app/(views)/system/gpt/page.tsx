@@ -11,6 +11,7 @@ import CustomButton from '@/components/ui/button/CustomButton';
 import { openModal } from '@/store/tech/techSlice';
 import routeChecker from '@/hoc/routeChecker';
 import ScrollContainer from '@/components/ui/scrollarea/CustomScrollarea';
+import { EGPT_SETTINGS_TYPE } from '@/core/interfaces/enums';
 
 interface IGptSettings {
   user_model: string;
@@ -24,7 +25,7 @@ interface IGptSettings {
 }
 
 const SystemGptPage = () => {
-  const [settingsType, setSettingsType] = useState<'TEST' | 'INTERVIEW'>('TEST');
+  const [settingsType, setSettingsType] = useState<EGPT_SETTINGS_TYPE>(EGPT_SETTINGS_TYPE.TEST);
   const dispatch = useAppDispatch();
   const [gptSettings, setGptSettings] = useState<IGptSettings>();
 
@@ -38,21 +39,25 @@ const SystemGptPage = () => {
     'gpt-4o',
   ];
 
-  const gptTypeButtons: Array<{ id: 'TEST' | 'INTERVIEW'; text: string }> = [
+  const gptTypeButtons: Array<{ id: EGPT_SETTINGS_TYPE; text: string }> = [
     {
-      id: 'TEST',
+      id: EGPT_SETTINGS_TYPE.TEST,
       text: 'Настройки для тестов',
     },
     {
-      id: 'INTERVIEW',
+      id: EGPT_SETTINGS_TYPE.INTERVIEW,
       text: 'Настройки для интервью',
+    },
+    {
+      id: EGPT_SETTINGS_TYPE.RESUME_CHECK,
+      text: 'Настройки для проверки резюме',
     },
   ];
 
   const loadSettings = useCallback(async () => {
     try {
       dispatch(setLoading(true));
-      const result = await Api.get<{ type: 'TEST' | 'INTERVIEW' }, IGptSettings>('/system/gpt-settings', {
+      const result = await Api.get<{ type: EGPT_SETTINGS_TYPE }, IGptSettings>('/system/gpt-settings', {
         type: settingsType,
       });
       setGptSettings(result.payload);
