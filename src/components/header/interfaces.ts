@@ -3,5 +3,6 @@ export enum EMENU_ITEM {
   SUPPORT,
   SYSTEM,
   INTERVIEW,
+  RESUME_CHECK,
   QUIT,
 }
