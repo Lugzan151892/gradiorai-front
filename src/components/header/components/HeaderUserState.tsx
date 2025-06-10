@@ -60,6 +60,11 @@ const HeaderUserState = () => {
         router.push('/interview');
         break;
       }
+      case EMENU_ITEM.RESUME_CHECK: {
+        setShowMenu(false);
+        router.push('/interview/resume-check');
+        break;
+      }
       case EMENU_ITEM.QUIT: {
         setShowMenu(false);
         handleLogout();
@@ -99,6 +104,13 @@ const HeaderUserState = () => {
       text: 'Пройти собес',
       icon: 'settings',
       onClick: () => handleMenuClick(EMENU_ITEM.INTERVIEW),
+      show: !!user?.admin,
+    },
+    {
+      id: EMENU_ITEM.INTERVIEW,
+      text: 'Проверить резюме',
+      icon: 'settings',
+      onClick: () => handleMenuClick(EMENU_ITEM.RESUME_CHECK),
       show: !!user?.admin,
     },
     {
@@ -170,7 +182,7 @@ const HeaderUserState = () => {
           {showMenu && (
             <div
               className={
-                'z-50 p-4 bg-black rounded-10 flex flex-col overflow-hidden desktop:w-[400px] mobile:w-full max-w-full desktop:h-[300px] mobile:h-full max-h-[calc(100%-80px)] absolute top-[80px] desktop:right-[30px] mobile:right-0'
+                'z-50 p-4 bg-black rounded-10 flex flex-col overflow-hidden desktop:w-[400px] mobile:w-full max-w-full desktop:h-[400px] mobile:h-full max-h-[calc(100%-80px)] absolute top-[80px] desktop:right-[30px] mobile:right-0'
               }
             >
               <MenuItem
