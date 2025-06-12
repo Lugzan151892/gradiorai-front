@@ -18,7 +18,7 @@ const AuthConfirmButton: React.FC<{
   const isCustomIcon = icon === 'arrow-right';
   return (
     <CustomButton
-      className={'!rounded-input !px-0 !py-0 text-xl ' + className}
+      className={'!rounded-input px-0! py-0! text-xl ' + className}
       text={text}
       type={type === 'error' ? 'error' : undefined}
       disabled={disabled}

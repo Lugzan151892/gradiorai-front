@@ -189,7 +189,7 @@ const RestorePassword = () => {
           </div>
         )}
         <AuthConfirmButton
-          className={'!w-[170px] mx-auto mt-2'}
+          className={'w-[170px]! mx-auto mt-2'}
           disabled={
             !!emailError ||
             !!passwordError ||
@@ -205,7 +205,7 @@ const RestorePassword = () => {
         <div className={'flex text-base w-full items-center justify-center mt-3'}>
           {showCodeBlock && step === 1 ? (
             <div
-              className={'text-white cursor-pointer border-b-1 border-transparent hover:border-white hover:border-b-1'}
+              className={'text-white cursor-pointer border-b border-transparent hover:border-white hover:border-b'}
               onClick={handleRequestCode}
             >
               Отправить повторно?
@@ -214,7 +214,7 @@ const RestorePassword = () => {
             <>
               <span
                 className={
-                  'ml-2 text-white cursor-pointer border-b-1 border-transparent hover:border-white hover:border-b-1'
+                  'ml-2 text-white cursor-pointer border-b border-transparent hover:border-white hover:border-b'
                 }
                 onClick={handleGoLogin}
               >
@@ -222,7 +222,7 @@ const RestorePassword = () => {
               </span>
               <span
                 className={
-                  'ml-5 text-white cursor-pointer border-b-1 border-transparent hover:border-white hover:border-b-1'
+                  'ml-5 text-white cursor-pointer border-b border-transparent hover:border-white hover:border-b'
                 }
                 onClick={handleGoRegistration}
               >

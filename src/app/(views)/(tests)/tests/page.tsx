@@ -273,10 +273,10 @@ const TestsView = () => {
           </AdminWrapper>
         </div>
       </SettingsBlock>
-      <div className={'flex-grow'} />
+      <div className={'grow'} />
       <div className={'w-full flex items-center mt-2 pb-2'}>
         <AuthConfirmButton
-          className={'!w-[170px] mx-auto'}
+          className={'w-[170px]! mx-auto'}
           customBorder
           disabled={!questionsTechs.length}
           size={24}
@@ -304,7 +304,7 @@ const TestsView = () => {
         text={'Для продолжения, пожалуйста, авторизуйтесь.'}
       >
         <CustomButton
-          className={'!rounded-10 !px-3 !py-2 text-xl h-max mx-auto '}
+          className={'!rounded-10 px-3! py-2! text-xl h-max mx-auto '}
           color={'low-green'}
           onClick={handleLogin}
         >

@@ -88,7 +88,7 @@ const LoginView = () => {
         />
         <div className={'grow'} />
         <AuthConfirmButton
-          className={'!w-[170px] mx-auto'}
+          className={'w-[170px]! mx-auto'}
           disabled={!!emailError || !!passwordError}
           customBorder
           size={16}
@@ -99,7 +99,7 @@ const LoginView = () => {
         <div className={'flex text-base w-full items-center justify-center mt-3'}>
           <span
             className={
-              'ml-2 text-white cursor-pointer border-b-1 border-transparent hover:border-white hover:border-b-1'
+              'ml-2 text-white cursor-pointer border-b border-transparent hover:border-white hover:border-b'
             }
             onClick={handleGoRegistration}
           >
@@ -107,7 +107,7 @@ const LoginView = () => {
           </span>
           <span
             className={
-              'ml-5 text-white cursor-pointer border-b-1 border-transparent hover:border-white hover:border-b-1'
+              'ml-5 text-white cursor-pointer border-b border-transparent hover:border-white hover:border-b'
             }
             onClick={handleRestorePassword}
           >

@@ -162,7 +162,7 @@ const RegistrationPage = () => {
           </div>
         )}
         <AuthConfirmButton
-          className={'!w-[170px] mx-auto mt-2'}
+          className={'w-[170px]! mx-auto mt-2'}
           disabled={
             !!emailError ||
             !!passwordError ||
@@ -178,7 +178,7 @@ const RegistrationPage = () => {
         <div className={'flex text-base w-full items-center justify-center mt-3'}>
           {showCodeBlock ? (
             <div
-              className={'text-white cursor-pointer border-b-1 border-transparent hover:border-white hover:border-b-1'}
+              className={'text-white cursor-pointer border-b border-transparent hover:border-white hover:border-b'}
               onClick={handleRequestCode}
             >
               Отправить повторно?
@@ -187,7 +187,7 @@ const RegistrationPage = () => {
             <>
               <span
                 className={
-                  'ml-2 text-white cursor-pointer border-b-1 border-transparent hover:border-white hover:border-b-1'
+                  'ml-2 text-white cursor-pointer border-b border-transparent hover:border-white hover:border-b'
                 }
                 onClick={handleGoLogin}
               >
@@ -195,7 +195,7 @@ const RegistrationPage = () => {
               </span>
               <span
                 className={
-                  'ml-5 text-white cursor-pointer border-b-1 border-transparent hover:border-white hover:border-b-1'
+                  'ml-5 text-white cursor-pointer border-b border-transparent hover:border-white hover:border-b'
                 }
                 onClick={handleGoRestore}
               >

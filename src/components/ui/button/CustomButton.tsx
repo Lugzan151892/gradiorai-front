@@ -47,7 +47,7 @@ const CustomButton: React.FC<ICustomButtonProps> = ({
     if (color) {
       switch (color) {
         case 'white':
-          return 'bg-white text-black data-[hover]:bg-gray data-[hover]:border-white';
+          return 'bg-white text-black data-[hover]:bg-gray data-hover:border-white';
         case 'gray':
           return 'bg-gray text-text-gray';
         case 'low-green':

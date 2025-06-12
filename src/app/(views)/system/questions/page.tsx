@@ -126,7 +126,7 @@ const SystemQuestions = () => {
         {questions.map((question) => (
           <div
             key={question.id}
-            className={'flex border-1'}
+            className={'flex border'}
           >
             <div className={'w-full'}>
               <div>{question.question}</div>

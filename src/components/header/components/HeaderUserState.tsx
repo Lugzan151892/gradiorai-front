@@ -144,7 +144,7 @@ const HeaderUserState = () => {
       {!user?.id || false ? (
         <div className={'ml-auto flex gap-2'}>
           <CustomButton
-            className={'!rounded-10 !px-3 !py-2 text-xl h-max '}
+            className={'!rounded-10 px-3! py-2! text-xl h-max '}
             color={'low-green'}
             onClick={handleLogin}
           >

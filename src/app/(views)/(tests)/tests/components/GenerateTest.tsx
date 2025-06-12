@@ -91,7 +91,7 @@ const GenerateTest: React.FC<{
 
   if (showResults) {
     return (
-      <div className={'h-full flex flex-grow w-full'}>
+      <div className={'h-full flex grow w-full'}>
         <div
           className={
             'desktop:my-8 mobile:my-4 bg-bg-transparent-25 desktop:mx-3 rounded-lg w-full p-4 flex flex-col items-center'
@@ -147,12 +147,12 @@ const GenerateTest: React.FC<{
               />
             </div>
           </div>
-          <div className={'flex-grow'} />
+          <div className={'grow'} />
           <div className={'mt-4 w-full flex'}>
             <AuthConfirmButton
               icon={'reload'}
               customBorder
-              className={'!w-[180px] desktop:ml-auto mobile:mx-auto h-max self-end '}
+              className={'w-[180px]! desktop:ml-auto mobile:mx-auto h-max self-end '}
               size={24}
               text={'Еще раз'}
               onClick={handleReview}
@@ -164,14 +164,14 @@ const GenerateTest: React.FC<{
   }
 
   return (
-    <div className={'desktop:max-h-[1032px] flex flex-grow w-full text-white'}>
+    <div className={'desktop:max-h-[1032px] flex grow w-full text-white'}>
       <div
         className={'bg-bg-transparent-25 rounded-10 w-full h-full desktop:p-12 desktop:pb-6 mobile:p-4 flex flex-col'}
       >
         <div className={'flex mobile:flex-col mobile:gap-2 desktop:gap-4'}>
           <div
             className={
-              'desktop:min-w-24 desktop:min-h-24 desktop:h-24 desktop:w-24 mobile:w-max mobile:p-2 rounded flex items-center justify-center text-xl border-1 border-white'
+              'desktop:min-w-24 desktop:min-h-24 desktop:h-24 desktop:w-24 mobile:w-max mobile:p-2 rounded flex items-center justify-center text-xl border border-white'
             }
           >
             {`${currentQuestion} / ${tests.length}`}
@@ -191,7 +191,7 @@ const GenerateTest: React.FC<{
             />
           ))}
         </div>
-        <div className={'flex-grow'} />
+        <div className={'grow'} />
         <div className={'w-full desktop:mt-6 mobile:mt-4 flex mobile:flex-col mobile:items-center'}>
           <AdminWrapper>
             <CustomButton
@@ -211,7 +211,7 @@ const GenerateTest: React.FC<{
           <AuthConfirmButton
             icon={currentQuestion === tests.length ? 'sand-clock' : 'arrow-right'}
             customBorder
-            className={'!w-[180px] desktop:ml-auto mobile:mx-auto mobile:mt-2 h-max self-end'}
+            className={'w-[180px]! desktop:ml-auto mobile:mx-auto mobile:mt-2 h-max self-end'}
             size={24}
             text={currentQuestion === tests.length ? 'Завершить' : 'Далее'}
             disabled={!userChoise}
