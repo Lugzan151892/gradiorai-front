@@ -6,6 +6,7 @@ import './globals.css';
 import GlobalLoader from '@/features/loading/GlobalBusy';
 import Providers from '@/app/providers';
 import ErrorModal from '@/features/error-modal/ErrorModal';
+import UserInitializer from '@/components/user-initializer/UserInitializer';
 
 const interDisplay = localFont({
   src: [
@@ -145,12 +146,13 @@ const RootLayout: React.FC<Readonly<{ children: React.ReactNode }>> = ({ childre
   return (
     <html lang={'en'}>
       <body
-        className={`${interDisplay.variable} ${inter.className} ${geistSans.variable} ${geistMono.variable} antialiased bg-[#030b1b] w-full h-full overflow-hidden bg-[url("../assets/images/main-bg.png")] bg-no-repeat bg-cover bg-left`}
+        className={`${interDisplay.variable} ${inter.className} ${geistSans.variable} ${geistMono.variable} antialiased bg-[#030b1b] w-full h-full overflow-hidden`}
       >
         <Providers>
           {children}
           <GlobalLoader />
           <ErrorModal />
+          <UserInitializer />
         </Providers>
       </body>
     </html>

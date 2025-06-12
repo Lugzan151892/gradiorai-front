@@ -9,6 +9,7 @@ import { setUnAuth } from '@/store/user/userSlice';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import UIButton from '@/components/ui/button/UIButton';
+import { UIInput } from '@/components/ui/input-v2/UIInput';
 
 const LoginView = () => {
   const router = useRouter();
@@ -63,13 +64,12 @@ const LoginView = () => {
     <div className={'text-black flex w-full h-full items-center'}>
       <div className={'flex flex-col w-full h-full gap-1 text-3xl'}>
         <div className={'mb-20 text-white text-center'}>С возвращением!</div>
-        <CustomInput
+        <UIInput
           className={'mb-6'}
           value={email}
           error={emailError}
           type={'email'}
           placeholder={'Email'}
-          icon={'email'}
           onInput={(val) => {
             setEmail(val);
             setEmailError('');

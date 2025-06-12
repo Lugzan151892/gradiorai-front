@@ -1,6 +1,5 @@
 'use client';
 import UIButton from '@/components/ui/button/UIButton';
-import { useUser } from '@/hooks/useUser';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import DescriptionListItem from '@/components/description-list-item/DescriptionListItem';
@@ -9,7 +8,6 @@ import AppLayout from '@/components/app-layout/AppLayout';
 
 const Home = () => {
   const router = useRouter();
-  useUser();
 
   return (
     <AppLayout>
