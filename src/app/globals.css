@@ -4,6 +4,8 @@
   --color-main-white: #ffffff;
   --color-text-black: #2c2b2b;
   --color-text-disabled: #aab1c0;
+  --color-bg-header: #222121;
+  --color-main-grad: linear-gradient(180deg, rgba(44, 43, 43, 0) 31.17%, #7c49e3 128.34%);
   /* --color-background: #010102;
   --color-main-green: #5aea6f;
   --color-low-green: #00e3c9;
@@ -39,6 +41,59 @@
   --main-white: #ffffff;
 }
 
+[data-slot='scroll-area-scrollbar'] {
+  background: transparent !important; /* убираем фон "трека" */
+  padding: 2px; /* отступы вокруг ползунка */
+  width: 12px; /* нужно чуть шире, чтобы влез thumb */
+}
+
+/* Вертикальный скроллбар */
+[data-slot='scroll-area-scrollbar'][data-orientation='vertical'] {
+  width: 12px;
+}
+
+/* Горизонтальный скроллбар (если понадобится) */
+[data-slot='scroll-area-scrollbar'][data-orientation='horizontal'] {
+  height: 12px;
+}
+
+/* Сам ползунок */
+[data-slot='scroll-area-thumb'] {
+  background-color: #aab1c0 !important;
+  border-radius: 4px;
+  width: 8px;
+  min-height: 25px;
+}
+
+* {
+  scrollbar-width: thin; /* для Firefox */
+  scrollbar-color: #aab1c0 transparent; /* thumb и track (Firefox) */
+}
+
+/* Webkit-стилизация (Chrome, Safari) */
+*::-webkit-scrollbar {
+  width: 12px; /* общий размер скроллбара */
+  height: 12px;
+}
+/* Убираем стрелочки */
+*::-webkit-scrollbar-button {
+  display: none;
+  height: 0;
+  width: 0;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #aab1c0;
+  border-radius: 4px;
+  min-height: 25px;
+  min-width: 8px;
+  margin: 2px; /* визуальный отступ */
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent; /* трек невидимый */
+}
+
 html,
 body {
   height: 100%;
@@ -46,9 +101,8 @@ body {
 
 body {
   color: white;
-  background: #010102;
-  background-color: #010102;
-  font-family: Arial, Helvetica, sans-serif;
+  background: #262525;
+  background-color: #262525;
 }
 
 .scroll-container {

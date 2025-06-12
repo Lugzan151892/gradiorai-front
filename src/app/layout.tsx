@@ -7,9 +7,6 @@ import GlobalLoader from '@/features/loading/GlobalBusy';
 import Providers from '@/app/providers';
 import ErrorModal from '@/features/error-modal/ErrorModal';
 
-// @font-face { font-family: "InterDisplay"; font-style: normal; font-weight: 700; font-display: swap; src: url("InterDisplay-Bold.woff2") format("woff2"); }
-// @font-face { font-family: "InterDisplay"; font-style: italic; font-weight: 700; font-display: swap; src: url("InterDisplay-BoldItalic.woff2") format("woff2"); }
-
 const interDisplay = localFont({
   src: [
     {

@@ -142,15 +142,15 @@ const HeaderUserState = () => {
   return (
     <>
       {!user?.id || false ? (
-        <div className={'ml-auto flex gap-2'}>
+        <div className={'flex gap-2'}>
           <UIButton
             onClick={handleLogin}
-            text={'Вход'}
+            text={'ВОЙТИ'}
           />
         </div>
       ) : (
         <div
-          className={'ml-auto flex items-center'}
+          className={'flex items-center'}
           ref={menuRef}
         >
           <div
