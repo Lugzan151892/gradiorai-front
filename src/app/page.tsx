@@ -1,5 +1,5 @@
 'use client';
-import CustomButton from '@/components/ui/button/CustomButton';
+import UIButton from '@/components/ui/button/UIButton';
 import { useUser } from '@/hooks/useUser';
 import { useRouter } from 'next/navigation';
 import React from 'react';
@@ -49,9 +49,8 @@ const Home = () => {
           <div className={'sm:hidden text-xl'}>Начните прямо сейчас!</div>
           <div className={'md:max-xl:hidden text-2xl'}>Начните проходить тест прямо сейчас!</div>
           <div className={'mt-3 w-[202px] h-[50px] flex mx-auto'}>
-            <CustomButton
+            <UIButton
               className={'md:max-xl:mx-auto w-full py-1! rounded-2xl!'}
-              type={'success'}
               text={'Начать'}
               onClick={() => router.push('/tests')}
             >
@@ -60,7 +59,7 @@ const Home = () => {
                 color={'var(--main-white)'}
                 size={30}
               />
-            </CustomButton>
+            </UIButton>
           </div>
         </div>
       </div>

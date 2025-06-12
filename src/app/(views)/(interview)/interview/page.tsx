@@ -4,12 +4,12 @@ import FileDropzone from '@/components/ui/file-dropzone/FileDropzone';
 import ScrollContainer from '@/components/ui/scrollarea/CustomScrollarea';
 import CustomTextarea from '@/components/ui/textarea/CustomTextarea';
 import React, { useState } from 'react';
-import AuthConfirmButton from '@/app/(views)/(auth)/components/AuthConfirmButton';
 import { setLoading } from '@/features/loading/loadingSlice';
 import errorHandler from '@/core/utils/error/errorHandler';
 import { useAppDispatch } from '@/hooks/redux';
 import Api from '@/core/api/api';
 import { useRouter } from 'next/navigation';
+import UIButton from '@/components/ui/button/UIButton';
 
 const InterviewView = () => {
   const [vakanciesFile, setVakanciesFile] = useState<null | File>(null);
@@ -90,11 +90,8 @@ const InterviewView = () => {
         </ScrollContainer>
       </div>
       <div className={'w-full flex items-center mt-2 mb-4'}>
-        <AuthConfirmButton
+        <UIButton
           className={'w-[170px]! mx-auto'}
-          customBorder
-          size={24}
-          icon={'check'}
           disabled={!userDescription}
           text={'Начать'}
           onClick={startInterview}

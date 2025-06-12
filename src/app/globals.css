@@ -1,7 +1,10 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-background: #010102;
+  --color-main-white: #ffffff;
+  --color-text-black: #2c2b2b;
+  --color-text-disabled: #aab1c0;
+  /* --color-background: #010102;
   --color-main-green: #5aea6f;
   --color-low-green: #00e3c9;
   --color-hard-green: #2e9c12;
@@ -26,7 +29,14 @@
   --color-message-blue: #5b67bb;
   --color-bg-transparent-none: rgba(210, 210, 210, 1);
   --color-bg-transparent-50: rgba(210, 210, 210, 0.5);
-  --color-bg-transparent-25: rgba(210, 210, 210, 0.25);
+  --color-bg-transparent-25: rgba(210, 210, 210, 0.25); */
+
+  --inset-shadow-button: inset 0 4px 0 rgba(0, 0, 0, 0.25);
+}
+
+:root {
+  --low-green: #00e3c9;
+  --main-white: #ffffff;
 }
 
 html,

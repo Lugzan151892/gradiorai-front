@@ -3,12 +3,12 @@
 import FileDropzone from '@/components/ui/file-dropzone/FileDropzone';
 import ScrollContainer from '@/components/ui/scrollarea/CustomScrollarea';
 import React, { useState } from 'react';
-import AuthConfirmButton from '@/app/(views)/(auth)/components/AuthConfirmButton';
 import { setLoading } from '@/features/loading/loadingSlice';
 import errorHandler from '@/core/utils/error/errorHandler';
 import { useAppDispatch } from '@/hooks/redux';
 import Api from '@/core/api/api';
 import InterviewMessage from '../[id]/components/InterviewMessage';
+import UIButton from '@/components/ui/button/UIButton';
 
 const ResumePrepare = () => {
   const [userCV, setUserCV] = useState<null | File>(null);
@@ -65,11 +65,8 @@ const ResumePrepare = () => {
         </ScrollContainer>
       </div>
       <div className={'w-full flex items-center mt-2 mb-4'}>
-        <AuthConfirmButton
+        <UIButton
           className={'w-[170px]! mx-auto'}
-          customBorder
-          size={24}
-          icon={'check'}
           disabled={!!checkResult}
           text={'Проверить'}
           onClick={checkResume}

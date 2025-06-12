@@ -4,7 +4,7 @@ import CustomCodeInput from '@/components/ui/code-input/CustomCodeInput';
 import CustomInput from '@/components/ui/input/CustomInput';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
-import AuthConfirmButton from '../components/AuthConfirmButton';
+import UIButton from '@/components/ui/button/UIButton';
 import { useAppDispatch } from '@/hooks/redux';
 import { setLoading } from '@/features/loading/loadingSlice';
 import Api from '@/core/api/api';
@@ -188,7 +188,7 @@ const RestorePassword = () => {
             />
           </div>
         )}
-        <AuthConfirmButton
+        <UIButton
           className={'w-[170px]! mx-auto mt-2'}
           disabled={
             !!emailError ||
@@ -196,9 +196,6 @@ const RestorePassword = () => {
             !!repeatedPasswordError ||
             (showCodeBlock && (code.length < 4 || codeError))
           }
-          customBorder
-          size={24}
-          icon={'refresh'}
           text={'Изменить'}
           onClick={handleConfirmButton}
         />

@@ -5,7 +5,7 @@ import SettingsBlock from '@/app/(views)/(tests)/tests/components/SettingsBlock'
 import { ESKILL_LEVEL } from '@/core/interfaces/enums';
 import CustomFilterButton from '@/components/ui/filter-button/CustomFilterButton';
 import AdminWrapper from '@/components/admin-wrapper/AdminWrapper';
-import CustomButton from '@/components/ui/button/CustomButton';
+import UIButton from '@/components/ui/button/UIButton';
 import AddSpecModal from '@/components/specialization-modals/AddSpecModal';
 import { useAppDispatch } from '@/hooks/redux';
 import { setLoading } from '@/features/loading/loadingSlice';
@@ -13,7 +13,6 @@ import Api from '@/core/api/api';
 import { ISpecialization, ITechnology, ITest, ITestParams } from '@/core/interfaces/types';
 import errorHandler from '@/core/utils/error/errorHandler';
 import AddTechnologyModal from '@/components/technology-modals/AddTechnologyModal';
-import AuthConfirmButton from '@/app/(views)/(auth)/components/AuthConfirmButton';
 import { shuffleArray } from '@/core/utils/array';
 import GenerateTest from '@/app/(views)/(tests)/tests/components/GenerateTest';
 import TechComponent from '@/components/tech-component/TechComponent';
@@ -231,8 +230,7 @@ const TestsView = () => {
         )}
         <div className={'mx-auto w-max mt-4'}>
           <AdminWrapper>
-            <CustomButton
-              small
+            <UIButton
               text={'Создать специализацию'}
               onClick={() => setOpenAddSpecModal(true)}
             />
@@ -265,8 +263,7 @@ const TestsView = () => {
         )}
         <div className={'mx-auto w-max mt-4'}>
           <AdminWrapper>
-            <CustomButton
-              small
+            <UIButton
               text={'Создать направление'}
               onClick={() => setOpenAddTechModal(true)}
             />
@@ -275,12 +272,9 @@ const TestsView = () => {
       </SettingsBlock>
       <div className={'grow'} />
       <div className={'w-full flex items-center mt-2 pb-2'}>
-        <AuthConfirmButton
+        <UIButton
           className={'w-[170px]! mx-auto'}
-          customBorder
           disabled={!questionsTechs.length}
-          size={24}
-          icon={'check'}
           text={'Начать'}
           onClick={generateTests}
         />
@@ -303,9 +297,8 @@ const TestsView = () => {
         opened={unauthGenerateModal}
         text={'Для продолжения, пожалуйста, авторизуйтесь.'}
       >
-        <CustomButton
+        <UIButton
           className={'!rounded-10 px-3! py-2! text-xl h-max mx-auto '}
-          color={'low-green'}
           onClick={handleLogin}
         >
           <div className={'flex'}>
@@ -317,7 +310,7 @@ const TestsView = () => {
             />
             <div className={'mr-4'}>Вход</div>
           </div>
-        </CustomButton>
+        </UIButton>
       </InfoModal>
       <GenerateModal
         text={'Тест генерируется, пожалуйста подождите.'}

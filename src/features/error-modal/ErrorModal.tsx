@@ -1,6 +1,6 @@
 'use client';
 
-import AuthConfirmButton from '@/app/(views)/(auth)/components/AuthConfirmButton';
+import UIButton from '@/components/ui/button/UIButton';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { RootState } from '@/store';
 import { closeModal, resetModalSettings } from '@/store/tech/techSlice';
@@ -54,12 +54,8 @@ const ErrorModal = () => {
                 </DialogTitle>
               </div>
               <div className={'mt-auto flex'}>
-                <AuthConfirmButton
+                <UIButton
                   className={'w-[120px]! mx-auto'}
-                  customBorder
-                  size={24}
-                  type={settings.type === 'error' ? 'error' : 'default'}
-                  icon={'check'}
                   text={'OK'}
                   onClick={close}
                 />

@@ -9,7 +9,7 @@ import { useAppDispatch } from '@/hooks/redux';
 import { setUnAuth } from '@/store/user/userSlice';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
-import AuthConfirmButton from '@/app/(views)/(auth)/components/AuthConfirmButton';
+import UIButton from '@/components/ui/button/UIButton';
 import routeChecker from '@/hoc/routeChecker';
 
 const RegistrationPage = () => {
@@ -161,7 +161,7 @@ const RegistrationPage = () => {
             />
           </div>
         )}
-        <AuthConfirmButton
+        <UIButton
           className={'w-[170px]! mx-auto mt-2'}
           disabled={
             !!emailError ||
@@ -169,9 +169,6 @@ const RegistrationPage = () => {
             !!repeatedPasswordError ||
             (showCodeBlock && (code.length < 4 || codeError))
           }
-          icon={'check'}
-          customBorder
-          size={32}
           text={'Создать'}
           onClick={showCodeBlock ? handleRegister : handleRequestCode}
         />

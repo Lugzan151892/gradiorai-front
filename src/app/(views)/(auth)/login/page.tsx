@@ -8,7 +8,7 @@ import { useAppDispatch } from '@/hooks/redux';
 import { setUnAuth } from '@/store/user/userSlice';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
-import AuthConfirmButton from '@/app/(views)/(auth)/components/AuthConfirmButton';
+import UIButton from '@/components/ui/button/UIButton';
 
 const LoginView = () => {
   const router = useRouter();
@@ -87,28 +87,21 @@ const LoginView = () => {
           }}
         />
         <div className={'grow'} />
-        <AuthConfirmButton
+        <UIButton
           className={'w-[170px]! mx-auto'}
           disabled={!!emailError || !!passwordError}
-          customBorder
-          size={16}
-          icon={'open-password'}
           text={'Войти'}
           onClick={handleLogin}
         />
         <div className={'flex text-base w-full items-center justify-center mt-3'}>
           <span
-            className={
-              'ml-2 text-white cursor-pointer border-b border-transparent hover:border-white hover:border-b'
-            }
+            className={'ml-2 text-white cursor-pointer border-b border-transparent hover:border-white hover:border-b'}
             onClick={handleGoRegistration}
           >
             Регистрация
           </span>
           <span
-            className={
-              'ml-5 text-white cursor-pointer border-b border-transparent hover:border-white hover:border-b'
-            }
+            className={'ml-5 text-white cursor-pointer border-b border-transparent hover:border-white hover:border-b'}
             onClick={handleRestorePassword}
           >
             Забыли пароль?
