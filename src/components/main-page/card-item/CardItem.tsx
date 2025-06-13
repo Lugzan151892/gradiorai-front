@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import React from 'react';
-import hut from './assets/hut.svg';
-import analize from './assets/analize.svg';
-import education from './assets/education.svg';
-import list from './assets/list.svg';
+import hut from '../assets/hut.svg';
+import analize from '../assets/analize.svg';
+import education from '../assets/education.svg';
+import list from '../assets/list.svg';
 
 const CardItem: React.FC<
   Readonly<{
@@ -38,9 +38,9 @@ const CardItem: React.FC<
         />
         <div className={'text-xl text-main-purple font-semibold'}>{title}</div>
       </div>
-      <div>{description}</div>
+      <div className={'text-lg leading-6'}>{description}</div>
       <div className={'w-full border-1 border-text-disabled'} />
-      <div>{additional}</div>
+      <div className={'text-sm font-light italic text-text-disabled'}>{additional}</div>
     </div>
   );
 };

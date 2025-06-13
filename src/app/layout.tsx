@@ -1,6 +1,5 @@
 import React from 'react';
 import type { Metadata } from 'next';
-import { Inter, Geist, Geist_Mono } from 'next/font/google';
 import localFont from 'next/font/local';
 import './globals.css';
 import GlobalLoader from '@/features/loading/GlobalBusy';
@@ -10,6 +9,16 @@ import UserInitializer from '@/components/user-initializer/UserInitializer';
 
 const interDisplay = localFont({
   src: [
+    {
+      path: '../assets/fonts/InterDisplay-Light.woff2',
+      weight: '300',
+      style: 'normal',
+    },
+    {
+      path: '../assets/fonts/InterDisplay-LightItalic.woff2',
+      weight: '300',
+      style: 'italic',
+    },
     {
       path: '../assets/fonts/InterDisplay-Regular.woff2',
       weight: '400',
@@ -53,23 +62,6 @@ const interDisplay = localFont({
   ],
   display: 'swap',
   variable: '--font-inter-display',
-});
-
-const inter = Inter({
-  weight: ['400', '500', '600', '700'],
-  style: ['normal', 'italic'],
-  subsets: ['latin'],
-  display: 'swap',
-});
-
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
-});
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
 });
 
 export const metadata: Metadata = {
@@ -146,7 +138,7 @@ const RootLayout: React.FC<Readonly<{ children: React.ReactNode }>> = ({ childre
   return (
     <html lang={'en'}>
       <body
-        className={`${interDisplay.variable} ${inter.className} ${geistSans.variable} ${geistMono.variable} antialiased bg-[#030b1b] w-full h-full overflow-hidden leading-[100%] font-normal text-sm`}
+        className={`${interDisplay.className} antialiased bg-[#030b1b] w-full h-full overflow-hidden leading-[100%] font-normal text-sm tracking-[0]`}
       >
         <Providers>
           {children}

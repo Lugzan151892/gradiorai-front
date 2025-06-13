@@ -4,7 +4,8 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 import AppLayout from '@/components/app-layout/AppLayout';
 import CardItem from '@/components/main-page/card-item/CardItem';
-// style={{ background: 'var(--main-gradient)' }}
+import CardWithImage from '@/components/main-page/card-with-image/CardWithImage';
+
 const Home = () => {
   const router = useRouter();
   return (
@@ -72,6 +73,58 @@ const Home = () => {
                 'Собеседование – это навык, которому можно научиться. Наша система адаптивного обучения поможет вам освоить все тонкости успешного прохождения интервью за короткий срок.'
               }
               additional={'Для максимального эффекта сочетайте обучение с практикой в нашем симуляторе собеседований.'}
+            />
+          </div>
+        </section>
+        <section
+          className={'h-full sm:h-[454px] rounded-b-4xl flex flex-col justify-center items-center mt-[140px]'}
+          style={{ background: 'var(--main-gradient)' }}
+        >
+          <div className={'w-full sm:max-w-[808px] flex flex-col gap-6 text-center'}>
+            <div className={'text-5xl leading-[100%] font-bold'}>Генерация с AI </div>
+            <div className={'text-xl'}>
+              Превратите свой опыт в убедительные ответы с помощью нашего интеллектуального помощника. Просто укажите
+              параметры – и получите готовые варианты ответов, которые впечатлят любого работодателя
+            </div>
+            <div>
+              <UIButton
+                text={'НАЧАТЬ'}
+                iconAfter={'arrow-top-right'}
+                onClick={() => {
+                  router.push('/');
+                }}
+              />
+            </div>
+          </div>
+        </section>
+        <section className={'flex flex-col mt-20 gap-19'}>
+          <div className={'text-2xl font-semibold text-center'}>Преимущества нашего AI-генератора</div>
+          <div className={'flex gap-4 flex-wrap'}>
+            <CardWithImage
+              className={'w-[49%]'}
+              title={'Режим улучшения – доработка ваших черновиков'}
+              text={
+                'Загрузите свой текст и получите: оптимизацию формулировок, добавление профессиональных терминов и исправление стилистики'
+              }
+              image={'arm'}
+            />
+            <CardWithImage
+              className={'w-[49%]'}
+              title={'Отраслевые шаблоны для 25+ профессий'}
+              text={'Готовые шаблоны с профессиональной лексикой, включая редкие специализации IT'}
+              image={'world'}
+            />
+            <CardWithImage
+              className={'w-[49%]'}
+              title={'Умная адаптация под уровень позиции'}
+              text={'Наш ИИ анализирует требования вакансии и автоматически подстраивает ответы под нужный уровень'}
+              image={'romb'}
+            />
+            <CardWithImage
+              className={'w-[49%]'}
+              title={'Генерация вопросов работодателю'}
+              text={'10+ умных вопросов под вашу сферу, включая редкие специализации'}
+              image={'question'}
             />
           </div>
         </section>
