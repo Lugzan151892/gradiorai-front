@@ -141,19 +141,19 @@ const EditEntitiesView = () => {
           <div className={'mb-4 relative bg-modal'}>
             {choosenEntitie === EEDITED_ENTITIE.TECH && (
               <div
-                className={'sticky top-0 left-0 border-1 grid grid-cols-[5%,20%,40%,25%,10%] min-h-8 border-1 bg-modal'}
+                className={'sticky top-0 left-0 border grid grid-cols-[5%_20%_40%_25%_10%] min-h-8 border bg-modal'}
               >
-                <div className={'text-2xl border-r-1 text-center'}>ID</div>
-                <div className={'text-2xl border-r-1 px-2'}>Название</div>
-                <div className={'text-2xl border-r-1 px-2'}>Описание</div>
-                <div className={'text-2xl border-r-1 px-2'}>Кол-во сохраненных вопросов</div>
+                <div className={'text-2xl border-r text-center'}>ID</div>
+                <div className={'text-2xl border-r px-2'}>Название</div>
+                <div className={'text-2xl border-r px-2'}>Описание</div>
+                <div className={'text-2xl border-r px-2'}>Кол-во сохраненных вопросов</div>
                 <div className={'text-2xl text-center'}>Действия</div>
               </div>
             )}
             {choosenEntitie === EEDITED_ENTITIE.SPEC && (
-              <div className={'sticky top-0 left-0 border-1 grid grid-cols-[5%,1fr,10%] min-h-8 border-1 bg-modal'}>
-                <div className={'text-2xl border-r-1 text-center'}>ID</div>
-                <div className={'text-2xl border-r-1 px-2'}>Название</div>
+              <div className={'sticky top-0 left-0 border grid grid-cols-[5%_1fr_10%] min-h-8 border bg-modal'}>
+                <div className={'text-2xl border-r text-center'}>ID</div>
+                <div className={'text-2xl border-r px-2'}>Название</div>
                 <div className={'text-2xl text-center'}>Действия</div>
               </div>
             )}
@@ -161,10 +161,10 @@ const EditEntitiesView = () => {
               specs.map((spec) => (
                 <div
                   key={spec.id}
-                  className={'border-1 w-full grid grid-cols-[5%,1fr,10%]'}
+                  className={'border w-full grid grid-cols-[5%_1fr_10%]'}
                 >
-                  <div className={'text-3xl border-r-1 px-2 py-2 text-center'}>{spec.id}</div>
-                  <div className={'text-3xl border-r-1 px-2 py-2'}>{spec.name}</div>
+                  <div className={'text-3xl border-r px-2 py-2 text-center'}>{spec.id}</div>
+                  <div className={'text-3xl border-r px-2 py-2'}>{spec.name}</div>
                   <div className={'flex flex-col px-2 py-2'}>
                     <CustomButton
                       text={'Изменить'}
@@ -183,12 +183,12 @@ const EditEntitiesView = () => {
               techs.map((tech) => (
                 <div
                   key={tech.id}
-                  className={'border-1 w-full grid grid-cols-[5%,20%,40%,25%,10%]'}
+                  className={'border w-full grid grid-cols-[5%_20%_40%_25%_10%]'}
                 >
-                  <div className={'text-3xl border-r-1 px-2 py-2 text-center'}>{tech.id}</div>
-                  <div className={'text-3xl border-r-1 px-2 py-2'}>{tech.name}</div>
-                  <div className={'text-2xl border-r-1 px-2 py-2'}>{tech.description || 'Не заполнено'}</div>
-                  <div className={'text-2xl border-r-1 px-2 py-2 text-center'}>{tech._count?.questions || '0'}</div>
+                  <div className={'text-3xl border-r px-2 py-2 text-center'}>{tech.id}</div>
+                  <div className={'text-3xl border-r px-2 py-2'}>{tech.name}</div>
+                  <div className={'text-2xl border-r px-2 py-2'}>{tech.description || 'Не заполнено'}</div>
+                  <div className={'text-2xl border-r px-2 py-2 text-center'}>{tech._count?.questions || '0'}</div>
                   <div className={'flex flex-col px-2 py-2'}>
                     <CustomButton
                       text={'Изменить'}
