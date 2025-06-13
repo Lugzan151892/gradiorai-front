@@ -146,7 +146,7 @@ const RootLayout: React.FC<Readonly<{ children: React.ReactNode }>> = ({ childre
   return (
     <html lang={'en'}>
       <body
-        className={`${interDisplay.variable} ${inter.className} ${geistSans.variable} ${geistMono.variable} antialiased bg-[#030b1b] w-full h-full overflow-hidden`}
+        className={`${interDisplay.variable} ${inter.className} ${geistSans.variable} ${geistMono.variable} antialiased bg-[#030b1b] w-full h-full overflow-hidden leading-[100%] font-normal text-sm`}
       >
         <Providers>
           {children}
