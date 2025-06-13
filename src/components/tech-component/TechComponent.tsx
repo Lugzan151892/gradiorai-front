@@ -22,14 +22,14 @@ const TechComponent: React.FC<ITechComponentProps> = ({
   return (
     <div
       key={tech.id}
-      className={`flex px-2 rounded group cursor-pointer items-center text-ellipsis border border-1 
+      className={`flex px-2 rounded group cursor-pointer items-center text-ellipsis border border 
         ${selected ? 'bg-low-green border-low-green' : 'border-white hover:border-low-green group-hover:border-low-green'}
         ${small ? 'h-7 min-h-7 ' : 'h-10 min-h-10 '}
         ${className}`}
       onClick={onClick}
     >
       <div
-        className={`border border-1 flex items-center p-1 mr-1 h-4 w-4 min-h-4 min-w-4 
+        className={`border border flex items-center p-1 mr-1 h-4 w-4 min-h-4 min-w-4 
           ${selected ? 'border-white' : 'border-white group-hover:border-low-green'}`}
       >
         <Image

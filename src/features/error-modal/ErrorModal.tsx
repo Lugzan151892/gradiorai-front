@@ -1,6 +1,6 @@
 'use client';
 
-import AuthConfirmButton from '@/app/(views)/(auth)/components/AuthConfirmButton';
+import UIButton from '@/components/ui/button/UIButton';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { RootState } from '@/store';
 import { closeModal, resetModalSettings } from '@/store/tech/techSlice';
@@ -40,7 +40,7 @@ const ErrorModal = () => {
             <DialogPanel
               transition
               className={
-                'w-full max-w-md flex flex-col rounded-input bg-modal p-6 border-[3px] min-h-[180px] duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0 ' +
+                'w-full max-w-md flex flex-col rounded-input bg-modal p-6 border-[3px] min-h-[180px] duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0 ' +
                 `border-${settings.type === 'error' ? 'error' : 'white'}`
               }
             >
@@ -54,12 +54,8 @@ const ErrorModal = () => {
                 </DialogTitle>
               </div>
               <div className={'mt-auto flex'}>
-                <AuthConfirmButton
-                  className={'!w-[120px] mx-auto'}
-                  customBorder
-                  size={24}
-                  type={settings.type === 'error' ? 'error' : 'default'}
-                  icon={'check'}
+                <UIButton
+                  className={'w-[120px]! mx-auto'}
                   text={'OK'}
                   onClick={close}
                 />

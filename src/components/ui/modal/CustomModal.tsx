@@ -49,13 +49,13 @@ const CustomModal: React.FC<ICustomModalProps> = ({
             <DialogPanel
               transition
               className={
-                'rounded-input border-2 text-white flex flex-col bg-modal duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0 overflow-hidden ' +
+                'rounded-input border-2 text-white flex flex-col bg-modal duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0 overflow-hidden ' +
                 `border-${typeColor()} ` +
                 widthClasses
               }
             >
               {header || (
-                <div className={'grid grid-cols-[1fr_40px] items-center py-2 justify-items-center border-b-1'}>
+                <div className={'grid grid-cols-[1fr_40px] items-center py-2 justify-items-center border-b'}>
                   <DialogTitle
                     as={'h3'}
                     className={'desktop:text-2xl text-center mobile:text-xl mobile:px-2 mobile:py-2 font-medium'}

@@ -1,10 +1,66 @@
 import React from 'react';
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Inter, Geist, Geist_Mono } from 'next/font/google';
+import localFont from 'next/font/local';
 import './globals.css';
 import GlobalLoader from '@/features/loading/GlobalBusy';
 import Providers from '@/app/providers';
 import ErrorModal from '@/features/error-modal/ErrorModal';
+import UserInitializer from '@/components/user-initializer/UserInitializer';
+
+const interDisplay = localFont({
+  src: [
+    {
+      path: '../assets/fonts/InterDisplay-Regular.woff2',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../assets/fonts/InterDisplay-Italic.woff2',
+      weight: '400',
+      style: 'italic',
+    },
+    {
+      path: '../assets/fonts/InterDisplay-Medium.woff2',
+      weight: '500',
+      style: 'normal',
+    },
+    {
+      path: '../assets/fonts/InterDisplay-MediumItalic.woff2',
+      weight: '500',
+      style: 'italic',
+    },
+    {
+      path: '../assets/fonts/InterDisplay-SemiBold.woff2',
+      weight: '600',
+      style: 'normal',
+    },
+    {
+      path: '../assets/fonts/InterDisplay-SemiBoldItalic.woff2',
+      weight: '600',
+      style: 'italic',
+    },
+    {
+      path: '../assets/fonts/InterDisplay-Bold.woff2',
+      weight: '700',
+      style: 'normal',
+    },
+    {
+      path: '../assets/fonts/InterDisplay-BoldItalic.woff2',
+      weight: '700',
+      style: 'italic',
+    },
+  ],
+  display: 'swap',
+  variable: '--font-inter-display',
+});
+
+const inter = Inter({
+  weight: ['400', '500', '600', '700'],
+  style: ['normal', 'italic'],
+  subsets: ['latin'],
+  display: 'swap',
+});
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -90,12 +146,13 @@ const RootLayout: React.FC<Readonly<{ children: React.ReactNode }>> = ({ childre
   return (
     <html lang={'en'}>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#030b1b] w-full h-full overflow-hidden bg-[url("../assets/images/main-bg.png")] bg-no-repeat bg-cover bg-left`}
+        className={`${interDisplay.variable} ${inter.className} ${geistSans.variable} ${geistMono.variable} antialiased bg-[#030b1b] w-full h-full overflow-hidden`}
       >
         <Providers>
           {children}
           <GlobalLoader />
           <ErrorModal />
+          <UserInitializer />
         </Providers>
       </body>
     </html>

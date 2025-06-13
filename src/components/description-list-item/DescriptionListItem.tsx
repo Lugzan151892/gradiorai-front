@@ -11,16 +11,16 @@ const DescriptionListItem: React.FC<{
       <div className={'flex items-center w-full py-1'}>
         <div
           className={
-            'border-1 border-gray rounded-full bg-white flex-shrink-0 h-4 w-4 flex items-center justify-center shadow-2xl'
+            'border border-gray rounded-full bg-white shrink-0 h-4 w-4 flex items-center justify-center shadow-2xl'
           }
         >
           <div
             className={
-              'rounded-full flex-shrink-0 h-5 w-5 bg-success flex items-center justify-center shadow-default shadow-black mobile:text-sm text-white'
+              'rounded-full shrink-0 h-5 w-5 bg-success flex items-center justify-center shadow-default shadow-black mobile:text-sm text-white'
             }
           >
             <Image
-              className={'mt-[1px]'}
+              className={'mt-px'}
               src={checkMainPage}
               alt={'check'}
             />

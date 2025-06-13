@@ -133,7 +133,7 @@ const CurrentInterviewPage = () => {
 
   return (
     <div className={'w-full max-w-[990px] mx-auto flex flex-col h-full'}>
-      <div className={'bg-bg-transparent-25 rounded-10 p-4 flex-grow flex flex-col h-full justify-end'}>
+      <div className={'bg-bg-transparent-25 rounded-10 p-4 grow flex flex-col h-full justify-end'}>
         <div className={'overflow-hidden'}>
           <ScrollContainer>
             <div className={'flex flex-col w-full h-full px-2'}>

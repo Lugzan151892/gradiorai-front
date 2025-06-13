@@ -43,7 +43,7 @@ const InterviewLayout: React.FC<Readonly<{ children: React.ReactNode }>> = ({ ch
   return (
     <div className={'w-full h-screen flex flex-col'}>
       <AppHeader />
-      <div className={'flex-grow flex mb-4 overflow-hidden'}>
+      <div className={'grow flex mb-4 overflow-hidden'}>
         <ScrollContainer>{children}</ScrollContainer>
       </div>
     </div>

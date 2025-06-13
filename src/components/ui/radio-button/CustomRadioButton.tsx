@@ -25,7 +25,7 @@ const CustomRadioButton: React.FC<ICustomRadioButtonProps> = ({
       return (
         <div
           className={
-            'rounded-full flex-shrink-0 h-5 w-5 bg-success flex items-center justify-center shadow-default shadow-black'
+            'rounded-full shrink-0 h-5 w-5 bg-success flex items-center justify-center shadow-default shadow-black'
           }
         >
           ✔
@@ -37,7 +37,7 @@ const CustomRadioButton: React.FC<ICustomRadioButtonProps> = ({
       return (
         <div
           className={
-            'rounded-full flex-shrink-0 h-5 w-5 bg-error flex items-center justify-center shadow-default shadow-black'
+            'rounded-full shrink-0 h-5 w-5 bg-error flex items-center justify-center shadow-default shadow-black'
           }
         >
           x
@@ -45,14 +45,14 @@ const CustomRadioButton: React.FC<ICustomRadioButtonProps> = ({
       );
     }
 
-    return <div className={'rounded-full flex-shrink-0 bg-gray h-2 w-2'} />;
+    return <div className={'rounded-full shrink-0 bg-gray h-2 w-2'} />;
   };
 
   return (
     <div className={`flex items-center w-full py-1 ${noPointer ? '' : 'cursor-pointer'} ${disabledClasses}`}>
       <div
         className={
-          'border-1 border-gray rounded-full bg-white flex-shrink-0 h-4 w-4 flex items-center justify-center shadow-2xl'
+          'border border-gray rounded-full bg-white shrink-0 h-4 w-4 flex items-center justify-center shadow-2xl'
         }
         onClick={onClick}
       >

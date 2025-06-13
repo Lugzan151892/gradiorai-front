@@ -1,6 +1,6 @@
 'use client';
 
-import CustomButton from '@/components/ui/button/CustomButton';
+import UIButton from '@/components/ui/button/UIButton';
 import CustomIcon from '@/components/ui/icon/CustomIcon';
 import Api from '@/core/api/api';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
@@ -142,26 +142,15 @@ const HeaderUserState = () => {
   return (
     <>
       {!user?.id || false ? (
-        <div className={'ml-auto flex gap-2'}>
-          <CustomButton
-            className={'!rounded-10 !px-3 !py-2 text-xl h-max '}
-            color={'low-green'}
+        <div className={'flex gap-2'}>
+          <UIButton
             onClick={handleLogin}
-          >
-            <div className={'flex'}>
-              <CustomIcon
-                className={'desktop:mr-6'}
-                name={'user-login'}
-                size={25}
-                color={'var(--main-white)'}
-              />
-              <div className={'mobile:hidden'}>Вход</div>
-            </div>
-          </CustomButton>
+            text={'ВОЙТИ'}
+          />
         </div>
       ) : (
         <div
-          className={'ml-auto flex items-center'}
+          className={'flex items-center'}
           ref={menuRef}
         >
           <div

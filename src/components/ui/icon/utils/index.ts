@@ -30,6 +30,8 @@ const getIconViewBox = (name: keyof typeof IconMarkup) => {
       return '0 0 32 32';
     case 'owl':
       return '0 0 512 512';
+    case 'arrow-top-right':
+      return '0 0 19 18';
     default:
       return '0 0 24 24';
   }
