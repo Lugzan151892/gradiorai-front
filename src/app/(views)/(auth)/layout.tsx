@@ -8,7 +8,7 @@ const AuthLayout: React.FC<{
 }> = ({ children }) => {
   return (
     <AppLayout withState={false}>
-      <div className={'flex items-center justify-center max-w-[800px] mx-auto'}>{children}</div>
+      <div className={'flex items-center justify-center max-w-[800px] mx-auto mt-10'}>{children}</div>
     </AppLayout>
   );
 };

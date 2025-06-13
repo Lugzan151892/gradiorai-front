@@ -12,6 +12,7 @@ interface Props extends Pick<React.ComponentProps<'input'>, 'id' | 'disabled' | 
   label?: string;
   type?: TInputType;
   error?: string[] | string;
+  linkChild?: React.ReactNode;
   onInput?: (val: string) => void;
   onChange?: (val: string) => void;
 }
@@ -25,10 +26,10 @@ const UIInput: React.FC<Readonly<Props>> = ({
   placeholder,
   value,
   error,
+  linkChild,
   onInput,
   onChange,
 }) => {
-  const [showTooltip, setShowTooltip] = useState(!!error);
   const [currentInputType, setCurrentInputType] = useState<TInputType>(type);
   const [internalValue, setInternalValue] = useState<string>(String(value ?? ''));
 
@@ -50,22 +51,39 @@ const UIInput: React.FC<Readonly<Props>> = ({
     }
   };
 
+  const errorClasses = errorsList.length
+    ? 'border-error selection:border-error text-error focus-visible:border-error'
+    : '';
+  const disabledClasses = disabled
+    ? 'border-main-gray selection:border-main-gray text-main-gray focus-visible:border-main-gray'
+    : '';
+
   const togglePasswordVisibility = () => {
     setCurrentInputType((prev) => (prev === 'password' ? 'text' : 'password'));
   };
 
   const isPasswordToggleVisible = type === 'password';
 
+  const getIconColor = () => {
+    if (disabled) {
+      return 'var(--main-gray)';
+    }
+
+    if (errorsList.length) {
+      return 'var(--main-error)';
+    }
+
+    return 'white';
+  };
+
   return (
-    <div
-      onMouseEnter={() => setShowTooltip(true)}
-      onMouseLeave={() => setShowTooltip(false)}
-      className={cn(className, 'relative')}
-    >
+    <div className={cn(className, 'flex flex-col w-full')}>
       {label && (
         <UILabel
-          className={'mb-1'}
+          className={'mb-2'}
           htmlFor={id}
+          error={!!errorsList.length}
+          disabled={disabled}
         >
           {label}
         </UILabel>
@@ -83,14 +101,15 @@ const UIInput: React.FC<Readonly<Props>> = ({
           disabled={disabled}
           placeholder={placeholder}
           className={cn(
-            'text-white border-1 pl-3 min-h-12 text-sm rounded-4xl border-main-gray selection:border-main-gray selection:border-1 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50',
+            'text-white border-1 pl-3 min-h-12 text-sm rounded-4xl border-main-gray selection:border-main-gray selection:border-1 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 w-full',
             'focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0',
             'focus-visible:border-main-gray focus-visible:border-1',
             'aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive',
-            isPasswordToggleVisible && 'pr-10'
+            isPasswordToggleVisible && 'pr-10',
+            errorClasses,
+            disabledClasses
           )}
         />
-
         {isPasswordToggleVisible && (
           <div
             onClick={togglePasswordVisibility}
@@ -98,25 +117,25 @@ const UIInput: React.FC<Readonly<Props>> = ({
               'absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors cursor-pointer'
             }
           >
-            {currentInputType === 'password' ? <EyeOff size={18} /> : <Eye size={18} />}
+            {currentInputType === 'password' ? (
+              <EyeOff
+                size={24}
+                color={getIconColor()}
+              />
+            ) : (
+              <Eye
+                size={24}
+                color={getIconColor()}
+              />
+            )}
           </div>
         )}
-        {showTooltip && errorsList.length > 0 && (
-          <div
-            className={
-              'absolute right-0 bottom-[60px] bg-white text-red-600 shadow-lg rounded text-sm w-max max-w-48 p-2 z-10'
-            }
-          >
-            <div className={'absolute -bottom-1 right-5 w-3 h-3 bg-white transform rotate-45'} />
-            {errorsList.map((err, index) => (
-              <div
-                key={index}
-                className={'flex items-center gap-2'}
-              >
-                <span className={'text-xs'}>{err}</span>
-              </div>
-            ))}
-          </div>
+      </div>
+      <div className={'min-h-4'}>
+        {errorsList.length && !disabled ? (
+          <div className={'mt-2 text-xs text-error'}>{errorsList.join(' ')}</div>
+        ) : (
+          linkChild && <div>{linkChild}</div>
         )}
       </div>
     </div>

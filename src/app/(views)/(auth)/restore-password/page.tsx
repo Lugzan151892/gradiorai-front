@@ -1,7 +1,6 @@
 'use client';
 
 import CustomCodeInput from '@/components/ui/code-input/CustomCodeInput';
-import CustomInput from '@/components/ui/input/CustomInput';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import UIButton from '@/components/ui/button/UIButton';
@@ -11,6 +10,7 @@ import Api from '@/core/api/api';
 import errorHandler from '@/core/utils/error/errorHandler';
 import { openModal } from '@/store/tech/techSlice';
 import routeChecker from '@/hoc/routeChecker';
+import { UIInput } from '@/components/ui/input-v2/UIInput';
 
 const RestorePassword = () => {
   const router = useRouter();
@@ -132,16 +132,17 @@ const RestorePassword = () => {
   };
 
   return (
-    <div className={'text-black flex w-full h-full items-center'}>
-      <div className={'flex flex-col w-full h-full gap-1 text-3xl'}>
-        <div className={'mb-20 text-white text-center'}>Изменение пароля</div>
+    <div className={'text-black flex flex-col w-full h-full items-center mx-4'}>
+      <div className={'mb-16 text-white text-center text-3xl sm:text-5xl font-bold'}>Изменение пароля</div>
+      <div className={'w-full max-w-xs'}>
         {step === 2 ? (
           <>
-            <CustomInput
-              className={'mb-6'}
+            <UIInput
+              label={'Пароль'}
+              className={'mb-3'}
               type={'password'}
-              icon={'password'}
               placeholder={'Пароль'}
+              id={'password'}
               value={password}
               error={passwordError}
               onInput={(val) => {
@@ -149,10 +150,11 @@ const RestorePassword = () => {
                 setPasswordError('');
               }}
             />
-            <CustomInput
+            <UIInput
+              label={'Повторите пароль'}
               type={'password'}
-              icon={'password'}
               placeholder={'Повторите пароль'}
+              id={'repeated-password'}
               value={repeatedPassword}
               error={repeatedPasswordError}
               onInput={(val) => {
@@ -163,33 +165,42 @@ const RestorePassword = () => {
           </>
         ) : null}
         {step === 1 ? (
-          <CustomInput
-            className={'mb-6'}
+          <UIInput
+            className={'mb-3'}
+            label={'E-mail'}
             value={email}
-            placeholder={'Email'}
+            id={'email'}
             error={emailError}
-            icon={'email'}
+            type={'email'}
+            placeholder={'Email'}
             onInput={(val) => {
               setEmail(val);
               setEmailError('');
             }}
           />
         ) : null}
-        <div className={'grow'} />
         {showCodeBlock && step === 1 && (
-          <div className={'flex flex-col text-center'}>
-            <div className={'text-white text-xl mb-2'}>Подтвердите Email</div>
-            <div className={'text-white text-sm mb-5'}>Код отправлен на адрес {email}</div>
+          <div className={'flex flex-col text-center mb-3'}>
+            <div className={'text-white text-2xl mb-3'}>Подтвердите Email</div>
+            <div className={'text-white text-sm mb-3'}>
+              Код отправлен на адрес <span className={'text-main-purple'}>{email}</span>
+            </div>
             <CustomCodeInput
               className={'mx-auto rounded-input'}
               error={codeError}
               value={code}
               onInput={handleInputCode}
             />
+            <div
+              className={'text-main-purple text-sm mt-3 hover:underline cursor-pointer'}
+              onClick={handleRequestCode}
+            >
+              Отправить повторно?
+            </div>
           </div>
         )}
         <UIButton
-          className={'w-[170px]! mx-auto mt-2'}
+          className={'w-full mt-2'}
           disabled={
             !!emailError ||
             !!passwordError ||
@@ -199,34 +210,19 @@ const RestorePassword = () => {
           text={'Изменить'}
           onClick={handleConfirmButton}
         />
-        <div className={'flex text-base w-full items-center justify-center mt-3'}>
-          {showCodeBlock && step === 1 ? (
-            <div
-              className={'text-white cursor-pointer border-b border-transparent hover:border-white hover:border-b'}
-              onClick={handleRequestCode}
-            >
-              Отправить повторно?
-            </div>
-          ) : (
-            <>
-              <span
-                className={
-                  'ml-2 text-white cursor-pointer border-b border-transparent hover:border-white hover:border-b'
-                }
-                onClick={handleGoLogin}
-              >
-                Вход
-              </span>
-              <span
-                className={
-                  'ml-5 text-white cursor-pointer border-b border-transparent hover:border-white hover:border-b'
-                }
-                onClick={handleGoRegistration}
-              >
-                Регистрация
-              </span>
-            </>
-          )}
+        <div className={'flex w-full justify-center gap-4 mt-6'}>
+          <UIButton
+            text={'Регистрация'}
+            type={'transparent'}
+            onClick={handleGoRegistration}
+            iconBefore={'user-add'}
+          />
+          <UIButton
+            text={'Вход'}
+            type={'transparent'}
+            onClick={handleGoLogin}
+            iconBefore={'login-new'}
+          />
         </div>
       </div>
     </div>

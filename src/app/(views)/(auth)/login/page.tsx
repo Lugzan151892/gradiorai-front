@@ -1,6 +1,5 @@
 'use client';
 
-import CustomInput from '@/components/ui/input/CustomInput';
 import Api from '@/core/api/api';
 import errorHandler from '@/core/utils/error/errorHandler';
 import routeChecker from '@/hoc/routeChecker';
@@ -60,13 +59,24 @@ const LoginView = () => {
     router.push('/restore-password');
   };
 
+  const forgetPasswordMarkup = (
+    <div
+      className={'mt-2 text-main-purple text-xs cursor-pointer hover:underline'}
+      onClick={handleRestorePassword}
+    >
+      Забыли пароль?
+    </div>
+  );
+
   return (
-    <div className={'text-black flex w-full h-full items-center'}>
-      <div className={'flex flex-col w-full h-full gap-1 text-3xl'}>
-        <div className={'mb-20 text-white text-center'}>С возвращением!</div>
+    <div className={'text-black flex flex-col w-full h-full items-center mx-4'}>
+      <div className={'mb-16 text-white text-center text-3xl sm:text-5xl font-bold'}>С возвращением!</div>
+      <div className={'w-full max-w-xs'}>
         <UIInput
-          className={'mb-6'}
+          className={'mb-3'}
+          label={'E-mail'}
           value={email}
+          id={'email'}
           error={emailError}
           type={'email'}
           placeholder={'Email'}
@@ -75,37 +85,34 @@ const LoginView = () => {
             setEmailError('');
           }}
         />
-        <CustomInput
+        <UIInput
+          label={'Пароль'}
           type={'password'}
-          icon={'password'}
+          id={'password'}
           placeholder={'Пароль'}
           value={password}
           error={passwordError}
+          linkChild={forgetPasswordMarkup}
           onInput={(val) => {
             setPassword(val);
             setPasswordError('');
           }}
         />
-        <div className={'grow'} />
         <UIButton
-          className={'w-[170px]! mx-auto'}
+          className={'w-full mt-6'}
           disabled={!!emailError || !!passwordError}
-          text={'Войти'}
+          text={'ВОЙТИ'}
           onClick={handleLogin}
+          iconAfter={'arrow-top-right'}
         />
-        <div className={'flex text-base w-full items-center justify-center mt-3'}>
-          <span
-            className={'ml-2 text-white cursor-pointer border-b border-transparent hover:border-white hover:border-b'}
+        <div className={'flex'}>
+          <UIButton
+            className={'mt-6 mx-auto'}
+            text={'Регистрация'}
+            type={'transparent'}
             onClick={handleGoRegistration}
-          >
-            Регистрация
-          </span>
-          <span
-            className={'ml-5 text-white cursor-pointer border-b border-transparent hover:border-white hover:border-b'}
-            onClick={handleRestorePassword}
-          >
-            Забыли пароль?
-          </span>
+            iconBefore={'user-add'}
+          />
         </div>
       </div>
     </div>

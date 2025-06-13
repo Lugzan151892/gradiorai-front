@@ -7,6 +7,8 @@
   --color-bg-header: #222121;
   --color-main-grad: linear-gradient(180deg, rgba(44, 43, 43, 0) 31.17%, #7c49e3 128.34%);
   --color-main-gray: #3d3f4d;
+  --color-error: #b52727;
+  --color-main-purple: #9073cb;
   /* --color-background: #010102;
   --color-main-green: #5aea6f;
   --color-low-green: #00e3c9;
@@ -40,6 +42,10 @@
 :root {
   --low-green: #00e3c9;
   --main-white: #ffffff;
+  --main-error: #b52727;
+  --main-gray: #3d3f4d;
+  --main-black: #262525;
+  --text-disabled: #aab1c0;
 }
 
 [data-slot='scroll-area-scrollbar'] {
@@ -102,8 +108,8 @@ body {
 
 body {
   color: white;
-  background: #262525;
-  background-color: #262525;
+  background: var(--main-black);
+  background-color: var(--main-black);
 }
 
 .scroll-container {
