@@ -108,7 +108,7 @@ const RegistrationPage = () => {
 
   return (
     <div className={'text-black flex flex-col w-full h-full items-center mx-4'}>
-      <div className={'mb-16 text-white text-center text-3xl sm:text-5xl font-bold'}>Добро пожаловать!</div>
+      <div className={'mb-16 text-white text-center text-3xl lg:text-5xl font-bold'}>Добро пожаловать!</div>
       <div className={'w-full max-w-xs'}>
         <UIInput
           className={'mb-3'}
@@ -184,9 +184,9 @@ const RegistrationPage = () => {
           text={'ЗАРЕГИСТРИРОВАТЬСЯ'}
           onClick={showCodeBlock ? handleRegister : handleRequestCode}
         />
-        <div className={'flex'}>
+        <div className={'flex my-6'}>
           <UIButton
-            className={'mt-6 mx-auto'}
+            className={'mx-auto'}
             text={'Вход'}
             type={'transparent'}
             onClick={handleGoLogin}

@@ -174,7 +174,7 @@ const HeaderUserState = () => {
           {showMenu && (
             <div
               className={
-                'z-50 p-4 bg-black rounded-xl flex flex-col overflow-hidden desktop:w-[400px] mobile:w-full max-w-full desktop:h-[400px] mobile:h-full max-h-[calc(100vh-80px)] absolute top-[80px] sm:right-[30px] right-0'
+                'z-50 p-4 bg-black rounded-xl flex flex-col overflow-hidden desktop:w-[400px] mobile:w-full max-w-full desktop:h-[400px] mobile:h-full max-h-[calc(100vh-80px)] absolute top-[80px] lg:right-[30px] right-0'
               }
             >
               <MenuItem

@@ -1,83 +1,83 @@
 import React from 'react';
 import Image from 'next/image';
-import arm from '../assets/arm.png';
-import world from '../assets/world.png';
-import romb from '../assets/romb.png';
-import question from '../assets/question.png';
+import arm from '@/components/main-page/assets/arm.png';
+import world from '@/components/main-page/assets/world.png';
+import romb from '@/components/main-page/assets/romb.png';
+import question from '@/components/main-page/assets/question.png';
 import { cn } from '@/lib/utils';
+import { useBreakpoint } from '@/hooks/useBreakpoints';
 
 const CardWithImage: React.FC<
   Readonly<{ title: string; text: string; image: 'arm' | 'world' | 'romb' | 'question'; className?: string }>
 > = ({ title, text, image, className }) => {
-  const getImage = () => {
-    switch (image) {
-      case 'arm':
-        return arm;
-      case 'world':
-        return world;
-      case 'romb':
-        return romb;
-      case 'question':
-        return question;
-    }
-  };
+  const { isMobile } = useBreakpoint();
 
-  const imageStyles = () => {
+  const getImageStats = () => {
     switch (image) {
-      case 'arm':
+      case 'arm': {
         return {
-          transform: 'rotate(-37.86deg)',
-          transformOrigin: 'center',
+          image: arm,
+          style: {
+            transform: 'rotate(-37.86deg)',
+            transformOrigin: 'center',
+          },
+          height: isMobile ? 104 : 186,
+          width: isMobile ? 114 : 203,
+          className: 'absolute lg:right-0 -right-5 lg:top-1/2 top-15 -translate-y-1/2',
         };
-      default:
-        return undefined;
-    }
-  };
-
-  const imageSizes = () => {
-    switch (image) {
-      case 'arm':
+      }
+      case 'world': {
         return {
+          image: world,
+          height: isMobile ? 150 : 186,
+          width: isMobile ? 150 : 203,
+          className: 'absolute lg:right-0 -right-5 bottom-0',
+        };
+      }
+      case 'romb': {
+        return {
+          image: romb,
           height: 186,
           width: 203,
+          className: 'absolute right-0 top-1/2 -translate-y-1/2',
         };
-      case 'world':
+      }
+      case 'question': {
         return {
-          height: 186,
-          width: 203,
+          image: question,
+          style: isMobile
+            ? {
+                transform: 'rotate(15deg)',
+                transformOrigin: 'center',
+              }
+            : undefined,
+          height: isMobile ? 103 : 135,
+          width: isMobile ? 69 : 90,
+          className: 'absolute right-2 top-1/2 -translate-y-1/2',
         };
-      case 'romb':
-        return {
-          height: 186,
-          width: 203,
-        };
-      case 'question':
-        return {
-          height: 135,
-          width: 90,
-        };
+      }
     }
   };
 
   return (
     <div
       className={cn(
-        'flex gap-4 justify-between border-1 border-main-gray rounded-3xl overflow-hidden max-h-[158px] relative',
+        'flex gap-4 justify-between border-1 border-main-gray rounded-3xl overflow-hidden lg:max-h-[158px] relative',
         className
       )}
     >
-      <div className={'max-w-[476px] my-6 ml-6'}>
-        <div className={'text-xl font-semibold'}>{title}</div>
-        <div className={'text-lg leading-[24px] mt-4'}>{text}</div>
+      <div className={'lg:max-w-[476px] max-w-[80%] my-6 ml-6'}>
+        <div className={'lg:text-xl text-base font-semibold'}>{title}</div>
+        <div className={'lg:text-lg text-sm leading-[24px] mt-4'}>{text}</div>
       </div>
       <Image
-        className={'absolute right-0 top-1/2 -translate-y-1/2'}
-        src={getImage()}
+        className={getImageStats().className}
+        src={getImageStats().image}
         alt={image}
-        width={imageSizes().width}
-        height={imageSizes().height}
+        width={getImageStats().width}
+        height={getImageStats().height}
         style={{
-          ...imageStyles(),
+          ...getImageStats().style,
           objectFit: 'contain',
         }}
       />

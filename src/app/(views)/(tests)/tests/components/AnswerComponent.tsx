@@ -11,7 +11,7 @@ const AnswerComponent: React.FC<{
   const showBorder = userChoise && (userChoise === answer.id || answer.correct);
   return (
     <div
-      className={`px-4 py-2 sm:min-h-[90px] min-h-[70px] rounded-3xl cursor-pointer border flex items-center ${showBorder ? correctClasses : 'border-main-gray'} ${!userChoise && !disabled ? 'hover:bg-bg-transparent-50' : ''}`}
+      className={`px-4 py-2 lg:min-h-[90px] min-h-[70px] rounded-3xl cursor-pointer border flex items-center ${showBorder ? correctClasses : 'border-main-gray'} ${!userChoise && !disabled ? 'hover:bg-bg-transparent-50' : ''}`}
       onClick={() => (disabled || !onClick ? undefined : onClick())}
     >
       <div className={`flex h-full items-center w-full py-1`}>

@@ -185,18 +185,18 @@ const TestsView = () => {
   return (
     <section className={'mt-6 w-full max-w-[1440px] mx-auto h-full'}>
       <div
-        className={'h-[198px] rounded-b-4xl flex flex-col justify-center items-center mb-6'}
+        className={'h-[198px] rounded-b-4xl flex flex-col justify-center items-center mb-6 px-4'}
         style={{ background: 'var(--main-gradient)' }}
       >
-        <div className={'w-full sm:max-w-[808px] flex flex-col gap-6 text-center'}>
-          <div className={'text-5xl leading-[100%] font-bold'}>Тестирование</div>
-          <div className={'text-xl'}>
+        <div className={'w-full lg:max-w-[808px] flex flex-col gap-6 text-center'}>
+          <div className={'lg:text-5xl text-4xl leading-[100%] font-bold'}>Тестирование</div>
+          <div className={'lg:text-xl text-base'}>
             Тест адаптируется под ваш уровень подготовки. Чем выше уровень — тем глубже и детальнее будут вопросы.
           </div>
         </div>
       </div>
-      <div className={'max-w-[685px] mx-auto flex flex-col relative'}>
-        <div className={'p-6 bg-main-black rounded-3xl flex flex-col gap-4 items-center z-20 mb-6'}>
+      <div className={'max-w-[685px] mx-auto flex flex-col relative px-4'}>
+        <div className={'p-6 bg-main-black rounded-3xl flex flex-col gap-4 items-center z-20 mb-6 text-center'}>
           <div className={'font-semibold text-xl'}>Уровень вопросов</div>
           <div className={'text-text-disabled'}>
             Сложность вопросов и критерии оценки будут адаптированы под ваш уровень
@@ -235,7 +235,10 @@ const TestsView = () => {
           )}
         >
           <div
-            className={cn('p-6 bg-main-black rounded-3xl flex flex-col gap-4 items-center', classes['dynamic-section'])}
+            className={cn(
+              'p-6 bg-main-black rounded-3xl flex flex-col gap-4 items-center text-center',
+              classes['dynamic-section']
+            )}
           >
             <div className={'font-semibold text-xl'}>Специализация</div>
             <div className={'text-text-disabled'}>
@@ -265,7 +268,7 @@ const TestsView = () => {
             </div>
           </div>
         </div>
-        <div className={'p-6 bg-main-black rounded-3xl flex flex-col gap-4 items-center mb-6'}>
+        <div className={'p-6 bg-main-black rounded-3xl flex flex-col gap-4 items-center text-center mb-6'}>
           <div className={'font-semibold text-xl'}>Направление</div>
           <div className={'text-text-disabled'}>Каждое направление включает в себя набор вопросов</div>
           <div className={'flex flex-wrap gap-3 justify-center'}>
@@ -293,7 +296,7 @@ const TestsView = () => {
         </div>
         <div className={'w-full flex items-center mt-2 mb-6'}>
           <UIButton
-            className={'mx-auto'}
+            className={'mx-auto lg:w-auto w-full'}
             disabled={!questionsTechs.length}
             text={'НАЧАТЬ ТЕСТИРОВАНИЕ'}
             iconAfter={'arrow-top-right'}
