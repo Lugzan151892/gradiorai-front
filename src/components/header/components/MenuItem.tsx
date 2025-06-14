@@ -13,7 +13,7 @@ export interface IMenuItemProps {
 const MenuItem: React.FC<Readonly<IMenuItemProps>> = ({ icon, text, className, isStatic, onClick }) => {
   return (
     <div
-      className={`flex items-center ${isStatic ? '' : 'hover:bg-hover-gray cursor-pointer'} p-2 rounded ` + className}
+      className={`flex items-center ${isStatic ? '' : 'hover:bg-main-gray cursor-pointer'} p-2 rounded ` + className}
       onClick={onClick}
     >
       <CustomIcon

@@ -11,6 +11,8 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import MenuItem, { IMenuItemProps } from '@/components/header/components/MenuItem';
 import { EMENU_ITEM } from '@/components/header/interfaces';
 import ScrollContainer from '@/components/ui/scrollarea/CustomScrollarea';
+import Image from 'next/image';
+import userLogin from '@/assets/icons/user-profile.svg';
 
 interface IMenuItem extends IMenuItemProps {
   id: EMENU_ITEM;
@@ -141,7 +143,7 @@ const HeaderUserState = () => {
 
   return (
     <>
-      {!user?.id || false ? (
+      {!user?.id ? (
         <div className={'flex gap-2'}>
           <UIButton
             onClick={handleLogin}
@@ -157,10 +159,11 @@ const HeaderUserState = () => {
             className={'flex items-center cursor-pointer'}
             onClick={() => setShowMenu(!showMenu)}
           >
-            <CustomIcon
-              size={30}
-              name={'user-login'}
-              color={'var(--main-white)'}
+            <Image
+              src={userLogin}
+              alt={'profile'}
+              width={40}
+              height={40}
             />
             <CustomIcon
               name={'menu-arrow'}
@@ -171,7 +174,7 @@ const HeaderUserState = () => {
           {showMenu && (
             <div
               className={
-                'z-50 p-4 bg-black rounded-10 flex flex-col overflow-hidden desktop:w-[400px] mobile:w-full max-w-full desktop:h-[400px] mobile:h-full max-h-[calc(100%-80px)] absolute top-[80px] desktop:right-[30px] mobile:right-0'
+                'z-50 p-4 bg-black rounded-xl flex flex-col overflow-hidden desktop:w-[400px] mobile:w-full max-w-full desktop:h-[400px] mobile:h-full max-h-[calc(100vh-80px)] absolute top-[80px] sm:right-[30px] right-0'
               }
             >
               <MenuItem
