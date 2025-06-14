@@ -46,6 +46,7 @@
   --main-gray: #3d3f4d;
   --main-black: #262525;
   --text-disabled: #aab1c0;
+  --main-gradient: linear-gradient(180deg, rgba(44, 43, 43, 0) 31.17%, #7c49e3 128.34%);
 }
 
 [data-slot='scroll-area-scrollbar'] {
