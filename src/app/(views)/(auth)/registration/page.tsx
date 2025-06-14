@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import UIButton from '@/components/ui/button/UIButton';
 import routeChecker from '@/hoc/routeChecker';
-import { UIInput } from '@/components/ui/input-v2/UIInput';
+import UIInput from '@/components/ui/input/UIInput';
 
 const RegistrationPage = () => {
   const router = useRouter();

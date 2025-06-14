@@ -6,7 +6,7 @@ import { setLoading } from '@/features/loading/loadingSlice';
 import errorHandler from '@/core/utils/error/errorHandler';
 import { openModal } from '@/store/tech/techSlice';
 import CustomTextarea from '@/components/ui/textarea/CustomTextarea';
-import CustomInput from '@/components/ui/input/CustomInput';
+import UIInput from '@/components/ui/input/UIInput';
 import { ESKILL_LEVEL } from '@/core/interfaces/enums';
 import { ITech, ITest } from '@/core/interfaces/types';
 import AddTechnologyModal from '@/components/technology-modals/AddTechnologyModal';
@@ -216,7 +216,7 @@ const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
                 onChange={() => handleChangeCorrectQuestion(iResponse)}
               />
               <div className={'text-nowrap'}>Ответ {iResponse + 1}:</div>
-              <CustomInput
+              <UIInput
                 success={response.correct}
                 value={response.answer}
                 onInput={(val) => handleResponseChange(iResponse, val)}

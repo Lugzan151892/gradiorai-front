@@ -258,8 +258,8 @@ const TestsView = () => {
             <div className={'mx-auto w-max mt-4'}>
               <AdminWrapper>
                 <UIButton
-                  text={'Создать направление'}
-                  onClick={() => setOpenAddTechModal(true)}
+                  text={'Создать специализацию'}
+                  onClick={() => setOpenAddSpecModal(true)}
                 />
               </AdminWrapper>
             </div>

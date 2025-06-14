@@ -5,13 +5,14 @@ import errorHandler from '@/core/utils/error/errorHandler';
 import { setLoading } from '@/features/loading/loadingSlice';
 import { useAppDispatch } from '@/hooks/redux';
 import React, { useCallback, useEffect, useState } from 'react';
-import CustomInput from '@/components/ui/input/CustomInput';
 import CustomTextarea from '@/components/ui/textarea/CustomTextarea';
-import CustomButton from '@/components/ui/button/CustomButton';
+import UIButton from '@/components/ui/button/UIButton';
 import { openModal } from '@/store/tech/techSlice';
 import routeChecker from '@/hoc/routeChecker';
 import ScrollContainer from '@/components/ui/scrollarea/CustomScrollarea';
 import { EGPT_SETTINGS_TYPE } from '@/core/interfaces/enums';
+import UIFilterButton from '@/components/ui/filter-button/UIFilterButton';
+import UIInput from '@/components/ui/input/UIInput';
 
 interface IGptSettings {
   user_model: string;
@@ -159,7 +160,7 @@ const SystemGptPage = () => {
         }
       >
         {gptTypeButtons.map((button) => (
-          <CustomButton
+          <UIFilterButton
             text={button.text}
             key={button.id}
             selected={button.id === settingsType}
@@ -180,12 +181,14 @@ const SystemGptPage = () => {
                     {`(ТОЛЬКО ${availableGptModels.map((model) => `'${model}'`).join(' || ')})`}
                   </div>
                   <div className={'flex flex-col gap-3'}>
-                    <CustomInput
+                    <UIInput
                       value={gptSettings.admin_model}
+                      id={'admin_model'}
                       label={'Модель админа'}
                       onInput={(val) => handleChangeSettings({ admin_model: val })}
                     />
-                    <CustomInput
+                    <UIInput
+                      id={'user_model'}
                       value={gptSettings.user_model}
                       label={'Модель пользователя'}
                       onInput={(val) => handleChangeSettings({ user_model: val })}
@@ -199,12 +202,14 @@ const SystemGptPage = () => {
                     </div>
                     <div className={'desktop:text-xl mobile:text-base mb-2 text-center'}>(!!ТОЛЬКО ЧИСЛА)</div>
                     <div className={'flex flex-col gap-3'}>
-                      <CustomInput
+                      <UIInput
+                        id={'admin_amount_input'}
                         value={gptSettings.admin_amount}
                         label={'Количество вопросов для админа'}
                         onInput={(val) => handleChangeSettings({ admin_amount: val })}
                       />
-                      <CustomInput
+                      <UIInput
+                        id={'user_amount_input'}
                         value={gptSettings.user_amount}
                         label={'Количество вопросов для пользователя'}
                         onInput={(val) => handleChangeSettings({ user_amount: val })}
@@ -218,7 +223,7 @@ const SystemGptPage = () => {
                     (ТОЛЬКО ЧИСЛА ОТ 0 до 2 с десятичными значениями, например 0.2)
                   </div>
                   <div className={'flex gap-3 desktop:w-[max-content] mobile:w-full'}>
-                    <CustomInput
+                    <UIInput
                       value={gptSettings.temperature}
                       label={'Температура'}
                       onInput={(val) => handleChangeSettings({ temperature: val })}
@@ -262,7 +267,7 @@ const SystemGptPage = () => {
                 </div>
               </div>
               <div className={'flex items-center w-full mt-2 mb-2'}>
-                <CustomButton
+                <UIButton
                   className={'mx-auto'}
                   text={'Сохранить'}
                   onClick={saveGptSettings}

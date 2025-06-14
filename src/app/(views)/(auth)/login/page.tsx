@@ -8,7 +8,7 @@ import { setUnAuth } from '@/store/user/userSlice';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import UIButton from '@/components/ui/button/UIButton';
-import { UIInput } from '@/components/ui/input-v2/UIInput';
+import UIInput from '@/components/ui/input/UIInput';
 
 const LoginView = () => {
   const router = useRouter();
@@ -25,9 +25,9 @@ const LoginView = () => {
     setEmailError(emailErrorMsg);
     setPasswordError(passwordErrorMsg);
 
-    // if (emailErrorMsg || passwordErrorMsg) {
-    //   return;
-    // }
+    if (emailErrorMsg || passwordErrorMsg) {
+      return;
+    }
 
     try {
       const result = await Api.postSilent('/auth/login', {

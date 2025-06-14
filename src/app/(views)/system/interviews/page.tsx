@@ -7,8 +7,8 @@ import errorHandler from '@/core/utils/error/errorHandler';
 import { setLoading } from '@/features/loading/loadingSlice';
 import { useAppDispatch } from '@/hooks/redux';
 import React, { useCallback, useEffect, useState } from 'react';
-import { IInterview } from '../../(interview)/interview/types';
-import CustomButton from '@/components/ui/button/CustomButton';
+import { IInterview } from '@/app/(views)/(interview)/interview/types';
+import UIButton from '@/components/ui/button/UIButton';
 import { openModal } from '@/store/tech/techSlice';
 
 const SystemInterviews = () => {
@@ -55,9 +55,7 @@ const SystemInterviews = () => {
         <ScrollContainer>
           <div className={'mb-4 relative bg-modal'}>
             <div
-              className={
-                'sticky top-0 left-0 border grid grid-cols-[12%_20%_33%_15%_10%_10%] min-h-8 border bg-modal'
-              }
+              className={'sticky top-0 left-0 border grid grid-cols-[12%_20%_33%_15%_10%_10%] min-h-8 border bg-modal'}
             >
               <div className={'text-2xl border-r px-2'}>Дата создания</div>
               <div className={'text-2xl border-r px-2'}>ID</div>
@@ -85,8 +83,7 @@ const SystemInterviews = () => {
                   </a>
                   <div className={'text-xl border-r px-2'}>{interview.finished ? 'Завершено' : 'В процессе'}</div>
                   <div className={'flex flex-col px-2 py-2'}>
-                    <CustomButton
-                      type={'error'}
+                    <UIButton
                       text={'Удалить'}
                       onClick={() => handleDeleteInterview(interview.id)}
                     />

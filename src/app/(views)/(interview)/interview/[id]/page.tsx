@@ -6,7 +6,7 @@ import { useParams } from 'next/navigation';
 import ScrollContainer from '@/components/ui/scrollarea/CustomScrollarea';
 import InterviewMessage from '@/app/(views)/(interview)/interview/[id]/components/InterviewMessage';
 import Api from '@/core/api/api';
-import CustomButton from '@/components/ui/button/CustomButton';
+import UIButton from '@/components/ui/button/UIButton';
 import errorHandler from '@/core/utils/error/errorHandler';
 import { useAppDispatch } from '@/hooks/redux';
 import { setLoading } from '@/features/loading/loadingSlice';
@@ -174,15 +174,14 @@ const CurrentInterviewPage = () => {
         {isListening && <div>Записываем голос ...</div>}
         {isGenerating && <div>Генерируем ответ ...</div>}
         {canUseRecognition && (
-          <CustomButton
+          <UIButton
             className={'mb-2'}
             text={isListening ? 'Завершить диктовку' : userMessage ? 'Продолжить диктовку' : 'Начать диктовку'}
-            type={isListening ? 'error' : 'success'}
             onClick={isListening ? stopListening : startListening}
             disabled={isGenerating || interview?.finished}
           />
         )}
-        <CustomButton
+        <UIButton
           text={'Отправить'}
           onClick={sendMessage}
           disabled={isGenerating || interview?.finished}

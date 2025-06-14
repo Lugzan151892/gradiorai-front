@@ -10,7 +10,7 @@ import Api from '@/core/api/api';
 import errorHandler from '@/core/utils/error/errorHandler';
 import { openModal } from '@/store/tech/techSlice';
 import routeChecker from '@/hoc/routeChecker';
-import { UIInput } from '@/components/ui/input-v2/UIInput';
+import UIInput from '@/components/ui/input/UIInput';
 
 const RestorePassword = () => {
   const router = useRouter();

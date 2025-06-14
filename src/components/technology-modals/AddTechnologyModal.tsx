@@ -1,4 +1,4 @@
-import CustomInput from '@/components/ui/input/CustomInput';
+import UIInput from '@/components/ui/input/UIInput';
 import CustomModal from '@/components/ui/modal/CustomModal';
 import Api from '@/core/api/api';
 import { ISpecialization, ITechnology } from '@/core/interfaces/types';
@@ -155,13 +155,13 @@ const AddTechnologyModal: React.FC<TModalProps> = (props) => {
       onClose={closeModal}
     >
       <div className={'p-6'}>
-        <CustomInput
+        <UIInput
           className={'mb-10'}
           label={'Название направления'}
           value={techName}
           onInput={setTechName}
         />
-        <CustomInput
+        <UIInput
           className={'mb-10'}
           label={'Описание направления'}
           value={techDescr}
