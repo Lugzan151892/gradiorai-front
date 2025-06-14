@@ -10,7 +10,7 @@ import CustomInput from '@/components/ui/input/CustomInput';
 import { ESKILL_LEVEL } from '@/core/interfaces/enums';
 import { ITech, ITest } from '@/core/interfaces/types';
 import AddTechnologyModal from '@/components/technology-modals/AddTechnologyModal';
-import TechComponent from '@/components/tech-component/TechComponent';
+import UIFilterButton from '@/components/ui/filter-button/UIFilterButton';
 import CustomCheckbox from '@/components/ui/checkbox/CustomCheckbox';
 import UIButton from '../ui/button/UIButton';
 
@@ -232,10 +232,10 @@ const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
             }
           >
             {levels.map((el) => (
-              <TechComponent
+              <UIFilterButton
                 className={'desktop:mt-2 mobile:mt-1'}
                 key={el.id}
-                tech={el}
+                text={el.name}
                 selected={selectedLevels.includes(el.id)}
                 onClick={() => changeLevels(el.id)}
               />
@@ -250,10 +250,10 @@ const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
             }
           >
             {allTechs.map((el) => (
-              <TechComponent
+              <UIFilterButton
                 className={'mt-2'}
                 key={el.id}
-                tech={el}
+                text={el.name}
                 selected={selectedTechs.includes(el.id)}
                 onClick={() => changeTechs(el.id)}
               />

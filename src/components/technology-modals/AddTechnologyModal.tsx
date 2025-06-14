@@ -7,9 +7,9 @@ import { setLoading } from '@/features/loading/loadingSlice';
 import { useAppDispatch } from '@/hooks/redux';
 import { openModal } from '@/store/tech/techSlice';
 import React, { useEffect, useState } from 'react';
-import TechComponent from '../tech-component/TechComponent';
-import ScrollContainer from '../ui/scrollarea/CustomScrollarea';
-import UIButton from '../ui/button/UIButton';
+import UIFilterButton from '@/components/ui/filter-button/UIFilterButton';
+import ScrollContainer from '@/components/ui/scrollarea/CustomScrollarea';
+import UIButton from '@/components/ui/button/UIButton';
 
 interface IAddTechnologyModalProps {
   type?: 'create';
@@ -174,8 +174,8 @@ const AddTechnologyModal: React.FC<TModalProps> = (props) => {
               <div className={'flex flex-wrap gap-5'}>
                 {specs.length ? (
                   specs.map((spec) => (
-                    <TechComponent
-                      tech={spec}
+                    <UIFilterButton
+                      text={spec.name}
                       key={spec.id}
                       selected={selectedSpecs.includes(spec.id)}
                       onClick={() => handleSetSelectedSpecs(spec.id)}

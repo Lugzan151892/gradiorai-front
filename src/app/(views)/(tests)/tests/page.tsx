@@ -1,9 +1,8 @@
 'use client';
 
 import React, { useCallback, useEffect, useState } from 'react';
-import SettingsBlock from '@/app/(views)/(tests)/tests/components/SettingsBlock';
 import { ESKILL_LEVEL } from '@/core/interfaces/enums';
-import CustomFilterButton from '@/components/ui/filter-button/CustomFilterButton';
+import UIFilterButton from '@/components/ui/filter-button/UIFilterButton';
 import AdminWrapper from '@/components/admin-wrapper/AdminWrapper';
 import UIButton from '@/components/ui/button/UIButton';
 import AddSpecModal from '@/components/specialization-modals/AddSpecModal';
@@ -15,13 +14,13 @@ import errorHandler from '@/core/utils/error/errorHandler';
 import AddTechnologyModal from '@/components/technology-modals/AddTechnologyModal';
 import { shuffleArray } from '@/core/utils/array';
 import GenerateTest from '@/app/(views)/(tests)/tests/components/GenerateTest';
-import TechComponent from '@/components/tech-component/TechComponent';
-import { useBreakpoint } from '@/hooks/useBreakpoints';
 import InfoModal from '@/components/ui/modal/InfoModal';
 import CustomIcon from '@/components/ui/icon/CustomIcon';
 import { useRouter } from 'next/navigation';
 import GenerateModal from '@/features/loading/GenerateModal';
 import { sleep } from '@/core/utils/common';
+import { cn } from '@/lib/utils';
+import classes from './styles/animatedBlock.module.css';
 
 const TestsView = () => {
   const dispatch = useAppDispatch();
@@ -37,7 +36,7 @@ const TestsView = () => {
   const router = useRouter();
   const [generateModal, setGenerateModal] = useState(false);
 
-  const { isMobile } = useBreakpoint();
+  const [showAdditionalFilters, setShowAdditionalFilters] = useState(false);
 
   const [showTest, setShowTest] = useState(false);
 
@@ -184,100 +183,123 @@ const TestsView = () => {
   }
 
   return (
-    <div className={'flex flex-col w-[1069px] max-w-full h-full gap-y-8 pb-4 mx-auto'}>
-      <SettingsBlock
-        icon={'search-book'}
-        title={'Уровень вопросов'}
+    <section className={'mt-6 w-full max-w-[1440px] mx-auto h-full'}>
+      <div
+        className={'h-[198px] rounded-b-4xl flex flex-col justify-center items-center mb-6'}
+        style={{ background: 'var(--main-gradient)' }}
       >
+        <div className={'w-full sm:max-w-[808px] flex flex-col gap-6 text-center'}>
+          <div className={'text-5xl leading-[100%] font-bold'}>Тестирование</div>
+          <div className={'text-xl'}>
+            Тест адаптируется под ваш уровень подготовки. Чем выше уровень — тем глубже и детальнее будут вопросы.
+          </div>
+        </div>
+      </div>
+      <div className={'max-w-[685px] mx-auto flex flex-col relative'}>
+        <div className={'p-6 bg-main-black rounded-3xl flex flex-col gap-4 items-center z-20 mb-6'}>
+          <div className={'font-semibold text-xl'}>Уровень вопросов</div>
+          <div className={'text-text-disabled'}>
+            Сложность вопросов и критерии оценки будут адаптированы под ваш уровень
+          </div>
+          <div className={'flex flex-wrap gap-3'}>
+            {skillOptions.map((level) => (
+              <UIFilterButton
+                text={level.text}
+                key={level.id}
+                selected={questionsLevel === level.id}
+                onClick={() => handleSetQuestionsLevel(level.id)}
+              />
+            ))}
+            <div
+              className={cn(
+                'flex items-center justify-center p-2 border-1 border-main-gray rounded-3xl cursor-pointer hover:bg-main-purple hover:border-main-purple',
+                showAdditionalFilters && 'bg-main-purple border-main-purple'
+              )}
+              onClick={() => setShowAdditionalFilters(!showAdditionalFilters)}
+            >
+              <CustomIcon
+                name={'settings-new'}
+                color={'var(--main-white)'}
+                size={16}
+              />
+            </div>
+          </div>
+        </div>
         <div
-          className={
-            'grid mobile:grid-cols-[repeat(auto-fit,minmax(88px,max-content))] desktop:grid-cols-[repeat(auto-fit,minmax(125px,max-content))] desktop:gap-5 mobile:gap-2 desktop:mt-9 mobile:mt-5 mobile:justify-center'
-          }
+          className={cn(
+            'mb-6',
+            classes['dynamic-section-wrapper'],
+            showAdditionalFilters
+              ? classes['dynamic-section-wrapper--open']
+              : classes['dynamic-section-wrapper--closed']
+          )}
         >
-          {skillOptions.map((level) => (
-            <CustomFilterButton
-              text={level.text}
-              key={level.id}
-              selected={questionsLevel === level.id}
-              onClick={() => handleSetQuestionsLevel(level.id)}
-            />
-          ))}
-        </div>
-      </SettingsBlock>
-      <SettingsBlock
-        icon={'monitor'}
-        title={'Специализация'}
-        description={`Здесь вы можете отфильтровать направления${isMobile ? '' : ' подходящие под специализацию'}`}
-      >
-        {specs.length ? (
           <div
-            className={
-              'grid grid-cols-[repeat(auto-fit,minmax(160px,max-content))] desktop:gap-x-5 desktop:gap-y-2 mobile:gap-2 desktop:mt-6 mobile:mt-3 mobile:justify-center'
-            }
+            className={cn('p-6 bg-main-black rounded-3xl flex flex-col gap-4 items-center', classes['dynamic-section'])}
           >
-            {specs.map((spec) => (
-              <TechComponent
-                tech={spec}
-                small
-                key={spec.id}
-                selected={questionsSpecs.includes(spec.id)}
-                onClick={() => handleSetQuestionsSpec(spec.id)}
-              />
-            ))}
+            <div className={'font-semibold text-xl'}>Специализация</div>
+            <div className={'text-text-disabled'}>
+              Здесь вы можете отфильтровать направления подходящие под специализацию
+            </div>
+            <div className={'flex flex-wrap gap-3 justify-center'}>
+              {specs.length ? (
+                specs.map((spec) => (
+                  <UIFilterButton
+                    text={spec.name}
+                    key={spec.id}
+                    selected={questionsSpecs.includes(spec.id)}
+                    onClick={() => handleSetQuestionsSpec(spec.id)}
+                  />
+                ))
+              ) : (
+                <div>Специализации не найдены</div>
+              )}
+            </div>
+            <div className={'mx-auto w-max mt-4'}>
+              <AdminWrapper>
+                <UIButton
+                  text={'Создать направление'}
+                  onClick={() => setOpenAddTechModal(true)}
+                />
+              </AdminWrapper>
+            </div>
           </div>
-        ) : (
-          <div>Специализации не найдены</div>
-        )}
-        <div className={'mx-auto w-max mt-4'}>
-          <AdminWrapper>
-            <UIButton
-              text={'Создать специализацию'}
-              onClick={() => setOpenAddSpecModal(true)}
-            />
-          </AdminWrapper>
         </div>
-      </SettingsBlock>
-      <SettingsBlock
-        icon={'hat'}
-        title={'Направления'}
-        description={`${isMobile ? 'Направление' : 'Каждое направление'} включает в себя набор вопросов`}
-      >
-        {techs.length ? (
-          <div
-            className={
-              'grid grid-cols-[repeat(auto-fit,minmax(160px,max-content))] desktop:gap-x-5 desktop:gap-y-2 mobile:gap-2 desktop:mt-6 mobile:mt-3 mobile:justify-center'
-            }
-          >
-            {techs.map((tech) => (
-              <TechComponent
-                tech={tech}
-                key={tech.id}
-                small
-                selected={questionsTechs.includes(tech.id)}
-                onClick={() => handleSetQuestionsTechs(tech.id)}
-              />
-            ))}
+        <div className={'p-6 bg-main-black rounded-3xl flex flex-col gap-4 items-center mb-6'}>
+          <div className={'font-semibold text-xl'}>Направление</div>
+          <div className={'text-text-disabled'}>Каждое направление включает в себя набор вопросов</div>
+          <div className={'flex flex-wrap gap-3 justify-center'}>
+            {techs.length ? (
+              techs.map((tech) => (
+                <UIFilterButton
+                  text={tech.name}
+                  key={tech.id}
+                  selected={questionsTechs.includes(tech.id)}
+                  onClick={() => handleSetQuestionsTechs(tech.id)}
+                />
+              ))
+            ) : (
+              <div>Специализации не найдены</div>
+            )}
           </div>
-        ) : (
-          <div>Специализации не найдены</div>
-        )}
-        <div className={'mx-auto w-max mt-4'}>
-          <AdminWrapper>
-            <UIButton
-              text={'Создать направление'}
-              onClick={() => setOpenAddTechModal(true)}
-            />
-          </AdminWrapper>
+          <div className={'mx-auto w-max mt-4'}>
+            <AdminWrapper>
+              <UIButton
+                text={'Создать направление'}
+                onClick={() => setOpenAddTechModal(true)}
+              />
+            </AdminWrapper>
+          </div>
         </div>
-      </SettingsBlock>
-      <div className={'grow'} />
-      <div className={'w-full flex items-center mt-2 pb-2'}>
-        <UIButton
-          className={'w-[170px]! mx-auto'}
-          disabled={!questionsTechs.length}
-          text={'Начать'}
-          onClick={generateTests}
-        />
+        <div className={'w-full flex items-center mt-2 mb-6'}>
+          <UIButton
+            className={'mx-auto'}
+            disabled={!questionsTechs.length}
+            text={'НАЧАТЬ ТЕСТИРОВАНИЕ'}
+            iconAfter={'arrow-top-right'}
+            onClick={generateTests}
+          />
+        </div>
       </div>
       <AddSpecModal
         open={openAddSpecModal}
@@ -316,7 +338,7 @@ const TestsView = () => {
         text={'Тест генерируется, пожалуйста подождите.'}
         opened={generateModal}
       />
-    </div>
+    </section>
   );
 };
 

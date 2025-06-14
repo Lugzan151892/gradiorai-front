@@ -7,8 +7,8 @@ import { setLoading } from '@/features/loading/loadingSlice';
 import { useAppDispatch } from '@/hooks/redux';
 import { openModal } from '@/store/tech/techSlice';
 import React, { useEffect, useState } from 'react';
-import TechComponent from '@/components/tech-component/TechComponent';
-import UIButton from '../ui/button/UIButton';
+import UIButton from '@/components/ui/button/UIButton';
+import UIFilterButton from '@/components/ui/filter-button/UIFilterButton';
 
 interface IAddSpecModalProps {
   type?: 'create';
@@ -159,8 +159,8 @@ const AddSpecModal: React.FC<TModalProps> = (props) => {
           <div className={'flex gap-5 flex-wrap mt-2'}>
             {techs.length ? (
               techs.map((tech) => (
-                <TechComponent
-                  tech={tech}
+                <UIFilterButton
+                  text={tech.name}
                   key={tech.id}
                   selected={selectedTechs.includes(tech.id)}
                   onClick={() => handleSetSelectedTechs(tech.id)}
