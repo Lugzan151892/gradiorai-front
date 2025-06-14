@@ -8,7 +8,7 @@ import { useAppDispatch } from '@/hooks/redux';
 import { openModal } from '@/store/tech/techSlice';
 import React, { useEffect, useState } from 'react';
 import UIFilterButton from '@/components/ui/filter-button/UIFilterButton';
-import ScrollContainer from '@/components/ui/scrollarea/CustomScrollarea';
+import { ScrollArea } from '@/components/ui/scroll-area/ScrollArea';
 import UIButton from '@/components/ui/button/UIButton';
 
 interface IAddTechnologyModalProps {
@@ -170,7 +170,7 @@ const AddTechnologyModal: React.FC<TModalProps> = (props) => {
         <div>
           <div>Список специализаций</div>
           <div className={'flex mt-2 max-h-[300px]'}>
-            <ScrollContainer>
+            <ScrollArea>
               <div className={'flex flex-wrap gap-5'}>
                 {specs.length ? (
                   specs.map((spec) => (
@@ -185,7 +185,7 @@ const AddTechnologyModal: React.FC<TModalProps> = (props) => {
                   <div>Специализации не найдены</div>
                 )}
               </div>
-            </ScrollContainer>
+            </ScrollArea>
           </div>
         </div>
         <div className={'flex'}>

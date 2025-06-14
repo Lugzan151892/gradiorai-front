@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import MenuItem, { IMenuItemProps } from '@/components/header/components/MenuItem';
 import { EMENU_ITEM } from '@/components/header/interfaces';
-import ScrollContainer from '@/components/ui/scrollarea/CustomScrollarea';
+import { ScrollArea } from '@/components/ui/scroll-area/ScrollArea';
 import Image from 'next/image';
 import userLogin from '@/assets/icons/user-profile.svg';
 
@@ -183,7 +183,7 @@ const HeaderUserState = () => {
                 text={username || ''}
                 isStatic
               />
-              <ScrollContainer>
+              <ScrollArea>
                 {menuItems
                   .filter((e) => e.show)
                   .map((item) => (
@@ -192,7 +192,7 @@ const HeaderUserState = () => {
                       {...item}
                     />
                   ))}
-              </ScrollContainer>
+              </ScrollArea>
             </div>
           )}
         </div>

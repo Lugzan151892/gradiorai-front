@@ -9,7 +9,7 @@ import CustomTextarea from '@/components/ui/textarea/CustomTextarea';
 import UIButton from '@/components/ui/button/UIButton';
 import { openModal } from '@/store/tech/techSlice';
 import routeChecker from '@/hoc/routeChecker';
-import ScrollContainer from '@/components/ui/scrollarea/CustomScrollarea';
+import { ScrollArea } from '@/components/ui/scroll-area/ScrollArea';
 import { EGPT_SETTINGS_TYPE } from '@/core/interfaces/enums';
 import UIFilterButton from '@/components/ui/filter-button/UIFilterButton';
 import UIInput from '@/components/ui/input/UIInput';
@@ -168,7 +168,7 @@ const SystemGptPage = () => {
           />
         ))}
       </div>
-      <ScrollContainer>
+      <ScrollArea>
         <div className={'flex flex-col px-2 items-center mb-4'}>
           {gptSettings ? (
             <div className={'mt-3 w-full'}>
@@ -276,7 +276,7 @@ const SystemGptPage = () => {
             </div>
           ) : null}
         </div>
-      </ScrollContainer>
+      </ScrollArea>
     </div>
   );
 };

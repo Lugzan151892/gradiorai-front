@@ -12,7 +12,7 @@ import { ISpecialization, ITechWithCount } from '@/core/interfaces/types';
 import { openModal } from '@/store/tech/techSlice';
 import AddSpecModal from '@/components/specialization-modals/AddSpecModal';
 import AddTechnologyModal from '@/components/technology-modals/AddTechnologyModal';
-import ScrollContainer from '@/components/ui/scrollarea/CustomScrollarea';
+import { ScrollArea } from '@/components/ui/scroll-area/ScrollArea';
 import UIFilterButton from '@/components/ui/filter-button/UIFilterButton';
 
 const EditEntitiesView = () => {
@@ -138,7 +138,7 @@ const EditEntitiesView = () => {
         ))}
       </div>
       <div className={'w-full px-4 mt-4 h-full overflow-hidden'}>
-        <ScrollContainer>
+        <ScrollArea>
           <div className={'mb-4 relative bg-modal'}>
             {choosenEntitie === EEDITED_ENTITIE.TECH && (
               <div className={'sticky top-0 left-0 border grid grid-cols-[5%_20%_40%_25%_10%] min-h-8 border bg-modal'}>
@@ -201,7 +201,7 @@ const EditEntitiesView = () => {
                 </div>
               ))}
           </div>
-        </ScrollContainer>
+        </ScrollArea>
       </div>
       {currentSpecialization && (
         <AddSpecModal

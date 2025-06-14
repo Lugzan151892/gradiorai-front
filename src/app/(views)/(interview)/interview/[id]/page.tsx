@@ -3,7 +3,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { IInterview } from '@/app/(views)/(interview)/interview/types';
 import { useParams } from 'next/navigation';
-import ScrollContainer from '@/components/ui/scrollarea/CustomScrollarea';
+import { ScrollArea } from '@/components/ui/scroll-area/ScrollArea';
 import InterviewMessage from '@/app/(views)/(interview)/interview/[id]/components/InterviewMessage';
 import Api from '@/core/api/api';
 import UIButton from '@/components/ui/button/UIButton';
@@ -135,7 +135,7 @@ const CurrentInterviewPage = () => {
     <div className={'w-full max-w-[990px] mx-auto flex flex-col h-full'}>
       <div className={'bg-bg-transparent-25 rounded-10 p-4 grow flex flex-col h-full justify-end'}>
         <div className={'overflow-hidden'}>
-          <ScrollContainer>
+          <ScrollArea>
             <div className={'flex flex-col w-full h-full px-2'}>
               {interview &&
                 interview.messages.map((message) => (
@@ -161,7 +161,7 @@ const CurrentInterviewPage = () => {
               )}
               <div ref={messageEndRef} />
             </div>
-          </ScrollContainer>
+          </ScrollArea>
         </div>
         <div className={'mt-2'}>
           <CustomTextarea
