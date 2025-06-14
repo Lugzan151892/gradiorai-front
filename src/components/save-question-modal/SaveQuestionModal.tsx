@@ -1,4 +1,3 @@
-import CustomButton from '@/components/ui/button/CustomButton';
 import CustomModal from '@/components/ui/modal/CustomModal';
 import React, { useEffect, useState } from 'react';
 import Api from '@/core/api/api';
@@ -13,6 +12,7 @@ import { ITech, ITest } from '@/core/interfaces/types';
 import AddTechnologyModal from '@/components/technology-modals/AddTechnologyModal';
 import TechComponent from '@/components/tech-component/TechComponent';
 import CustomCheckbox from '@/components/ui/checkbox/CustomCheckbox';
+import UIButton from '../ui/button/UIButton';
 
 interface ISaveQuestionModalProps {
   open?: boolean;
@@ -262,9 +262,7 @@ const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
         </div>
 
         <div className={'w-full flex mt-6 mb-6'}>
-          <CustomButton
-            small
-            type={'success'}
+          <UIButton
             className={'mx-auto'}
             text={'Добавить направления'}
             onClick={() => setAddTechModal(true)}
@@ -272,7 +270,7 @@ const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
         </div>
 
         <div className={'flex'}>
-          <CustomButton
+          <UIButton
             className={'desktop:ml-auto mobile:mx-auto'}
             text={'Сохранить вопрос'}
             onClick={saveQuestion}

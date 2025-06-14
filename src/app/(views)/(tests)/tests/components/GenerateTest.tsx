@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import CustomButton from '@/components/ui/button/CustomButton';
+import UIButton from '@/components/ui/button/UIButton';
 import AdminWrapper from '@/components/admin-wrapper/AdminWrapper';
 import { RootState } from '@/store';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
@@ -7,7 +7,6 @@ import Api from '@/core/api/api';
 import { ITest } from '@/core/interfaces/types';
 import AnswerComponent from '@/app/(views)/(tests)/tests/components/AnswerComponent';
 import SaveQuestionModal from '@/components/save-question-modal/SaveQuestionModal';
-import AuthConfirmButton from '@/app/(views)/(auth)/components/AuthConfirmButton';
 import ProgressBar from '@/components/ui/progress-bar/ProgressBar';
 import CustomTextarea from '@/components/ui/textarea/CustomTextarea';
 import CustomIcon from '@/components/ui/icon/CustomIcon';
@@ -149,11 +148,8 @@ const GenerateTest: React.FC<{
           </div>
           <div className={'grow'} />
           <div className={'mt-4 w-full flex'}>
-            <AuthConfirmButton
-              icon={'reload'}
-              customBorder
+            <UIButton
               className={'w-[180px]! desktop:ml-auto mobile:mx-auto h-max self-end '}
-              size={24}
               text={'Еще раз'}
               onClick={handleReview}
             />
@@ -194,25 +190,21 @@ const GenerateTest: React.FC<{
         <div className={'grow'} />
         <div className={'w-full desktop:mt-6 mobile:mt-4 flex mobile:flex-col mobile:items-center'}>
           <AdminWrapper>
-            <CustomButton
+            <UIButton
               className={'desktop:hidden'}
-              small
               disabled={!!tests[currentQuestion - 1].id || disableSave}
               text={'Сохранить вопрос'}
               onClick={saveQuestion}
             />
-            <CustomButton
+            <UIButton
               className={'mobile:hidden'}
               disabled={!!tests[currentQuestion - 1].id || disableSave}
               text={'Сохранить вопрос'}
               onClick={saveQuestion}
             />
           </AdminWrapper>
-          <AuthConfirmButton
-            icon={currentQuestion === tests.length ? 'sand-clock' : 'arrow-right'}
-            customBorder
+          <UIButton
             className={'w-[180px]! desktop:ml-auto mobile:mx-auto mobile:mt-2 h-max self-end'}
-            size={24}
             text={currentQuestion === tests.length ? 'Завершить' : 'Далее'}
             disabled={!userChoise}
             onClick={handleSetQuestion}

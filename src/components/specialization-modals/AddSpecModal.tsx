@@ -1,4 +1,3 @@
-import CustomButton from '@/components/ui/button/CustomButton';
 import CustomInput from '@/components/ui/input/CustomInput';
 import CustomModal from '@/components/ui/modal/CustomModal';
 import Api from '@/core/api/api';
@@ -9,6 +8,7 @@ import { useAppDispatch } from '@/hooks/redux';
 import { openModal } from '@/store/tech/techSlice';
 import React, { useEffect, useState } from 'react';
 import TechComponent from '@/components/tech-component/TechComponent';
+import UIButton from '../ui/button/UIButton';
 
 interface IAddSpecModalProps {
   type?: 'create';
@@ -172,7 +172,7 @@ const AddSpecModal: React.FC<TModalProps> = (props) => {
           </div>
         </div>
         <div className={'flex'}>
-          <CustomButton
+          <UIButton
             className={'ml-auto'}
             text={'Сохранить'}
             onClick={handleSaveOrEdit}

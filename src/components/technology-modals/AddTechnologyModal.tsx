@@ -1,4 +1,3 @@
-import CustomButton from '@/components/ui/button/CustomButton';
 import CustomInput from '@/components/ui/input/CustomInput';
 import CustomModal from '@/components/ui/modal/CustomModal';
 import Api from '@/core/api/api';
@@ -10,6 +9,7 @@ import { openModal } from '@/store/tech/techSlice';
 import React, { useEffect, useState } from 'react';
 import TechComponent from '../tech-component/TechComponent';
 import ScrollContainer from '../ui/scrollarea/CustomScrollarea';
+import UIButton from '../ui/button/UIButton';
 
 interface IAddTechnologyModalProps {
   type?: 'create';
@@ -189,7 +189,7 @@ const AddTechnologyModal: React.FC<TModalProps> = (props) => {
           </div>
         </div>
         <div className={'flex'}>
-          <CustomButton
+          <UIButton
             className={'ml-auto'}
             text={'Сохранить'}
             onClick={handleSaveOrEdit}
