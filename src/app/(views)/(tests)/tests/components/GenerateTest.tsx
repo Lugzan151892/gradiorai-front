@@ -8,7 +8,7 @@ import { ITest } from '@/core/interfaces/types';
 import AnswerComponent from '@/app/(views)/(tests)/tests/components/AnswerComponent';
 import SaveQuestionModal from '@/components/save-question-modal/SaveQuestionModal';
 import ProgressBar from '@/components/ui/progress-bar/ProgressBar';
-import CustomTextarea from '@/components/ui/textarea/CustomTextarea';
+import UITextarea from '@/components/ui/textarea/UITextarea';
 import CustomIcon from '@/components/ui/icon/CustomIcon';
 import errorHandler from '@/core/utils/error/errorHandler';
 import { setLoading } from '@/features/loading/loadingSlice';
@@ -123,7 +123,7 @@ const GenerateTest: React.FC<{
             </div>
             <div className={'desktop:mt-10 mobile:mt-5'}>
               <div className={'desktop:text-xl mobile:text-base mb-2'}>Отзыв</div>
-              <CustomTextarea
+              <UITextarea
                 value={comment}
                 rows={isMobile ? 3 : 4}
                 onInput={setComment}

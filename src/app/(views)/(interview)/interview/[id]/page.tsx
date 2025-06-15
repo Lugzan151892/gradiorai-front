@@ -10,7 +10,7 @@ import UIButton from '@/components/ui/button/UIButton';
 import errorHandler from '@/core/utils/error/errorHandler';
 import { useAppDispatch } from '@/hooks/redux';
 import { setLoading } from '@/features/loading/loadingSlice';
-import CustomTextarea from '@/components/ui/textarea/CustomTextarea';
+import UITextarea from '@/components/ui/textarea/UITextarea';
 import { useSpeechRecognition } from '@/hooks/speech-recognition/useSpeechRecognition';
 
 const CurrentInterviewPage = () => {
@@ -164,7 +164,7 @@ const CurrentInterviewPage = () => {
           </ScrollArea>
         </div>
         <div className={'mt-2'}>
-          <CustomTextarea
+          <UITextarea
             value={isListening ? `${userMessage} ${interimTranscript}`.trim() : userMessage}
             onInput={setUserMessage}
             onChange={sendMessage}

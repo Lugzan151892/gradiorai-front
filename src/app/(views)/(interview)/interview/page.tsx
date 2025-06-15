@@ -1,8 +1,6 @@
 'use client';
 
 import FileDropzone from '@/components/ui/file-dropzone/FileDropzone';
-import { ScrollArea } from '@/components/ui/scroll-area/ScrollArea';
-import CustomTextarea from '@/components/ui/textarea/CustomTextarea';
 import React, { useState } from 'react';
 import { setLoading } from '@/features/loading/loadingSlice';
 import errorHandler from '@/core/utils/error/errorHandler';
@@ -10,11 +8,14 @@ import { useAppDispatch } from '@/hooks/redux';
 import Api from '@/core/api/api';
 import { useRouter } from 'next/navigation';
 import UIButton from '@/components/ui/button/UIButton';
+import SwitchButton from '@/components/ui/switch-button/SwitchButton';
+import UITextarea from '@/components/ui/textarea/UITextarea';
 
 const InterviewView = () => {
   const [vakanciesFile, setVakanciesFile] = useState<null | File>(null);
   const [userCV, setUserCV] = useState<null | File>(null);
   const [userDescription, setUserDescription] = useState('');
+  const [addVCFile, setAddVCFile] = useState(false);
   const dispatch = useAppDispatch();
   const router = useRouter();
 
@@ -53,51 +54,65 @@ const InterviewView = () => {
   };
 
   return (
-    <div className={'w-full max-w-[1360px] mx-auto flex flex-col'}>
-      <h1 className={'text-5xl mb-2'}>Настройки генерации</h1>
-      <h2 className={'text-xl'}>Укажите конфигурацию параметров для составления контекста собеседования</h2>
-      <div className={'bg-bg-transparent-25 rounded-10 p-4 mt-9 grow mb-9 overflow-hidden'}>
-        <ScrollArea>
-          <div className={'flex flex-col w-full h-full justify-center'}>
-            <div className={'flex w-full justify-around'}>
-              <div className={'max-w-md'}>
-                <div className={'mb-5 text-3xl'}>Ваше резюме</div>
-                <FileDropzone
-                  maxFileSize={2}
-                  formats={['docx', 'pdf']}
-                  onFileSelected={setUserCV}
-                />
-                {userCV ? <div>{userCV.name}</div> : null}
-              </div>
-              <div className={'max-w-md'}>
-                <div className={'mb-5 text-3xl'}>Ваша вакансия</div>
-                <FileDropzone
-                  maxFileSize={2}
-                  formats={['docx', 'pdf']}
-                  onFileSelected={setVakanciesFile}
-                />
-                {vakanciesFile ? <div>{vakanciesFile.name}</div> : null}
-              </div>
-            </div>
-            <div className={'w-full max-w-md mt-20 mx-auto'}>
-              <div className={'mb-2 text-base'}>Введите дополнительную информацию о себе</div>
-              <CustomTextarea
-                value={userDescription}
-                onInput={setUserDescription}
-              />
-            </div>
+    <section className={'mt-6 w-full max-w-[1440px] mx-auto h-full'}>
+      <div
+        className={'lg:h-[198px] rounded-b-4xl flex flex-col justify-center items-center mb-6 px-4 lg:py-auto py-14'}
+        style={{ background: 'var(--main-gradient)' }}
+      >
+        <div className={'w-full lg:max-w-[808px] flex flex-col gap-6 text-center'}>
+          <div className={'lg:text-5xl text-4xl leading-[100%] font-bold'}>Настройка генерации</div>
+          <div className={'lg:text-xl text-base'}>
+            Укажите конфигурацию параметров для составления контекста собеседования.
           </div>
-        </ScrollArea>
+        </div>
       </div>
-      <div className={'w-full flex items-center mt-2 mb-4'}>
+
+      <div className={'p-6 bg-main-black rounded-3xl gap-4 z-20 text-center mx-4'}>
+        <div className={'max-w-[808px] flex flex-col mx-auto'}>
+          <FileDropzone
+            label={'Ваше резюме'}
+            maxFileSize={2}
+            file={userCV}
+            formats={['docx', 'pdf']}
+            onFileSelected={setUserCV}
+          />
+          <SwitchButton
+            className={'mt-6'}
+            label={'Добавить вакансию'}
+            checked={addVCFile}
+            onChange={(val) => setAddVCFile(val)}
+          />
+          {addVCFile && (
+            <FileDropzone
+              className={'mt-6'}
+              label={'Ваша вакансия'}
+              file={vakanciesFile}
+              maxFileSize={2}
+              formats={['docx', 'pdf']}
+              onFileSelected={setVakanciesFile}
+            />
+          )}
+          <UITextarea
+            className={'mt-6'}
+            id={'user-description'}
+            label={'Дополнительная информация о себе (необязательно)'}
+            value={userDescription}
+            rows={10}
+            placeholder={'Расскажите о себе'}
+            onInput={setUserDescription}
+          />
+        </div>
+      </div>
+      <div className={'w-full flex items-center mt-8 mb-6 px-4'}>
         <UIButton
-          className={'w-[170px]! mx-auto'}
+          className={'mx-auto lg:w-auto w-full'}
+          iconAfter={'arrow-top-right'}
           disabled={!userDescription}
-          text={'Начать'}
+          text={'НАЧАТЬ'}
           onClick={startInterview}
         />
       </div>
-    </div>
+    </section>
   );
 };
 

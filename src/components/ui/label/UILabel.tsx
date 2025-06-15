@@ -16,7 +16,7 @@ const UILabel: React.FC<ILabelProps> = ({ className, error, disabled, ...props }
     <LabelPrimitiveRoot
       data-slot={'label'}
       className={cn(
-        'flex items-center gap-2 text-white text-xl leading-none select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50',
+        'flex items-center gap-2 text-white lg:text-xl text-base font-semibold leading-none select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50',
         error && 'text-error',
         disabled && 'text-main-gray',
         className

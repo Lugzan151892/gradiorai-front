@@ -18,7 +18,7 @@ type ICustomIconProps = {
 
 const CustomIcon: React.FC<ICustomIconProps> = ({
   name,
-  color = 'var(--main-gray)',
+  color = 'var(--main-white)',
   size = 24,
   tooltip = '',
   className,

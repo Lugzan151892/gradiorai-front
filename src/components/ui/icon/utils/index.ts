@@ -32,6 +32,11 @@ const getIconViewBox = (name: keyof typeof IconMarkup) => {
       return '0 0 19 18';
     case 'settings-new':
       return '0 0 16 16';
+    case 'document-upload':
+    case 'document-ready':
+      return '0 0 32 32';
+    case 'close-circle':
+      return '0 0 22 22';
     default:
       return '0 0 24 24';
   }
