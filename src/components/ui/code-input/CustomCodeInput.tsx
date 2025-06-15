@@ -65,14 +65,14 @@ const CustomCodeInput: React.FC<{
           .map((_, iEl) => (
             <div
               key={iEl}
-              className={`w-12 border-2 border-white bg-white rounded-xl h-12 flex flex-col items-center ${error ? 'border-error bg-error' : ''}`}
+              className={`w-12 border-2 bg-transparent rounded-xl h-12 flex flex-col items-center ${error ? 'border-error bg-error' : 'border-main-gray'}`}
               onClick={handleFocus}
             >
-              <div className={`mt-1 text-3xl max-h-8 ${error ? 'text-error' : ''}`}>{value[iEl]}</div>
+              <div className={`mt-1 text-3xl max-h-8 ${error ? 'text-error' : 'text-white'}`}>{value[iEl]}</div>
               <div className={'grow'} />
               <div
                 className={
-                  'min-h-1 min-w-2 mb-1 border-2 border-black opacity-0 justify-self-end' +
+                  'min-h-1 min-w-2 mb-1 border-2 border-white opacity-0 justify-self-end' +
                   ` ${error ? 'border-error' : ''}` +
                   ` ${isFieldActive(iEl) ? styles['input__item__line--active'] : ''}`
                 }

@@ -1,15 +1,15 @@
 'use client';
 
-import ScrollContainer from '@/components/ui/scrollarea/CustomScrollarea';
 import Api from '@/core/api/api';
 import { normalizeServerDate } from '@/core/utils/date';
 import errorHandler from '@/core/utils/error/errorHandler';
 import { setLoading } from '@/features/loading/loadingSlice';
 import { useAppDispatch } from '@/hooks/redux';
 import React, { useCallback, useEffect, useState } from 'react';
-import { IInterview } from '../../(interview)/interview/types';
-import CustomButton from '@/components/ui/button/CustomButton';
+import { IInterview } from '@/app/(views)/(interview)/interview/types';
+import UIButton from '@/components/ui/button/UIButton';
 import { openModal } from '@/store/tech/techSlice';
+import { ScrollArea } from '@/components/ui/scroll-area/ScrollArea';
 
 const SystemInterviews = () => {
   const [interviews, setInterviews] = useState<IInterview[]>([]);
@@ -52,41 +52,38 @@ const SystemInterviews = () => {
     <div className={'flex flex-col h-full items-center'}>
       <div className={'text-5xl mb-5'}>Список собеседований</div>
       <div className={'w-full px-4 mt-4 h-full overflow-hidden'}>
-        <ScrollContainer>
+        <ScrollArea>
           <div className={'mb-4 relative bg-modal'}>
             <div
-              className={
-                'sticky top-0 left-0 border-1 grid grid-cols-[12%,20%,33%,15%,10%,10%] min-h-8 border-1 bg-modal'
-              }
+              className={'sticky top-0 left-0 border grid grid-cols-[12%_20%_33%_15%_10%_10%] min-h-8 border bg-modal'}
             >
-              <div className={'text-2xl border-r-1 px-2'}>Дата создания</div>
-              <div className={'text-2xl border-r-1 px-2'}>ID</div>
-              <div className={'text-2xl border-r-1 px-2'}>Описание пользователя</div>
-              <div className={'text-2xl border-r-1 px-2'}>Ссылка на интервью</div>
-              <div className={'text-2xl border-r-1 px-2'}>STATUS</div>
-              <div className={'text-2xl border-r-1 px-2'}>ACTIONS</div>
+              <div className={'text-2xl border-r px-2'}>Дата создания</div>
+              <div className={'text-2xl border-r px-2'}>ID</div>
+              <div className={'text-2xl border-r px-2'}>Описание пользователя</div>
+              <div className={'text-2xl border-r px-2'}>Ссылка на интервью</div>
+              <div className={'text-2xl border-r px-2'}>STATUS</div>
+              <div className={'text-2xl border-r px-2'}>ACTIONS</div>
             </div>
             {interviews.length &&
               interviews.map((interview) => (
                 <div
                   key={interview.id}
-                  className={'border-1 w-full grid grid-cols-[12%,20%,33%,15%,10%,10%]'}
+                  className={'border w-full grid grid-cols-[12%_20%_33%_15%_10%_10%]'}
                 >
-                  <div className={'text-xl border-r-1 px-2'}>
+                  <div className={'text-xl border-r px-2'}>
                     {interview.created_at ? normalizeServerDate(interview.created_at) : ''}
                   </div>
-                  <div className={'text-xl border-r-1 text-center'}>{interview.id}</div>
-                  <div className={'text-xl border-r-1 px-2 truncate'}>{interview.user_prompt}</div>
+                  <div className={'text-xl border-r text-center'}>{interview.id}</div>
+                  <div className={'text-xl border-r px-2 truncate'}>{interview.user_prompt}</div>
                   <a
-                    className={'text-xl text-center border-r-1 border-white hover:text-main-blue hover:underline'}
+                    className={'text-xl text-center border-r border-white hover:text-main-blue hover:underline'}
                     href={`/interview/${interview.id}`}
                   >
                     Перейти
                   </a>
-                  <div className={'text-xl border-r-1 px-2'}>{interview.finished ? 'Завершено' : 'В процессе'}</div>
+                  <div className={'text-xl border-r px-2'}>{interview.finished ? 'Завершено' : 'В процессе'}</div>
                   <div className={'flex flex-col px-2 py-2'}>
-                    <CustomButton
-                      type={'error'}
+                    <UIButton
                       text={'Удалить'}
                       onClick={() => handleDeleteInterview(interview.id)}
                     />
@@ -94,7 +91,7 @@ const SystemInterviews = () => {
                 </div>
               ))}
           </div>
-        </ScrollContainer>
+        </ScrollArea>
       </div>
     </div>
   );

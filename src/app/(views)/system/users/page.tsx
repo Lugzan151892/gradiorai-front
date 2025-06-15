@@ -1,6 +1,5 @@
 'use client';
 
-import ScrollContainer from '@/components/ui/scrollarea/CustomScrollarea';
 import Api from '@/core/api/api';
 import { IUser } from '@/core/interfaces/types';
 import { normalizeServerDate } from '@/core/utils/date';
@@ -8,6 +7,7 @@ import errorHandler from '@/core/utils/error/errorHandler';
 import { setLoading } from '@/features/loading/loadingSlice';
 import { useAppDispatch } from '@/hooks/redux';
 import React, { useCallback, useEffect, useState } from 'react';
+import { ScrollArea } from '@/components/ui/scroll-area/ScrollArea';
 
 const SystemUsers = () => {
   const [users, setUsers] = useState<IUser[]>([]);
@@ -34,38 +34,38 @@ const SystemUsers = () => {
     <div className={'flex flex-col h-full items-center'}>
       <div className={'text-5xl mb-5'}>Список зарегистрированных пользователей</div>
       <div className={'w-full px-4 mt-4 h-full overflow-hidden'}>
-        <ScrollContainer>
+        <ScrollArea>
           <div className={'mb-4 relative bg-modal'}>
             <div
               className={
-                'sticky top-0 left-0 border-1 grid grid-cols-[3%,15%,12%,15%,10%,10%,19%,16%] min-h-8 border-1 bg-modal'
+                'sticky top-0 left-0 border grid grid-cols-[3%_15%_12%_15%_10%_10%_19%_16%] min-h-8 border bg-modal'
               }
             >
-              <div className={'text-2xl border-r-1 text-center'}>ID</div>
-              <div className={'text-2xl border-r-1 px-2'}>EMAIL</div>
-              <div className={'text-2xl border-r-1 px-2'}>Дата регистрации</div>
-              <div className={'text-2xl border-r-1 px-2'}>Последний вход</div>
-              <div className={'text-2xl border-r-1 px-2'}>Последний IP</div>
-              <div className={'text-2xl border-r-1 px-2'}>3 последних IP</div>
-              <div className={'text-2xl border-r-1 px-2'}>Кол-во пройденных вопросов</div>
+              <div className={'text-2xl border-r text-center'}>ID</div>
+              <div className={'text-2xl border-r px-2'}>EMAIL</div>
+              <div className={'text-2xl border-r px-2'}>Дата регистрации</div>
+              <div className={'text-2xl border-r px-2'}>Последний вход</div>
+              <div className={'text-2xl border-r px-2'}>Последний IP</div>
+              <div className={'text-2xl border-r px-2'}>3 последних IP</div>
+              <div className={'text-2xl border-r px-2'}>Кол-во пройденных вопросов</div>
               <div className={'text-2xl text-center'}>STATUS</div>
             </div>
             {users.length &&
               users.map((user) => (
                 <div
                   key={user.id}
-                  className={'border-1 w-full grid grid-cols-[3%,15%,12%,15%,10%,10%,19%,16%]'}
+                  className={'border w-full grid grid-cols-[3%_15%_12%_15%_10%_10%_19%_16%]'}
                 >
-                  <div className={'text-xl border-r-1 text-center'}>{user.id}</div>
-                  <div className={'text-xl border-r-1 px-2'}>{user.email}</div>
-                  <div className={'text-xl border-r-1 px-2'}>
+                  <div className={'text-xl border-r text-center'}>{user.id}</div>
+                  <div className={'text-xl border-r px-2'}>{user.email}</div>
+                  <div className={'text-xl border-r px-2'}>
                     {user.created_at ? normalizeServerDate(user.created_at) : ''}
                   </div>
-                  <div className={'text-xl border-r-1 px-2'}>
+                  <div className={'text-xl border-r px-2'}>
                     {user.last_login ? normalizeServerDate(user.last_login) : ''}
                   </div>
-                  <div className={'text-xl border-r-1 px-2'}>{user.last_ip || ''}</div>
-                  <div className={'text-xl border-r-1 px-2'}>
+                  <div className={'text-xl border-r px-2'}>{user.last_ip || ''}</div>
+                  <div className={'text-xl border-r px-2'}>
                     {user.ip_log
                       ? user.ip_log.map((ip, iIp) => (
                           <span key={iIp}>
@@ -75,12 +75,12 @@ const SystemUsers = () => {
                         ))
                       : ''}
                   </div>
-                  <div className={'text-xl border-r-1 text-center'}>{user.questions_passed?.length || 0}</div>
+                  <div className={'text-xl border-r text-center'}>{user.questions_passed?.length || 0}</div>
                   <div className={'text-xl text-center'}>{user.admin ? 'ADMIN' : 'USER'}</div>
                 </div>
               ))}
           </div>
-        </ScrollContainer>
+        </ScrollArea>
       </div>
     </div>
   );

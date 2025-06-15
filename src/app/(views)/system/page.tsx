@@ -1,6 +1,6 @@
 'use client';
 
-import CustomButton from '@/components/ui/button/CustomButton';
+import UIButton from '@/components/ui/button/UIButton';
 import routeChecker from '@/hoc/routeChecker';
 import { useRouter } from 'next/navigation';
 import React from 'react';
@@ -45,12 +45,12 @@ const SystemPage = () => {
     },
   ];
   return (
-    <div className={'flex items-center h-full w-full justify-center'}>
+    <div className={'flex items-center h-full w-full justify-center my-auto'}>
       <div
         className={'grid grid-cols-[repeat(auto-fit,minmax(350px,max-content))] justify-center w-full gap-y-2 gap-x-2'}
       >
         {buttons.map((button) => (
-          <CustomButton
+          <UIButton
             text={button.text}
             key={button.id}
             onClick={() => {
