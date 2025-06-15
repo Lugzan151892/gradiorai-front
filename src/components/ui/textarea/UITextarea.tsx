@@ -101,7 +101,7 @@ const UITextarea: React.FC<Readonly<Props>> = ({
           disabled={disabled}
           placeholder={placeholder}
           className={cn(
-            'text-white border-1 pl-3 min-h-12 text-sm rounded-4xl border-main-gray selection:border-main-gray selection:border-1 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 w-full',
+            'text-white border-1 p-4 min-h-12 text-sm rounded-4xl border-main-gray selection:border-main-gray selection:border-1 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 w-full',
             'focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0',
             'focus-visible:border-main-gray focus-visible:border-1',
             'aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive',
