@@ -8,7 +8,7 @@ import { setUnAuth } from '@/store/user/userSlice';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import UIButton from '@/components/ui/button/UIButton';
-import { UIInput } from '@/components/ui/input-v2/UIInput';
+import UIInput from '@/components/ui/input/UIInput';
 
 const LoginView = () => {
   const router = useRouter();
@@ -25,9 +25,9 @@ const LoginView = () => {
     setEmailError(emailErrorMsg);
     setPasswordError(passwordErrorMsg);
 
-    // if (emailErrorMsg || passwordErrorMsg) {
-    //   return;
-    // }
+    if (emailErrorMsg || passwordErrorMsg) {
+      return;
+    }
 
     try {
       const result = await Api.postSilent('/auth/login', {
@@ -70,7 +70,7 @@ const LoginView = () => {
 
   return (
     <div className={'text-black flex flex-col w-full h-full items-center mx-4'}>
-      <div className={'mb-16 text-white text-center text-3xl sm:text-5xl font-bold'}>С возвращением!</div>
+      <div className={'mb-16 text-white text-center text-3xl lg:text-5xl font-bold'}>С возвращением!</div>
       <div className={'w-full max-w-xs'}>
         <UIInput
           className={'mb-3'}
@@ -105,9 +105,9 @@ const LoginView = () => {
           onClick={handleLogin}
           iconAfter={'arrow-top-right'}
         />
-        <div className={'flex'}>
+        <div className={'flex my-6'}>
           <UIButton
-            className={'mt-6 mx-auto'}
+            className={'mx-auto'}
             text={'Регистрация'}
             type={'transparent'}
             onClick={handleGoRegistration}

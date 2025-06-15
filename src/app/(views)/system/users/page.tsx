@@ -1,6 +1,5 @@
 'use client';
 
-import ScrollContainer from '@/components/ui/scrollarea/CustomScrollarea';
 import Api from '@/core/api/api';
 import { IUser } from '@/core/interfaces/types';
 import { normalizeServerDate } from '@/core/utils/date';
@@ -8,6 +7,7 @@ import errorHandler from '@/core/utils/error/errorHandler';
 import { setLoading } from '@/features/loading/loadingSlice';
 import { useAppDispatch } from '@/hooks/redux';
 import React, { useCallback, useEffect, useState } from 'react';
+import { ScrollArea } from '@/components/ui/scroll-area/ScrollArea';
 
 const SystemUsers = () => {
   const [users, setUsers] = useState<IUser[]>([]);
@@ -34,7 +34,7 @@ const SystemUsers = () => {
     <div className={'flex flex-col h-full items-center'}>
       <div className={'text-5xl mb-5'}>Список зарегистрированных пользователей</div>
       <div className={'w-full px-4 mt-4 h-full overflow-hidden'}>
-        <ScrollContainer>
+        <ScrollArea>
           <div className={'mb-4 relative bg-modal'}>
             <div
               className={
@@ -80,7 +80,7 @@ const SystemUsers = () => {
                 </div>
               ))}
           </div>
-        </ScrollContainer>
+        </ScrollArea>
       </div>
     </div>
   );

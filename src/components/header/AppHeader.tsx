@@ -28,7 +28,7 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
   return (
     <div
       className={clsx(
-        'flex fixed top-0 left-0 right-0 z-50 h-[112px] bg-bg-header shadow-indigo-900 px-60 items-center transition-shadow duration-300',
+        'flex fixed top-0 left-0 right-0 z-50 h-[112px] bg-bg-header shadow-indigo-900 lg:px-60 px-4 items-center transition-shadow duration-300',
         withState ? 'justify-between' : 'justify-center',
         scrolled && 'shadow-xl'
       )}

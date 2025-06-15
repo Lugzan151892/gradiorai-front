@@ -1,6 +1,5 @@
 'use client';
 
-import ScrollContainer from '@/components/ui/scrollarea/CustomScrollarea';
 import Api from '@/core/api/api';
 import { IUserReview } from '@/core/interfaces/types';
 import { normalizeServerDate } from '@/core/utils/date';
@@ -8,6 +7,7 @@ import errorHandler from '@/core/utils/error/errorHandler';
 import { setLoading } from '@/features/loading/loadingSlice';
 import { useAppDispatch } from '@/hooks/redux';
 import React, { useCallback, useEffect, useState } from 'react';
+import { ScrollArea } from '@/components/ui/scroll-area/ScrollArea';
 
 const SystemReviews = () => {
   const [reviews, setReviews] = useState<IUserReview[]>([]);
@@ -42,11 +42,9 @@ const SystemReviews = () => {
     <div className={'flex flex-col h-full items-center'}>
       <div className={'text-5xl mb-5'}>Список отзывов от пользователей</div>
       <div className={'w-full px-4 mt-4 h-full overflow-hidden'}>
-        <ScrollContainer>
+        <ScrollArea>
           <div className={'mb-4 relative bg-modal'}>
-            <div
-              className={'sticky top-0 left-0 border grid grid-cols-[5%_12%_15%_54%_7%_7%] min-h-8 border bg-modal'}
-            >
+            <div className={'sticky top-0 left-0 border grid grid-cols-[5%_12%_15%_54%_7%_7%] min-h-8 border bg-modal'}>
               <div className={'text-2xl border-r text-center'}>ID</div>
               <div className={'text-2xl border-r px-2'}>Дата отзыва</div>
               <div className={'text-2xl border-r px-2'}>Email или IP</div>
@@ -69,7 +67,7 @@ const SystemReviews = () => {
                 </div>
               ))}
           </div>
-        </ScrollContainer>
+        </ScrollArea>
       </div>
     </div>
   );

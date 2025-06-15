@@ -1,5 +1,4 @@
-import AppHeader from '@/components/header/AppHeader';
-import ScrollContainer from '@/components/ui/scrollarea/CustomScrollarea';
+import AppLayoutClient from '@/components/app-layout/AppLayoutClient';
 import { Metadata } from 'next';
 import React from 'react';
 
@@ -40,18 +39,7 @@ export const metadata: Metadata = {
 };
 
 const TestsLayout: React.FC<Readonly<{ children: React.ReactNode }>> = ({ children }) => {
-  return (
-    <div className={'w-full h-full flex flex-col'}>
-      <AppHeader />
-      <div className={'flex max-w-full max-h-full h-full overflow-hidden'}>
-        <ScrollContainer>
-          <div className={'w-[1362px] flex grow max-w-full grow mx-auto my-2'}>
-            <div className={'flex h-full w-full desktop:px-4 mobile:px-2'}>{children}</div>
-          </div>
-        </ScrollContainer>
-      </div>
-    </div>
-  );
+  return <AppLayoutClient withState>{children}</AppLayoutClient>;
 };
 
 export default TestsLayout;

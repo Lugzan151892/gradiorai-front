@@ -1,7 +1,7 @@
 'use client';
 
 import FileDropzone from '@/components/ui/file-dropzone/FileDropzone';
-import ScrollContainer from '@/components/ui/scrollarea/CustomScrollarea';
+import { ScrollArea } from '@/components/ui/scroll-area/ScrollArea';
 import React, { useState } from 'react';
 import { setLoading } from '@/features/loading/loadingSlice';
 import errorHandler from '@/core/utils/error/errorHandler';
@@ -44,7 +44,7 @@ const ResumePrepare = () => {
       <h1 className={'text-5xl mb-2'}>Проверка резюме</h1>
       <h2 className={'text-xl'}>Приложите свое резюме и мы дадим рекомендации по его исправлению</h2>
       <div className={'bg-bg-transparent-25 rounded-10 p-4 mt-9 grow mb-9 overflow-hidden'}>
-        <ScrollContainer>
+        <ScrollArea>
           <div className={'flex flex-col w-full h-full justify-center'}>
             <div className={'flex w-full justify-around'}>
               <div className={'max-w-md'}>
@@ -62,7 +62,7 @@ const ResumePrepare = () => {
               </div>
             </div>
           </div>
-        </ScrollContainer>
+        </ScrollArea>
       </div>
       <div className={'w-full flex items-center mt-2 mb-4'}>
         <UIButton

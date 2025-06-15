@@ -10,7 +10,7 @@ import Api from '@/core/api/api';
 import errorHandler from '@/core/utils/error/errorHandler';
 import { openModal } from '@/store/tech/techSlice';
 import routeChecker from '@/hoc/routeChecker';
-import { UIInput } from '@/components/ui/input-v2/UIInput';
+import UIInput from '@/components/ui/input/UIInput';
 
 const RestorePassword = () => {
   const router = useRouter();
@@ -133,7 +133,7 @@ const RestorePassword = () => {
 
   return (
     <div className={'text-black flex flex-col w-full h-full items-center mx-4'}>
-      <div className={'mb-16 text-white text-center text-3xl sm:text-5xl font-bold'}>Изменение пароля</div>
+      <div className={'mb-16 text-white text-center text-3xl lg:text-5xl font-bold'}>Изменение пароля</div>
       <div className={'w-full max-w-xs'}>
         {step === 2 ? (
           <>
@@ -210,7 +210,7 @@ const RestorePassword = () => {
           text={'Изменить'}
           onClick={handleConfirmButton}
         />
-        <div className={'flex w-full justify-center gap-4 mt-6'}>
+        <div className={'flex w-full justify-center gap-4 my-6'}>
           <UIButton
             text={'Регистрация'}
             type={'transparent'}

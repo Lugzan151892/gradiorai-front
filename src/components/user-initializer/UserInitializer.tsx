@@ -1,9 +1,18 @@
 'use client';
 
-import { useUser } from '@/hooks/useUser';
+import { useAppDispatch } from '@/hooks/redux';
+import { getUserData } from '@/store/user/userSlice';
+import { usePathname } from 'next/navigation';
+import { useEffect } from 'react';
 
 const UserInitializer = () => {
-  useUser();
+  const dispatch = useAppDispatch();
+  const pathname = usePathname();
+
+  useEffect(() => {
+    dispatch(getUserData());
+  }, [pathname, dispatch]);
+
   return null;
 };
 
