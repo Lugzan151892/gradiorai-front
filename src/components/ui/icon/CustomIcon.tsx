@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import IconMarkup from '@/components/ui/icon/utils/IconMarkup';
 import getIconViewBox from '@/components/ui/icon/utils';
+import { cn } from '@/lib/utils';
 
 type ICustomIconProps = {
   name: keyof typeof IconMarkup;
@@ -11,6 +12,7 @@ type ICustomIconProps = {
   stroke?: string;
   caption?: string;
   tooltip?: string;
+  disabled?: boolean;
   onClick?: () => void;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
@@ -21,6 +23,7 @@ const CustomIcon: React.FC<ICustomIconProps> = ({
   color = 'var(--main-white)',
   size = 24,
   tooltip = '',
+  disabled,
   className,
   onMouseEnter,
   onMouseLeave,
@@ -31,13 +34,15 @@ const CustomIcon: React.FC<ICustomIconProps> = ({
   const [showTooltip, setShowTooltip] = useState(false);
   const iconRef = useRef<HTMLDivElement>(null);
 
+  const disabledClasses = 'opacity-25 pointer-events-none';
+
   if (!icon) {
     return null;
   }
 
   return (
     <div
-      className={'relative flex flex-col items-center justify-center ' + className}
+      className={cn('relative flex flex-col items-center justify-center', className, disabled && disabledClasses)}
       onMouseEnter={() => {
         setShowTooltip(true);
         if (onMouseEnter) {

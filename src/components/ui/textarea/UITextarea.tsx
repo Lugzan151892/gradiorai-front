@@ -12,6 +12,8 @@ interface Props extends Pick<React.ComponentProps<'input'>, 'id' | 'disabled' | 
   success?: boolean;
   rows?: number;
   autoResize?: boolean;
+  children?: React.ReactNode;
+  paddingGap?: number;
   onInput?: (val: string) => void;
   onChange?: (val: string) => void;
 }
@@ -27,7 +29,9 @@ const UITextarea: React.FC<Readonly<Props>> = ({
   error,
   linkChild,
   autoResize = false,
+  paddingGap,
   success,
+  children,
   onInput,
   onChange,
 }) => {
@@ -68,6 +72,10 @@ const UITextarea: React.FC<Readonly<Props>> = ({
     }
   };
 
+  const autoResizeClasses = autoResize
+    ? 'border-input-white selection:border-input-white'
+    : 'border-main-gray selection:border-main-gray';
+
   const errorClasses = errorsList.length
     ? 'border-error selection:border-error text-error focus-visible:border-error'
     : '';
@@ -75,6 +83,7 @@ const UITextarea: React.FC<Readonly<Props>> = ({
     ? 'border-main-gray selection:border-main-gray text-main-gray focus-visible:border-main-gray'
     : '';
 
+  const paddingClasses = children && paddingGap ? `py-3 pl-4` : 'p-4';
   const successStyles = 'border-main-green';
 
   return (
@@ -100,16 +109,21 @@ const UITextarea: React.FC<Readonly<Props>> = ({
           onKeyDown={handleKeyDown}
           disabled={disabled}
           placeholder={placeholder}
+          style={children && paddingGap ? { paddingRight: `${paddingGap}px` } : undefined}
           className={cn(
-            'text-white border-1 p-4 min-h-12 text-sm rounded-4xl border-main-gray selection:border-main-gray selection:border-1 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 w-full',
+            'text-white border-1 min-h-12 text-sm rounded-4xl selection:border-1 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 w-full',
             'focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0',
             'focus-visible:border-main-gray focus-visible:border-1',
             'aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive',
+            autoResizeClasses,
             success && successStyles,
             errorClasses,
-            disabledClasses
+            disabledClasses,
+            autoResize && 'resize-none overflow-hidden',
+            paddingClasses
           )}
         />
+        {children && <div className={'absolute right-3 top-1/2 -translate-y-1/2'}>{children}</div>}
       </div>
       <div className={'min-h-4'}>
         {errorsList.length && !disabled ? (

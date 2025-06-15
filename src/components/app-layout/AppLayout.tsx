@@ -16,10 +16,10 @@ const AppLayout: React.FC<Readonly<{ children: React.ReactNode; withState?: bool
       />
       <div className={'h-[112px]'} />
       <main
-        className={'flex-1 overflow-y-auto'}
+        className={'flex-1 overflow-y-auto min-h-[calc(100vh-112px)]'}
         ref={scrollRef}
       >
-        <ScrollArea>
+        <ScrollArea className={'h-full'}>
           <div>{children}</div>
         </ScrollArea>
       </main>

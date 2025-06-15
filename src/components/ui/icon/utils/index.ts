@@ -37,6 +37,9 @@ const getIconViewBox = (name: keyof typeof IconMarkup) => {
       return '0 0 32 32';
     case 'close-circle':
       return '0 0 22 22';
+    case 'send':
+    case 'microphone':
+      return '0 0 24 25';
     default:
       return '0 0 24 24';
   }
