@@ -3,10 +3,10 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { IInterview } from '@/app/(views)/(interview)/interview/types';
 import { useParams } from 'next/navigation';
-import ScrollContainer from '@/components/ui/scrollarea/CustomScrollarea';
+import { ScrollArea } from '@/components/ui/scroll-area/ScrollArea';
 import InterviewMessage from '@/app/(views)/(interview)/interview/[id]/components/InterviewMessage';
 import Api from '@/core/api/api';
-import CustomButton from '@/components/ui/button/CustomButton';
+import UIButton from '@/components/ui/button/UIButton';
 import errorHandler from '@/core/utils/error/errorHandler';
 import { useAppDispatch } from '@/hooks/redux';
 import { setLoading } from '@/features/loading/loadingSlice';
@@ -133,9 +133,9 @@ const CurrentInterviewPage = () => {
 
   return (
     <div className={'w-full max-w-[990px] mx-auto flex flex-col h-full'}>
-      <div className={'bg-bg-transparent-25 rounded-10 p-4 flex-grow flex flex-col h-full justify-end'}>
+      <div className={'bg-bg-transparent-25 rounded-10 p-4 grow flex flex-col h-full justify-end'}>
         <div className={'overflow-hidden'}>
-          <ScrollContainer>
+          <ScrollArea>
             <div className={'flex flex-col w-full h-full px-2'}>
               {interview &&
                 interview.messages.map((message) => (
@@ -161,7 +161,7 @@ const CurrentInterviewPage = () => {
               )}
               <div ref={messageEndRef} />
             </div>
-          </ScrollContainer>
+          </ScrollArea>
         </div>
         <div className={'mt-2'}>
           <CustomTextarea
@@ -174,15 +174,14 @@ const CurrentInterviewPage = () => {
         {isListening && <div>Записываем голос ...</div>}
         {isGenerating && <div>Генерируем ответ ...</div>}
         {canUseRecognition && (
-          <CustomButton
+          <UIButton
             className={'mb-2'}
             text={isListening ? 'Завершить диктовку' : userMessage ? 'Продолжить диктовку' : 'Начать диктовку'}
-            type={isListening ? 'error' : 'success'}
             onClick={isListening ? stopListening : startListening}
             disabled={isGenerating || interview?.finished}
           />
         )}
-        <CustomButton
+        <UIButton
           text={'Отправить'}
           onClick={sendMessage}
           disabled={isGenerating || interview?.finished}

@@ -58,6 +58,7 @@ const CustomIcon: React.FC<ICustomIconProps> = ({
         height={size}
         viewBox={getIconViewBox(name)}
         style={{ color }}
+        className={'fill-current'}
       >
         {icon}
       </svg>

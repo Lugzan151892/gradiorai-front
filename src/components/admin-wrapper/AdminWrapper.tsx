@@ -16,8 +16,8 @@ const AdminWrapper: React.FC<{
 
   return (
     <div className={className + ' relative'}>
-      <div className={'px-3 bg-orange rounded absolute text-white text-sm font-semibold top-[-9px] right-[-16px]'}>
-        D
+      <div className={'px-3 bg-main-purple rounded absolute text-white text-sm font-semibold top-[-9px] right-[-16px]'}>
+        DEV
       </div>
       {children}
     </div>

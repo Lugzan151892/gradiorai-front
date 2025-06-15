@@ -1,6 +1,6 @@
 'use client';
 
-import CustomButton from '@/components/ui/button/CustomButton';
+import UIButton from '@/components/ui/button/UIButton';
 import React, { useCallback, useEffect, useState } from 'react';
 import { entitiesListButtons } from '@/app/(views)/system/edit-entities/utils';
 import { EEDITED_ENTITIE } from '@/app/(views)/system/edit-entities/interfaces';
@@ -12,7 +12,8 @@ import { ISpecialization, ITechWithCount } from '@/core/interfaces/types';
 import { openModal } from '@/store/tech/techSlice';
 import AddSpecModal from '@/components/specialization-modals/AddSpecModal';
 import AddTechnologyModal from '@/components/technology-modals/AddTechnologyModal';
-import ScrollContainer from '@/components/ui/scrollarea/CustomScrollarea';
+import { ScrollArea } from '@/components/ui/scroll-area/ScrollArea';
+import UIFilterButton from '@/components/ui/filter-button/UIFilterButton';
 
 const EditEntitiesView = () => {
   const [choosenEntitie, setChoosenEntitie] = useState<EEDITED_ENTITIE>();
@@ -128,7 +129,7 @@ const EditEntitiesView = () => {
         }
       >
         {entitiesListButtons.map((button) => (
-          <CustomButton
+          <UIFilterButton
             text={button.text}
             key={button.id}
             selected={button.id === choosenEntitie}
@@ -137,23 +138,21 @@ const EditEntitiesView = () => {
         ))}
       </div>
       <div className={'w-full px-4 mt-4 h-full overflow-hidden'}>
-        <ScrollContainer>
+        <ScrollArea>
           <div className={'mb-4 relative bg-modal'}>
             {choosenEntitie === EEDITED_ENTITIE.TECH && (
-              <div
-                className={'sticky top-0 left-0 border-1 grid grid-cols-[5%,20%,40%,25%,10%] min-h-8 border-1 bg-modal'}
-              >
-                <div className={'text-2xl border-r-1 text-center'}>ID</div>
-                <div className={'text-2xl border-r-1 px-2'}>Название</div>
-                <div className={'text-2xl border-r-1 px-2'}>Описание</div>
-                <div className={'text-2xl border-r-1 px-2'}>Кол-во сохраненных вопросов</div>
+              <div className={'sticky top-0 left-0 border grid grid-cols-[5%_20%_40%_25%_10%] min-h-8 border bg-modal'}>
+                <div className={'text-2xl border-r text-center'}>ID</div>
+                <div className={'text-2xl border-r px-2'}>Название</div>
+                <div className={'text-2xl border-r px-2'}>Описание</div>
+                <div className={'text-2xl border-r px-2'}>Кол-во сохраненных вопросов</div>
                 <div className={'text-2xl text-center'}>Действия</div>
               </div>
             )}
             {choosenEntitie === EEDITED_ENTITIE.SPEC && (
-              <div className={'sticky top-0 left-0 border-1 grid grid-cols-[5%,1fr,10%] min-h-8 border-1 bg-modal'}>
-                <div className={'text-2xl border-r-1 text-center'}>ID</div>
-                <div className={'text-2xl border-r-1 px-2'}>Название</div>
+              <div className={'sticky top-0 left-0 border grid grid-cols-[5%_1fr_10%] min-h-8 border bg-modal'}>
+                <div className={'text-2xl border-r text-center'}>ID</div>
+                <div className={'text-2xl border-r px-2'}>Название</div>
                 <div className={'text-2xl text-center'}>Действия</div>
               </div>
             )}
@@ -161,18 +160,17 @@ const EditEntitiesView = () => {
               specs.map((spec) => (
                 <div
                   key={spec.id}
-                  className={'border-1 w-full grid grid-cols-[5%,1fr,10%]'}
+                  className={'border w-full grid grid-cols-[5%_1fr_10%]'}
                 >
-                  <div className={'text-3xl border-r-1 px-2 py-2 text-center'}>{spec.id}</div>
-                  <div className={'text-3xl border-r-1 px-2 py-2'}>{spec.name}</div>
+                  <div className={'text-3xl border-r px-2 py-2 text-center'}>{spec.id}</div>
+                  <div className={'text-3xl border-r px-2 py-2'}>{spec.name}</div>
                   <div className={'flex flex-col px-2 py-2'}>
-                    <CustomButton
+                    <UIButton
                       text={'Изменить'}
                       className={'mb-2'}
                       onClick={() => handleEditSpecialization(spec)}
                     />
-                    <CustomButton
-                      type={'error'}
+                    <UIButton
                       text={'Удалить'}
                       onClick={() => handleDeleteSpecialization(spec.id)}
                     />
@@ -183,20 +181,19 @@ const EditEntitiesView = () => {
               techs.map((tech) => (
                 <div
                   key={tech.id}
-                  className={'border-1 w-full grid grid-cols-[5%,20%,40%,25%,10%]'}
+                  className={'border w-full grid grid-cols-[5%_20%_40%_25%_10%]'}
                 >
-                  <div className={'text-3xl border-r-1 px-2 py-2 text-center'}>{tech.id}</div>
-                  <div className={'text-3xl border-r-1 px-2 py-2'}>{tech.name}</div>
-                  <div className={'text-2xl border-r-1 px-2 py-2'}>{tech.description || 'Не заполнено'}</div>
-                  <div className={'text-2xl border-r-1 px-2 py-2 text-center'}>{tech._count?.questions || '0'}</div>
+                  <div className={'text-3xl border-r px-2 py-2 text-center'}>{tech.id}</div>
+                  <div className={'text-3xl border-r px-2 py-2'}>{tech.name}</div>
+                  <div className={'text-2xl border-r px-2 py-2'}>{tech.description || 'Не заполнено'}</div>
+                  <div className={'text-2xl border-r px-2 py-2 text-center'}>{tech._count?.questions || '0'}</div>
                   <div className={'flex flex-col px-2 py-2'}>
-                    <CustomButton
+                    <UIButton
                       text={'Изменить'}
                       className={'mb-2'}
                       onClick={() => handleEditTechnology(tech)}
                     />
-                    <CustomButton
-                      type={'error'}
+                    <UIButton
                       text={'Удалить'}
                       onClick={() => handleDeleteTechnology(tech.id)}
                     />
@@ -204,7 +201,7 @@ const EditEntitiesView = () => {
                 </div>
               ))}
           </div>
-        </ScrollContainer>
+        </ScrollArea>
       </div>
       {currentSpecialization && (
         <AddSpecModal

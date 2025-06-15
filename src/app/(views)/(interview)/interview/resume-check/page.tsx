@@ -1,14 +1,14 @@
 'use client';
 
 import FileDropzone from '@/components/ui/file-dropzone/FileDropzone';
-import ScrollContainer from '@/components/ui/scrollarea/CustomScrollarea';
+import { ScrollArea } from '@/components/ui/scroll-area/ScrollArea';
 import React, { useState } from 'react';
-import AuthConfirmButton from '@/app/(views)/(auth)/components/AuthConfirmButton';
 import { setLoading } from '@/features/loading/loadingSlice';
 import errorHandler from '@/core/utils/error/errorHandler';
 import { useAppDispatch } from '@/hooks/redux';
 import Api from '@/core/api/api';
 import InterviewMessage from '../[id]/components/InterviewMessage';
+import UIButton from '@/components/ui/button/UIButton';
 
 const ResumePrepare = () => {
   const [userCV, setUserCV] = useState<null | File>(null);
@@ -43,8 +43,8 @@ const ResumePrepare = () => {
     <div className={'w-full max-w-[1360px] mx-auto flex flex-col'}>
       <h1 className={'text-5xl mb-2'}>Проверка резюме</h1>
       <h2 className={'text-xl'}>Приложите свое резюме и мы дадим рекомендации по его исправлению</h2>
-      <div className={'bg-bg-transparent-25 rounded-10 p-4 mt-9 flex-grow mb-9 overflow-hidden'}>
-        <ScrollContainer>
+      <div className={'bg-bg-transparent-25 rounded-10 p-4 mt-9 grow mb-9 overflow-hidden'}>
+        <ScrollArea>
           <div className={'flex flex-col w-full h-full justify-center'}>
             <div className={'flex w-full justify-around'}>
               <div className={'max-w-md'}>
@@ -62,14 +62,11 @@ const ResumePrepare = () => {
               </div>
             </div>
           </div>
-        </ScrollContainer>
+        </ScrollArea>
       </div>
       <div className={'w-full flex items-center mt-2 mb-4'}>
-        <AuthConfirmButton
-          className={'!w-[170px] mx-auto'}
-          customBorder
-          size={24}
-          icon={'check'}
+        <UIButton
+          className={'w-[170px]! mx-auto'}
           disabled={!!checkResult}
           text={'Проверить'}
           onClick={checkResume}

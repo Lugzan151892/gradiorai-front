@@ -21,12 +21,12 @@ const CustomCheckbox: React.FC<ICustomInputProps> = ({ selected, caption, classN
       <Checkbox
         checked={selected}
         className={
-          'border-1 border-white group flex-shrink-0 cursor-pointer h-5 w-5 flex items-center justify-center ' +
+          'border border-white group shrink-0 cursor-pointer h-5 w-5 flex items-center justify-center ' +
           selectedClasses
         }
       >
         <svg
-          className={'stroke-white opacity-0 group-data-[checked]:opacity-100 h-4 w-4'}
+          className={'stroke-white opacity-0 group-data-checked:opacity-100 h-4 w-4'}
           viewBox={'0 0 14 14'}
           fill={'none'}
         >

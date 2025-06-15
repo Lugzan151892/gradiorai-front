@@ -1,0 +1,35 @@
+@keyframes slide-down {
+  0% {
+    transform: translateY(-100%);
+    margin-bottom: 0px;
+  }
+  100% {
+    transform: translateY(0);
+    margin-bottom: 24px;
+  }
+}
+
+@keyframes slide-up {
+  0% {
+    transform: translateY(0);
+    margin-bottom: 24px;
+  }
+  100% {
+    transform: translateY(-100%);
+    max-height: 0;
+    margin-bottom: 0px;
+  }
+}
+
+.dynamic-section-wrapper {
+  overflow: hidden;
+  transition: all 0.6s ease;
+}
+
+.dynamic-section-wrapper--open {
+  animation: slide-down 0.6s ease forwards;
+}
+
+.dynamic-section-wrapper--closed {
+  animation: slide-up 0.6s ease forwards;
+}

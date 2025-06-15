@@ -1,6 +1,6 @@
 'use client';
 
-import CustomButton from '@/components/ui/button/CustomButton';
+import UIButton from '@/components/ui/button/UIButton';
 import CustomIcon from '@/components/ui/icon/CustomIcon';
 import Api from '@/core/api/api';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
@@ -10,7 +10,9 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import MenuItem, { IMenuItemProps } from '@/components/header/components/MenuItem';
 import { EMENU_ITEM } from '@/components/header/interfaces';
-import ScrollContainer from '@/components/ui/scrollarea/CustomScrollarea';
+import { ScrollArea } from '@/components/ui/scroll-area/ScrollArea';
+import Image from 'next/image';
+import userLogin from '@/assets/icons/user-profile.svg';
 
 interface IMenuItem extends IMenuItemProps {
   id: EMENU_ITEM;
@@ -141,37 +143,27 @@ const HeaderUserState = () => {
 
   return (
     <>
-      {!user?.id || false ? (
-        <div className={'ml-auto flex gap-2'}>
-          <CustomButton
-            className={'!rounded-10 !px-3 !py-2 text-xl h-max '}
-            color={'low-green'}
+      {!user?.id ? (
+        <div className={'flex gap-2'}>
+          <UIButton
             onClick={handleLogin}
-          >
-            <div className={'flex'}>
-              <CustomIcon
-                className={'desktop:mr-6'}
-                name={'user-login'}
-                size={25}
-                color={'var(--main-white)'}
-              />
-              <div className={'mobile:hidden'}>Вход</div>
-            </div>
-          </CustomButton>
+            text={'ВОЙТИ'}
+          />
         </div>
       ) : (
         <div
-          className={'ml-auto flex items-center'}
+          className={'flex items-center'}
           ref={menuRef}
         >
           <div
             className={'flex items-center cursor-pointer'}
             onClick={() => setShowMenu(!showMenu)}
           >
-            <CustomIcon
-              size={30}
-              name={'user-login'}
-              color={'var(--main-white)'}
+            <Image
+              src={userLogin}
+              alt={'profile'}
+              width={40}
+              height={40}
             />
             <CustomIcon
               name={'menu-arrow'}
@@ -182,7 +174,7 @@ const HeaderUserState = () => {
           {showMenu && (
             <div
               className={
-                'z-50 p-4 bg-black rounded-10 flex flex-col overflow-hidden desktop:w-[400px] mobile:w-full max-w-full desktop:h-[400px] mobile:h-full max-h-[calc(100%-80px)] absolute top-[80px] desktop:right-[30px] mobile:right-0'
+                'z-50 p-4 bg-black rounded-xl flex flex-col overflow-hidden desktop:w-[400px] mobile:w-full max-w-full desktop:h-[400px] mobile:h-full max-h-[calc(100vh-80px)] absolute top-[80px] lg:right-[30px] right-0'
               }
             >
               <MenuItem
@@ -191,7 +183,7 @@ const HeaderUserState = () => {
                 text={username || ''}
                 isStatic
               />
-              <ScrollContainer>
+              <ScrollArea>
                 {menuItems
                   .filter((e) => e.show)
                   .map((item) => (
@@ -200,7 +192,7 @@ const HeaderUserState = () => {
                       {...item}
                     />
                   ))}
-              </ScrollContainer>
+              </ScrollArea>
             </div>
           )}
         </div>
