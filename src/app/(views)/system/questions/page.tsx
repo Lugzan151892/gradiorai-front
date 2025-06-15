@@ -1,13 +1,14 @@
 'use client';
 
 import SaveQuestionModal from '@/components/save-question-modal/SaveQuestionModal';
-import CustomButton from '@/components/ui/button/CustomButton';
+import UIButton from '@/components/ui/button/UIButton';
 import Api from '@/core/api/api';
 import { ITechnology, ITest } from '@/core/interfaces/types';
 import errorHandler from '@/core/utils/error/errorHandler';
 import { setLoading } from '@/features/loading/loadingSlice';
 import { useAppDispatch } from '@/hooks/redux';
 import React, { useCallback, useEffect, useState } from 'react';
+import UIFilterButton from '@/components/ui/filter-button/UIFilterButton';
 
 interface IFullQuestion extends ITest {
   level: number;
@@ -96,27 +97,23 @@ const SystemQuestions = () => {
   return (
     <div className={'w-full'}>
       <div className={'flex w-full items-center justify-center px-4 py-2'}>
-        <CustomButton
+        <UIFilterButton
           className={'mr-2'}
-          small
           selected={withoutSpecs}
           text={'Вопросы без направлений'}
           onClick={() => {
             setWithoutSpecs(!withoutSpecs);
           }}
         />
-        <CustomButton
-          small
+        <UIFilterButton
           selected={onlyMine}
           text={'Добавленные мной'}
           onClick={() => {
             setOnlyMine(!onlyMine);
           }}
         />
-        <CustomButton
+        <UIButton
           className={'ml-auto'}
-          type={'error'}
-          small
           text={'Добавить новый вопрос'}
           onClick={() => setOpenCreateModal(true)}
         />
@@ -137,14 +134,11 @@ const SystemQuestions = () => {
               </div>
             </div>
             <div className={'flex flex-col gap-1 py-2'}>
-              <CustomButton
-                small
+              <UIButton
                 text={'Изменить'}
                 onClick={() => openQuestionModal(question)}
               />
-              <CustomButton
-                type={'error'}
-                small
+              <UIButton
                 text={'Удалить'}
                 onClick={() => handleDeleteQuestion(question.id)}
               />

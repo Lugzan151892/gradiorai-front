@@ -13,6 +13,7 @@ interface Props extends Pick<React.ComponentProps<'input'>, 'id' | 'disabled' | 
   type?: TInputType;
   error?: string[] | string;
   linkChild?: React.ReactNode;
+  success?: boolean;
   onInput?: (val: string) => void;
   onChange?: (val: string) => void;
 }
@@ -27,6 +28,7 @@ const UIInput: React.FC<Readonly<Props>> = ({
   value,
   error,
   linkChild,
+  success,
   onInput,
   onChange,
 }) => {
@@ -57,6 +59,8 @@ const UIInput: React.FC<Readonly<Props>> = ({
   const disabledClasses = disabled
     ? 'border-main-gray selection:border-main-gray text-main-gray focus-visible:border-main-gray'
     : '';
+
+  const successStyles = 'border-main-green';
 
   const togglePasswordVisibility = () => {
     setCurrentInputType((prev) => (prev === 'password' ? 'text' : 'password'));
@@ -105,6 +109,7 @@ const UIInput: React.FC<Readonly<Props>> = ({
             'focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0',
             'focus-visible:border-main-gray focus-visible:border-1',
             'aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive',
+            success && successStyles,
             isPasswordToggleVisible && 'pr-10',
             errorClasses,
             disabledClasses
@@ -142,4 +147,4 @@ const UIInput: React.FC<Readonly<Props>> = ({
   );
 };
 
-export { UIInput };
+export default UIInput;

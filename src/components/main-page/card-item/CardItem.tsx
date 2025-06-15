@@ -28,7 +28,7 @@ const CardItem: React.FC<
     }
   };
   return (
-    <div className={'p-6 flex flex-col gap-4 w-[342px] border-1 border-main-gray rounded-3xl'}>
+    <div className={'p-6 flex flex-col gap-4 w-full lg:max-w-[342px] border-1 border-main-gray rounded-3xl'}>
       <div className={'flex w-full gap-2 mb-4 items-center'}>
         <Image
           src={getIcon()}
