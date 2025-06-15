@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import AppHeader from '@/components/header/AppHeader';
-import { ScrollArea } from '@/components/ui/scroll-area-v2/ScrollAreaV2';
+import { ScrollArea } from '@/components/ui/scroll-area/ScrollArea';
 
 const AppLayout: React.FC<Readonly<{ children: React.ReactNode; withState?: boolean }>> = ({
   children,
