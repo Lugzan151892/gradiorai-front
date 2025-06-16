@@ -111,7 +111,7 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 8px;
   scrollbar-color: #aab1c0 transparent;
 }
 ::-webkit-scrollbar-thumb {
