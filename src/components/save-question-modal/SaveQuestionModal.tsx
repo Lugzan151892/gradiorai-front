@@ -5,7 +5,7 @@ import { useAppDispatch } from '@/hooks/redux';
 import { setLoading } from '@/features/loading/loadingSlice';
 import errorHandler from '@/core/utils/error/errorHandler';
 import { openModal } from '@/store/tech/techSlice';
-import CustomTextarea from '@/components/ui/textarea/CustomTextarea';
+import UITextarea from '@/components/ui/textarea/UITextarea';
 import UIInput from '@/components/ui/input/UIInput';
 import { ESKILL_LEVEL } from '@/core/interfaces/enums';
 import { ITech, ITest } from '@/core/interfaces/types';
@@ -202,7 +202,7 @@ const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
       <div className={'m-6'}>
         <div>
           <div className={'desktop:text-2xl mobile:text-xl mb-2'}>Изменение вопроса</div>
-          <CustomTextarea
+          <UITextarea
             value={editedQuestion.question}
             onInput={(val) => handleQuestionChange(val)}
           />

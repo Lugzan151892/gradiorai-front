@@ -26,10 +26,10 @@ const InterviewMessage: React.FC<
     className?: string;
   }>
 > = ({ message, isHuman, className }) => {
-  const dynamicClasses = isHuman ? 'bg-message-blue' : 'bg-message-gray';
+  const dynamicClasses = isHuman ? 'bg-main-gray' : 'bg-main-purple';
 
   return (
-    <div className={`rounded-input p-4 whitespace-pre-wrap ${dynamicClasses} ${className}`}>
+    <div className={`rounded-3xl px-4 py-3 whitespace-pre-wrap ${dynamicClasses} ${className}`}>
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{
