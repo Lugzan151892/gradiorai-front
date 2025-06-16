@@ -3,7 +3,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { IInterview } from '@/app/(views)/(interview)/interview/types';
 import { useParams } from 'next/navigation';
-import { ScrollArea } from '@/components/ui/scroll-area/ScrollArea';
 import InterviewMessage from '@/app/(views)/(interview)/interview/[id]/components/InterviewMessage';
 import Api from '@/core/api/api';
 import errorHandler from '@/core/utils/error/errorHandler';
@@ -132,35 +131,33 @@ const CurrentInterviewPage = () => {
   }, [loadInterview]);
 
   return (
-    <div className={'w-full max-w-[840px] h-[calc(100vh-112px)] mx-auto flex flex-col overflow-hidden lg:py-14 py-8'}>
-      <div className={'border-1 border-main-gray rounded-3xl p-4 flex flex-col justify-end overflow-y-hidden'}>
+    <div className={'w-full max-w-[840px] h-[calc(100vh-112px)] mx-auto flex flex-col lg:py-14 py-8'}>
+      <div className={'border-1 border-main-gray rounded-3xl p-4 flex flex-col justify-end overflow-hidden h-full'}>
         <div className={'flex-grow'} />
-        <ScrollArea className={'h-full'}>
-          <div className={'flex flex-col justify-end flex-grow'}>
-            {interview?.messages.map((message) => (
-              <InterviewMessage
-                key={message.id}
-                className={`max-w-[70%] mb-2 ${message.is_human ? 'ml-auto' : 'mr-auto'}`}
-                message={message.text}
-                isHuman={message.is_human}
-              />
-            ))}
-            {isGenerating && !!generatedMessage && (
-              <InterviewMessage
-                className={'max-w-[70%] mb-2 mr-auto'}
-                message={generatedMessage}
-                isHuman={false}
-              />
-            )}
-            {interview?.finished && (
-              <div className={'bg-message-gray p-4 rounded-input'}>
-                <div className={'text-2xl mb-4'}>Результат интервью:</div>
-                <div>{interview.recomendations}</div>
-              </div>
-            )}
-            <div ref={messageEndRef} />
-          </div>
-        </ScrollArea>
+        <div className={'flex flex-col overflow-auto'}>
+          {interview?.messages.map((message) => (
+            <InterviewMessage
+              key={message.id}
+              className={`max-w-[70%] mb-2 ${message.is_human ? 'ml-auto' : 'mr-auto'}`}
+              message={message.text}
+              isHuman={message.is_human}
+            />
+          ))}
+          {isGenerating && !!generatedMessage && (
+            <InterviewMessage
+              className={'max-w-[70%] mb-2 mr-auto'}
+              message={generatedMessage}
+              isHuman={false}
+            />
+          )}
+          {interview?.finished && (
+            <div className={'bg-message-gray p-4 rounded-input'}>
+              <div className={'text-2xl mb-4'}>Результат интервью:</div>
+              <div>{interview.recomendations}</div>
+            </div>
+          )}
+          <div ref={messageEndRef} />
+        </div>
         <div className={'mt-4'}>
           <div className={'h-4 mb-2'}>
             {(isListening || isGenerating || true) && (

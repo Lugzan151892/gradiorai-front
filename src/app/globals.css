@@ -14,32 +14,6 @@
   --color-text-low-white: #f9f9f9;
   --color-main-green: #29c341;
   --color-input-white: #f2f7f8;
-  /* --color-background: #010102;
-  --color-main-green: #5aea6f;
-  --color-low-green: #00e3c9;
-  --color-hard-green: #2e9c12;
-  --color-hover-low-green: #00a895;
-  --color-main-black: #000000;
-  --color-main-blue: #6d8aeef2;
-  --color-main-blue-secondary: #19b0da;
-  --color-main-error: #f64242;
-  --color-main-success: #50fb26;
-  --color-main-warning: #f2ac57;
-  --color-main-orange: #ffb43d;
-  --color-main-yellow: #ffef3d;
-  --color-main-gray: #d8d3d3;
-  --color-second-gray: #eaeaea;
-  --color-main-aqua: #c2fbf7;
-  --color-text-secondary: #6f6969;
-  --color-text-gray: #6d6b6b;
-  --color-hover-gray: #414141;
-  --color-disabled-button: #9a9a9a;
-  --color-modal-bg: #1e1e1e;
-  --color-message-gray: #4a4f4e;
-  --color-message-blue: #5b67bb;
-  --color-bg-transparent-none: rgba(210, 210, 210, 1);
-  --color-bg-transparent-50: rgba(210, 210, 210, 0.5);
-  --color-bg-transparent-25: rgba(210, 210, 210, 0.25); */
 
   --inset-shadow-button: inset 0 4px 0 rgba(0, 0, 0, 0.25);
 }
@@ -54,23 +28,20 @@
   --main-gradient: linear-gradient(180deg, rgba(44, 43, 43, 0) 31.17%, #7c49e3 128.34%);
 }
 
-[data-slot='scroll-area-scrollbar'] {
-  background: transparent !important; /* убираем фон "трека" */
-  padding: 2px; /* отступы вокруг ползунка */
-  width: 12px; /* нужно чуть шире, чтобы влез thumb */
+/* [data-slot='scroll-area-scrollbar'] {
+  background: transparent !important;
+  padding: 2px;
+  width: 12px;
 }
 
-/* Вертикальный скроллбар */
 [data-slot='scroll-area-scrollbar'][data-orientation='vertical'] {
   width: 12px;
 }
 
-/* Горизонтальный скроллбар (если понадобится) */
 [data-slot='scroll-area-scrollbar'][data-orientation='horizontal'] {
   height: 12px;
 }
 
-/* Сам ползунок */
 [data-slot='scroll-area-thumb'] {
   background-color: #aab1c0 !important;
   border-radius: 4px;
@@ -79,16 +50,15 @@
 }
 
 * {
-  scrollbar-width: thin; /* для Firefox */
-  scrollbar-color: #aab1c0 transparent; /* thumb и track (Firefox) */
+  scrollbar-width: thin;
+  scrollbar-color: #aab1c0 transparent;
 }
 
-/* Webkit-стилизация (Chrome, Safari) */
 *::-webkit-scrollbar {
-  width: 12px; /* общий размер скроллбара */
+  width: 12px;
   height: 12px;
 }
-/* Убираем стрелочки */
+
 *::-webkit-scrollbar-button {
   display: none;
   height: 0;
@@ -100,12 +70,12 @@
   border-radius: 4px;
   min-height: 25px;
   min-width: 8px;
-  margin: 2px; /* визуальный отступ */
+  margin: 2px;
 }
 
 *::-webkit-scrollbar-track {
-  background: transparent; /* трек невидимый */
-}
+  background: transparent;
+} */
 
 html,
 body {
@@ -118,29 +88,40 @@ body {
   background-color: var(--main-black);
 }
 
-.scroll-container {
+/* .scroll-container {
   overflow: overlay;
   position: relative;
 }
 
 .scroll-container::-webkit-scrollbar {
   width: 5px;
+  scrollbar-color: #aab1c0 transparent;
 }
 
 .scroll-container::-webkit-scrollbar-thumb {
-  background-color: transparent;
+  background-color: #aab1c0;
   border-radius: 10px;
   transition:
     background-color 0.3s ease,
     opacity 0.3s ease;
-  opacity: 0;
+} */
+
+::-webkit-scrollbar-button {
+  display: none;
 }
 
-.scroll-container.show-scrollbar::-webkit-scrollbar-thumb {
-  background-color: white !important;
-  opacity: 1 !important;
+::-webkit-scrollbar {
+  width: 5px;
+  scrollbar-color: #aab1c0 transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #aab1c0;
+  border-radius: 10px;
+  transition:
+    background-color 0.3s ease,
+    opacity 0.3s ease;
 }
 
-.scroll-container::-webkit-scrollbar-button {
+::-webkit-scrollbar-button {
   display: none;
 }
