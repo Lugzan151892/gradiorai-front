@@ -5,7 +5,7 @@ import errorHandler from '@/core/utils/error/errorHandler';
 import { setLoading } from '@/features/loading/loadingSlice';
 import { useAppDispatch } from '@/hooks/redux';
 import React, { useCallback, useEffect, useState } from 'react';
-import CustomTextarea from '@/components/ui/textarea/CustomTextarea';
+import UITextarea from '@/components/ui/textarea/UITextarea';
 import UIButton from '@/components/ui/button/UIButton';
 import { openModal } from '@/store/tech/techSlice';
 import routeChecker from '@/hoc/routeChecker';
@@ -246,7 +246,7 @@ const SystemGptPage = () => {
                 )}
                 <div className={'flex mobile:flex-col w-full h-full gap-3'}>
                   <div className={'flex w-full h-full'}>
-                    <CustomTextarea
+                    <UITextarea
                       className={'flex-1 h-full'}
                       rows={9}
                       value={gptSettings.system_message}
@@ -256,7 +256,7 @@ const SystemGptPage = () => {
                   </div>
                   {settingsType === 'TEST' && (
                     <div className={'flex w-full h-full'}>
-                      <CustomTextarea
+                      <UITextarea
                         value={gptSettings.user_message}
                         rows={9}
                         label={'Пользовательское сообщение'}
