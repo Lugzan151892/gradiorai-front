@@ -6,12 +6,12 @@ import { useParams } from 'next/navigation';
 import { ScrollArea } from '@/components/ui/scroll-area/ScrollArea';
 import InterviewMessage from '@/app/(views)/(interview)/interview/[id]/components/InterviewMessage';
 import Api from '@/core/api/api';
-import UIButton from '@/components/ui/button/UIButton';
 import errorHandler from '@/core/utils/error/errorHandler';
 import { useAppDispatch } from '@/hooks/redux';
 import { setLoading } from '@/features/loading/loadingSlice';
-import CustomTextarea from '@/components/ui/textarea/CustomTextarea';
+import UITextarea from '@/components/ui/textarea/UITextarea';
 import { useSpeechRecognition } from '@/hooks/speech-recognition/useSpeechRecognition';
+import CustomIcon from '@/components/ui/icon/CustomIcon';
 
 const CurrentInterviewPage = () => {
   const { id } = useParams();
@@ -132,60 +132,72 @@ const CurrentInterviewPage = () => {
   }, [loadInterview]);
 
   return (
-    <div className={'w-full max-w-[990px] mx-auto flex flex-col h-full'}>
-      <div className={'bg-bg-transparent-25 rounded-10 p-4 grow flex flex-col h-full justify-end'}>
-        <div className={'overflow-hidden'}>
-          <ScrollArea>
-            <div className={'flex flex-col w-full h-full px-2'}>
-              {interview &&
-                interview.messages.map((message) => (
-                  <InterviewMessage
-                    key={message.id}
-                    className={`max-w-[70%] mb-2 ${message.is_human ? 'ml-auto' : 'mr-auto'}`}
-                    message={message.text}
-                    isHuman={message.is_human}
-                  />
-                ))}
-              {isGenerating && !!generatedMessage && (
-                <InterviewMessage
-                  className={`max-w-[70%] mb-2 'mr-auto'`}
-                  message={generatedMessage}
-                  isHuman={false}
-                />
-              )}
-              {interview?.finished && (
-                <div className={'bg-message-gray p-4 rounded-input'}>
-                  <div className={'text-2xl mb-4'}>Результат интервью:</div>
-                  <div>{interview.recomendations}</div>
-                </div>
-              )}
-              <div ref={messageEndRef} />
-            </div>
-          </ScrollArea>
-        </div>
-        <div className={'mt-2'}>
-          <CustomTextarea
+    <div className={'w-full max-w-[840px] h-[calc(100vh-112px)] mx-auto flex flex-col overflow-hidden lg:py-14 py-8'}>
+      <div className={'border-1 border-main-gray rounded-3xl p-4 flex flex-col justify-end overflow-y-hidden'}>
+        <div className={'flex-grow'} />
+        <ScrollArea className={'h-full'}>
+          <div className={'flex flex-col justify-end flex-grow'}>
+            {interview?.messages.map((message) => (
+              <InterviewMessage
+                key={message.id}
+                className={`max-w-[70%] mb-2 ${message.is_human ? 'ml-auto' : 'mr-auto'}`}
+                message={message.text}
+                isHuman={message.is_human}
+              />
+            ))}
+            {isGenerating && !!generatedMessage && (
+              <InterviewMessage
+                className={'max-w-[70%] mb-2 mr-auto'}
+                message={generatedMessage}
+                isHuman={false}
+              />
+            )}
+            {interview?.finished && (
+              <div className={'bg-message-gray p-4 rounded-input'}>
+                <div className={'text-2xl mb-4'}>Результат интервью:</div>
+                <div>{interview.recomendations}</div>
+              </div>
+            )}
+            <div ref={messageEndRef} />
+          </div>
+        </ScrollArea>
+        <div className={'mt-4'}>
+          <div className={'h-4 mb-2'}>
+            {(isListening || isGenerating || true) && (
+              <div className={'text-text-disabled flex justify-center'}>
+                {isListening && <div>Записываем голос ...</div>}
+                {isGenerating && <div>Генерируем ответ ...</div>}
+              </div>
+            )}
+          </div>
+          <UITextarea
             value={isListening ? `${userMessage} ${interimTranscript}`.trim() : userMessage}
             onInput={setUserMessage}
+            autoResize
+            placeholder={'Введите текст'}
+            paddingGap={70}
             onChange={sendMessage}
             disabled={isGenerating || interview?.finished || isListening}
-          />
+          >
+            <div className={'flex gap-3'}>
+              {canUseRecognition && (
+                <CustomIcon
+                  name={isListening ? 'stop' : 'microphone'}
+                  className={'cursor-pointer'}
+                  color={isListening ? 'var(--main-error)' : 'var(--main-white)'}
+                  disabled={isGenerating || interview?.finished}
+                  onClick={isListening ? stopListening : startListening}
+                />
+              )}
+              <CustomIcon
+                name={'send'}
+                className={'cursor-pointer'}
+                disabled={isGenerating || interview?.finished}
+                onClick={sendMessage}
+              />
+            </div>
+          </UITextarea>
         </div>
-        {isListening && <div>Записываем голос ...</div>}
-        {isGenerating && <div>Генерируем ответ ...</div>}
-        {canUseRecognition && (
-          <UIButton
-            className={'mb-2'}
-            text={isListening ? 'Завершить диктовку' : userMessage ? 'Продолжить диктовку' : 'Начать диктовку'}
-            onClick={isListening ? stopListening : startListening}
-            disabled={isGenerating || interview?.finished}
-          />
-        )}
-        <UIButton
-          text={'Отправить'}
-          onClick={sendMessage}
-          disabled={isGenerating || interview?.finished}
-        />
       </div>
     </div>
   );
