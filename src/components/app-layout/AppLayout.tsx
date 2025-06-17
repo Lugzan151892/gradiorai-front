@@ -14,10 +14,10 @@ const AppLayout: React.FC<Readonly<{ children: React.ReactNode; withState?: bool
         withState={withState}
       />
       <main
-        className={'flex-1 overflow-y-auto h-screen'}
+        className={'flex-1 overflow-y-auto'}
         ref={scrollRef}
       >
-        <div>{children}</div>
+        {children}
       </main>
     </div>
   );

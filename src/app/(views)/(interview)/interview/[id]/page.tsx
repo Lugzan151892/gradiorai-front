@@ -131,7 +131,7 @@ const CurrentInterviewPage = () => {
   }, [loadInterview]);
 
   return (
-    <div className={'w-full max-w-[840px] h-[calc(100vh-112px)] mx-auto flex flex-col lg:py-14 py-8'}>
+    <div className={'w-full max-w-[840px] h-[calc(100vh-112px)] lg:mx-auto flex flex-col lg:py-14 py-8 px-4'}>
       <div className={'border-1 border-main-gray rounded-3xl p-4 flex flex-col justify-end overflow-hidden h-full'}>
         <div className={'flex-grow'} />
         <div className={'flex flex-col overflow-auto'}>
