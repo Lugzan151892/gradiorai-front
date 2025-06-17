@@ -195,7 +195,7 @@ const TestsView = () => {
           </div>
         </div>
       </div>
-      <div className={'max-w-[685px] mx-auto flex flex-col relative px-4'}>
+      <div className={'max-w-[685px] mx-auto flex flex-col relative px-4 overflow-hidden'}>
         <div className={'p-6 bg-main-black rounded-3xl flex flex-col gap-4 items-center z-20 mb-6 text-center'}>
           <div className={'font-semibold text-xl'}>Уровень вопросов</div>
           <div className={'text-text-disabled'}>

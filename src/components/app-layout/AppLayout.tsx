@@ -1,6 +1,5 @@
 import React, { useRef } from 'react';
 import AppHeader from '@/components/header/AppHeader';
-import { ScrollArea } from '@/components/ui/scroll-area/ScrollArea';
 
 const AppLayout: React.FC<Readonly<{ children: React.ReactNode; withState?: boolean }>> = ({
   children,
@@ -9,19 +8,16 @@ const AppLayout: React.FC<Readonly<{ children: React.ReactNode; withState?: bool
   const scrollRef = useRef<HTMLDivElement | null>(null);
 
   return (
-    <div className={'h-screen flex flex-col'}>
+    <div className={'h-screen flex flex-col pt-[112px]'}>
       <AppHeader
         scrollRef={scrollRef}
         withState={withState}
       />
-      <div className={'h-[112px]'} />
       <main
-        className={'flex-1 overflow-y-auto min-h-[calc(100vh-112px)]'}
+        className={'flex-1 overflow-y-auto h-screen'}
         ref={scrollRef}
       >
-        <ScrollArea className={'h-full'}>
-          <div>{children}</div>
-        </ScrollArea>
+        <div>{children}</div>
       </main>
     </div>
   );

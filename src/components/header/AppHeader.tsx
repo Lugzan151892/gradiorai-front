@@ -25,6 +25,24 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
 
   const router = useRouter();
 
+  const links = [
+    {
+      id: 1,
+      text: 'СОБЕСЕДОВАНИЕ',
+      href: '/interview',
+    },
+    {
+      id: 2,
+      text: 'ТЕСТИРОВАНИЕ',
+      href: '/tests',
+    },
+    {
+      id: 3,
+      text: 'ПРОВЕРКА РЕЗЮМЕ',
+      href: '/interview/resume-check',
+    },
+  ];
+
   return (
     <div
       className={clsx(
@@ -45,6 +63,17 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
         >
           gradiorAI
         </div>
+      </div>
+      <div className={'px-6 py-2 lg:flex hidden gap-8 rounded-3xl bg-main-dark'}>
+        {links.map((el) => (
+          <div
+            className={'text-sm font-medium cursor-pointer hover:underline hover:text-main-purple'}
+            key={el.id}
+            onClick={() => router.push(el.href)}
+          >
+            {el.text}
+          </div>
+        ))}
       </div>
       {withState ? <HeaderUserState /> : null}
     </div>
