@@ -427,63 +427,63 @@ const Home = () => {
             </div>
           </div>
         </section>
+        <footer className={'lg:h-[300px] bg-main-black flex lg:items-center lg:justify-center mt-25 p-4'}>
+          <div className={'flex lg:flex-row flex-col lg:gap-30 gap-12'}>
+            <div className={'flex flex-col gap-8'}>
+              <div className={'flex'}>
+                <CustomIcon
+                  name={'owl'}
+                  size={24}
+                  color={'var(--low-green)'}
+                />
+                <div
+                  className={'ml-2 cursor-pointer text-white text-base'}
+                  onClick={() => router.push('/')}
+                >
+                  gradiorAI
+                </div>
+              </div>
+              <div className={'flex flex-col gap-3 text-sm font-light text-text-low-white'}>
+                <div>Политика конфиденциальности</div>
+                <div>Условия использования</div>
+              </div>
+              <div className={'text-sm font-light text-text-low-white'}>2025. Gradior. Все права защищены</div>
+            </div>
+            <div className={'flex flex-col gap-8'}>
+              <div className={'font-medium text-base leading-[24px]'}>ИНСТРУМЕНТЫ</div>
+              <div className={'flex flex-col gap-3 text-sm font-light text-text-low-white'}>
+                <div className={'cursor-pointer hover:underline hover:text-main-purple'}>Генерация с AI</div>
+                <div className={'cursor-pointer hover:underline hover:text-main-purple'}>Собеседование</div>
+                <div className={'cursor-pointer hover:underline hover:text-main-purple'}>Тестирование</div>
+                <div className={'cursor-pointer hover:underline hover:text-main-purple'}>Проверка резюме</div>
+              </div>
+            </div>
+            <div className={'flex flex-col gap-8'}>
+              <div className={'font-medium text-base leading-[24px]'}>КОНТАКТЫ</div>
+              <div className={'flex flex-col gap-3 text-sm font-light text-text-low-white'}>
+                <div className={'flex gap-3 items-center'}>
+                  <Image
+                    src={mail}
+                    alt={'mail'}
+                    width={32}
+                    height={32}
+                  />
+                  <div>Email: support@gradior.ru</div>
+                </div>
+                <div className={'flex gap-3 items-center'}>
+                  <Image
+                    src={telegramm}
+                    alt={'telegramm'}
+                    width={32}
+                    height={32}
+                  />
+                  <div>Telegram: @gradior_support</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </footer>
       </div>
-      <footer className={'lg:h-[300px] bg-main-black flex lg:items-center lg:justify-center mt-25 p-4'}>
-        <div className={'flex lg:flex-row flex-col lg:gap-30 gap-12'}>
-          <div className={'flex flex-col gap-8'}>
-            <div className={'flex'}>
-              <CustomIcon
-                name={'owl'}
-                size={24}
-                color={'var(--low-green)'}
-              />
-              <div
-                className={'ml-2 cursor-pointer text-white text-base'}
-                onClick={() => router.push('/')}
-              >
-                gradiorAI
-              </div>
-            </div>
-            <div className={'flex flex-col gap-3 text-sm font-light text-text-low-white'}>
-              <div>Политика конфиденциальности</div>
-              <div>Условия использования</div>
-            </div>
-            <div className={'text-sm font-light text-text-low-white'}>2025. Gradior. Все права защищены</div>
-          </div>
-          <div className={'flex flex-col gap-8'}>
-            <div className={'font-medium text-base leading-[24px]'}>ИНСТРУМЕНТЫ</div>
-            <div className={'flex flex-col gap-3 text-sm font-light text-text-low-white'}>
-              <div className={'cursor-pointer hover:underline hover:text-main-purple'}>Генерация с AI</div>
-              <div className={'cursor-pointer hover:underline hover:text-main-purple'}>Собеседование</div>
-              <div className={'cursor-pointer hover:underline hover:text-main-purple'}>Тестирование</div>
-              <div className={'cursor-pointer hover:underline hover:text-main-purple'}>Проверка резюме</div>
-            </div>
-          </div>
-          <div className={'flex flex-col gap-8'}>
-            <div className={'font-medium text-base leading-[24px]'}>КОНТАКТЫ</div>
-            <div className={'flex flex-col gap-3 text-sm font-light text-text-low-white'}>
-              <div className={'flex gap-3 items-center'}>
-                <Image
-                  src={mail}
-                  alt={'mail'}
-                  width={32}
-                  height={32}
-                />
-                <div>Email: support@gradior.ru</div>
-              </div>
-              <div className={'flex gap-3 items-center'}>
-                <Image
-                  src={telegramm}
-                  alt={'telegramm'}
-                  width={32}
-                  height={32}
-                />
-                <div>Telegram: @gradior_support</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
     </AppLayout>
   );
 };
