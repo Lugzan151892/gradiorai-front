@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { clsx } from 'clsx';
 import { useRouter } from 'next/navigation';
 import HeaderUserState from '@/components/header/components/HeaderUserState';
-import CustomIcon from '../ui/icon/CustomIcon';
+import CustomIcon from '@/components/ui/icon/CustomIcon';
 
 const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement | null>; withState?: boolean }>> = ({
   scrollRef,
