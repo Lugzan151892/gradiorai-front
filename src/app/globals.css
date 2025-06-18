@@ -5,7 +5,7 @@
   --color-text-black: #2c2b2b;
   --color-text-disabled: #aab1c0;
   --color-bg-header: #222121;
-  --color-main-grad: linear-gradient(180deg, rgba(44, 43, 43, 0) 31.17%, #7c49e3 128.34%);
+  --color-main-grad: linear-gradient(180deg, rgba(44, 43, 43, 0) 31.17%, #4f1df4 102.86%);
   --color-main-gray: #3d3f4d;
   --color-error: #b52727;
   --color-main-purple: #9073cb;
@@ -25,10 +25,21 @@
   --main-gray: #3d3f4d;
   --main-black: #262525;
   --text-disabled: #aab1c0;
-  --main-gradient: linear-gradient(180deg, rgba(44, 43, 43, 0) 31.17%, #7c49e3 128.34%);
+  --main-gradient: linear-gradient(180deg, rgba(44, 43, 43, 0) 31.17%, #4f1df4 102.86%);
 }
 
-/* [data-slot='scroll-area-scrollbar'] {
+html,
+body {
+  height: 100%;
+}
+
+body {
+  color: white;
+  background: var(--main-black);
+  background-color: var(--main-black);
+}
+
+[data-slot='scroll-area-scrollbar'] {
   background: transparent !important;
   padding: 2px;
   width: 12px;
@@ -49,63 +60,6 @@
   min-height: 25px;
 }
 
-* {
-  scrollbar-width: thin;
-  scrollbar-color: #aab1c0 transparent;
-}
-
-*::-webkit-scrollbar {
-  width: 12px;
-  height: 12px;
-}
-
-*::-webkit-scrollbar-button {
-  display: none;
-  height: 0;
-  width: 0;
-}
-
-*::-webkit-scrollbar-thumb {
-  background-color: #aab1c0;
-  border-radius: 4px;
-  min-height: 25px;
-  min-width: 8px;
-  margin: 2px;
-}
-
-*::-webkit-scrollbar-track {
-  background: transparent;
-} */
-
-html,
-body {
-  height: 100%;
-}
-
-body {
-  color: white;
-  background: var(--main-black);
-  background-color: var(--main-black);
-}
-
-/* .scroll-container {
-  overflow: overlay;
-  position: relative;
-}
-
-.scroll-container::-webkit-scrollbar {
-  width: 5px;
-  scrollbar-color: #aab1c0 transparent;
-}
-
-.scroll-container::-webkit-scrollbar-thumb {
-  background-color: #aab1c0;
-  border-radius: 10px;
-  transition:
-    background-color 0.3s ease,
-    opacity 0.3s ease;
-} */
-
 ::-webkit-scrollbar-button {
   display: none;
 }
@@ -114,6 +68,7 @@ body {
   width: 8px;
   scrollbar-color: #aab1c0 transparent;
 }
+
 ::-webkit-scrollbar-thumb {
   background-color: #aab1c0;
   border-radius: 10px;
