@@ -1,7 +1,6 @@
 'use client';
 
 import FileDropzone from '@/components/ui/file-dropzone/FileDropzone';
-import { ScrollArea } from '@/components/ui/scroll-area/ScrollArea';
 import React, { useState } from 'react';
 import { setLoading } from '@/features/loading/loadingSlice';
 import errorHandler from '@/core/utils/error/errorHandler';
@@ -9,6 +8,7 @@ import { useAppDispatch } from '@/hooks/redux';
 import Api from '@/core/api/api';
 import InterviewMessage from '../[id]/components/InterviewMessage';
 import UIButton from '@/components/ui/button/UIButton';
+import UILabel from '@/components/ui/label/UILabel';
 
 const ResumePrepare = () => {
   const [userCV, setUserCV] = useState<null | File>(null);
@@ -39,40 +39,60 @@ const ResumePrepare = () => {
     }
   };
 
+  const clearData = () => {
+    setUserCV(null);
+    setCheckResult('');
+  };
+
   return (
-    <div className={'w-full max-w-[1360px] mx-auto flex flex-col'}>
-      <h1 className={'text-5xl mb-2'}>Проверка резюме</h1>
-      <h2 className={'text-xl'}>Приложите свое резюме и мы дадим рекомендации по его исправлению</h2>
-      <div className={'bg-bg-transparent-25 rounded-10 p-4 mt-9 grow mb-9 overflow-hidden'}>
-        <ScrollArea>
-          <div className={'flex flex-col w-full h-full justify-center'}>
-            <div className={'flex w-full justify-around'}>
-              <div className={'max-w-md'}>
-                <div className={'mb-5 text-3xl'}>Ваше резюме</div>
-                <FileDropzone
-                  maxFileSize={2}
-                  formats={['docx', 'pdf']}
-                  onFileSelected={setUserCV}
-                />
-                {userCV ? <div>{userCV.name}</div> : null}
-              </div>
-              <div className={'max-w-md'}>
-                <div className={'mb-5 text-3xl'}>Результат проверки</div>
-                {checkResult && <InterviewMessage message={checkResult} />}
-              </div>
-            </div>
+    <section className={'w-full max-w-[1440px] h-[calc(100vh-112px)] mx-auto flex flex-col pb-3'}>
+      <div
+        className={'lg:h-[198px] rounded-b-4xl flex flex-col justify-center items-center mb-6 px-4 lg:py-auto py-14'}
+        style={{ background: 'var(--main-gradient)' }}
+      >
+        <div className={'w-full lg:max-w-[808px] flex flex-col gap-6 text-center'}>
+          <div className={'lg:text-5xl text-4xl leading-[100%] font-bold'}>Проверка резюме</div>
+          <div className={'lg:text-xl text-base'}>
+            Приложите свое резюме и мы дадим рекомендации по его исправлению.
           </div>
-        </ScrollArea>
+        </div>
       </div>
-      <div className={'w-full flex items-center mt-2 mb-4'}>
-        <UIButton
-          className={'w-[170px]! mx-auto'}
-          disabled={!!checkResult}
-          text={'Проверить'}
-          onClick={checkResume}
-        />
+      <div
+        className={
+          'p-6 bg-main-black rounded-3xl grid lg:grid-cols-2 grid-cols-1 grid-rows-2 lg:grid-rows-1 gap-3 text-center mx-2 flex-1'
+        }
+      >
+        <div className={'flex flex-col'}>
+          <FileDropzone
+            label={'Ваше резюме'}
+            maxFileSize={2}
+            file={userCV}
+            formats={['docx', 'pdf']}
+            onFileSelected={setUserCV}
+          />
+          <div className={'w-full flex items-center mt-2'}>
+            <UIButton
+              className={'mx-auto'}
+              disabled={!checkResult && !userCV}
+              text={!!checkResult ? 'Сбросить результат' : 'Проверить'}
+              onClick={!!checkResult ? clearData : checkResume}
+            />
+          </div>
+        </div>
+        <div className={'flex flex-col'}>
+          <UILabel className={'mb-2'}>Результат проверки:</UILabel>
+          <div className={'bg-main-dark p-4 text-center rounded-3xl h-full overflow-auto'}>
+            {checkResult && (
+              <InterviewMessage
+                className={'mb-2 mr-auto'}
+                message={checkResult}
+                isHuman={false}
+              />
+            )}
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 
