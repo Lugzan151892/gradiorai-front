@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { clsx } from 'clsx';
 import { useRouter } from 'next/navigation';
 import HeaderUserState from '@/components/header/components/HeaderUserState';
-import CustomIcon from '@/components/ui/icon/CustomIcon';
+import CustomIcon from '../ui/icon/CustomIcon';
 
 const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement | null>; withState?: boolean }>> = ({
   scrollRef,
@@ -55,16 +55,16 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
         <CustomIcon
           name={'owl'}
           size={24}
-          color={'var(--low-green)'}
+          color={'var(--color-text-disabled)'}
         />
         <div
-          className={'ml-2 cursor-pointer text-white text-base'}
+          className={'ml-2 cursor-pointer text-white lg:text-2xl text-base'}
           onClick={() => router.push('/')}
         >
           gradiorAI
         </div>
       </div>
-      <div className={'px-6 py-2 lg:flex hidden gap-8 rounded-3xl bg-main-dark'}>
+      <div className={'px-6 py-2 xl:flex hidden gap-8 rounded-3xl bg-main-dark'}>
         {links.map((el) => (
           <div
             className={'text-sm font-medium cursor-pointer hover:underline hover:text-main-purple'}
