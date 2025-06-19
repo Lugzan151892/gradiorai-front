@@ -320,22 +320,14 @@ const TestsView = () => {
       />
       <InfoModal
         opened={unauthGenerateModal}
-        text={'Для продолжения, пожалуйста, авторизуйтесь.'}
+        text={'Неавторизованный доступ к генерации уже использован. Для продолжения, пожалуйста, авторизуйтесь.'}
       >
         <UIButton
-          className={'!rounded-10 px-3! py-2! text-xl h-max mx-auto '}
+          className={'mx-auto'}
+          text={'ВОЙТИ'}
+          iconAfter={'arrow-top-right'}
           onClick={handleLogin}
-        >
-          <div className={'flex'}>
-            <CustomIcon
-              className={'mr-6'}
-              name={'user-login'}
-              size={25}
-              color={'var(--main-white)'}
-            />
-            <div className={'mr-4'}>Вход</div>
-          </div>
-        </UIButton>
+        />
       </InfoModal>
       <GenerateModal
         text={'Тест генерируется, пожалуйста подождите.'}
