@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 import AppLayout from '@/components/app-layout/AppLayout';
 import CardItem from '@/components/main-page/card-item/CardItem';
-import CardWithImage from '@/components/main-page/card-with-image/CardWithImage';
+// import CardWithImage from '@/components/main-page/card-with-image/CardWithImage';
 import robot from '@/components/main-page/assets/robot.png';
 import Image from 'next/image';
 import abstract from '@/components/main-page/assets/abstract.svg';
@@ -95,7 +95,8 @@ const Home = () => {
             </div>
           </div>
         </section>
-        <section
+        {/** Временно скрыто */}
+        {/* <section
           className={'lg:h-[454px] rounded-b-4xl flex justify-center items-center lg:mt-[140px] mt-18 px-4 py-12'}
           style={{ background: 'var(--main-gradient)' }}
         >
@@ -127,8 +128,8 @@ const Home = () => {
             src={chatExample}
             alt={'chat'}
           />
-        </section>
-        <section className={'flex flex-col lg:mt-20 mt-19 lg:gap-19 gap-8'}>
+        </section> */}
+        {/* <section className={'flex flex-col lg:mt-20 mt-19 lg:gap-19 gap-8'}>
           <div className={'lg:text-2xl text-xl font-semibold text-center'}>Преимущества нашего AI-генератора</div>
           <div className={'flex gap-4 flex-wrap px-4'}>
             <CardWithImage
@@ -158,7 +159,7 @@ const Home = () => {
               image={'question'}
             />
           </div>
-        </section>
+        </section> */}
         <section
           className={
             'lg:h-[454px] h-[665px] rounded-b-4xl flex justify-center items-center lg:mt-[140px] mt-18 px-4 py-12'
@@ -182,7 +183,7 @@ const Home = () => {
                 text={'ПРОЙТИ СОБЕСЕДОВАНИЕ'}
                 iconAfter={'arrow-top-right'}
                 onClick={() => {
-                  router.push('/');
+                  router.push('/interview');
                 }}
               />
             </div>
@@ -277,7 +278,7 @@ const Home = () => {
                 text={'НАЧАТЬ ТЕСТ'}
                 iconAfter={'arrow-top-right'}
                 onClick={() => {
-                  router.push('/');
+                  router.push('/tests');
                 }}
               />
             </div>
@@ -341,7 +342,7 @@ const Home = () => {
                 text={'ПРОВЕРИТЬ РЕЗЮМЕ'}
                 iconAfter={'arrow-top-right'}
                 onClick={() => {
-                  router.push('/');
+                  router.push('/interview/resume-check');
                 }}
               />
             </div>
@@ -443,19 +444,35 @@ const Home = () => {
                   gradiorAI
                 </div>
               </div>
-              <div className={'flex flex-col gap-3 text-sm font-light text-text-low-white'}>
+              <div className={'grow'} />
+              {/* <div className={'flex flex-col gap-3 text-sm font-light text-text-low-white'}>
                 <div>Политика конфиденциальности</div>
                 <div>Условия использования</div>
-              </div>
+              </div> */}
               <div className={'text-sm font-light text-text-low-white'}>2025. Gradior. Все права защищены</div>
             </div>
             <div className={'flex flex-col gap-8'}>
               <div className={'font-medium text-base leading-[24px]'}>ИНСТРУМЕНТЫ</div>
               <div className={'flex flex-col gap-3 text-sm font-light text-text-low-white'}>
-                <div className={'cursor-pointer hover:underline hover:text-main-purple'}>Генерация с AI</div>
-                <div className={'cursor-pointer hover:underline hover:text-main-purple'}>Собеседование</div>
-                <div className={'cursor-pointer hover:underline hover:text-main-purple'}>Тестирование</div>
-                <div className={'cursor-pointer hover:underline hover:text-main-purple'}>Проверка резюме</div>
+                {/* <div className={'cursor-pointer hover:underline hover:text-main-purple'}>Генерация с AI</div> */}
+                <div
+                  className={'cursor-pointer hover:underline hover:text-main-purple'}
+                  onClick={() => router.push('/interview')}
+                >
+                  Собеседование
+                </div>
+                <div
+                  className={'cursor-pointer hover:underline hover:text-main-purple'}
+                  onClick={() => router.push('/tests')}
+                >
+                  Тестирование
+                </div>
+                <div
+                  className={'cursor-pointer hover:underline hover:text-main-purple'}
+                  onClick={() => router.push('/interview/resume-check')}
+                >
+                  Проверка резюме
+                </div>
               </div>
             </div>
             <div className={'flex flex-col gap-8'}>

@@ -8,7 +8,11 @@
   --color-main-grad: linear-gradient(180deg, rgba(44, 43, 43, 0) 31.17%, #4f1df4 102.86%);
   --color-main-gray: #3d3f4d;
   --color-error: #b52727;
-  --color-main-purple: #9073cb;
+  /* old purple */
+  /* --color-main-purple: #9073cb; */
+
+  /* new purple */
+  --color-main-purple: #461fc8;
   --color-main-black: #222121;
   --color-main-dark: #262525;
   --color-text-low-white: #f9f9f9;
