@@ -40,6 +40,11 @@ const getIconViewBox = (name: keyof typeof IconMarkup) => {
     case 'send':
     case 'microphone':
       return '0 0 24 25';
+    case 'item-hut':
+    case 'item-analize':
+    case 'item-list':
+    case 'item-education':
+      return '0 0 50 50';
     default:
       return '0 0 24 24';
   }
