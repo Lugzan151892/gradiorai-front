@@ -45,7 +45,7 @@ const ResumePrepare = () => {
   };
 
   return (
-    <section className={'w-full max-w-[1440px] h-[calc(100vh-112px)] mx-auto flex flex-col pb-3'}>
+    <section className={'w-full max-w-[1440px] max-h-[calc(100vh-112px)] mx-auto flex flex-col pb-3 overflow-hidden'}>
       <div
         className={'lg:h-[198px] rounded-b-4xl flex flex-col justify-center items-center mb-6 px-4 lg:py-auto py-14'}
         style={{ background: 'var(--main-gradient)' }}
@@ -59,7 +59,7 @@ const ResumePrepare = () => {
       </div>
       <div
         className={
-          'p-6 bg-main-black rounded-3xl grid lg:grid-cols-2 grid-cols-1 grid-rows-2 lg:grid-rows-1 gap-3 text-center mx-2 flex-1'
+          'p-6 bg-main-black rounded-3xl grid lg:grid-cols-2 grid-cols-1 grid-rows-2 lg:grid-rows-1 gap-3 text-center mx-2 flex-1 lg:max-h-[600px] max-h-[300px]'
         }
       >
         <div className={'flex flex-col'}>
