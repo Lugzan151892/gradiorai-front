@@ -171,7 +171,7 @@ const AddTechnologyModal: React.FC<TModalProps> = (props) => {
           <div>Список специализаций</div>
           <div className={'flex mt-2 max-h-[300px]'}>
             <ScrollArea>
-              <div className={'flex flex-wrap gap-5'}>
+              <div className={'flex flex-wrap gap-2'}>
                 {specs.length ? (
                   specs.map((spec) => (
                     <UIFilterButton

@@ -172,12 +172,10 @@ const SystemGptPage = () => {
         <div className={'flex flex-col px-2 items-center mb-4'}>
           {gptSettings ? (
             <div className={'mt-3 w-full'}>
-              <div className={'flex mobile:flex-col gap-4'}>
+              <div className={'flex lg:flex-row flex-col gap-4'}>
                 <div className={'flex flex-col'}>
-                  <div className={'desktop:text-2xl mobile:text-lg text-center'}>
-                    Настройки используемой модели GPT:
-                  </div>
-                  <div className={'desktop:text-xl mobile:text-base mb-2 text-center'}>
+                  <div className={'lg:text-2xl text-lg text-center'}>Настройки используемой модели GPT:</div>
+                  <div className={'lg:text-xl text-base mb-2 text-center'}>
                     {`(ТОЛЬКО ${availableGptModels.map((model) => `'${model}'`).join(' || ')})`}
                   </div>
                   <div className={'flex flex-col gap-3'}>
@@ -197,10 +195,10 @@ const SystemGptPage = () => {
                 </div>
                 {settingsType === 'TEST' && (
                   <div className={'flex flex-col'}>
-                    <div className={'desktop:text-2xl mobile:text-lg text-center'}>
+                    <div className={'lg:text-2xl text-lg text-center'}>
                       Настройки количества генерируемых вопросов GPT:
                     </div>
-                    <div className={'desktop:text-xl mobile:text-base mb-2 text-center'}>(!!ТОЛЬКО ЧИСЛА)</div>
+                    <div className={'lg:text-xl text-base mb-2 text-center'}>(!!ТОЛЬКО ЧИСЛА)</div>
                     <div className={'flex flex-col gap-3'}>
                       <UIInput
                         id={'admin_amount_input'}
@@ -217,12 +215,12 @@ const SystemGptPage = () => {
                     </div>
                   </div>
                 )}
-                <div className={'flex flex-col desktop:w-[max-content] mobile:w-full'}>
-                  <div className={'desktop:text-2xl mobile:text-lg text-center'}>Настройки температуры GPT:</div>
-                  <div className={'desktop:text-xl mobile:text-base mb-2 text-center'}>
+                <div className={'flex flex-col lg:w-[max-content] w-full'}>
+                  <div className={'lg:text-2xl text-lg text-center'}>Настройки температуры GPT:</div>
+                  <div className={'lg:text-xl text-base mb-2 text-center'}>
                     (ТОЛЬКО ЧИСЛА ОТ 0 до 2 с десятичными значениями, например 0.2)
                   </div>
-                  <div className={'flex gap-3 desktop:w-[max-content] mobile:w-full'}>
+                  <div className={'flex gap-3 lg:w-[max-content] w-full'}>
                     <UIInput
                       value={gptSettings.temperature}
                       label={'Температура'}
@@ -232,7 +230,7 @@ const SystemGptPage = () => {
                 </div>
               </div>
               <div className={'flex flex-col mb-10'}>
-                <div className={'desktop:text-2xl mobile:text-lg mb-2 text-center'}>Промпты</div>
+                <div className={'lg:text-2xl text-lg mb-2 text-center'}>Промпты</div>
                 {settingsType === 'TEST' && (
                   <div>
                     Можно использовать переменные:
@@ -244,7 +242,7 @@ const SystemGptPage = () => {
                     </div>
                   </div>
                 )}
-                <div className={'flex mobile:flex-col w-full h-full gap-3'}>
+                <div className={'flex lg:flex-row flex-col w-full h-full gap-3'}>
                   <div className={'flex w-full h-full'}>
                     <UITextarea
                       className={'flex-1 h-full'}
