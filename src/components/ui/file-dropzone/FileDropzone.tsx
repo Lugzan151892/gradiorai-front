@@ -6,12 +6,15 @@ import UILabel from '../label/UILabel';
 import { cn } from '@/lib/utils';
 import { formatFileSize } from '@/utils/files';
 
+const BYTES_IN_MB = 1024 * 1024;
+
 interface IFileDropzoneProps {
   onFileSelected: (file: File | null) => void;
   maxFileSize?: number;
   className?: string;
   label?: string;
   file?: File | null;
+  error?: string[] | string;
   id?: string;
   formats?: Array<string>;
 }
@@ -22,11 +25,13 @@ const FileDropzone: React.FC<Readonly<IFileDropzoneProps>> = ({
   formats,
   file,
   className,
+  error,
   label,
   id,
 }) => {
   const [isDragOver, setIsDragOver] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [insideErrors, setInsideErrors] = useState<Array<string>>([]);
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -37,11 +42,32 @@ const FileDropzone: React.FC<Readonly<IFileDropzoneProps>> = ({
     setIsDragOver(false);
   };
 
+  function getFileExtension(filename: string): string | null {
+    const lastDotIndex = filename.lastIndexOf('.');
+    if (lastDotIndex === -1) return null;
+    return filename.slice(lastDotIndex + 1).toLowerCase();
+  }
+
+  const getInsideErrors = (file: File) => {
+    const errorType = formats && !formats.includes(getFileExtension(file.name) || '') ? 'Неверный формат файла' : '';
+    const errorSize = maxFileSize && file.size > maxFileSize * BYTES_IN_MB ? 'Размер файла превышает допустимый' : '';
+
+    return [errorType, errorSize].filter(Boolean);
+  };
+
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragOver(false);
     if (e.dataTransfer.files.length > 0) {
+      const errors = getInsideErrors(e.dataTransfer.files[0]);
+
+      if (errors.length) {
+        setInsideErrors(errors);
+
+        return;
+      }
       onFileSelected(e.dataTransfer.files[0]);
+      setInsideErrors([]);
     }
   };
 
@@ -51,10 +77,27 @@ const FileDropzone: React.FC<Readonly<IFileDropzoneProps>> = ({
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
+      const errors = getInsideErrors(e.target.files[0]);
+
+      if (errors.length) {
+        setInsideErrors(errors);
+
+        return;
+      }
+
       onFileSelected(e.target.files[0]);
+      setInsideErrors([]);
       e.target.value = '';
     }
   };
+
+  const errorsList = Array.isArray(error)
+    ? [...insideErrors, ...error]
+    : error
+      ? [...insideErrors, error]
+      : insideErrors;
+
+  const borderClasses = errorsList.length ? 'border-error' : 'border-main-gray';
 
   return (
     <div className={cn(className, 'flex flex-col w-full')}>
@@ -75,7 +118,7 @@ const FileDropzone: React.FC<Readonly<IFileDropzoneProps>> = ({
           isDragOver ? 'bg-low-green border-low-green' : ''
         }`}
       >
-        <div className={'border-1 border-dashed border-main-gray flex flex-col items-center p-4 text-text-disabled'}>
+        <div className={cn('border-1 border-dashed flex flex-col items-center p-4 text-text-disabled', borderClasses)}>
           <p className={'text-sm mb-8'}>Перетащите файл сюда или нажмите, чтобы выбрать</p>
           <div className={'h-15 w-15 rounded-full border-main-gray border-1 flex items-center justify-center mb-8'}>
             <CustomIcon
@@ -116,6 +159,15 @@ const FileDropzone: React.FC<Readonly<IFileDropzoneProps>> = ({
             hidden
           />
         </div>
+      </div>
+      <div className={'min-h-4'}>
+        {!!errorsList.length && (
+          <div className={'mt-2 text-xs text-error flex flex-col items-start'}>
+            {errorsList.map((e) => (
+              <span key={e}>{e}</span>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

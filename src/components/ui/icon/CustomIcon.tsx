@@ -8,8 +8,6 @@ type ICustomIconProps = {
   color?: string;
   size?: number;
   className?: string;
-  fill?: string;
-  stroke?: string;
   caption?: string;
   tooltip?: string;
   disabled?: boolean;
@@ -69,12 +67,12 @@ const CustomIcon: React.FC<ICustomIconProps> = ({
       </svg>
       {tooltip && showTooltip && (
         <div
-          className={`absolute w-max top-[${size}px] right-[10px] px-3 py-1 mobile:text-sm desktop:text-xl text-white bg-black rounded-md`}
+          className={`absolute w-max top-[${size}px] right-[10px] px-3 py-1 text-sm lg:text-xl text-white bg-black rounded-md`}
         >
           {tooltip}
         </div>
       )}
-      {caption ? <div className={'desktop:text-xl mobile:text-sm text-white'}>{caption}</div> : null}
+      {caption ? <div className={'lg:text-xl text-sm text-white'}>{caption}</div> : null}
     </div>
   );
 };
