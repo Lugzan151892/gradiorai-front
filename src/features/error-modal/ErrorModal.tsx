@@ -40,7 +40,7 @@ const ErrorModal = () => {
             <DialogPanel
               transition
               className={
-                'w-full max-w-md flex flex-col rounded-input bg-modal p-6 border-[3px] min-h-[180px] duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0 ' +
+                'w-full max-w-md flex flex-col gap-3 rounded-3xl bg-black p-6 border-1 min-h-[180px] duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0 ' +
                 `border-${settings.type === 'error' ? 'error' : 'white'}`
               }
             >
@@ -48,7 +48,7 @@ const ErrorModal = () => {
                 <div />
                 <DialogTitle
                   as={'h3'}
-                  className={'text-xl font-medium text-white text-center'}
+                  className={'text-base font-medium text-white text-center'}
                 >
                   {settings.text}
                 </DialogTitle>

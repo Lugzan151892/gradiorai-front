@@ -201,8 +201,9 @@ const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
     >
       <div className={'m-6'}>
         <div>
-          <div className={'desktop:text-2xl mobile:text-xl mb-2'}>Изменение вопроса</div>
+          <div className={'lg:text-2xl text-xl mb-2'}>Изменение вопроса</div>
           <UITextarea
+            rows={3}
             value={editedQuestion.question}
             onInput={(val) => handleQuestionChange(val)}
           />
@@ -224,16 +225,12 @@ const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
             </div>
           ))}
         </div>
-        <div className={'mt-3'}>
-          <div className={'desktop:text-2xl mobile:text-xl mb-2 text-center'}>Укажите уровень вопроса:</div>
-          <div
-            className={
-              'grid desktop:grid-flow-col desktop:auto-cols-auto-fit desktop:auto-cols-[minmax(150px,200px)] mobile:grid-cols-1 justify-center w-full gap-y-2 gap-x-2'
-            }
-          >
+        <div className={'mt-3 mx-auto flex flex-col'}>
+          <div className={'lg:text-2xl text-xl mb-2 text-center'}>Укажите уровень вопроса:</div>
+          <div className={'flex flex-wrap gap-3 justify-center'}>
             {levels.map((el) => (
               <UIFilterButton
-                className={'desktop:mt-2 mobile:mt-1'}
+                className={'lg:mt-2 mt-1'}
                 key={el.id}
                 text={el.name}
                 selected={selectedLevels.includes(el.id)}
@@ -243,15 +240,10 @@ const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
           </div>
         </div>
         <div className={'mt-3'}>
-          <div className={'desktop:text-2xl mobile:text-xl mb-2 text-center'}>Укажите направления:</div>
-          <div
-            className={
-              'grid desktop:grid-cols-[repeat(auto-fit,minmax(150px,200px))] mobile:grid-cols-1 justify-center w-full gap-y-2 gap-x-2'
-            }
-          >
+          <div className={'lg:text-2xl text-xl mb-2 text-center'}>Укажите направления:</div>
+          <div className={'flex flex-wrap gap-2 justify-center'}>
             {allTechs.map((el) => (
               <UIFilterButton
-                className={'mt-2'}
                 key={el.id}
                 text={el.name}
                 selected={selectedTechs.includes(el.id)}
@@ -271,7 +263,7 @@ const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
 
         <div className={'flex'}>
           <UIButton
-            className={'desktop:ml-auto mobile:mx-auto'}
+            className={'lg:ml-auto mx-auto'}
             text={'Сохранить вопрос'}
             onClick={saveQuestion}
           />
