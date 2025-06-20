@@ -13,6 +13,7 @@ import CustomIcon from '@/components/ui/icon/CustomIcon';
 import errorHandler from '@/core/utils/error/errorHandler';
 import { setLoading } from '@/features/loading/loadingSlice';
 import { useBreakpoint } from '@/hooks/useBreakpoints';
+import { cn } from '@/lib/utils';
 
 const GenerateTest: React.FC<{
   tests: ITest[];
@@ -26,6 +27,7 @@ const GenerateTest: React.FC<{
   const [showResults, setShowResults] = useState<boolean>(false);
   const [disableSave, setDisableSave] = useState(false);
   const [saveQuestionModal, setSaveQuestionModal] = useState(false);
+  const [reviewSent, setReviewSent] = useState(false);
   const { user } = useAppSelector((state: RootState) => state.user);
 
   const { isMobile } = useBreakpoint();
@@ -65,7 +67,6 @@ const GenerateTest: React.FC<{
 
   const handleReview = async () => {
     if (!userRating && !comment) {
-      goToTests();
       return;
     }
 
@@ -75,8 +76,7 @@ const GenerateTest: React.FC<{
         comment,
         rating: userRating,
       });
-
-      goToTests();
+      setReviewSent(true);
     } catch (e) {
       errorHandler(e, dispatch);
     } finally {
@@ -90,56 +90,64 @@ const GenerateTest: React.FC<{
 
   if (showResults) {
     return (
-      <div className={'h-full flex grow w-full'}>
+      <section className={'mt-6 w-full max-w-[1440px] mx-auto h-full'}>
         <div
-          className={
-            'desktop:my-8 mobile:my-4 bg-bg-transparent-25 desktop:mx-3 rounded-lg w-full p-4 flex flex-col items-center'
-          }
+          className={'h-[120px] rounded-b-4xl flex flex-col justify-center items-center mb-8 px-4'}
+          style={{ background: 'var(--main-gradient)' }}
         >
-          <div className={'desktop:text-6xl mobile:text-4xl mobile:mb-4 desktop:mb-10'}>Ваш результат</div>
-          <ProgressBar
-            score={userResult}
-            maxScore={tests.length}
-          />
-          <div className={'flex flex-col max-w-lg w-full desktop:mt-10 mobile:mt-7'}>
-            <div>
-              <div className={'desktop:text-xl mobile:text-base'}>Оцените тестирование</div>
-              <div
-                className={'flex gap-7 mt-2'}
-                onMouseLeave={() => setUserHover(0)}
-              >
-                {stars.map((star) => (
-                  <CustomIcon
-                    key={star}
-                    className={'cursor-pointer'}
-                    name={'star'}
-                    size={79}
-                    color={userHover >= star || userRating >= star ? 'var(--low-green)' : 'var(--main-white)'}
-                    onMouseEnter={() => setUserHover(star)}
-                    onClick={() => setUserRating(star)}
-                  />
-                ))}
-              </div>
-            </div>
-            <div className={'desktop:mt-10 mobile:mt-5'}>
-              <div className={'desktop:text-xl mobile:text-base mb-2'}>Отзыв</div>
-              <UITextarea
-                value={comment}
-                rows={isMobile ? 3 : 4}
-                onInput={setComment}
-              />
-            </div>
+          <div className={'w-full lg:max-w-[808px] flex flex-col gap-6 text-center'}>
+            <div className={'lg:text-5xl text-4xl leading-[100%] font-bold'}>Результат тестирования</div>
           </div>
-          <div className={'grow'} />
-          <div className={'mt-4 w-full flex'}>
+        </div>
+        <div className={'max-w-[685px] mx-auto flex flex-col relative px-4 overflow-hidden'}>
+          <div className={'flex flex-col'}>
+            <ProgressBar
+              score={userResult}
+              maxScore={tests.length}
+            />
             <UIButton
-              className={'w-[180px]! desktop:ml-auto mobile:mx-auto h-max self-end '}
-              text={'Еще раз'}
+              className={'mx-auto mt-8'}
+              text={'ПОПРОБОВАТЬ СНОВА'}
+              onClick={goToTests}
+            />
+          </div>
+        </div>
+        <div className={'bg-main-black rounded-3xl flex justify-center p-8 mx-4 mt-10 mb-8'}>
+          <div className={'flex flex-col gap-6 items-center text-center max-w-[1200px] w-full'}>
+            <div className={'lg:text-xl text-base'}>Пожалуйста, оцените тестирование</div>
+            <div
+              className={'flex gap-7 mt-2'}
+              onMouseLeave={() => setUserHover(0)}
+            >
+              {stars.map((star) => (
+                <CustomIcon
+                  key={star}
+                  className={cn('cursor-pointer', reviewSent && 'pointer-events-none')}
+                  name={userHover >= star || userRating >= star ? 'star-transparent' : 'star'}
+                  size={44}
+                  color={userHover >= star || userRating >= star ? 'var(--main-purple)' : 'transparent'}
+                  onMouseEnter={() => setUserHover(star)}
+                  onClick={() => setUserRating(star)}
+                />
+              ))}
+            </div>
+            <UITextarea
+              label={'Оставьте отзыв'}
+              placeholder={'Расскажите о своих впечатлениях'}
+              value={comment}
+              rows={isMobile ? 3 : 4}
+              onInput={setComment}
+              disabled={reviewSent}
+            />
+            <UIButton
+              text={'ОТПРАВИТЬ ОТЗЫВ'}
+              iconAfter={'arrow-top-right'}
+              disabled={(!userRating && !comment) || reviewSent}
               onClick={handleReview}
             />
           </div>
         </div>
-      </div>
+      </section>
     );
   }
 
