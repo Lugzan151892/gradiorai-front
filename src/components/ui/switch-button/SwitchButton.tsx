@@ -28,7 +28,7 @@ const SwitchButton: React.FC<Readonly<ISwitchProps>> = ({ className, label, disa
       <SwitchPrimitive.Root
         data-slot={'switch'}
         className={cn(
-          'peer data-[state=checked]:bg-main-purple data-[state=unchecked]:bg-main-gray focus-visible:border-ring focus-visible:ring-ring/50 inline-flex h-7 w-13 px-[2px] shrink-0 items-center rounded-full border border-transparent shadow-xs transition-all outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50'
+          'peer cursor-pointer data-[state=checked]:bg-main-purple data-[state=unchecked]:bg-main-gray focus-visible:border-ring focus-visible:ring-ring/50 inline-flex h-7 w-13 px-[2px] shrink-0 items-center rounded-full border border-transparent shadow-xs transition-all outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50'
         )}
         onCheckedChange={onChange}
         {...props}
