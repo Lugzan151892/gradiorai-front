@@ -109,7 +109,7 @@ const HeaderUserState = () => {
       show: !!user?.admin,
     },
     {
-      id: EMENU_ITEM.INTERVIEW,
+      id: EMENU_ITEM.RESUME_CHECK,
       text: 'Проверить резюме',
       icon: 'settings',
       onClick: () => handleMenuClick(EMENU_ITEM.RESUME_CHECK),
@@ -174,16 +174,15 @@ const HeaderUserState = () => {
           {showMenu && (
             <div
               className={
-                'z-50 p-4 bg-black rounded-xl flex flex-col overflow-hidden lg:w-[400px] w-full max-w-full lg:h-[400px] h-full max-h-[calc(100vh-80px)] absolute top-[80px] lg:right-[30px] right-0'
+                'z-50 p-4 bg-black rounded-xl flex flex-col overflow-hidden lg:w-[400px] w-full max-w-full lg:h-[400px] h-screen max-h-[calc(100vh-114px)] absolute top-[114px] lg:right-[30px] right-0'
               }
             >
-              <MenuItem
-                className={'mb-10'}
-                icon={'user'}
-                text={username || ''}
-                isStatic
-              />
               <ScrollArea>
+                <MenuItem
+                  icon={'user'}
+                  text={username || ''}
+                  isStatic
+                />
                 {menuItems
                   .filter((e) => e.show)
                   .map((item) => (

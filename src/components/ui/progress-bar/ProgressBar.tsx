@@ -107,7 +107,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ score, maxScore, colorSteps =
           viewBox={`0 0 ${radius * 2} ${radius * 2}`}
         >
           <circle
-            stroke={'var(--main-purple)'}
+            stroke={'var(--main-gray)'}
             fill={'transparent'}
             strokeWidth={stroke}
             r={normalizedRadius}

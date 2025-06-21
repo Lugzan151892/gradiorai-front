@@ -45,7 +45,7 @@ const ResumePrepare = () => {
   };
 
   return (
-    <section className={'w-full max-w-[1440px] max-h-[calc(100vh-112px)] mx-auto flex flex-col pb-3 overflow-hidden'}>
+    <section className={'w-full max-w-[1440px] mx-auto flex flex-col pb-3'}>
       <div
         className={'lg:h-[198px] rounded-b-4xl flex flex-col justify-center items-center mb-6 px-4 lg:py-auto py-14'}
         style={{ background: 'var(--main-gradient)' }}
@@ -57,11 +57,7 @@ const ResumePrepare = () => {
           </div>
         </div>
       </div>
-      <div
-        className={
-          'p-6 bg-main-black rounded-3xl grid lg:grid-cols-2 grid-cols-1 grid-rows-2 lg:grid-rows-1 gap-3 text-center mx-2 flex-1 lg:max-h-[600px] max-h-[300px]'
-        }
-      >
+      <div className={'p-6 bg-main-black rounded-3xl flex flex-col gap-3 text-center mx-2 flex-1'}>
         <div className={'flex flex-col'}>
           <FileDropzone
             label={'Ваше резюме'}
@@ -81,7 +77,7 @@ const ResumePrepare = () => {
         </div>
         <div className={'flex flex-col'}>
           <UILabel className={'mb-2'}>Результат проверки:</UILabel>
-          <div className={'bg-main-dark p-4 text-center rounded-3xl h-full overflow-auto'}>
+          <div className={'bg-main-dark p-4 text-center rounded-3xl min-h-[300px] max-h-[400px] overflow-auto'}>
             {checkResult && (
               <InterviewMessage
                 className={'mb-2 mr-auto'}
