@@ -90,16 +90,9 @@ const GenerateTest: React.FC<{
 
   if (showResults) {
     return (
-      <section className={'mt-6 w-full max-w-[1440px] mx-auto h-full'}>
-        <div
-          className={'h-[120px] rounded-b-4xl flex flex-col justify-center items-center mb-8 px-4'}
-          style={{ background: 'var(--main-gradient)' }}
-        >
-          <div className={'w-full lg:max-w-[808px] flex flex-col gap-6 text-center'}>
-            <div className={'lg:text-5xl text-4xl leading-[100%] font-bold'}>Результат тестирования</div>
-          </div>
-        </div>
-        <div className={'max-w-[685px] mx-auto flex flex-col relative px-4 overflow-hidden'}>
+      <section className={'mt-6 w-full max-w-[1440px] lg:mx-auto h-full mx-4'}>
+        <div className={'lg:text-5xl text-4xl leading-[100%] font-bold text-center mb-6'}>Результат тестирования</div>
+        <div className={'max-w-[685px] mx-auto flex flex-col relative px-4'}>
           <div className={'flex flex-col'}>
             <ProgressBar
               score={userResult}

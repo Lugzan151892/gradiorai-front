@@ -35,12 +35,12 @@ const ErrorModal = () => {
         onClose={close}
       >
         <DialogBackdrop className={'fixed inset-0 bg-black opacity-80'} />
-        <div className={'fixed inset-0 z-10 w-screen overflow-y-auto'}>
+        <div className={'fixed inset-0 z-10 overflow-y-auto max-w-screen w-md'}>
           <div className={'flex min-h-full items-center justify-center p-4'}>
             <DialogPanel
               transition
               className={
-                'w-full max-w-md flex flex-col gap-3 rounded-3xl bg-black p-6 border-1 min-h-[180px] duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0 ' +
+                'max-w-screen w-md flex flex-col mx-4 gap-3 rounded-3xl bg-black p-6 border-1 min-h-[180px] duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0 ' +
                 `border-${settings.type === 'error' ? 'error' : 'white'}`
               }
             >
