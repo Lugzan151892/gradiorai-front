@@ -9,7 +9,7 @@ const AppLayout: React.FC<Readonly<{ children: React.ReactNode; withState?: bool
   const scrollRef = useRef<HTMLDivElement | null>(null);
 
   return (
-    <div className={'h-screen flex flex-col pt-[112px]'}>
+    <div className={'flex flex-col pt-[112px] [height:100dvh]'}>
       <AppHeader
         scrollRef={scrollRef}
         withState={withState}
