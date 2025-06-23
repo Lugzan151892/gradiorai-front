@@ -12,7 +12,7 @@ import abstract2 from '@/components/main-page/assets/abstract2.svg';
 import butterfly from '@/components/main-page/assets/butterfly.svg';
 import donut from '@/components/main-page/assets/donut.svg';
 import mail from '@/components/main-page/assets/mail.svg';
-import telegramm from '@/components/main-page/assets/telegramm.svg';
+// import telegramm from '@/components/main-page/assets/telegramm.svg';
 import CustomIcon from '@/components/ui/icon/CustomIcon';
 import chatExample from '@/components/main-page/assets/chat-example.png';
 import { useAppSelector } from '@/hooks/redux';
@@ -533,7 +533,7 @@ const Home = () => {
                   Email: support@gradior.ru
                 </a>
               </div>
-              <div className={'flex gap-3 items-center'}>
+              {/* <div className={'flex gap-3 items-center'}>
                 <Image
                   src={telegramm}
                   alt={'telegramm'}
@@ -546,7 +546,7 @@ const Home = () => {
                 >
                   Telegram: @gradior_support
                 </a>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
