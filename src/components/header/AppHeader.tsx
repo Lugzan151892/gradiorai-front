@@ -65,14 +65,16 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
         </div>
       </div>
       {withState && (
-        <div className={'px-6 py-2 xl:flex hidden gap-8 rounded-3xl bg-main-dark'}>
+        <div className={'px-6 py-2 xl:flex hidden gap-8 rounded-3xl bg-main-dark border-1 border-main-gray'}>
           {links.map((el) => (
             <div
-              className={'text-sm font-medium cursor-pointer hover:underline hover:text-main-purple'}
+              className={
+                'px-4 py-1 cursor-pointer rounded-3xl transition-colors duration-150 hover:[background:var(--main-gray)] hover:[box-shadow:inset_0_0_0_1px_hsla(0,0%,100%,0.04)]'
+              }
               key={el.id}
               onClick={() => router.push(el.href)}
             >
-              {el.text}
+              <div className={'font-medium text-sm'}>{el.text}</div>
             </div>
           ))}
         </div>
