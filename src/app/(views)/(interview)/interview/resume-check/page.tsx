@@ -9,6 +9,7 @@ import Api from '@/core/api/api';
 import InterviewMessage from '../[id]/components/InterviewMessage';
 import UIButton from '@/components/ui/button/UIButton';
 import UILabel from '@/components/ui/label/UILabel';
+import routeChecker from '@/hoc/routeChecker';
 
 const ResumePrepare = () => {
   const [userCV, setUserCV] = useState<null | File>(null);
@@ -90,4 +91,4 @@ const ResumePrepare = () => {
   );
 };
 
-export default ResumePrepare;
+export default routeChecker(ResumePrepare, 'authOnly');

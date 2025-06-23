@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation';
 import UIButton from '@/components/ui/button/UIButton';
 import SwitchButton from '@/components/ui/switch-button/SwitchButton';
 import UITextarea from '@/components/ui/textarea/UITextarea';
+import routeChecker from '@/hoc/routeChecker';
 
 const InterviewView = () => {
   const [vakanciesFile, setVakanciesFile] = useState<null | File>(null);
@@ -115,4 +116,4 @@ const InterviewView = () => {
   );
 };
 
-export default InterviewView;
+export default routeChecker(InterviewView, 'authOnly');
