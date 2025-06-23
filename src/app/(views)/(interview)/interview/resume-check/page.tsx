@@ -6,7 +6,7 @@ import { setLoading } from '@/features/loading/loadingSlice';
 import errorHandler from '@/core/utils/error/errorHandler';
 import { useAppDispatch } from '@/hooks/redux';
 import Api from '@/core/api/api';
-import InterviewMessage from '../[id]/components/InterviewMessage';
+import InterviewMessage from '@/app/(views)/(interview)/interview/[id]/components/InterviewMessage';
 import UIButton from '@/components/ui/button/UIButton';
 import UILabel from '@/components/ui/label/UILabel';
 import routeChecker from '@/hoc/routeChecker';

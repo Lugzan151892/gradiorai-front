@@ -1,7 +1,7 @@
 'use client';
 import UIButton from '@/components/ui/button/UIButton';
 import { useRouter } from 'next/navigation';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import AppLayout from '@/components/app-layout/AppLayout';
 import CardItem from '@/components/main-page/card-item/CardItem';
 // import CardWithImage from '@/components/main-page/card-with-image/CardWithImage';
@@ -15,9 +15,52 @@ import mail from '@/components/main-page/assets/mail.svg';
 import telegramm from '@/components/main-page/assets/telegramm.svg';
 import CustomIcon from '@/components/ui/icon/CustomIcon';
 import chatExample from '@/components/main-page/assets/chat-example.png';
+import { useAppSelector } from '@/hooks/redux';
+import { RootState } from '@/store';
+import { getRandomElement } from '@/core/utils/array';
 
 const Home = () => {
   const router = useRouter();
+
+  const { user } = useAppSelector((state: RootState) => state.user);
+
+  const [mainButton, setMainButton] = useState({
+    id: 1,
+    text: 'ПОПРОБОВАТЬ УНИКАЛЬНЫЕ ТЕСТЫ',
+    onClick: () => router.push('/tests'),
+    unauth: true,
+  });
+
+  useEffect(() => {
+    const buttons = [
+      {
+        id: 1,
+        text: 'ПОПРОБОВАТЬ УНИКАЛЬНЫЕ ТЕСТЫ',
+        onClick: () => router.push('/tests'),
+        unauth: true,
+      },
+      {
+        id: 2,
+        text: 'ПОСОРЕВНОВАТЬСЯ С AI В СОБЕСЕДОВАНИИ',
+        onClick: () => router.push('/interview'),
+        unauth: false,
+      },
+      {
+        id: 3,
+        text: 'ПРОВЕРИТЬ АКТУЛАЛЬНОСТЬ СВОЕГО РЕЗЮМЕ',
+        onClick: () => router.push('/interview/resume-check'),
+        unauth: false,
+      },
+    ];
+
+    const filteredButtons = buttons.filter((el) => !!user || el.unauth);
+
+    const newButton = getRandomElement(filteredButtons);
+
+    if (newButton) {
+      setMainButton(newButton);
+    }
+  }, [user, router]);
 
   return (
     <AppLayout>
@@ -35,11 +78,9 @@ const Home = () => {
             </div>
             <div>
               <UIButton
-                text={'НАЧАТЬ ТЕСТИРОВАНИЕ'}
+                text={mainButton.text}
                 iconAfter={'arrow-top-right'}
-                onClick={() => {
-                  router.push('/tests');
-                }}
+                onClick={mainButton.onClick}
               />
             </div>
           </div>
