@@ -65,7 +65,7 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
         </div>
       </div>
       {withState && (
-        <div className={'px-6 py-2 xl:flex hidden gap-8 rounded-3xl bg-main-dark border-1 border-main-gray'}>
+        <div className={'p-2 xl:flex hidden gap-2 rounded-3xl bg-main-dark border-1 border-main-gray'}>
           {links.map((el) => (
             <div
               className={

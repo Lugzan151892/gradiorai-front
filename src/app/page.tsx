@@ -435,7 +435,7 @@ const Home = () => {
               <CustomIcon
                 name={'owl'}
                 size={24}
-                color={'var(--low-green)'}
+                color={'var(--color-text-disabled)'}
               />
               <div
                 className={'ml-2 cursor-pointer text-white text-base'}
