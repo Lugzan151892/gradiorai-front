@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation';
 import UIButton from '@/components/ui/button/UIButton';
 import SwitchButton from '@/components/ui/switch-button/SwitchButton';
 import UITextarea from '@/components/ui/textarea/UITextarea';
+import routeChecker from '@/hoc/routeChecker';
 
 const InterviewView = () => {
   const [vakanciesFile, setVakanciesFile] = useState<null | File>(null);
@@ -20,7 +21,7 @@ const InterviewView = () => {
   const router = useRouter();
 
   const startInterview = async () => {
-    if (!userDescription) {
+    if (!userCV) {
       return;
     }
 
@@ -60,7 +61,7 @@ const InterviewView = () => {
         style={{ background: 'var(--main-gradient)' }}
       >
         <div className={'w-full lg:max-w-[808px] flex flex-col gap-6 text-center'}>
-          <div className={'lg:text-5xl text-4xl leading-[100%] font-bold'}>Настройка генерации</div>
+          <div className={'lg:text-5xl text-4xl leading-[100%] font-bold'}>Настройка собеседования</div>
           <div className={'lg:text-xl text-base'}>
             Укажите конфигурацию параметров для составления контекста собеседования.
           </div>
@@ -78,7 +79,7 @@ const InterviewView = () => {
           />
           <SwitchButton
             className={'mt-6'}
-            label={'Добавить вакансию'}
+            label={'Добавить файл с вакансией'}
             checked={addVCFile}
             onChange={(val) => setAddVCFile(val)}
           />
@@ -95,10 +96,9 @@ const InterviewView = () => {
           <UITextarea
             className={'mt-6'}
             id={'user-description'}
-            label={'Дополнительная информация о себе (необязательно)'}
+            label={'Информация о вакансии (необязательно)'}
             value={userDescription}
             rows={10}
-            placeholder={'Расскажите о себе'}
             onInput={setUserDescription}
           />
         </div>
@@ -107,7 +107,7 @@ const InterviewView = () => {
         <UIButton
           className={'mx-auto lg:w-auto w-full'}
           iconAfter={'arrow-top-right'}
-          disabled={!userDescription}
+          disabled={!userCV}
           text={'НАЧАТЬ'}
           onClick={startInterview}
         />
@@ -116,4 +116,4 @@ const InterviewView = () => {
   );
 };
 
-export default InterviewView;
+export default routeChecker(InterviewView, 'authOnly');

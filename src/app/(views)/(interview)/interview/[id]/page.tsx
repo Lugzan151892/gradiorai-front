@@ -11,6 +11,7 @@ import { setLoading } from '@/features/loading/loadingSlice';
 import UITextarea from '@/components/ui/textarea/UITextarea';
 import { useSpeechRecognition } from '@/hooks/speech-recognition/useSpeechRecognition';
 import CustomIcon from '@/components/ui/icon/CustomIcon';
+import routeChecker from '@/hoc/routeChecker';
 
 const CurrentInterviewPage = () => {
   const { id } = useParams();
@@ -200,4 +201,4 @@ const CurrentInterviewPage = () => {
   );
 };
 
-export default CurrentInterviewPage;
+export default routeChecker(CurrentInterviewPage, 'authOnly');

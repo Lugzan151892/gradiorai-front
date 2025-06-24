@@ -10,7 +10,6 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import MenuItem, { IMenuItemProps } from '@/components/header/components/MenuItem';
 import { EMENU_ITEM } from '@/components/header/interfaces';
-import { ScrollArea } from '@/components/ui/scroll-area/ScrollArea';
 import Image from 'next/image';
 import userLogin from '@/assets/icons/user-profile.svg';
 
@@ -174,24 +173,22 @@ const HeaderUserState = () => {
           {showMenu && (
             <div
               className={
-                'z-50 p-4 bg-black rounded-xl flex flex-col overflow-hidden lg:w-[400px] w-full max-w-full lg:h-[400px] h-screen max-h-[calc(100vh-114px)] absolute top-[114px] lg:right-[30px] right-0'
+                'z-50 p-4 bg-black rounded-xl flex flex-col overflow-hidden lg:w-[400px] w-full max-w-full lg:h-[400px] h-screen max-h-[calc(100vh-114px)] absolute top-[114px] lg:right-[30px] right-0 overflow-y-auto'
               }
             >
-              <ScrollArea>
-                <MenuItem
-                  icon={'user'}
-                  text={username || ''}
-                  isStatic
-                />
-                {menuItems
-                  .filter((e) => e.show)
-                  .map((item) => (
-                    <MenuItem
-                      key={item.id}
-                      {...item}
-                    />
-                  ))}
-              </ScrollArea>
+              <MenuItem
+                icon={'user'}
+                text={username || ''}
+                isStatic
+              />
+              {menuItems
+                .filter((e) => e.show)
+                .map((item) => (
+                  <MenuItem
+                    key={item.id}
+                    {...item}
+                  />
+                ))}
             </div>
           )}
         </div>
