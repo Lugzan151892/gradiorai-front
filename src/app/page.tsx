@@ -7,7 +7,7 @@ import CardItem from '@/components/main-page/card-item/CardItem';
 // import CardWithImage from '@/components/main-page/card-with-image/CardWithImage';
 import robot from '@/components/main-page/assets/robot.png';
 import Image from 'next/image';
-import abstract from '@/components/main-page/assets/abstract.svg';
+// import abstract from '@/components/main-page/assets/abstract.svg';
 import abstract2 from '@/components/main-page/assets/abstract2.svg';
 import butterfly from '@/components/main-page/assets/butterfly.svg';
 import donut from '@/components/main-page/assets/donut.svg';
@@ -41,13 +41,13 @@ const Home = () => {
       },
       {
         id: 2,
-        text: 'ПОСОРЕВНОВАТЬСЯ С AI В СОБЕСЕДОВАНИИ',
+        text: 'ПРОЙТИ РЕАЛЬНОЕ СОБЕСЕДОВАНИЕ',
         onClick: () => router.push('/interview'),
         unauth: false,
       },
       {
         id: 3,
-        text: 'ПРОВЕРИТЬ АКТУЛАЛЬНОСТЬ СВОЕГО РЕЗЮМЕ',
+        text: 'ПРОВЕРИТЬ АКТУАЛЬНОСТЬ СВОЕГО РЕЗЮМЕ',
         onClick: () => router.push('/interview/resume-check'),
         unauth: false,
       },
@@ -396,9 +396,7 @@ const Home = () => {
             <div className={'flex border-1 border-main-gray rounded-3xl p-4 relative overflow-hidden'}>
               <div className={'flex flex-col gap-4 max-w-[70%]'}>
                 <div className={'lg:text-xl text-base font-semibold leading-[100%]'}>Загрузите резюме</div>
-                <div className={'lg:text-lg text-sm leading-[24px]'}>
-                  Поддерживаемые форматы: PDF, DOCX, TXT. Можно вставить текст вручную или загрузить из LinkedIn
-                </div>
+                <div className={'lg:text-lg text-sm leading-[24px]'}>Поддерживаемые форматы: PDF, DOCX.</div>
               </div>
               <Image
                 className={'absolute lg:right-0 lg:bottom-0 -right-15'}
@@ -406,7 +404,7 @@ const Home = () => {
                 alt={'abstract'}
               />
             </div>
-            <div className={'flex border-1 border-main-gray rounded-3xl p-4 relative overflow-hidden'}>
+            {/* <div className={'flex border-1 border-main-gray rounded-3xl p-4 relative overflow-hidden'}>
               <div className={'flex flex-col gap-4 max-w-[70%]'}>
                 <div className={'lg:text-xl text-base font-semibold leading-[100%]'}>Выберите вакансию</div>
                 <div className={'lg:text-lg text-sm leading-[24px]'}>
@@ -419,21 +417,7 @@ const Home = () => {
                 src={abstract}
                 alt={'abstract'}
               />
-            </div>
-            <div className={'flex border-1 border-main-gray rounded-3xl p-4 relative overflow-hidden'}>
-              <div className={'flex flex-col gap-4 max-w-[70%]'}>
-                <div className={'lg:text-xl text-base font-semibold leading-[100%]'}>ATS-оптимизация</div>
-                <div className={'lg:text-lg text-sm leading-[24px]'}>
-                  AI определит, содержит ли резюме ключевые слова из вакансии. Проверит структуру и оценит вероятность
-                  отсеивания
-                </div>
-              </div>
-              <Image
-                className={'absolute lg:right-0 lg:bottom-3 -bottom-2 -right-2'}
-                src={donut}
-                alt={'abstract'}
-              />
-            </div>
+            </div> */}
             <div className={'flex border-1 border-main-gray rounded-3xl p-4 relative overflow-hidden'}>
               <div className={'flex flex-col gap-4 max-w-[70%]'}>
                 <div className={'lg:text-xl text-base font-semibold leading-[100%]'}>Отчет с улучшениями</div>
@@ -444,6 +428,20 @@ const Home = () => {
               <Image
                 className={'absolute lg:right-0 lg:bottom-3 -right-1 -bottom-2'}
                 src={abstract2}
+                alt={'abstract'}
+              />
+            </div>
+            <div className={'flex border-1 border-main-gray rounded-3xl p-4 relative overflow-hidden col-span-full'}>
+              <div className={'flex flex-col gap-4 max-w-[70%]'}>
+                <div className={'lg:text-xl text-base font-semibold leading-[100%]'}>ATS-оптимизация</div>
+                <div className={'lg:text-lg text-sm leading-[24px]'}>
+                  AI определит, содержит ли резюме ключевые слова из вакансии. Проверит структуру и оценит вероятность
+                  отсеивания
+                </div>
+              </div>
+              <Image
+                className={'absolute lg:right-0 lg:bottom-3 -bottom-2 -right-2'}
+                src={donut}
                 alt={'abstract'}
               />
             </div>
