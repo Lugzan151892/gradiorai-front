@@ -13,11 +13,11 @@ import butterfly from '@/components/main-page/assets/butterfly.svg';
 import donut from '@/components/main-page/assets/donut.svg';
 import mail from '@/components/main-page/assets/mail.svg';
 // import telegramm from '@/components/main-page/assets/telegramm.svg';
-import CustomIcon from '@/components/ui/icon/CustomIcon';
 import chatExample from '@/components/main-page/assets/chat-example.png';
 import { useAppSelector } from '@/hooks/redux';
 import { RootState } from '@/store';
 import { getRandomElement } from '@/core/utils/array';
+import logoTransparentFull from '@/assets/icons/gradior_transparent_full.png';
 
 const Home = () => {
   const router = useRouter();
@@ -87,8 +87,8 @@ const Home = () => {
         </section>
         <section className={'w-full flex flex-col justify-center items-center mt-20 gap-19 px-4'}>
           <div className={'max-w-[1040px] lg:text-2xl text-xl font-semibold text-center'}>
-            gradiorAI поможет вам пройти любое собеседование с помощью персонализированных симуляций и обратной связи в
-            реальном времени
+            Наши инструменты помогут Вам пройти любое собеседование с помощью персонализированных симуляций и обратной
+            связи в реальном времени
           </div>
           <div className={'flex xl:flex-nowrap flex-wrap justify-center gap-6'}>
             <div className={'flex sm:flex-nowrap flex-wrap gap-6'}>
@@ -120,7 +120,7 @@ const Home = () => {
                 description={
                   'Ваше собеседование провалилось, но вы не понимаете почему? Наш AI-ассистент проведет детальный разбор и выявит, что нужно улучшить, чтобы в следующий раз гарантированно получить оффер.'
                 }
-                additional={'67% соискателей повторяют одни и те же ошибки на разных собеседованиях.'}
+                additional={'73% соискателей повторяют одни и те же ошибки на разных собеседованиях.'}
               />
               <CardItem
                 icon={'item-education'}
@@ -250,7 +250,7 @@ const Home = () => {
                   AI не просто слушает — он понимает контекст
                 </div>
                 <div className={'lg:max-w-[254px] max-w-[70%] lg:text-lg text-sm leading-[24px]'}>
-                  Глубокая семантическая обработка: алгоритм оценивает, насколько ваш ответ соответствует
+                  Глубокая семантическая обработка — алгоритм оценивает, насколько ваш ответ соответствует
                   профессиональным стандартам, а не просто «звучит красиво».
                 </div>
               </div>
@@ -278,8 +278,8 @@ const Home = () => {
                 Реалистичные условия без стресса реального отказа
               </div>
               <div className={'lg:text-lg text-sm leading-[24px]'}>
-                Адаптивная сложность: если вы справляетесь, AI усложняет вопросы (как настоящий интервьюер). Провокации:
-                симуляция неудобных моментов.
+                Адаптивная сложность, если вы справляетесь, AI усложняет вопросы (как настоящий интервьюер).
+                Реалистичная симуляция неудобных моментов.
               </div>
             </div>
             <div
@@ -291,8 +291,8 @@ const Home = () => {
                 Экономия времени за счёт точного фокуса
               </div>
               <div className={'lg:text-lg text-sm leading-[24px]'}>
-                Концентрация на важном: вместо просмотра 10 видео на YouTube только релевантные знания. Мгновенный
-                фидбек: не нужно ждать проверки — оценка и советы появляются сразу.
+                Концентрация на важном, вместо просмотра 10 видео на YouTube только релевантные знания. Мгновенный
+                фидбек, не нужно ждать проверки — оценка и советы появляются сразу.
               </div>
             </div>
           </div>
@@ -335,8 +335,10 @@ const Home = () => {
             className={'w-full flex flex-col p-6 gap-4 border-1 border-main-gray rounded-3xl w-1/5 lg:min-h-[242px]'}
           >
             <div className={'lg:text-xl text-base font-semibold leading-[100%]'}>Выберите уровень</div>
-            <div className={'lg:text-lg text-sm leading-[24px]'}>
-              Начинающий (Junior), Опытный (Middle) или Экспертный (Senior)
+            <div className={'lg:text-lg text-sm leading-[24px] flex flex-col gap-1'}>
+              <span>Начинающий (Junior)</span>
+              <span>Опытный (Middle)</span>
+              <span>Экспертный (Senior)</span>
             </div>
           </div>
           <div className={'border-1 border-main-gray border-dashed lg:w-1/15 lg:h-0 h-8 w-0'} />
@@ -345,7 +347,7 @@ const Home = () => {
           >
             <div className={'lg:text-xl text-base font-semibold leading-[100%]'}>Настройте специализацию</div>
             <div className={'lg:text-lg text-sm leading-[24px]'}>
-              15+ технических специализаций (IT, дизайн, продуктовый менеджмент)
+              15+ технических специализаций для IT, дизайн, продуктовый менеджмент, Front, Back, QA и других
             </div>
           </div>
           <div className={'border-1 border-main-gray border-dashed lg:w-1/15 lg:h-0 h-8 w-0'} />
@@ -363,7 +365,7 @@ const Home = () => {
           >
             <div className={'lg:text-xl text-base font-semibold leading-[100%]'}>Пройдите тест</div>
             <div className={'lg:text-lg text-sm leading-[24px]'}>
-              После настройки AI сгенерирует персонализированный тест
+              После настройки конфигурации AI сгенерирует персонализированный тест
             </div>
           </div>
         </section>
@@ -436,8 +438,7 @@ const Home = () => {
               <div className={'flex flex-col gap-4 max-w-[70%]'}>
                 <div className={'lg:text-xl text-base font-semibold leading-[100%]'}>Отчет с улучшениями</div>
                 <div className={'lg:text-lg text-sm leading-[24px]'}>
-                  AI проверит резюме и подскажет, что нужно улучшить. Вы получите оптимизированную версию, которую можно
-                  скачать.
+                  AI проверит резюме и подскажет, что нужно улучшить.
                 </div>
               </div>
               <Image
@@ -472,11 +473,12 @@ const Home = () => {
       <footer className={'lg:h-[300px] bg-main-black flex lg:items-center lg:justify-center mt-25 p-4'}>
         <div className={'flex lg:flex-row flex-col lg:gap-30 gap-12'}>
           <div className={'flex flex-col gap-8'}>
-            <div className={'flex'}>
-              <CustomIcon
-                name={'owl'}
-                size={24}
-                color={'var(--color-text-disabled)'}
+            <div className={'flex items-center'}>
+              <Image
+                src={logoTransparentFull}
+                alt={'gradiorai'}
+                height={32}
+                width={32}
               />
               <div
                 className={'ml-2 cursor-pointer text-white text-base'}

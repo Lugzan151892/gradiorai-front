@@ -2,7 +2,7 @@
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { IInterview } from '@/app/(views)/(interview)/interview/types';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import InterviewMessage from '@/app/(views)/(interview)/interview/[id]/components/InterviewMessage';
 import Api from '@/core/api/api';
 import errorHandler from '@/core/utils/error/errorHandler';
@@ -12,9 +12,11 @@ import UITextarea from '@/components/ui/textarea/UITextarea';
 import { useSpeechRecognition } from '@/hooks/speech-recognition/useSpeechRecognition';
 import CustomIcon from '@/components/ui/icon/CustomIcon';
 import routeChecker from '@/hoc/routeChecker';
+import UIButton from '@/components/ui/button/UIButton';
 
 const CurrentInterviewPage = () => {
   const { id } = useParams();
+  const router = useRouter();
 
   const [interview, setInterview] = useState<IInterview>();
   const [userMessage, setUserMessage] = useState('');
@@ -135,7 +137,7 @@ const CurrentInterviewPage = () => {
     <div className={'w-full max-w-[840px] h-[calc(100vh-112px)] lg:mx-auto flex flex-col lg:py-14 py-8 px-4'}>
       <div className={'border-1 border-main-gray rounded-3xl p-4 flex flex-col justify-end overflow-hidden h-full'}>
         <div className={'flex-grow'} />
-        <div className={'flex flex-col overflow-auto'}>
+        <div className={'flex flex-col overflow-y-auto overflow-x-hidden'}>
           {interview?.messages.map((message) => (
             <InterviewMessage
               key={message.id}
@@ -153,8 +155,16 @@ const CurrentInterviewPage = () => {
           )}
           {interview?.finished && (
             <div className={'bg-message-gray p-4 rounded-input'}>
-              <div className={'text-2xl mb-4'}>Результат интервью:</div>
+              <div className={'text-2xl mb-4'}>Результат собеседования</div>
               <div>{interview.recomendations}</div>
+              <div className={'w-full flex items-center mt-4 mb-2 px-4'}>
+                <UIButton
+                  className={'mx-auto lg:w-auto w-full'}
+                  iconAfter={'arrow-top-right'}
+                  text={'НАЧАТЬ НОВОЕ СОБЕСЕДОВАНИЕ'}
+                  onClick={() => router.push('/interview')}
+                />
+              </div>
             </div>
           )}
           <div ref={messageEndRef} />
