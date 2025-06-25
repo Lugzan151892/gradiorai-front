@@ -61,7 +61,7 @@ const InterviewView = () => {
         style={{ background: 'var(--main-gradient)' }}
       >
         <div className={'w-full lg:max-w-[808px] flex flex-col gap-6 text-center'}>
-          <div className={'lg:text-5xl text-4xl leading-[100%] font-bold'}>Настройка собеседования</div>
+          <div className={'lg:text-5xl text-4xl leading-[100%] font-bold'}>Cобеседование</div>
           <div className={'lg:text-xl text-base'}>
             Укажите конфигурацию параметров для составления контекста собеседования.
           </div>
@@ -83,6 +83,7 @@ const InterviewView = () => {
             checked={addVCFile}
             onChange={(val) => setAddVCFile(val)}
           />
+          <div className={'text-left text-xs mt-1 text-text-disabled'}>Файл вакансии на которую вы откликаетесь</div>
           {addVCFile && (
             <FileDropzone
               className={'mt-6'}
@@ -96,7 +97,10 @@ const InterviewView = () => {
           <UITextarea
             className={'mt-6'}
             id={'user-description'}
-            label={'Информация о вакансии (необязательно)'}
+            label={'Дополнительная информация'}
+            hint={
+              'Здесь можно описать вакансию, на которую хотите пройти собеседование или дать больше информации о себе'
+            }
             value={userDescription}
             rows={10}
             onInput={setUserDescription}
