@@ -4,7 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { clsx } from 'clsx';
 import { useRouter } from 'next/navigation';
 import HeaderUserState from '@/components/header/components/HeaderUserState';
-import CustomIcon from '@/components/ui/icon/CustomIcon';
+import Image from 'next/image';
+import logoTransparentFull from '@/assets/icons/gradior_transparent_full.png';
 
 const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement | null>; withState?: boolean }>> = ({
   scrollRef,
@@ -52,10 +53,11 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
       )}
     >
       <div className={'flex'}>
-        <CustomIcon
-          name={'owl'}
-          size={24}
-          color={'var(--color-text-disabled)'}
+        <Image
+          src={logoTransparentFull}
+          alt={'gradiorai'}
+          width={32}
+          height={32}
         />
         <div
           className={'ml-2 cursor-pointer text-white lg:text-2xl text-base'}

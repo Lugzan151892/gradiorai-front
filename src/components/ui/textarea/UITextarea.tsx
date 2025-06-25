@@ -7,6 +7,7 @@ import UILabel from '@/components/ui/label/UILabel';
 
 interface Props extends Pick<React.ComponentProps<'input'>, 'id' | 'disabled' | 'placeholder' | 'value' | 'className'> {
   label?: string;
+  hint?: string;
   error?: string[] | string;
   linkChild?: React.ReactNode;
   success?: boolean;
@@ -22,6 +23,7 @@ const UITextarea: React.FC<Readonly<Props>> = ({
   className,
   id,
   label,
+  hint,
   disabled,
   placeholder,
   value,
@@ -98,6 +100,7 @@ const UITextarea: React.FC<Readonly<Props>> = ({
           {label}
         </UILabel>
       )}
+      {hint && <div className={'text-left text-xs mb-1 text-text-disabled'}>{hint}</div>}
       <div className={'relative'}>
         <textarea
           data-slot={'input'}
