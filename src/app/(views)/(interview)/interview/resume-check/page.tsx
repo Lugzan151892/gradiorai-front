@@ -53,7 +53,7 @@ const ResumePrepare = () => {
       >
         <div className={'w-full lg:max-w-[808px] flex flex-col gap-6 text-center'}>
           <div className={'lg:text-5xl text-4xl leading-[100%] font-bold'}>Проверка резюме</div>
-          <div className={'lg:text-xl text-base'}>Приложите свое резюме и мы дадим рекомендации по его улучшению.</div>
+          <div className={'lg:text-xl text-base'}>Приложите свое резюме и получите рекомендации по его улучшению.</div>
         </div>
       </div>
       <div className={'p-6 bg-main-black rounded-3xl flex flex-col gap-3 text-center mx-2 flex-1'}>

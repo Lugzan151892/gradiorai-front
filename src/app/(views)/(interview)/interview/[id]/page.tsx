@@ -2,7 +2,7 @@
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { IInterview } from '@/app/(views)/(interview)/interview/types';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import InterviewMessage from '@/app/(views)/(interview)/interview/[id]/components/InterviewMessage';
 import Api from '@/core/api/api';
 import errorHandler from '@/core/utils/error/errorHandler';
@@ -12,15 +12,35 @@ import UITextarea from '@/components/ui/textarea/UITextarea';
 import { useSpeechRecognition } from '@/hooks/speech-recognition/useSpeechRecognition';
 import CustomIcon from '@/components/ui/icon/CustomIcon';
 import routeChecker from '@/hoc/routeChecker';
+import UIButton from '@/components/ui/button/UIButton';
 
 const CurrentInterviewPage = () => {
   const { id } = useParams();
+  const router = useRouter();
 
   const [interview, setInterview] = useState<IInterview>();
   const [userMessage, setUserMessage] = useState('');
   const [generatedMessage, setGeneratedMessage] = useState('');
   const messageEndRef = useRef<HTMLDivElement>(null);
   const [isGenerating, setIsGenerating] = useState(false);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [showScrollToBottom, setShowScrollToBottom] = useState(false);
+
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container) return;
+
+    const handleScroll = () => {
+      const { scrollTop, scrollHeight, clientHeight } = container;
+      const isAtBottom = scrollTop + clientHeight >= scrollHeight - 50; // небольшой отступ
+
+      setShowScrollToBottom(!isAtBottom);
+    };
+
+    container.addEventListener('scroll', handleScroll);
+
+    return () => container.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const { isListening, startListening, stopListening, interimTranscript, canUseRecognition } = useSpeechRecognition(
     (finalPart) => {
@@ -132,10 +152,17 @@ const CurrentInterviewPage = () => {
   }, [loadInterview]);
 
   return (
-    <div className={'w-full max-w-[840px] h-[calc(100vh-112px)] lg:mx-auto flex flex-col lg:py-14 py-8 px-4'}>
-      <div className={'border-1 border-main-gray rounded-3xl p-4 flex flex-col justify-end overflow-hidden h-full'}>
+    <div className={'w-full max-w-[840px] h-[calc(100dvh-112px)] lg:mx-auto flex flex-col lg:py-14 py-8 px-4'}>
+      <div
+        className={
+          'border-1 border-main-gray rounded-3xl p-4 flex flex-col justify-end overflow-hidden h-full relative'
+        }
+      >
         <div className={'flex-grow'} />
-        <div className={'flex flex-col overflow-auto'}>
+        <div
+          className={'flex flex-col overflow-y-auto overflow-x-hidden'}
+          ref={scrollContainerRef}
+        >
           {interview?.messages.map((message) => (
             <InterviewMessage
               key={message.id}
@@ -153,12 +180,35 @@ const CurrentInterviewPage = () => {
           )}
           {interview?.finished && (
             <div className={'bg-message-gray p-4 rounded-input'}>
-              <div className={'text-2xl mb-4'}>Результат интервью:</div>
+              <div className={'text-2xl mb-4'}>Результат собеседования</div>
               <div>{interview.recomendations}</div>
+              <div className={'w-full flex items-center mt-4 mb-2 px-4'}>
+                <UIButton
+                  className={'mx-auto lg:w-auto w-full'}
+                  iconAfter={'arrow-top-right'}
+                  text={'НАЧАТЬ НОВОЕ СОБЕСЕДОВАНИЕ'}
+                  onClick={() => router.push('/interview')}
+                />
+              </div>
             </div>
           )}
           <div ref={messageEndRef} />
         </div>
+        {showScrollToBottom && (
+          <div
+            className={
+              'absolute bottom-24 right-1 p-1 bg-main-blue text-white rounded-full shadow-lg z-50 cursor-pointer bg-main-purple'
+            }
+            onClick={() => {
+              scrollContainerRef.current?.scrollTo({
+                top: scrollContainerRef.current.scrollHeight,
+                behavior: 'smooth',
+              });
+            }}
+          >
+            <CustomIcon name={'arrow-down'} />
+          </div>
+        )}
         <div className={'mt-4'}>
           <div className={'h-4 mb-2'}>
             {(isListening || isGenerating || true) && (
@@ -196,6 +246,19 @@ const CurrentInterviewPage = () => {
             </div>
           </UITextarea>
         </div>
+        {/* {showScrollToBottom && (
+          <button
+            className={'fixed bottom-28 right-8 p-2 bg-main-blue text-white rounded-full shadow-lg z-50'}
+            onClick={() => {
+              scrollContainerRef.current?.scrollTo({
+                top: scrollContainerRef.current.scrollHeight,
+                behavior: 'smooth',
+              });
+            }}
+          >
+            ⬇️ Вниз
+          </button>
+        )} */}
       </div>
     </div>
   );

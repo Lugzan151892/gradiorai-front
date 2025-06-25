@@ -10,11 +10,7 @@
   --color-error: #b52727;
   --color-success: #23b44f;
   --color-yellow: #ffef3d;
-  /* old purple */
   --color-main-purple: #9073cb;
-
-  /* new purple */
-  /* --color-main-purple: #461fc8; */
   --color-main-black: #222121;
   --color-main-dark: #262525;
   --color-text-low-white: #f9f9f9;
@@ -32,7 +28,6 @@
   --main-black: #262525;
   --text-disabled: #aab1c0;
   --main-purple: #461fc8;
-  /* --main-gradient: linear-gradient(180deg, rgba(44, 43, 43, 0) 31.17%, #4f1df4 102.86%); */
   --main-gradient: radial-gradient(140% 107.13% at 50% 10%, transparent 37.41%, #63e 69.27%, #fff 100%);
 }
 
