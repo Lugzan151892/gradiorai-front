@@ -66,8 +66,8 @@ const interDisplay = localFont({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Gradior',
-    template: '%s | Gradior',
+    default: 'gradiorAI',
+    template: '%s | gradiorAI',
   },
   description:
     'От новичка до эксперта - наши AI-тесты помогут вам оценить уровень знаний и найти точки роста. Выбирайте направление, отвечайте на вопросы, развивайтесь. Прокачивайте навыки с нами!',
@@ -89,6 +89,7 @@ export const metadata: Metadata = {
     'вопросы к собеседованию',
     'генерация вопросов чатом GPT',
     'Gradior',
+    'gradiorAI',
     'gradior ai',
     'IT',
     'проверка знаний',
@@ -104,16 +105,16 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   openGraph: {
-    title: 'Gradior — Ваш ИИ-помощник в подготовке к собеседованиям',
+    title: 'gradiorAI — Ваш ИИ-помощник в подготовке к собеседованиям',
     description:
       'От новичка до эксперта - наши AI-тесты помогут вам оценить уровень знаний и найти точки роста. Выбирайте направление, отвечайте на вопросы, развивайтесь. Прокачивайте навыки с нами!',
     url: 'https://gradiorai.ru/',
-    siteName: 'Gradior',
+    siteName: 'gradiorAI',
     locale: 'ru_RU',
     type: 'website',
   },
   category: 'technology',
-  applicationName: 'Gradior',
+  applicationName: 'gradiorAI',
   generator: 'Next.js',
   robots: {
     index: true,
