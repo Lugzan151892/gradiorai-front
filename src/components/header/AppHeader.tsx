@@ -52,7 +52,7 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
         scrolled && 'shadow-xl'
       )}
     >
-      <div className={'flex'}>
+      <div className={'flex items-center'}>
         <Image
           src={logoTransparentFull}
           alt={'gradiorai'}

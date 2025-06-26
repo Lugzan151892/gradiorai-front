@@ -13,6 +13,7 @@ import { useSpeechRecognition } from '@/hooks/speech-recognition/useSpeechRecogn
 import CustomIcon from '@/components/ui/icon/CustomIcon';
 import routeChecker from '@/hoc/routeChecker';
 import UIButton from '@/components/ui/button/UIButton';
+import { cn } from '@/lib/utils';
 
 const CurrentInterviewPage = () => {
   const { id } = useParams();
@@ -209,15 +210,17 @@ const CurrentInterviewPage = () => {
             <CustomIcon name={'arrow-down'} />
           </div>
         )}
-        <div className={'mt-4'}>
-          <div className={'h-4 mb-2'}>
-            {(isListening || isGenerating || true) && (
-              <div className={'text-text-disabled flex justify-center'}>
-                {isListening && <div>Записываем голос ...</div>}
-                {isGenerating && <div>Генерируем ответ ...</div>}
-              </div>
-            )}
-          </div>
+        <div className={cn(!interview?.finished && 'mt-4')}>
+          {!interview?.finished && (
+            <div className={'h-4 mb-2'}>
+              {(isListening || isGenerating || true) && (
+                <div className={'text-text-disabled flex justify-center'}>
+                  {isListening && <div>Записываем голос ...</div>}
+                  {isGenerating && <div>Генерируем ответ ...</div>}
+                </div>
+              )}
+            </div>
+          )}
           <UITextarea
             value={isListening ? `${userMessage} ${interimTranscript}`.trim() : userMessage}
             onInput={setUserMessage}

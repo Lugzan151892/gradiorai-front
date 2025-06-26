@@ -90,9 +90,9 @@ const GenerateTest: React.FC<{
 
   if (showResults) {
     return (
-      <section className={'mt-6 w-full max-w-[1440px] lg:mx-auto h-full mx-4'}>
+      <section className={'mt-6 w-full lg:max-w-[1440px] max-w-screen lg:mx-auto h-full px-4'}>
         <div className={'lg:text-5xl text-4xl leading-[100%] font-bold text-center mb-6'}>Результат тестирования</div>
-        <div className={'max-w-[685px] mx-auto flex flex-col relative px-4'}>
+        <div className={'max-w-[685px] mx-auto flex flex-col relative lg:px-4'}>
           <div className={'flex flex-col'}>
             <ProgressBar
               score={userResult}
@@ -105,11 +105,11 @@ const GenerateTest: React.FC<{
             />
           </div>
         </div>
-        <div className={'bg-main-black rounded-3xl flex justify-center p-8 mx-4 mt-10 mb-8'}>
-          <div className={'flex flex-col gap-6 items-center text-center max-w-[1200px] w-full'}>
+        <div className={'bg-main-black rounded-3xl flex justify-center p-8 mt-10 mb-8'}>
+          <div className={'flex flex-col gap-6 items-center text-center lg:max-w-[1200px] w-full'}>
             <div className={'lg:text-xl text-base'}>Пожалуйста, оцените тестирование</div>
             <div
-              className={'flex gap-7 mt-2'}
+              className={'flex lg:gap-7 gap-5 mt-2'}
               onMouseLeave={() => setUserHover(0)}
             >
               {stars.map((star) => (
@@ -117,7 +117,7 @@ const GenerateTest: React.FC<{
                   key={star}
                   className={cn('cursor-pointer', reviewSent && 'pointer-events-none')}
                   name={userHover >= star || userRating >= star ? 'star-transparent' : 'star'}
-                  size={44}
+                  size={isMobile ? 32 : 44}
                   color={userHover >= star || userRating >= star ? 'var(--main-purple)' : 'transparent'}
                   onMouseEnter={() => setUserHover(star)}
                   onClick={() => setUserRating(star)}
