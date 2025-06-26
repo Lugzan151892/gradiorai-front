@@ -18,19 +18,21 @@ interface ProgressBarProps {
 const defaultColors: ColorStep[] = [
   {
     percent: 0,
-    // color: 'text-error stroke-error',
+    color: 'text-main-gray stroke-main-gray',
+    text: 'Не расстраивайтесь — это отличная возможность улучшить свои знания! Попробуйте еще раз, у вас точно получится!',
+  },
+  {
+    percent: 5,
     color: 'text-main-purple stroke-main-purple',
     text: 'Не расстраивайтесь — это отличная возможность улучшить свои знания! Попробуйте еще раз, у вас точно получится!',
   },
   {
     percent: 30,
-    // color: 'text-yellow stroke-yellow',
     color: 'text-main-purple stroke-main-purple',
     text: 'Неплохой результат, но есть куда расти! Разберите ошибки и попробуйте снова.',
   },
   {
     percent: 80,
-    // color: 'text-success stroke-success',
     color: 'text-main-purple stroke-main-purple',
     text: 'Отличный результат! Вы показали отличные знания и справились со всеми вопросами. Так держать!',
   },
