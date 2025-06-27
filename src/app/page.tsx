@@ -41,13 +41,13 @@ const Home = () => {
       },
       {
         id: 2,
-        text: 'ПРОЙТИ РЕАЛЬНОЕ СОБЕСЕДОВАНИЕ',
+        text: 'ПРОЙТИ СОБЕСЕДОВАНИЕ',
         onClick: () => router.push('/interview'),
         unauth: false,
       },
       {
         id: 3,
-        text: 'ПРОВЕРИТЬ АКТУАЛЬНОСТЬ СВОЕГО РЕЗЮМЕ',
+        text: 'ПРОВЕРИТЬ РЕЗЮМЕ',
         onClick: () => router.push('/interview/resume-check'),
         unauth: false,
       },
@@ -76,7 +76,7 @@ const Home = () => {
               Пройди собеседование с актуальными вопросами, получи теоретические знания в разных направлениях, оцени
               свое резюме. Наши инструменты дадут тебе преимущество перед другими кандидатами.
             </div>
-            <div>
+            <div className={'mt-8'}>
               <UIButton
                 text={mainButton.text}
                 iconAfter={'arrow-top-right'}
