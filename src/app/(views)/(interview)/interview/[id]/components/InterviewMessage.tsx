@@ -8,7 +8,7 @@ const customStyle = {
   ...atomDark,
   'pre[class*="language-"]': {
     ...atomDark['pre[class*="language-"]'],
-    background: '#2d2d2d', // Меньше контраст
+    background: '#2d2d2d',
     padding: '1em',
     borderRadius: '0.5em',
   },
@@ -19,41 +19,99 @@ const customStyle = {
   },
 };
 
-const InterviewMessage: React.FC<
-  Readonly<{
-    message: string;
-    isHuman?: boolean;
-    className?: string;
-  }>
-> = ({ message, isHuman, className }) => {
+const InterviewMessage: React.FC<{
+  message: string;
+  isHuman?: boolean;
+  className?: string;
+}> = ({ message, isHuman, className }) => {
   const dynamicClasses = isHuman ? 'bg-main-gray' : 'bg-main-purple';
 
   return (
-    <div className={`rounded-3xl px-4 py-3 whitespace-pre-wrap ${dynamicClasses} ${className}`}>
+    <div className={`rounded-3xl px-4 py-3 text-left ${dynamicClasses} ${className}`}>
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{
-          code(props) {
-            const { children, node: _, ref: __, className, ...rest } = props;
+          h1: ({ node: _, ...props }) => (
+            <h1
+              className={'text-2xl font-bold mt-4 mb-2'}
+              {...props}
+            />
+          ),
+          h2: ({ node: _, ...props }) => (
+            <h2
+              className={'text-xl font-semibold mt-4 mb-2'}
+              {...props}
+            />
+          ),
+          h3: ({ node: _, ...props }) => (
+            <h3
+              className={'text-lg font-semibold mt-4 mb-2'}
+              {...props}
+            />
+          ),
+          p: ({ node: _, ...props }) => (
+            <p
+              className={'my-2 leading-relaxed'}
+              {...props}
+            />
+          ),
+          ul: ({ node: _, ...props }) => (
+            <ul
+              className={'list-disc pl-6 my-2'}
+              {...props}
+            />
+          ),
+          ol: ({ node: _, ...props }) => (
+            <ol
+              className={'list-decimal pl-6 my-2'}
+              {...props}
+            />
+          ),
+          li: ({ node: _, ...props }) => (
+            <li
+              className={'mb-1'}
+              {...props}
+            />
+          ),
+          blockquote: ({ node: _, ...props }) => (
+            <blockquote
+              className={'border-l-4 border-gray-400 pl-4 italic text-black my-2'}
+              {...props}
+            />
+          ),
+
+          code({ children, className, ...rest }) {
             const match = /language-(\w+)/.exec(className || '');
-            return match ? (
-              <SyntaxHighlighter
-                {...rest}
-                // eslint-disable-next-line react/no-children-prop
-                children={String(children).replace(/\n$/, '')}
-                PreTag={'div'}
-                language={match[1] || undefined}
-                style={customStyle}
-              />
-            ) : (
+            if (match) {
+              return (
+                // @ts-expect-error tak nado
+                <SyntaxHighlighter
+                  {...rest}
+                  // eslint-disable-next-line react/no-children-prop
+                  children={String(children).replace(/\n$/, '')}
+                  PreTag={'div'}
+                  language={match[1]}
+                  style={customStyle}
+                />
+              );
+            }
+            return (
               <code
+                className={'text-sm px-1 rounded'}
                 {...rest}
-                className={className}
               >
                 {children}
               </code>
             );
           },
+          pre: ({ node: _, children, ...rest }) => (
+            <pre
+              className={'bg-[#2d2d2d] text-white text-sm p-4 rounded-md overflow-x-auto my-2'}
+              {...rest}
+            >
+              {children}
+            </pre>
+          ),
         }}
       >
         {message}
