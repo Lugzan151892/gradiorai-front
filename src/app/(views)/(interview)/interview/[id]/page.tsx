@@ -183,7 +183,10 @@ const CurrentInterviewPage = () => {
           {interview?.finished && (
             <div className={'bg-message-gray p-4 rounded-input'}>
               <div className={'text-2xl mb-4'}>Результат собеседования</div>
-              <div>{interview.recomendations}</div>
+              <InterviewMessage
+                message={interview.recomendations}
+                background={'bg-text-disabled text-black'}
+              />
               <div className={'w-full flex items-center mt-4 mb-2 px-4'}>
                 <UIButton
                   className={'mx-auto lg:w-auto w-full'}
