@@ -14,6 +14,7 @@ import donut from '@/components/main-page/assets/donut.svg';
 import mail from '@/components/main-page/assets/mail.svg';
 // import telegramm from '@/components/main-page/assets/telegramm.svg';
 import chatExample from '@/components/main-page/assets/chat-example.png';
+import testExample from '@/components/main-page/assets/test-example.png';
 import { useAppSelector } from '@/hooks/redux';
 import { RootState } from '@/store';
 import { getRandomElement } from '@/core/utils/array';
@@ -310,7 +311,7 @@ const Home = () => {
             <Image
               className={'lg:hidden flex mx-auto'}
               height={300}
-              src={chatExample}
+              src={testExample}
               alt={'chat'}
             />
             <div>
@@ -326,7 +327,7 @@ const Home = () => {
           <Image
             className={'hidden lg:flex ml-4'}
             height={300}
-            src={chatExample}
+            src={testExample}
             alt={'chat'}
           />
         </section>
