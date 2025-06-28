@@ -201,15 +201,17 @@ const TestsView = () => {
           <div className={'text-text-disabled'}>
             Сложность вопросов и критерии оценки будут адаптированы под ваш уровень
           </div>
-          <div className={'flex flex-wrap gap-3'}>
-            {skillOptions.map((level) => (
-              <UIFilterButton
-                text={level.text}
-                key={level.id}
-                selected={questionsLevel === level.id}
-                onClick={() => handleSetQuestionsLevel(level.id)}
-              />
-            ))}
+          <div className={'flex gap-3 items-center'}>
+            <div className={'flex flex-wrap gap-3 justify-center'}>
+              {skillOptions.map((level) => (
+                <UIFilterButton
+                  text={level.text}
+                  key={level.id}
+                  selected={questionsLevel === level.id}
+                  onClick={() => handleSetQuestionsLevel(level.id)}
+                />
+              ))}
+            </div>
             <div
               className={cn(
                 'flex items-center justify-center p-2 border-1 border-main-gray rounded-3xl cursor-pointer hover:bg-main-purple hover:border-main-purple',

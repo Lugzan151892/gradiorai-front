@@ -49,8 +49,8 @@ const UITextarea: React.FC<Readonly<Props>> = ({
     }
     const el = textareaRef.current;
     if (el) {
-      el.style.height = 'auto'; // сброс
-      el.style.height = `${el.scrollHeight}px`; // установка новой высоты
+      el.style.height = 'auto';
+      el.style.height = `${el.scrollHeight}px`;
     }
   }, [autoResize]);
 
@@ -60,12 +60,19 @@ const UITextarea: React.FC<Readonly<Props>> = ({
 
   useEffect(() => {
     setInternalValue(String(value ?? ''));
-  }, [value]);
+
+    if (!value) {
+      setTimeout(() => {
+        resizeTextarea();
+      }, 200);
+    }
+  }, [value, resizeTextarea]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const val = e.target.value;
     setInternalValue(val);
     onInput?.(val);
+    resizeTextarea();
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {

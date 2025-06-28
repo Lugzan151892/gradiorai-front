@@ -138,6 +138,7 @@ const CurrentInterviewPage = () => {
         setGeneratedMessage('');
         setInterview(content.interview);
         setIsGenerating(false);
+        partialMessage = '';
 
         setTimeout(() => {
           messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
