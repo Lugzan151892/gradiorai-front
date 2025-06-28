@@ -80,6 +80,7 @@ const ResumePrepare = () => {
             {checkResult && (
               <InterviewMessage
                 className={'mb-2 mr-auto'}
+                background={'bg-transparent'}
                 message={checkResult}
                 isHuman={false}
               />

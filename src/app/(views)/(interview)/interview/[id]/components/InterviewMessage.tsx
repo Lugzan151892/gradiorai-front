@@ -22,9 +22,10 @@ const customStyle = {
 const InterviewMessage: React.FC<{
   message: string;
   isHuman?: boolean;
+  background?: string;
   className?: string;
-}> = ({ message, isHuman, className }) => {
-  const dynamicClasses = isHuman ? 'bg-main-gray' : 'bg-main-purple';
+}> = ({ message, isHuman, background, className }) => {
+  const dynamicClasses = isHuman ? background || 'bg-main-gray' : background || 'bg-main-purple';
 
   return (
     <div className={`rounded-3xl px-4 py-3 text-left ${dynamicClasses} ${className}`}>
@@ -75,7 +76,7 @@ const InterviewMessage: React.FC<{
           ),
           blockquote: ({ node: _, ...props }) => (
             <blockquote
-              className={'border-l-4 border-gray-400 pl-4 italic text-black my-2'}
+              className={'border-l-4 border-text-disabled pl-4 italic text-text-disabled my-2'}
               {...props}
             />
           ),
