@@ -13,8 +13,8 @@ import butterfly from '@/components/main-page/assets/butterfly.svg';
 import donut from '@/components/main-page/assets/donut.svg';
 import mail from '@/components/main-page/assets/mail.svg';
 // import telegramm from '@/components/main-page/assets/telegramm.svg';
-import chatExample from '@/components/main-page/assets/chat-example-edit.png';
-import testExample from '@/components/main-page/assets/test-example-edit.png';
+import chatExample from '@/components/main-page/assets/chat-example.png';
+import testExample from '@/components/main-page/assets/test-example.png';
 import { useAppSelector } from '@/hooks/redux';
 import { RootState } from '@/store';
 import { getRandomElement } from '@/core/utils/array';
@@ -27,7 +27,7 @@ const Home = () => {
 
   const [mainButton, setMainButton] = useState({
     id: 1,
-    text: 'ПОПРОБОВАТЬ УНИКАЛЬНЫЕ ТЕСТЫ',
+    text: 'ПРОЙТИ ТЕСТ',
     onClick: () => router.push('/tests'),
     unauth: true,
   });
@@ -36,7 +36,7 @@ const Home = () => {
     const buttons = [
       {
         id: 1,
-        text: 'ПОПРОБОВАТЬ УНИКАЛЬНЫЕ ТЕСТЫ',
+        text: 'ПРОЙТИ ТЕСТ',
         onClick: () => router.push('/tests'),
         unauth: true,
       },

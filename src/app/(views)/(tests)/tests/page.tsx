@@ -325,7 +325,7 @@ const TestsView = () => {
         text={'Неавторизованный доступ к генерации уже использован. Для продолжения, пожалуйста, авторизуйтесь.'}
       >
         <UIButton
-          className={'mx-auto'}
+          className={'mx-auto mt-3'}
           text={'ВОЙТИ'}
           iconAfter={'arrow-top-right'}
           onClick={handleLogin}
