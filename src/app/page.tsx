@@ -27,7 +27,7 @@ const Home = () => {
 
   const [mainButton, setMainButton] = useState({
     id: 1,
-    text: 'ПРОЙТИ ТЕСТ',
+    text: 'ПРОЙТИ ТЕСТИРОВАНИЕ',
     onClick: () => router.push('/tests'),
     unauth: true,
   });
@@ -36,7 +36,7 @@ const Home = () => {
     const buttons = [
       {
         id: 1,
-        text: 'ПРОЙТИ ТЕСТ',
+        text: 'ПРОЙТИ ТЕСТИРОВАНИЕ',
         onClick: () => router.push('/tests'),
         unauth: true,
       },
