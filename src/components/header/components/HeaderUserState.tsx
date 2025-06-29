@@ -56,6 +56,11 @@ const HeaderUserState = () => {
         router.push('/system');
         break;
       }
+      case EMENU_ITEM.TESTS: {
+        setShowMenu(false);
+        router.push('/tests');
+        break;
+      }
       case EMENU_ITEM.INTERVIEW: {
         setShowMenu(false);
         router.push('/interview');
@@ -101,18 +106,25 @@ const HeaderUserState = () => {
       show: !!user?.admin,
     },
     {
+      id: EMENU_ITEM.TESTS,
+      text: 'Пройти тестирование',
+      icon: 'settings',
+      onClick: () => handleMenuClick(EMENU_ITEM.TESTS),
+      show: true,
+    },
+    {
       id: EMENU_ITEM.INTERVIEW,
-      text: 'Пройти собес',
+      text: 'Пройти собеседование',
       icon: 'settings',
       onClick: () => handleMenuClick(EMENU_ITEM.INTERVIEW),
-      show: !!user?.admin,
+      show: true,
     },
     {
       id: EMENU_ITEM.RESUME_CHECK,
       text: 'Проверить резюме',
       icon: 'settings',
       onClick: () => handleMenuClick(EMENU_ITEM.RESUME_CHECK),
-      show: !!user?.admin,
+      show: true,
     },
     {
       id: EMENU_ITEM.QUIT,
@@ -173,7 +185,7 @@ const HeaderUserState = () => {
           {showMenu && (
             <div
               className={
-                'z-50 p-4 bg-black rounded-xl flex flex-col overflow-hidden lg:w-[400px] w-full max-w-full lg:h-[400px] h-screen max-h-[calc(100vh-114px)] absolute top-[114px] lg:right-[30px] right-0 overflow-y-auto'
+                'z-50 p-4 bg-black rounded-xl flex flex-col overflow-hidden lg:w-[400px] w-full max-w-full lg:h-[400px] h-screen max-h-[calc(100dvh-114px)] absolute top-[114px] lg:right-[30px] right-0 overflow-y-auto'
               }
             >
               <MenuItem
