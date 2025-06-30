@@ -1,7 +1,6 @@
 'use client';
 
-import React, { useRef } from 'react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 type ColorStep = {
   percent: number;
@@ -10,49 +9,50 @@ type ColorStep = {
 };
 
 interface ProgressBarProps {
-  /** Текущий результат */
   score: number;
-  /** Максимальный возможный результат */
   maxScore: number;
-  /** Массив цветовых шагов */
   colorSteps?: ColorStep[];
-  /** Длительность анимации (мс) */
   duration?: number;
 }
 
-const defaultColors = [
+const defaultColors: ColorStep[] = [
   {
     percent: 0,
-    color: 'bg-error',
+    color: 'text-main-gray stroke-main-gray',
+    text: 'Не расстраивайтесь — это отличная возможность улучшить свои знания! Попробуйте еще раз, у вас точно получится!',
+  },
+  {
+    percent: 5,
+    color: 'text-main-purple stroke-main-purple',
     text: 'Не расстраивайтесь — это отличная возможность улучшить свои знания! Попробуйте еще раз, у вас точно получится!',
   },
   {
     percent: 30,
-    color: 'bg-yellow',
+    color: 'text-main-purple stroke-main-purple',
     text: 'Неплохой результат, но есть куда расти! Разберите ошибки и попробуйте снова.',
   },
   {
     percent: 80,
-    color: 'bg-success',
+    color: 'text-main-purple stroke-main-purple',
     text: 'Отличный результат! Вы показали отличные знания и справились со всеми вопросами. Так держать!',
   },
 ];
 
-const ProgressBar: React.FC<Readonly<ProgressBarProps>> = ({
-  score,
-  maxScore,
-  colorSteps = defaultColors,
-  duration = 1000,
-}: ProgressBarProps) => {
+const ProgressBar: React.FC<ProgressBarProps> = ({ score, maxScore, colorSteps = defaultColors, duration = 1000 }) => {
   const [currentPercent, setCurrentPercent] = useState(0);
   const requestRef = useRef<number | null>(null);
   const startTimeRef = useRef<number | null>(null);
 
-  const calculatedDuration = ((score * 100) / maxScore / 100) * duration;
+  const radius = 60;
+  const stroke = 10;
+  const normalizedRadius = radius - stroke / 2;
+  const circumference = 2 * Math.PI * normalizedRadius;
+
   const targetPercent = Math.min(100, Math.round((score / maxScore) * 100));
+  const calculatedDuration = (targetPercent / 100) * duration;
 
   const getColor = (percent: number): string => {
-    let color = colorSteps[0]?.color || 'bg-white';
+    let color = colorSteps[0]?.color || 'stroke-white';
     for (const step of colorSteps) {
       if (percent >= step.percent) {
         color = step.color;
@@ -65,17 +65,15 @@ const ProgressBar: React.FC<Readonly<ProgressBarProps>> = ({
 
   const caption = () => {
     const percent = Math.round((score * 100) / maxScore);
-
-    let caption = colorSteps[0].text;
+    let text = colorSteps[0]?.text || '';
     for (const step of colorSteps) {
       if (percent >= step.percent) {
-        caption = step.text;
+        text = step.text;
       } else {
         break;
       }
     }
-
-    return caption;
+    return text;
   };
 
   useEffect(() => {
@@ -98,20 +96,49 @@ const ProgressBar: React.FC<Readonly<ProgressBarProps>> = ({
     };
   }, [targetPercent, calculatedDuration]);
 
+  const strokeDashoffset = circumference - (currentPercent / 100) * circumference;
+
   const colorClass = getColor(currentPercent);
 
   return (
-    <div className={'w-full flex flex-col items-center'}>
-      <div className={'desktop:text-4xl mobile:text-2xl mb-4'}>
-        {score} из {maxScore}
+    <div className={'flex flex-col items-center space-y-4'}>
+      <div className={'relative w-40 h-40'}>
+        <svg
+          width={'100%'}
+          height={'100%'}
+          viewBox={`0 0 ${radius * 2} ${radius * 2}`}
+        >
+          <circle
+            stroke={'var(--main-gray)'}
+            fill={'transparent'}
+            strokeWidth={stroke}
+            r={normalizedRadius}
+            cx={radius}
+            cy={radius}
+          />
+          <circle
+            className={`${colorClass} transition-colors duration-200`}
+            fill={'transparent'}
+            strokeWidth={stroke}
+            strokeLinecap={'round'}
+            strokeDasharray={circumference}
+            strokeDashoffset={strokeDashoffset}
+            r={normalizedRadius}
+            cx={radius}
+            cy={radius}
+            style={{ transform: 'rotate(-90deg)', transformOrigin: '50% 50%' }}
+          />
+        </svg>
+        <div className={'absolute inset-0 flex items-center justify-center text-lg font-medium'}>
+          <div
+            className={'py-2 px-4 rounded-3xl'}
+            style={{ background: 'var(--main-gradient)' }}
+          >
+            {score} / {maxScore}
+          </div>
+        </div>
       </div>
-      <div className={'w-full bg-gray-200 rounded-2xl overflow-hidden shadow-inner max-w-md bg-white h-5'}>
-        <div
-          className={`h-full transition-colors duration-200 ${colorClass}`}
-          style={{ width: `${currentPercent}%` }}
-        />
-      </div>
-      <div className={'desktop:text-3xl mobile:text-base mt-4 text-center max-w-4xl'}>{caption()}</div>
+      <div className={'text-center text-base lg:text-xl px-4'}>{caption()}</div>
     </div>
   );
 };

@@ -30,7 +30,7 @@ const InfoModal: React.FC<Readonly<IInfoModalProps>> = ({ opened, text, children
             <DialogPanel
               transition
               className={
-                'w-full max-w-md flex flex-col rounded-input bg-modal py-3 px-7 border-[3px] border-white min-h-[180px] duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0'
+                'w-full max-w-md flex flex-col rounded-3xl bg-black py-3 px-7 border-1 border-white min-h-[180px] duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0'
               }
             >
               <div className={'grid gap-3 items-center justify-items-center'}>

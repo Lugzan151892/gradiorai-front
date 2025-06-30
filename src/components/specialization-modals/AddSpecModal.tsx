@@ -1,5 +1,4 @@
-import CustomButton from '@/components/ui/button/CustomButton';
-import CustomInput from '@/components/ui/input/CustomInput';
+import UIInput from '@/components/ui/input/UIInput';
 import CustomModal from '@/components/ui/modal/CustomModal';
 import Api from '@/core/api/api';
 import { ISpecialization, ITechnology } from '@/core/interfaces/types';
@@ -8,7 +7,8 @@ import { setLoading } from '@/features/loading/loadingSlice';
 import { useAppDispatch } from '@/hooks/redux';
 import { openModal } from '@/store/tech/techSlice';
 import React, { useEffect, useState } from 'react';
-import TechComponent from '@/components/tech-component/TechComponent';
+import UIButton from '@/components/ui/button/UIButton';
+import UIFilterButton from '@/components/ui/filter-button/UIFilterButton';
 
 interface IAddSpecModalProps {
   type?: 'create';
@@ -63,7 +63,7 @@ const AddSpecModal: React.FC<TModalProps> = (props) => {
           type: 'success',
         })
       );
-    } catch (e: any) {
+    } catch (e) {
       errorHandler(e, dispatch);
     } finally {
       dispatch(setLoading(false));
@@ -90,7 +90,7 @@ const AddSpecModal: React.FC<TModalProps> = (props) => {
           type: 'success',
         })
       );
-    } catch (e: any) {
+    } catch (e) {
       errorHandler(e, dispatch);
     } finally {
       dispatch(setLoading(false));
@@ -125,12 +125,14 @@ const AddSpecModal: React.FC<TModalProps> = (props) => {
     const loadTechs = async () => {
       try {
         dispatch(setLoading(true));
-        const result = await Api.get<null, { techs: ITechnology[]; questions_amount: number }>('/questions/get-techs');
+        const result = await Api.get<undefined, { techs: ITechnology[]; questions_amount: number }>(
+          '/questions/get-techs'
+        );
         setTechs(result.payload.techs);
         if (isEditModalProps(props)) {
           setSelectedTechs(props.specialization.technology.map((el) => el.id));
         }
-      } catch (e: any) {
+      } catch (e) {
         errorHandler(e, dispatch);
       } finally {
         dispatch(setLoading(false));
@@ -146,7 +148,7 @@ const AddSpecModal: React.FC<TModalProps> = (props) => {
       onClose={closeModal}
     >
       <div className={'p-6'}>
-        <CustomInput
+        <UIInput
           className={'mb-10'}
           label={'Название специализации'}
           value={specName}
@@ -157,8 +159,8 @@ const AddSpecModal: React.FC<TModalProps> = (props) => {
           <div className={'flex gap-5 flex-wrap mt-2'}>
             {techs.length ? (
               techs.map((tech) => (
-                <TechComponent
-                  tech={tech}
+                <UIFilterButton
+                  text={tech.name}
                   key={tech.id}
                   selected={selectedTechs.includes(tech.id)}
                   onClick={() => handleSetSelectedTechs(tech.id)}
@@ -170,7 +172,7 @@ const AddSpecModal: React.FC<TModalProps> = (props) => {
           </div>
         </div>
         <div className={'flex'}>
-          <CustomButton
+          <UIButton
             className={'ml-auto'}
             text={'Сохранить'}
             onClick={handleSaveOrEdit}

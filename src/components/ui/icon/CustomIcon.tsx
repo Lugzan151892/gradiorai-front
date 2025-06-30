@@ -1,16 +1,16 @@
 import React, { useRef, useState } from 'react';
 import IconMarkup from '@/components/ui/icon/utils/IconMarkup';
 import getIconViewBox from '@/components/ui/icon/utils';
+import { cn } from '@/lib/utils';
 
 type ICustomIconProps = {
   name: keyof typeof IconMarkup;
   color?: string;
   size?: number;
   className?: string;
-  fill?: string;
-  stroke?: string;
   caption?: string;
   tooltip?: string;
+  disabled?: boolean;
   onClick?: () => void;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
@@ -18,9 +18,10 @@ type ICustomIconProps = {
 
 const CustomIcon: React.FC<ICustomIconProps> = ({
   name,
-  color = 'var(--main-gray)',
+  color = 'var(--main-white)',
   size = 24,
   tooltip = '',
+  disabled,
   className,
   onMouseEnter,
   onMouseLeave,
@@ -31,13 +32,15 @@ const CustomIcon: React.FC<ICustomIconProps> = ({
   const [showTooltip, setShowTooltip] = useState(false);
   const iconRef = useRef<HTMLDivElement>(null);
 
+  const disabledClasses = 'opacity-25 pointer-events-none';
+
   if (!icon) {
     return null;
   }
 
   return (
     <div
-      className={'relative flex flex-col items-center justify-center ' + className}
+      className={cn('relative flex flex-col items-center justify-center', className, disabled && disabledClasses)}
       onMouseEnter={() => {
         setShowTooltip(true);
         if (onMouseEnter) {
@@ -58,17 +61,18 @@ const CustomIcon: React.FC<ICustomIconProps> = ({
         height={size}
         viewBox={getIconViewBox(name)}
         style={{ color }}
+        className={'fill-current'}
       >
         {icon}
       </svg>
       {tooltip && showTooltip && (
         <div
-          className={`absolute w-max top-[${size}px] right-[10px] px-3 py-1 mobile:text-sm desktop:text-xl text-white bg-black rounded-md`}
+          className={`absolute w-max top-[${size}px] right-[10px] px-3 py-1 text-sm lg:text-xl text-white bg-black rounded-md`}
         >
           {tooltip}
         </div>
       )}
-      {caption ? <div className={'desktop:text-xl mobile:text-sm text-white'}>{caption}</div> : null}
+      {caption ? <div className={'lg:text-xl text-sm text-white'}>{caption}</div> : null}
     </div>
   );
 };
