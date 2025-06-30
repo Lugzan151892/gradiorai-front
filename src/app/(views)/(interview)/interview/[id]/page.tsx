@@ -168,14 +168,14 @@ const CurrentInterviewPage = () => {
           {interview?.messages.map((message) => (
             <InterviewMessage
               key={message.id}
-              className={`max-w-[70%] mb-2 ${message.is_human ? 'ml-auto' : 'mr-auto'}`}
+              className={`lg:max-w-[70%] max-w-[85%] mb-2 ${message.is_human ? 'ml-auto' : 'mr-auto'}`}
               message={message.text}
               isHuman={message.is_human}
             />
           ))}
           {isGenerating && !!generatedMessage && (
             <InterviewMessage
-              className={'max-w-[70%] mb-2 mr-auto'}
+              className={'lg:max-w-[70%] max-w-[85%] mb-2 mr-auto'}
               message={generatedMessage}
               isHuman={false}
             />
@@ -183,10 +183,7 @@ const CurrentInterviewPage = () => {
           {interview?.finished && (
             <div className={'bg-message-gray p-4 rounded-input'}>
               <div className={'text-2xl mb-4'}>Результат собеседования</div>
-              <InterviewMessage
-                message={interview.recomendations}
-                background={'bg-text-disabled text-black'}
-              />
+              <div>{interview.recomendations}</div>
               <div className={'w-full flex items-center mt-4 mb-2 px-4'}>
                 <UIButton
                   className={'mx-auto lg:w-auto w-full'}
