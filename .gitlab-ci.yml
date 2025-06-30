@@ -4,25 +4,68 @@ stages:
   - deploy
   - deploy-test
 
+# deploy:
+#   stage: deploy
+#   only:
+#     - master
+#   before_script:
+#     - apt update -y && apt install -y openssh-client
+#     - eval $(ssh-agent -s)
+#     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+#     - mkdir -p ~/.ssh
+#     - chmod 700 ~/.ssh
+#     - echo "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+#   script:
+#     - ssh $DEPLOY_USER@$DEPLOY_HOST "
+#       cd $DEPLOY_PATH &&
+#       git pull &&
+#       npm install &&
+#       npm run build &&
+#       pm2 restart 'interview-ready-front' --update-env || pm2 start npm --name 'interview-ready-front' -- start &&
+#       pm2 save"
+
 deploy:
   stage: deploy
   only:
     - master
+  variables:
+    GIT_STRATEGY: clone
   before_script:
-    - apt update -y && apt install -y openssh-client
+    - set -x
+    - apt update -y && apt install -y openssh-client rsync
     - eval $(ssh-agent -s)
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
     - echo "$KNOWN_HOSTS" > ~/.ssh/known_hosts
+    - ls -la ~/.ssh
+    - ssh -T $DEPLOY_USER@$DEPLOY_HOST || echo "SSH failed"
   script:
-    - ssh $DEPLOY_USER@$DEPLOY_HOST "
-      cd $DEPLOY_PATH &&
-      git pull &&
-      npm install &&
-      npm run build &&
-      pm2 restart 'interview-ready-front' --update-env || pm2 start npm --name 'interview-ready-front' -- start &&
-      pm2 save"
+    - echo "Start SSH command"
+    - |
+      ssh $DEPLOY_USER@$DEPLOY_HOST "
+        set -xe
+
+        echo '✅ Connected'
+        echo '📁 DEPLOY_PATH = $DEPLOY_PATH'
+        cd $DEPLOY_PATH
+
+        echo '📍 Current directory:'
+        pwd
+
+        echo '📦 Listing contents:'
+        ls -la
+
+        echo '🔍 Git status check:'
+        git status
+
+        git checkout master
+        git pull
+        npm install
+        npm run build
+        pm2 restart 'interview-ready-front' || pm2 start npm --name="interview-ready-front" -- run start -- --port 3000
+        pm2 save
+      "
 
 deploy_test:
   stage: deploy-test
