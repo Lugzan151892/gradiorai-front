@@ -12,6 +12,7 @@ import MenuItem, { IMenuItemProps } from '@/components/header/components/MenuIte
 import { EMENU_ITEM } from '@/components/header/interfaces';
 import Image from 'next/image';
 import userLogin from '@/assets/icons/user-profile.svg';
+import { useBreakpoint } from '@/hooks/useBreakpoints';
 
 interface IMenuItem extends IMenuItemProps {
   id: EMENU_ITEM;
@@ -23,6 +24,7 @@ const HeaderUserState = () => {
   const { user } = useAppSelector((state: RootState) => state.user);
   const dispatch = useAppDispatch();
   const [showMenu, setShowMenu] = useState(false);
+  const { isMobile } = useBreakpoint();
 
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -46,7 +48,7 @@ const HeaderUserState = () => {
     }
 
     dispatch(logout());
-    router.push('/login');
+    router.push('/');
   };
 
   const handleMenuClick = (id: EMENU_ITEM) => {
@@ -110,21 +112,21 @@ const HeaderUserState = () => {
       text: 'Пройти тестирование',
       icon: 'settings',
       onClick: () => handleMenuClick(EMENU_ITEM.TESTS),
-      show: true,
+      show: isMobile,
     },
     {
       id: EMENU_ITEM.INTERVIEW,
       text: 'Пройти собеседование',
       icon: 'settings',
       onClick: () => handleMenuClick(EMENU_ITEM.INTERVIEW),
-      show: true,
+      show: isMobile,
     },
     {
       id: EMENU_ITEM.RESUME_CHECK,
       text: 'Проверить резюме',
       icon: 'settings',
       onClick: () => handleMenuClick(EMENU_ITEM.RESUME_CHECK),
-      show: true,
+      show: isMobile,
     },
     {
       id: EMENU_ITEM.QUIT,
