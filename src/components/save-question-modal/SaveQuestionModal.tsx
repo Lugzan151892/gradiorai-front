@@ -1,4 +1,3 @@
-import CustomButton from '@/components/ui/button/CustomButton';
 import CustomModal from '@/components/ui/modal/CustomModal';
 import React, { useEffect, useState } from 'react';
 import Api from '@/core/api/api';
@@ -6,13 +5,14 @@ import { useAppDispatch } from '@/hooks/redux';
 import { setLoading } from '@/features/loading/loadingSlice';
 import errorHandler from '@/core/utils/error/errorHandler';
 import { openModal } from '@/store/tech/techSlice';
-import CustomTextarea from '@/components/ui/textarea/CustomTextarea';
-import CustomInput from '@/components/ui/input/CustomInput';
+import UITextarea from '@/components/ui/textarea/UITextarea';
+import UIInput from '@/components/ui/input/UIInput';
 import { ESKILL_LEVEL } from '@/core/interfaces/enums';
 import { ITech, ITest } from '@/core/interfaces/types';
 import AddTechnologyModal from '@/components/technology-modals/AddTechnologyModal';
-import TechComponent from '@/components/tech-component/TechComponent';
+import UIFilterButton from '@/components/ui/filter-button/UIFilterButton';
 import CustomCheckbox from '@/components/ui/checkbox/CustomCheckbox';
+import UIButton from '../ui/button/UIButton';
 
 interface ISaveQuestionModalProps {
   open?: boolean;
@@ -102,7 +102,7 @@ const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
     try {
       dispatch(setLoading(true));
       await loadTechs();
-    } catch (e: any) {
+    } catch (e) {
       errorHandler(e, dispatch);
     } finally {
       dispatch(setLoading(false));
@@ -150,7 +150,7 @@ const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
       if (onClose) {
         onClose();
       }
-    } catch (e: any) {
+    } catch (e) {
       errorHandler(e, dispatch);
     } finally {
       dispatch(setLoading(false));
@@ -168,7 +168,7 @@ const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
           setSelectedTechs(techs || []);
         }
       }
-    } catch (e: any) {
+    } catch (e) {
       errorHandler(e, dispatch);
     } finally {
       dispatch(setLoading(false));
@@ -201,8 +201,9 @@ const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
     >
       <div className={'m-6'}>
         <div>
-          <div className={'desktop:text-2xl mobile:text-xl mb-2'}>Изменение вопроса</div>
-          <CustomTextarea
+          <div className={'lg:text-2xl text-xl mb-2'}>Изменение вопроса</div>
+          <UITextarea
+            rows={3}
             value={editedQuestion.question}
             onInput={(val) => handleQuestionChange(val)}
           />
@@ -216,7 +217,7 @@ const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
                 onChange={() => handleChangeCorrectQuestion(iResponse)}
               />
               <div className={'text-nowrap'}>Ответ {iResponse + 1}:</div>
-              <CustomInput
+              <UIInput
                 success={response.correct}
                 value={response.answer}
                 onInput={(val) => handleResponseChange(iResponse, val)}
@@ -224,18 +225,14 @@ const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
             </div>
           ))}
         </div>
-        <div className={'mt-3'}>
-          <div className={'desktop:text-2xl mobile:text-xl mb-2 text-center'}>Укажите уровень вопроса:</div>
-          <div
-            className={
-              'grid desktop:grid-flow-col desktop:auto-cols-auto-fit desktop:auto-cols-[minmax(150px,200px)] mobile:grid-cols-1 justify-center w-full gap-y-2 gap-x-2'
-            }
-          >
+        <div className={'mt-3 mx-auto flex flex-col'}>
+          <div className={'lg:text-2xl text-xl mb-2 text-center'}>Укажите уровень вопроса:</div>
+          <div className={'flex flex-wrap gap-3 justify-center'}>
             {levels.map((el) => (
-              <TechComponent
-                className={'desktop:mt-2 mobile:mt-1'}
+              <UIFilterButton
+                className={'lg:mt-2 mt-1'}
                 key={el.id}
-                tech={el}
+                text={el.name}
                 selected={selectedLevels.includes(el.id)}
                 onClick={() => changeLevels(el.id)}
               />
@@ -243,17 +240,12 @@ const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
           </div>
         </div>
         <div className={'mt-3'}>
-          <div className={'desktop:text-2xl mobile:text-xl mb-2 text-center'}>Укажите направления:</div>
-          <div
-            className={
-              'grid desktop:grid-cols-[repeat(auto-fit,minmax(150px,200px))] mobile:grid-cols-1 justify-center w-full gap-y-2 gap-x-2'
-            }
-          >
+          <div className={'lg:text-2xl text-xl mb-2 text-center'}>Укажите направления:</div>
+          <div className={'flex flex-wrap gap-2 justify-center'}>
             {allTechs.map((el) => (
-              <TechComponent
-                className={'mt-2'}
+              <UIFilterButton
                 key={el.id}
-                tech={el}
+                text={el.name}
                 selected={selectedTechs.includes(el.id)}
                 onClick={() => changeTechs(el.id)}
               />
@@ -262,9 +254,7 @@ const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
         </div>
 
         <div className={'w-full flex mt-6 mb-6'}>
-          <CustomButton
-            small
-            type={'success'}
+          <UIButton
             className={'mx-auto'}
             text={'Добавить направления'}
             onClick={() => setAddTechModal(true)}
@@ -272,8 +262,8 @@ const SaveQuestionModal: React.FC<ISaveQuestionModalProps> = ({
         </div>
 
         <div className={'flex'}>
-          <CustomButton
-            className={'desktop:ml-auto mobile:mx-auto'}
+          <UIButton
+            className={'lg:ml-auto mx-auto'}
             text={'Сохранить вопрос'}
             onClick={saveQuestion}
           />

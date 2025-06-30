@@ -1,13 +1,14 @@
 'use client';
 
 import SaveQuestionModal from '@/components/save-question-modal/SaveQuestionModal';
-import CustomButton from '@/components/ui/button/CustomButton';
+import UIButton from '@/components/ui/button/UIButton';
 import Api from '@/core/api/api';
 import { ITechnology, ITest } from '@/core/interfaces/types';
 import errorHandler from '@/core/utils/error/errorHandler';
 import { setLoading } from '@/features/loading/loadingSlice';
 import { useAppDispatch } from '@/hooks/redux';
 import React, { useCallback, useEffect, useState } from 'react';
+import UIFilterButton from '@/components/ui/filter-button/UIFilterButton';
 
 interface IFullQuestion extends ITest {
   level: number;
@@ -58,13 +59,16 @@ const SystemQuestions = () => {
   const loadQuestions = useCallback(async () => {
     try {
       dispatch(setLoading(true));
-      const result = await Api.get<any, IFullQuestion[]>('/questions/questions-list', {
-        only_mine: onlyMine,
-        only_without_specs: withoutSpecs,
-      });
+      const result = await Api.get<{ only_mine: boolean; only_without_specs: boolean }, IFullQuestion[]>(
+        '/questions/questions-list',
+        {
+          only_mine: onlyMine,
+          only_without_specs: withoutSpecs,
+        }
+      );
 
       setQuestions(result.payload);
-    } catch (e: any) {
+    } catch (e) {
       errorHandler(e, dispatch);
     } finally {
       dispatch(setLoading(false));
@@ -78,7 +82,7 @@ const SystemQuestions = () => {
 
     try {
       setLoading(true);
-      await Api.delete<{ id: number }, any>('/questions/delete', { id: questionId });
+      await Api.delete<{ id: number }, undefined>('/questions/delete', { id: questionId });
       loadQuestions();
     } catch (e) {
       errorHandler(e, dispatch);
@@ -93,27 +97,23 @@ const SystemQuestions = () => {
   return (
     <div className={'w-full'}>
       <div className={'flex w-full items-center justify-center px-4 py-2'}>
-        <CustomButton
+        <UIFilterButton
           className={'mr-2'}
-          small
           selected={withoutSpecs}
           text={'Вопросы без направлений'}
           onClick={() => {
             setWithoutSpecs(!withoutSpecs);
           }}
         />
-        <CustomButton
-          small
+        <UIFilterButton
           selected={onlyMine}
           text={'Добавленные мной'}
           onClick={() => {
             setOnlyMine(!onlyMine);
           }}
         />
-        <CustomButton
+        <UIButton
           className={'ml-auto'}
-          type={'error'}
-          small
           text={'Добавить новый вопрос'}
           onClick={() => setOpenCreateModal(true)}
         />
@@ -123,7 +123,7 @@ const SystemQuestions = () => {
         {questions.map((question) => (
           <div
             key={question.id}
-            className={'flex border-1'}
+            className={'flex border'}
           >
             <div className={'w-full'}>
               <div>{question.question}</div>
@@ -134,14 +134,11 @@ const SystemQuestions = () => {
               </div>
             </div>
             <div className={'flex flex-col gap-1 py-2'}>
-              <CustomButton
-                small
+              <UIButton
                 text={'Изменить'}
                 onClick={() => openQuestionModal(question)}
               />
-              <CustomButton
-                type={'error'}
-                small
+              <UIButton
                 text={'Удалить'}
                 onClick={() => handleDeleteQuestion(question.id)}
               />

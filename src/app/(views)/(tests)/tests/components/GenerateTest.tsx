@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import CustomButton from '@/components/ui/button/CustomButton';
+import UIButton from '@/components/ui/button/UIButton';
 import AdminWrapper from '@/components/admin-wrapper/AdminWrapper';
 import { RootState } from '@/store';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
@@ -7,13 +7,13 @@ import Api from '@/core/api/api';
 import { ITest } from '@/core/interfaces/types';
 import AnswerComponent from '@/app/(views)/(tests)/tests/components/AnswerComponent';
 import SaveQuestionModal from '@/components/save-question-modal/SaveQuestionModal';
-import AuthConfirmButton from '@/app/(views)/(auth)/components/AuthConfirmButton';
 import ProgressBar from '@/components/ui/progress-bar/ProgressBar';
-import CustomTextarea from '@/components/ui/textarea/CustomTextarea';
+import UITextarea from '@/components/ui/textarea/UITextarea';
 import CustomIcon from '@/components/ui/icon/CustomIcon';
 import errorHandler from '@/core/utils/error/errorHandler';
 import { setLoading } from '@/features/loading/loadingSlice';
 import { useBreakpoint } from '@/hooks/useBreakpoints';
+import { cn } from '@/lib/utils';
 
 const GenerateTest: React.FC<{
   tests: ITest[];
@@ -27,6 +27,7 @@ const GenerateTest: React.FC<{
   const [showResults, setShowResults] = useState<boolean>(false);
   const [disableSave, setDisableSave] = useState(false);
   const [saveQuestionModal, setSaveQuestionModal] = useState(false);
+  const [reviewSent, setReviewSent] = useState(false);
   const { user } = useAppSelector((state: RootState) => state.user);
 
   const { isMobile } = useBreakpoint();
@@ -66,7 +67,6 @@ const GenerateTest: React.FC<{
 
   const handleReview = async () => {
     if (!userRating && !comment) {
-      goToTests();
       return;
     }
 
@@ -76,9 +76,8 @@ const GenerateTest: React.FC<{
         comment,
         rating: userRating,
       });
-
-      goToTests();
-    } catch (e: any) {
+      setReviewSent(true);
+    } catch (e) {
       errorHandler(e, dispatch);
     } finally {
       dispatch(setLoading(false));
@@ -91,96 +90,66 @@ const GenerateTest: React.FC<{
 
   if (showResults) {
     return (
-      <div className={'h-full flex flex-grow w-full'}>
-        <div
-          className={
-            'desktop:my-8 mobile:my-4 bg-bg-transparent-25 desktop:mx-3 rounded-lg w-full p-4 flex flex-col items-center'
-          }
-        >
-          <div className={'desktop:text-6xl mobile:text-4xl mobile:mb-4 desktop:mb-10'}>Ваш результат</div>
-          <ProgressBar
-            score={userResult}
-            maxScore={tests.length}
-          />
-          <div className={'flex flex-col max-w-lg w-full desktop:mt-10 mobile:mt-7'}>
-            <div>
-              <div className={'desktop:text-xl mobile:text-base'}>Оцените тестирование</div>
-              <div
-                className={'mobile:hidden flex gap-7 mt-2'}
-                onMouseLeave={() => setUserHover(0)}
-              >
-                {stars.map((star) => (
-                  <CustomIcon
-                    key={star}
-                    className={'cursor-pointer'}
-                    name={'star'}
-                    size={79}
-                    color={userHover >= star || userRating >= star ? 'var(--low-green)' : 'var(--main-white)'}
-                    onMouseEnter={() => setUserHover(star)}
-                    onClick={() => setUserRating(star)}
-                  />
-                ))}
-              </div>
-              <div
-                className={'desktop:hidden flex gap-5 mt-2'}
-                onMouseLeave={() => setUserHover(0)}
-              >
-                {stars.map((star) => (
-                  <CustomIcon
-                    key={star}
-                    className={'cursor-pointer'}
-                    name={'star'}
-                    size={45}
-                    color={userHover >= star || userRating >= star ? 'var(--low-green)' : 'var(--main-white)'}
-                    onMouseEnter={() => setUserHover(star)}
-                    onClick={() => setUserRating(star)}
-                  />
-                ))}
-              </div>
-            </div>
-            <div className={'desktop:mt-10 mobile:mt-5'}>
-              <div className={'desktop:text-xl mobile:text-base mb-2'}>Отзыв</div>
-              <CustomTextarea
-                value={comment}
-                rows={isMobile ? 3 : 4}
-                onInput={setComment}
-              />
-            </div>
+      <section className={'mt-6 w-full lg:max-w-[1440px] max-w-screen lg:mx-auto h-full px-4'}>
+        <div className={'lg:text-5xl text-4xl leading-[100%] font-bold text-center mb-6'}>Результат тестирования</div>
+        <div className={'max-w-[685px] mx-auto flex flex-col relative lg:px-4'}>
+          <div className={'flex flex-col'}>
+            <ProgressBar
+              score={userResult}
+              maxScore={tests.length}
+            />
+            <UIButton
+              className={'mx-auto mt-8'}
+              text={'ПОПРОБОВАТЬ СНОВА'}
+              onClick={goToTests}
+            />
           </div>
-          <div className={'flex-grow'} />
-          <div className={'mt-4 w-full flex'}>
-            <AuthConfirmButton
-              icon={'reload'}
-              customBorder
-              className={'!w-[180px] desktop:ml-auto mobile:mx-auto h-max self-end '}
-              size={24}
-              text={'Еще раз'}
+        </div>
+        <div className={'bg-main-black rounded-3xl flex justify-center p-8 mt-10 mb-8'}>
+          <div className={'flex flex-col gap-6 items-center text-center lg:max-w-[1200px] w-full'}>
+            <div className={'lg:text-xl text-base'}>Пожалуйста, оцените тестирование</div>
+            <div
+              className={'flex lg:gap-7 gap-5 mt-2'}
+              onMouseLeave={() => setUserHover(0)}
+            >
+              {stars.map((star) => (
+                <CustomIcon
+                  key={star}
+                  className={cn('cursor-pointer', reviewSent && 'pointer-events-none')}
+                  name={userHover >= star || userRating >= star ? 'star-transparent' : 'star'}
+                  size={isMobile ? 32 : 44}
+                  color={userHover >= star || userRating >= star ? 'var(--main-purple)' : 'transparent'}
+                  onMouseEnter={() => setUserHover(star)}
+                  onClick={() => setUserRating(star)}
+                />
+              ))}
+            </div>
+            <UITextarea
+              label={'Оставьте отзыв'}
+              placeholder={'Расскажите о своих впечатлениях'}
+              value={comment}
+              rows={isMobile ? 3 : 4}
+              onInput={setComment}
+              disabled={reviewSent}
+            />
+            <UIButton
+              text={'ОТПРАВИТЬ ОТЗЫВ'}
+              iconAfter={'arrow-top-right'}
+              disabled={(!userRating && !comment) || reviewSent}
               onClick={handleReview}
             />
           </div>
         </div>
-      </div>
+      </section>
     );
   }
 
   return (
-    <div className={'desktop:max-h-[1032px] flex flex-grow w-full text-white'}>
-      <div
-        className={'bg-bg-transparent-25 rounded-10 w-full h-full desktop:p-12 desktop:pb-6 mobile:p-4 flex flex-col'}
-      >
-        <div className={'flex mobile:flex-col mobile:gap-2 desktop:gap-4'}>
-          <div
-            className={
-              'desktop:min-w-24 desktop:min-h-24 desktop:h-24 desktop:w-24 mobile:w-max mobile:p-2 rounded flex items-center justify-center text-xl border-1 border-white'
-            }
-          >
-            {`${currentQuestion} / ${tests.length}`}
-          </div>
-          <div className={'w-full flex items-center rounded desktop:p-3 mobile:py-3 desktop:text-2xl mobile:text-base'}>
-            {tests[currentQuestion - 1].question}
-          </div>
-        </div>
-        <div className={'flex flex-col desktop:mt-7 mobile:mt-2 gap-2'}>
+    <section className={'mt-14 w-full max-w-[685px] mx-auto h-full'}>
+      <div className={'bg-main-black p-6 rounded-3xl'}>
+        <div className={'text-xl font-semibold text-center mb-8'}>{`${currentQuestion} / ${tests.length}`}</div>
+        <div className={'text-xl font-semibold text-center mb-4'}>{tests[currentQuestion - 1].question}</div>
+        <div className={'flex flex-col gap-3'}>
           {tests[currentQuestion - 1].responses.map((answer) => (
             <AnswerComponent
               key={answer.id}
@@ -191,42 +160,29 @@ const GenerateTest: React.FC<{
             />
           ))}
         </div>
-        <div className={'flex-grow'} />
-        <div className={'w-full desktop:mt-6 mobile:mt-4 flex mobile:flex-col mobile:items-center'}>
-          <AdminWrapper>
-            <CustomButton
-              className={'desktop:hidden'}
-              small
-              disabled={!!tests[currentQuestion - 1].id || disableSave}
-              text={'Сохранить вопрос'}
-              onClick={saveQuestion}
-            />
-            <CustomButton
-              className={'mobile:hidden'}
-              disabled={!!tests[currentQuestion - 1].id || disableSave}
-              text={'Сохранить вопрос'}
-              onClick={saveQuestion}
-            />
-          </AdminWrapper>
-          <AuthConfirmButton
-            icon={currentQuestion === tests.length ? 'sand-clock' : 'arrow-right'}
-            customBorder
-            className={'!w-[180px] desktop:ml-auto mobile:mx-auto mobile:mt-2 h-max self-end'}
-            size={24}
-            text={currentQuestion === tests.length ? 'Завершить' : 'Далее'}
-            disabled={!userChoise}
-            onClick={handleSetQuestion}
+      </div>
+      <div className={'w-max mx-auto my-8 flex flex-col items-center'}>
+        <AdminWrapper className={'mb-3'}>
+          <UIButton
+            disabled={!!tests[currentQuestion - 1].id || disableSave}
+            text={'Сохранить вопрос'}
+            onClick={saveQuestion}
           />
-        </div>
-        <SaveQuestionModal
-          techs={techs}
-          level={level}
-          question={tests[currentQuestion - 1]}
-          open={saveQuestionModal}
-          onClose={() => setSaveQuestionModal(false)}
+        </AdminWrapper>
+        <UIButton
+          text={currentQuestion === tests.length ? 'Завершить' : 'Далее'}
+          disabled={!userChoise}
+          onClick={handleSetQuestion}
         />
       </div>
-    </div>
+      <SaveQuestionModal
+        techs={techs}
+        level={level}
+        question={tests[currentQuestion - 1]}
+        open={saveQuestionModal}
+        onClose={() => setSaveQuestionModal(false)}
+      />
+    </section>
   );
 };
 

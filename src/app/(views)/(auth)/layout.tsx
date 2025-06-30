@@ -1,26 +1,13 @@
-'use client';
-
-import AppHeader from '@/components/header/AppHeader';
+import AppLayoutClient from '@/components/app-layout/AppLayoutClient';
 import React from 'react';
 
 const AuthLayout: React.FC<{
   children: Readonly<React.ReactNode>;
 }> = ({ children }) => {
   return (
-    <div className={'w-full h-full flex flex-col'}>
-      <AppHeader withState={false} />
-      <div className={'w-full h-full flex'}>
-        <div className={'flex justify-center w-full h-full items-center'}>
-          <div
-            className={
-              'max-w-sm w-full h-full max-h-[700px] rounded-3xl bg-transparent p-10 bg-[url("../assets/images/main-bg.png")] bg-no-repeat bg-center bg-origin-content'
-            }
-          >
-            {children}
-          </div>
-        </div>
-      </div>
-    </div>
+    <AppLayoutClient withState={false}>
+      <div className={'flex items-center justify-center max-w-[800px] mx-auto mt-10'}>{children}</div>
+    </AppLayoutClient>
   );
 };
 

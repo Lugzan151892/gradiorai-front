@@ -1,6 +1,6 @@
 'use client';
 
-import AuthConfirmButton from '@/app/(views)/(auth)/components/AuthConfirmButton';
+import UIButton from '@/components/ui/button/UIButton';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { RootState } from '@/store';
 import { closeModal, resetModalSettings } from '@/store/tech/techSlice';
@@ -35,12 +35,12 @@ const ErrorModal = () => {
         onClose={close}
       >
         <DialogBackdrop className={'fixed inset-0 bg-black opacity-80'} />
-        <div className={'fixed inset-0 z-10 w-screen overflow-y-auto'}>
+        <div className={'fixed inset-0 z-30 overflow-y-auto'}>
           <div className={'flex min-h-full items-center justify-center p-4'}>
             <DialogPanel
               transition
               className={
-                'w-full max-w-md flex flex-col rounded-input bg-modal p-6 border-[3px] min-h-[180px] duration-300 ease-out data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0 ' +
+                'max-w-screen w-md flex flex-col mx-4 gap-3 rounded-3xl bg-black p-6 border-1 min-h-[180px] duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0 ' +
                 `border-${settings.type === 'error' ? 'error' : 'white'}`
               }
             >
@@ -48,18 +48,14 @@ const ErrorModal = () => {
                 <div />
                 <DialogTitle
                   as={'h3'}
-                  className={'text-xl font-medium text-white text-center'}
+                  className={'text-base font-medium text-white text-center'}
                 >
                   {settings.text}
                 </DialogTitle>
               </div>
               <div className={'mt-auto flex'}>
-                <AuthConfirmButton
-                  className={'!w-[120px] mx-auto'}
-                  customBorder
-                  size={24}
-                  type={settings.type === 'error' ? 'error' : 'default'}
-                  icon={'check'}
+                <UIButton
+                  className={'w-[120px]! mx-auto'}
                   text={'OK'}
                   onClick={close}
                 />

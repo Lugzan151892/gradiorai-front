@@ -1,5 +1,4 @@
-import CustomButton from '@/components/ui/button/CustomButton';
-import CustomInput from '@/components/ui/input/CustomInput';
+import UIInput from '@/components/ui/input/UIInput';
 import CustomModal from '@/components/ui/modal/CustomModal';
 import Api from '@/core/api/api';
 import { ISpecialization, ITechnology } from '@/core/interfaces/types';
@@ -8,8 +7,9 @@ import { setLoading } from '@/features/loading/loadingSlice';
 import { useAppDispatch } from '@/hooks/redux';
 import { openModal } from '@/store/tech/techSlice';
 import React, { useEffect, useState } from 'react';
-import TechComponent from '../tech-component/TechComponent';
-import ScrollContainer from '../ui/scrollarea/CustomScrollarea';
+import UIFilterButton from '@/components/ui/filter-button/UIFilterButton';
+import { ScrollArea } from '@/components/ui/scroll-area/ScrollArea';
+import UIButton from '@/components/ui/button/UIButton';
 
 interface IAddTechnologyModalProps {
   type?: 'create';
@@ -77,7 +77,7 @@ const AddTechnologyModal: React.FC<TModalProps> = (props) => {
           type: 'success',
         })
       );
-    } catch (e: any) {
+    } catch (e) {
       errorHandler(e, dispatch);
     } finally {
       dispatch(setLoading(false));
@@ -104,7 +104,7 @@ const AddTechnologyModal: React.FC<TModalProps> = (props) => {
           type: 'success',
         })
       );
-    } catch (e: any) {
+    } catch (e) {
       errorHandler(e, dispatch);
     } finally {
       dispatch(setLoading(false));
@@ -132,13 +132,13 @@ const AddTechnologyModal: React.FC<TModalProps> = (props) => {
     const loadSpecs = async () => {
       try {
         dispatch(setLoading(true));
-        const result = await Api.get<null, ISpecialization[]>('/questions/get-specs');
+        const result = await Api.get<undefined, ISpecialization[]>('/questions/get-specs');
         setSpecs(result.payload);
 
         if (isEditModalProps(props)) {
           setSelectedSpecs(props.technology.specialization.map((el) => el.id));
         }
-      } catch (e: any) {
+      } catch (e) {
         errorHandler(e, dispatch);
       } finally {
         dispatch(setLoading(false));
@@ -155,13 +155,13 @@ const AddTechnologyModal: React.FC<TModalProps> = (props) => {
       onClose={closeModal}
     >
       <div className={'p-6'}>
-        <CustomInput
+        <UIInput
           className={'mb-10'}
           label={'Название направления'}
           value={techName}
           onInput={setTechName}
         />
-        <CustomInput
+        <UIInput
           className={'mb-10'}
           label={'Описание направления'}
           value={techDescr}
@@ -170,12 +170,12 @@ const AddTechnologyModal: React.FC<TModalProps> = (props) => {
         <div>
           <div>Список специализаций</div>
           <div className={'flex mt-2 max-h-[300px]'}>
-            <ScrollContainer>
-              <div className={'flex flex-wrap gap-5'}>
+            <ScrollArea>
+              <div className={'flex flex-wrap gap-2'}>
                 {specs.length ? (
                   specs.map((spec) => (
-                    <TechComponent
-                      tech={spec}
+                    <UIFilterButton
+                      text={spec.name}
                       key={spec.id}
                       selected={selectedSpecs.includes(spec.id)}
                       onClick={() => handleSetSelectedSpecs(spec.id)}
@@ -185,11 +185,11 @@ const AddTechnologyModal: React.FC<TModalProps> = (props) => {
                   <div>Специализации не найдены</div>
                 )}
               </div>
-            </ScrollContainer>
+            </ScrollArea>
           </div>
         </div>
         <div className={'flex'}>
-          <CustomButton
+          <UIButton
             className={'ml-auto'}
             text={'Сохранить'}
             onClick={handleSaveOrEdit}

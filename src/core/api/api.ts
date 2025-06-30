@@ -39,13 +39,59 @@ class Api {
     });
   }
 
-  static async handleResponse<T, R, S extends boolean>(
+  static requestFormData<T extends Record<string, any> | undefined>(
+    path: string,
+    method: 'POST',
+    options: T = {} as T
+  ): Promise<Response> {
+    const authToken = localStorage.getItem('token');
+    const formData = new FormData();
+
+    if (options) {
+      Object.keys(options).forEach((key) => {
+        const value = options[key];
+
+        if (Array.isArray(value)) {
+          value.forEach((item) => {
+            if (item instanceof File) {
+              formData.append(key, item);
+            } else if (typeof item === 'object') {
+              formData.append(key, JSON.stringify(item));
+            } else {
+              formData.append(key, String(item));
+            }
+          });
+        } else if (value instanceof File) {
+          formData.append(key, value);
+        } else if (typeof value === 'object') {
+          formData.append(key, JSON.stringify(value));
+        } else {
+          formData.append(key, String(value));
+        }
+      });
+    }
+
+    return fetch(API_PATH + path, {
+      method,
+      headers: {
+        ...(authToken && { Authorization: `Bearer ${authToken}` }),
+      },
+      credentials: 'include',
+      body: formData,
+    });
+  }
+
+  static async handleResponse<T extends object | undefined, R, S extends boolean>(
     path: string,
     method: TApiMethod,
     options: T = {} as T,
-    silent?: S
+    silent?: S,
+    isFormData?: boolean
   ): Promise<ResponseType<R, S>> {
-    const response = await this.request<T>(path, method, options);
+    const response =
+      isFormData && method === 'POST'
+        ? await this.requestFormData<T>(path, method, options)
+        : await this.request<T>(path, method, options);
 
     this.handleRequestStatus(response.status, silent);
 
@@ -67,36 +113,59 @@ class Api {
     } as ResponseType<R, S>;
   }
 
-  static async get<T, R>(path: string, options: T = {} as T): Promise<IResponse<R>> {
+  static async get<T extends object | undefined, R>(path: string, options: T = {} as T): Promise<IResponse<R>> {
     return await this.handleResponse<T, R, false>(path, 'GET', options);
   }
 
-  static async getSilent<T, R>(path: string, options: T = {} as T): Promise<IResponseSilent<R>> {
+  static async getSilent<T extends object | undefined, R>(
+    path: string,
+    options: T = {} as T
+  ): Promise<IResponseSilent<R>> {
     return await this.handleResponse<T, R, true>(path, 'GET', options, true);
   }
 
-  static async post<T, R>(path: string, options: T = {} as T): Promise<IResponse<R>> {
+  static async post<T extends object | undefined, R>(path: string, options: T = {} as T): Promise<IResponse<R>> {
     return await this.handleResponse<T, R, false>(path, 'POST', options);
   }
 
-  static async postSilent<T, R>(path: string, options: T = {} as T): Promise<IResponseSilent<R>> {
+  static async postSilent<T extends object | undefined, R>(
+    path: string,
+    options: T = {} as T
+  ): Promise<IResponseSilent<R>> {
     return await this.handleResponse<T, R, true>(path, 'POST', options, true);
   }
 
-  static async put<T, R>(path: string, options: T = {} as T): Promise<IResponse<R>> {
+  static async put<T extends object | undefined, R>(path: string, options: T = {} as T): Promise<IResponse<R>> {
     return await this.handleResponse<T, R, false>(path, 'PUT', options);
   }
 
-  static async putSilent<T, R>(path: string, options: T = {} as T): Promise<IResponseSilent<R>> {
+  static async putSilent<T extends object | undefined, R>(
+    path: string,
+    options: T = {} as T
+  ): Promise<IResponseSilent<R>> {
     return await this.handleResponse<T, R, true>(path, 'PUT', options, true);
   }
 
-  static async delete<T, R>(path: string, options: T = {} as T): Promise<IResponse<R>> {
+  static async delete<T extends object | undefined, R>(path: string, options: T = {} as T): Promise<IResponse<R>> {
     return await this.handleResponse<T, R, false>(path, 'DELETE', options);
   }
 
-  static async deleteSilent<T, R>(path: string, options: T = {} as T): Promise<IResponseSilent<R>> {
+  static async deleteSilent<T extends object | undefined, R>(
+    path: string,
+    options: T = {} as T
+  ): Promise<IResponseSilent<R>> {
     return await this.handleResponse<T, R, true>(path, 'DELETE', options, true);
+  }
+
+  static async postFormData<T extends object | undefined, R>(
+    path: string,
+    options: T = {} as T
+  ): Promise<IResponse<R>> {
+    return await this.handleResponse<T, R, false>(path, 'POST', options, false, true);
+  }
+
+  static createEvent(path: string) {
+    return new EventSource(API_PATH + path);
   }
 }
 

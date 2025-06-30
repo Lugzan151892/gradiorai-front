@@ -1,0 +1,149 @@
+'use client';
+
+import * as React from 'react';
+import { cn } from '@/lib/utils';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import UILabel from '@/components/ui/label/UILabel';
+
+interface Props extends Pick<React.ComponentProps<'input'>, 'id' | 'disabled' | 'placeholder' | 'value' | 'className'> {
+  label?: string;
+  hint?: string;
+  error?: string[] | string;
+  linkChild?: React.ReactNode;
+  success?: boolean;
+  rows?: number;
+  autoResize?: boolean;
+  children?: React.ReactNode;
+  paddingGap?: number;
+  onInput?: (val: string) => void;
+  onChange?: (val: string) => void;
+}
+
+const UITextarea: React.FC<Readonly<Props>> = ({
+  className,
+  id,
+  label,
+  hint,
+  disabled,
+  placeholder,
+  value,
+  rows = 1,
+  error,
+  linkChild,
+  autoResize = false,
+  paddingGap,
+  success,
+  children,
+  onInput,
+  onChange,
+}) => {
+  const [internalValue, setInternalValue] = useState<string>(String(value ?? ''));
+
+  const errorsList = Array.isArray(error) ? error : error ? [error] : [];
+
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+
+  const resizeTextarea = useCallback(() => {
+    if (!autoResize) {
+      return;
+    }
+    const el = textareaRef.current;
+    if (el) {
+      el.style.height = 'auto';
+      el.style.height = `${el.scrollHeight}px`;
+    }
+  }, [autoResize]);
+
+  useEffect(() => {
+    resizeTextarea();
+  }, [value, resizeTextarea]);
+
+  useEffect(() => {
+    setInternalValue(String(value ?? ''));
+
+    if (!value) {
+      setTimeout(() => {
+        resizeTextarea();
+      }, 200);
+    }
+  }, [value, resizeTextarea]);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const val = e.target.value;
+    setInternalValue(val);
+    onInput?.(val);
+    resizeTextarea();
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter') {
+      onChange?.(internalValue);
+    }
+  };
+
+  const autoResizeClasses = autoResize
+    ? 'border-input-white selection:border-input-white'
+    : 'border-main-gray selection:border-main-gray';
+
+  const errorClasses = errorsList.length
+    ? 'border-error selection:border-error text-error focus-visible:border-error'
+    : '';
+  const disabledClasses = disabled
+    ? 'border-main-gray selection:border-main-gray text-main-gray focus-visible:border-main-gray'
+    : '';
+
+  const paddingClasses = children && paddingGap ? `py-3 pl-4` : 'p-4';
+  const successStyles = 'border-main-green';
+
+  return (
+    <div className={cn(className, 'flex flex-col w-full')}>
+      {label && (
+        <UILabel
+          className={'mb-2 text-left'}
+          htmlFor={id}
+          error={!!errorsList.length}
+          disabled={disabled}
+        >
+          {label}
+        </UILabel>
+      )}
+      {hint && <div className={'text-left text-xs mb-1 text-text-disabled'}>{hint}</div>}
+      <div className={'relative'}>
+        <textarea
+          data-slot={'input'}
+          id={id}
+          ref={textareaRef}
+          value={internalValue}
+          onChange={handleInputChange}
+          rows={autoResize ? 1 : rows}
+          onKeyDown={handleKeyDown}
+          disabled={disabled}
+          placeholder={placeholder}
+          style={children && paddingGap ? { paddingRight: `${paddingGap}px` } : undefined}
+          className={cn(
+            'text-white border-1 min-h-12 text-sm rounded-4xl selection:border-1 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 w-full',
+            'focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0',
+            'focus-visible:border-main-gray focus-visible:border-1',
+            'aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive',
+            autoResizeClasses,
+            success && successStyles,
+            errorClasses,
+            disabledClasses,
+            autoResize && 'resize-none overflow-hidden',
+            paddingClasses
+          )}
+        />
+        {children && <div className={'absolute right-3 top-1/2 -translate-y-1/2'}>{children}</div>}
+      </div>
+      <div className={'min-h-4'}>
+        {errorsList.length && !disabled ? (
+          <div className={'mt-2 text-xs text-error'}>{errorsList.join(' ')}</div>
+        ) : (
+          linkChild && <div>{linkChild}</div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default UITextarea;

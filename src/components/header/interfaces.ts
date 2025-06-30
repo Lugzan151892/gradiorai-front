@@ -2,5 +2,8 @@ export enum EMENU_ITEM {
   SUBSCRIBE = 1,
   SUPPORT,
   SYSTEM,
+  TESTS,
+  INTERVIEW,
+  RESUME_CHECK,
   QUIT,
 }
