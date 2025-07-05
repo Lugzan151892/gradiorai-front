@@ -1,12 +1,11 @@
-import AppLayoutClient from '@/components/app-layout/AppLayoutClient';
-import { getMetaData } from '@/core/utils/meta';
-import type { Metadata } from 'next';
 import React from 'react';
+import type { Metadata } from 'next';
+import { getMetaData } from '@/core/utils/meta';
 
 export const metadata: Metadata = getMetaData({
   title: {
-    default: 'AI Интервью',
-    template: '%s | gradiorAI. AI Интервью.',
+    default: 'Онлайн собеседование',
+    template: '%s | gradiorAI. Онлайн собеседование.',
   },
   description:
     'Укажите конфигурацию параметров для составления контекста собеседования и испытайте себя в настоящем интервью сгенерированном под Вашу вакансию!',
@@ -39,8 +38,8 @@ export const metadata: Metadata = getMetaData({
   ],
 });
 
-const InterviewLayout: React.FC<Readonly<{ children: React.ReactNode }>> = ({ children }) => {
-  return <AppLayoutClient withState>{children}</AppLayoutClient>;
+const ResumeCheckLayout: React.FC<Readonly<{ children: React.ReactNode }>> = ({ children }) => {
+  return <>{children}</>;
 };
 
-export default InterviewLayout;
+export default ResumeCheckLayout;
