@@ -1,7 +1,7 @@
 import { AppDispatch } from '@/store';
 import { openModal } from '@/store/tech/techSlice';
-import SystemError from '@/utils/errors/SystemError';
-import UserError from '@/utils/errors/UserError';
+import SystemError from '@/core/utils/error/SystemError';
+import UserError from '@/core/utils/error/UserError';
 
 const errorHandler = (error: UserError | SystemError | any, dispatch: AppDispatch) => {
   dispatch(
