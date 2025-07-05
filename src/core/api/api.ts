@@ -1,5 +1,5 @@
-import SystemError from '@/utils/errors/SystemError';
-import UserError from '@/utils/errors/UserError';
+import SystemError from '@/core/utils/error/SystemError';
+import UserError from '@/core/utils/error/UserError';
 import { IResponse, IResponseSilent } from '@/core/api/interfaces';
 
 const API_PATH = process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : `/api`;
