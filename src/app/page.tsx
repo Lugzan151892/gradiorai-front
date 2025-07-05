@@ -72,7 +72,7 @@ const Home = () => {
         >
           <div className={'max-w-full lg:max-w-[1100px] flex flex-col gap-6 text-center'}>
             <div className={'lg:text-[64px] text-[40px] leading-[100%] font-bold'}>Подготовка к собеседованию с AI</div>
-            <div className={'lg:text-3xl text-base'}>Искусственный интелект, который улучшает твои знания</div>
+            <div className={'lg:text-3xl text-base'}>Искусственный интеллект, который улучшает твои знания</div>
             <div className={'lg:text-lg text-base'}>
               Пройди собеседование с актуальными вопросами, получи теоретические знания в разных направлениях, оцени
               свое резюме. Наши инструменты дадут тебе преимущество перед другими кандидатами.

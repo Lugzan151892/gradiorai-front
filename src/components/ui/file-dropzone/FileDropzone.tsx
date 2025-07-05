@@ -4,7 +4,7 @@ import React, { useRef, useState } from 'react';
 import CustomIcon from '../icon/CustomIcon';
 import UILabel from '../label/UILabel';
 import { cn } from '@/lib/utils';
-import { formatFileSize } from '@/utils/files';
+import { formatFileSize } from '@/core/utils/files';
 
 const BYTES_IN_MB = 1024 * 1024;
 
