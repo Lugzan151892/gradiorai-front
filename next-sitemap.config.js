@@ -3,7 +3,7 @@ module.exports = {
   siteUrl: 'https://gradiorai.ru/',
   generateRobotsTxt: true,
   sitemapSize: 5000,
-  changefreq: 'weekly',
+  changefreq: 'daily',
   priority: 0.7,
-  exclude: ['/system/*'],
+  exclude: ['/system', '/system/*'],
 };
