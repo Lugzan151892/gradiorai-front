@@ -1,3 +1,5 @@
+const BACKEND_DOMEN = process.env.NODE_ENV === 'development' ? 'http://localhost:5000/' : '/';
+
 export const formatFileSize = (bytes: number): string => {
   const units = [
     { label: 'Tb', size: 1024 ** 4 },
@@ -18,4 +20,8 @@ export const formatFileSize = (bytes: number): string => {
   }
 
   return result.join(' ');
+};
+
+export const getPublicFileLink = (path: string) => {
+  return `${BACKEND_DOMEN}${path.replace('uploads/', '')}`;
 };
