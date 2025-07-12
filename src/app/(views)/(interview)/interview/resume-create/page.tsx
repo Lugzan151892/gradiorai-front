@@ -8,7 +8,6 @@ import Api from '@/core/api/api';
 import InterviewMessage from '@/app/(views)/(interview)/interview/[id]/components/InterviewMessage';
 import UIButton from '@/components/ui/button/UIButton';
 import UILabel from '@/components/ui/label/UILabel';
-import routeChecker from '@/hoc/routeChecker';
 import UITextarea from '@/components/ui/textarea/UITextarea';
 
 const ResumeCreate = () => {
@@ -93,4 +92,4 @@ const ResumeCreate = () => {
   );
 };
 
-export default routeChecker(ResumeCreate, 'authOnly');
+export default ResumeCreate;
