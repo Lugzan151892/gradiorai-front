@@ -4,10 +4,10 @@ import { getMetaData } from '@/core/utils/meta';
 
 export const metadata: Metadata = getMetaData({
   title: {
-    default: 'Проверка резюме',
-    template: '%s | gradiorAI. Проверка резюме.',
+    default: 'Создание резюме',
+    template: '%s | gradiorAI. Создание резюме.',
   },
-  description: 'Приложите свое резюме и получите рекомендации по его улучшению с помощью обученного AI',
+  description: 'Опишите свои навыки и получите готовое резюме с помощью обученного AI',
   keywords: [
     'проверка резюме',
     'проверка резюме к собеседованию',
@@ -24,8 +24,8 @@ export const metadata: Metadata = getMetaData({
   ],
 });
 
-const ResumeCheckLayout: React.FC<Readonly<{ children: React.ReactNode }>> = ({ children }) => {
+const ResumeCreateLayout: React.FC<Readonly<{ children: React.ReactNode }>> = ({ children }) => {
   return <>{children}</>;
 };
 
-export default ResumeCheckLayout;
+export default ResumeCreateLayout;

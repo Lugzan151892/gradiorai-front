@@ -53,6 +53,10 @@ const SystemGptPage = () => {
       id: EGPT_SETTINGS_TYPE.RESUME_CHECK,
       text: 'Настройки для проверки резюме',
     },
+    {
+      id: EGPT_SETTINGS_TYPE.RESUME_CREATE,
+      text: 'Настройки для создания резюме',
+    },
   ];
 
   const loadSettings = useCallback(async () => {
