@@ -42,6 +42,11 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
       text: 'ПРОВЕРКА РЕЗЮМЕ',
       href: '/interview/resume-check',
     },
+    {
+      id: 4,
+      text: 'СОЗДАНИЕ РЕЗЮМЕ',
+      href: '/interview/resume-create',
+    },
   ];
 
   return (
