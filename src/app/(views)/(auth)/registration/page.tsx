@@ -215,7 +215,7 @@ const RegistrationPage = () => {
             iconBefore={'login-new'}
           />
           {privatePolicy && personalTerms && (
-            <div className={'text-white text-xs mt-2'}>
+            <div className={'text-white text-xs mt-2 text-center'}>
               <span>
                 Регистрируясь на сайте, Вы даете разрешение на хранение и обработку предоставленных данных. Вы всегда
                 можете прочитать полную и актуальную версию

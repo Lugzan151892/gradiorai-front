@@ -11,6 +11,7 @@ import Api from '@/core/api/api';
 import errorHandler from '@/core/utils/error/errorHandler';
 import { normalizeServerDate } from '@/core/utils/date';
 import { getPublicFileLink } from '@/core/utils/files';
+import { openModal } from '@/store/tech/techSlice';
 
 const SystemFilesPage = () => {
   const [systemFiles, setSystemFiles] = useState<Array<any>>([]);
@@ -49,6 +50,20 @@ const SystemFilesPage = () => {
     return systemFiles.find((file) => file.key === 'personal_terms');
   }, [systemFiles]);
 
+  const deleteFile = async (key: string, type: string) => {
+    if (!key) {
+      return;
+    }
+
+    try {
+      await Api.delete(`/system/files/${key}`);
+      await loadSystemFiles();
+      dispatch(openModal({ type: 'success', text: `Файл ${type} успешно сохранен!` }));
+    } catch (e: any) {
+      errorHandler(e, dispatch);
+    }
+  };
+
   return (
     <div className={'flex flex-col h-full items-center'}>
       <div className={'text-5xl'}>Изменение сущностей</div>
@@ -83,7 +98,7 @@ const SystemFilesPage = () => {
                 <div className={'text-2xl border-r px-2 py-2'}>Не заполнено</div>
               )}
               <div className={'text-2xl border-r px-2 py-2 text-center'}>
-                {normalizeServerDate(privacyPolicyFile?.uploadedAt || '') || 'Не заполнено'}
+                {privacyPolicyFile?.uploadedAt ? normalizeServerDate(privacyPolicyFile?.uploadedAt) : 'Не заполнено'}
               </div>
               <div className={'flex flex-col px-2 py-2'}>
                 <UIButton
@@ -91,11 +106,14 @@ const SystemFilesPage = () => {
                   className={'mb-2'}
                   onClick={() => openFileModal('privacy_policy', 'Политика конфиденциальности')}
                 />
-                <UIButton text={'Удалить'} />
+                <UIButton
+                  text={'Удалить'}
+                  onClick={() => deleteFile('privacy_policy', 'Политика конфиденциальности')}
+                />
               </div>
             </div>
             <div className={'border w-full grid grid-cols-[5%_20%_20%_20%_25%_10%]'}>
-              <div className={'text-3xl border-r px-2 py-2 text-center'}>{privacyPolicyFile?.id || '-'}</div>
+              <div className={'text-3xl border-r px-2 py-2 text-center'}>{personalTermsFile?.id || '-'}</div>
               <div className={'text-3xl border-r px-2 py-2'}>Согласие на обработку персональных данных</div>
               <div className={'text-3xl border-r px-2 py-2'}>{personalTermsFile?.filename || 'Не заполнено'}</div>
               {personalTermsFile?.path ? (
@@ -120,7 +138,10 @@ const SystemFilesPage = () => {
                   className={'mb-2'}
                   onClick={() => openFileModal('personal_terms', 'Согласие на обработку персональных данных')}
                 />
-                <UIButton text={'Удалить'} />
+                <UIButton
+                  text={'Удалить'}
+                  onClick={() => deleteFile('personal_terms', 'Согласие на обработку персональных данных')}
+                />
               </div>
             </div>
           </div>
@@ -130,6 +151,7 @@ const SystemFilesPage = () => {
         open={openUploadFileModal}
         fileKey={modalFileData.key}
         fileTypeText={modalFileData.name}
+        onFileSave={loadSystemFiles}
         onClose={() => setOpenUploadFileModal(false)}
       />
     </div>
