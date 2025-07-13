@@ -43,6 +43,11 @@ const SystemPage = () => {
       text: 'Мои собеседования',
       href: 'system/interviews',
     },
+    {
+      id: 8,
+      text: 'Системные файлы',
+      href: 'system/files',
+    },
   ];
   return (
     <div className={'flex items-center h-full w-full justify-center my-auto'}>
