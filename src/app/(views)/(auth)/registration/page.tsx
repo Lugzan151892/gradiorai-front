@@ -215,11 +215,8 @@ const RegistrationPage = () => {
             iconBefore={'login-new'}
           />
           {privatePolicy && personalTerms && (
-            <div className={'text-white text-xs mt-2 text-center'}>
-              <span>
-                Регистрируясь, Вы даете согласие на хранение и обработку предоставленных данных. Вы всегда можете
-                прочитать полную и актуальную версию
-              </span>{' '}
+            <div className={'text-white text-xs mt-2 text-center flex flex-col'}>
+              <span>Регистрируясь, Вы даете согласие на хранение и обработку предоставленных данных.</span>
               <a
                 className={'text-main-purple text-xs cursor-pointer hover:underline'}
                 target={'_blank'}
@@ -227,9 +224,8 @@ const RegistrationPage = () => {
                 download
                 rel={'noreferrer'}
               >
-                Согласия на обработку персональных данных
-              </a>{' '}
-              и{' '}
+                Согласие на обработку персональных данных
+              </a>
               <a
                 className={'text-main-purple text-xs cursor-pointer hover:underline'}
                 target={'_blank'}
@@ -237,7 +233,7 @@ const RegistrationPage = () => {
                 download
                 rel={'noreferrer'}
               >
-                Политики конфиденциальности
+                Политика конфиденциальности
               </a>
             </div>
           )}
