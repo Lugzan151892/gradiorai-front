@@ -59,9 +59,7 @@ const ResumeCreate = () => {
             className={'mt-6'}
             id={'user-description'}
             label={'О себе'}
-            hint={
-              'Подробно опишите информаицю о себе и своих навыках и обученный AI подготовит текст резюме специально под Вас'
-            }
+            hint={'Подробно опишите информацию о себе и своих навыках'}
             value={userDescription}
             disabled={!!createResult}
             rows={10}
