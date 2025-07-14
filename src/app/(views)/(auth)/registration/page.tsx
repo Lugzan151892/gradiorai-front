@@ -216,12 +216,11 @@ const RegistrationPage = () => {
           />
           {privatePolicy && personalTerms && (
             <div className={'text-white text-xs mt-2 text-center flex flex-col'}>
-              <span>Регистрируясь, Вы даете согласие на хранение и обработку предоставленных данных.</span>
+              <span>Регистрируясь, я даю согласие на хранение и обработку предоставленных данных.</span>
               <a
                 className={'text-main-purple text-xs cursor-pointer hover:underline'}
                 target={'_blank'}
                 href={getPublicFileLink(personalTerms?.path || '')}
-                download
                 rel={'noreferrer'}
               >
                 Согласие на обработку персональных данных
@@ -230,7 +229,6 @@ const RegistrationPage = () => {
                 className={'text-main-purple text-xs cursor-pointer hover:underline'}
                 target={'_blank'}
                 href={getPublicFileLink(privatePolicy?.path || '')}
-                download
                 rel={'noreferrer'}
               >
                 Политика конфиденциальности
