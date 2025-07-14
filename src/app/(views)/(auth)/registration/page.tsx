@@ -217,8 +217,8 @@ const RegistrationPage = () => {
           {privatePolicy && personalTerms && (
             <div className={'text-white text-xs mt-2 text-center'}>
               <span>
-                Регистрируясь на сайте, Вы даете разрешение на хранение и обработку предоставленных данных. Вы всегда
-                можете прочитать полную и актуальную версию
+                Регистрируясь, Вы даете согласие на хранение и обработку предоставленных данных. Вы всегда можете
+                прочитать полную и актуальную версию
               </span>{' '}
               <a
                 className={'text-main-purple text-xs cursor-pointer hover:underline'}
