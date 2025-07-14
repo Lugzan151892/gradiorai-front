@@ -7,10 +7,11 @@ import { setLoading } from '@/features/loading/loadingSlice';
 import { useAppDispatch } from '@/hooks/redux';
 import { setUnAuth } from '@/store/user/userSlice';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import UIButton from '@/components/ui/button/UIButton';
 import routeChecker from '@/hoc/routeChecker';
 import UIInput from '@/components/ui/input/UIInput';
+import { getPublicFileLink } from '@/core/utils/files';
 
 const RegistrationPage = () => {
   const router = useRouter();
@@ -106,6 +107,27 @@ const RegistrationPage = () => {
     router.push('/login');
   };
 
+  const [privatePolicy, setPrivatePolicy] = useState<any>(null);
+  const [personalTerms, setPersonalTerms] = useState<any>(null);
+
+  const loadSystemFiles = useCallback(async () => {
+    try {
+      dispatch(setLoading(true));
+      const privatePolicyFile = await Api.get<undefined, any>('/system/files/privacy_policy');
+      setPrivatePolicy(privatePolicyFile.payload);
+      const personalTermsFile = await Api.get<undefined, any[]>('/system/files/personal_terms');
+      setPersonalTerms(personalTermsFile.payload);
+    } catch (e) {
+      errorHandler(e, dispatch);
+    } finally {
+      dispatch(setLoading(false));
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
+    loadSystemFiles();
+  }, [loadSystemFiles]);
+
   return (
     <div className={'text-black flex flex-col w-full h-full items-center mx-4'}>
       <div className={'mb-16 text-white text-center text-3xl lg:text-5xl font-bold'}>Добро пожаловать!</div>
@@ -184,7 +206,7 @@ const RegistrationPage = () => {
           text={'ЗАРЕГИСТРИРОВАТЬСЯ'}
           onClick={showCodeBlock ? handleRegister : handleRequestCode}
         />
-        <div className={'flex my-6'}>
+        <div className={'flex flex-col items-center my-6'}>
           <UIButton
             className={'mx-auto'}
             text={'Вход'}
@@ -192,6 +214,29 @@ const RegistrationPage = () => {
             onClick={handleGoLogin}
             iconBefore={'login-new'}
           />
+          {privatePolicy && personalTerms && (
+            <div className={'text-white text-xs mt-2 text-center flex flex-col'}>
+              <span>Регистрируясь, Вы даете согласие на хранение и обработку предоставленных данных.</span>
+              <a
+                className={'text-main-purple text-xs cursor-pointer hover:underline'}
+                target={'_blank'}
+                href={getPublicFileLink(personalTerms?.path || '')}
+                download
+                rel={'noreferrer'}
+              >
+                Согласие на обработку персональных данных
+              </a>
+              <a
+                className={'text-main-purple text-xs cursor-pointer hover:underline'}
+                target={'_blank'}
+                href={getPublicFileLink(privatePolicy?.path || '')}
+                download
+                rel={'noreferrer'}
+              >
+                Политика конфиденциальности
+              </a>
+            </div>
+          )}
         </div>
       </div>
     </div>
