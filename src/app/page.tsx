@@ -455,7 +455,7 @@ const Home = () => {
           <div className={'w-full lg:max-w-[808px] flex flex-col gap-6 text-center'}>
             <div className={'lg:text-5xl text-4xl leading-[100%] font-bold'}>Создание резюме</div>
             <div className={'lg:text-xl text-base'}>
-              Обученный AI создаст текст для Вашего резюме на основе предоставленных данных
+              Если у вас нет резюме, мы создадим текст для него на основе предоставленных данных
             </div>
             <div>
               <UIButton
