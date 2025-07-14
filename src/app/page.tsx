@@ -448,6 +448,26 @@ const Home = () => {
             </div>
           </div>
         </section>
+        <section
+          className={'lg:h-[454px] h-[544px] rounded-b-4xl flex justify-center items-center lg:mt-[140px] mt-18'}
+          style={{ background: 'var(--main-gradient)' }}
+        >
+          <div className={'w-full lg:max-w-[808px] flex flex-col gap-6 text-center'}>
+            <div className={'lg:text-5xl text-4xl leading-[100%] font-bold'}>Создание резюме</div>
+            <div className={'lg:text-xl text-base'}>
+              Обученный AI создаст текст для Вашего резюме на основе предоставленных данных
+            </div>
+            <div>
+              <UIButton
+                text={'СОЗДАТЬ РЕЗЮМЕ'}
+                iconAfter={'arrow-top-right'}
+                onClick={() => {
+                  router.push('/interview/resume-create');
+                }}
+              />
+            </div>
+          </div>
+        </section>
         {/* <section
           className={'lg:h-[454px] h-[544px] rounded-b-4xl flex justify-center items-center lg:mt-[140px] mt-18'}
           style={{ background: 'var(--main-gradient)' }}
