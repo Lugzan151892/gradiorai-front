@@ -6,9 +6,9 @@ import { setLoading } from '@/features/loading/loadingSlice';
 import errorHandler from '@/core/utils/error/errorHandler';
 import { useAppDispatch } from '@/hooks/redux';
 import Api from '@/core/api/api';
-import InterviewMessage from '@/app/(views)/(interview)/interview/[id]/components/InterviewMessage';
 import UIButton from '@/components/ui/button/UIButton';
 import UILabel from '@/components/ui/label/UILabel';
+import MarkdownMessage from '@/components/markdown-message/MarkdownMessage';
 
 const ResumePrepare = () => {
   const [userCV, setUserCV] = useState<null | File>(null);
@@ -77,7 +77,7 @@ const ResumePrepare = () => {
           <UILabel className={'mb-2'}>Результат проверки</UILabel>
           <div className={'bg-main-dark p-4 text-center rounded-3xl min-h-[300px] max-h-[400px] overflow-auto'}>
             {checkResult && (
-              <InterviewMessage
+              <MarkdownMessage
                 className={'mb-2 mr-auto'}
                 background={'bg-transparent'}
                 message={checkResult}
