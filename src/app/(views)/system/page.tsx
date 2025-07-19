@@ -48,6 +48,11 @@ const SystemPage = () => {
       text: 'Системные файлы',
       href: 'system/files',
     },
+    {
+      id: 9,
+      text: 'Активность пользователей',
+      href: 'system/actions-log',
+    },
   ];
   return (
     <div className={'flex items-center h-full w-full justify-center my-auto'}>

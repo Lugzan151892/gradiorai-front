@@ -5,10 +5,10 @@ import { setLoading } from '@/features/loading/loadingSlice';
 import errorHandler from '@/core/utils/error/errorHandler';
 import { useAppDispatch } from '@/hooks/redux';
 import Api from '@/core/api/api';
-import InterviewMessage from '@/app/(views)/(interview)/interview/[id]/components/InterviewMessage';
 import UIButton from '@/components/ui/button/UIButton';
 import UILabel from '@/components/ui/label/UILabel';
 import UITextarea from '@/components/ui/textarea/UITextarea';
+import MarkdownMessage from '@/components/markdown-message/MarkdownMessage';
 
 const ResumeCreate = () => {
   const [userDescription, setUserDescription] = useState('');
@@ -78,7 +78,7 @@ const ResumeCreate = () => {
           <UILabel className={'mb-2'}>Результат генерации</UILabel>
           <div className={'bg-main-dark p-4 text-center rounded-3xl min-h-[300px] max-h-[400px] overflow-auto'}>
             {createResult && (
-              <InterviewMessage
+              <MarkdownMessage
                 className={'mb-2 mr-auto'}
                 background={'bg-transparent'}
                 message={createResult}
