@@ -19,7 +19,7 @@ const customStyle = {
   },
 };
 
-const InterviewMessage: React.FC<{
+const MarkdownMessage: React.FC<{
   message: string;
   isHuman?: boolean;
   background?: string;
@@ -121,4 +121,4 @@ const InterviewMessage: React.FC<{
   );
 };
 
-export default InterviewMessage;
+export default MarkdownMessage;
