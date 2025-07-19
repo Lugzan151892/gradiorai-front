@@ -1,4 +1,5 @@
-import { ESKILL_LEVEL } from '@/core/interfaces/enums';
+import { IInterview } from '@/app/(views)/(interview)/interview/types';
+import { EGPT_SETTINGS_TYPE, ESKILL_LEVEL } from '@/core/interfaces/enums';
 
 export interface IUser {
   id: number;
@@ -75,4 +76,16 @@ export interface ITech {
   id: number;
   name: string;
   spec: number;
+}
+
+export interface IActionsLog {
+  id: number;
+  createdAt: string;
+  type: EGPT_SETTINGS_TYPE;
+  user_ip?: string;
+  interview?: IInterview;
+  user?: IUser;
+  user_id?: number;
+  interview_id?: number;
+  content?: string;
 }

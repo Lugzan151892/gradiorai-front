@@ -3,19 +3,22 @@ import type { Metadata } from 'next';
 export const getMetaData = (data?: Partial<Metadata>) => {
   const isProduction = process.env.IS_PRODUCTION === 'true';
 
+  // eslint-disable-next-line no-console
+  console.log('Главный стенд: ', isProduction);
+
   const metadata: Metadata = {
     title: data?.title || {
       default: 'gradiorAI. Подготовка к собеседованию с AI',
       template: '%s | gradiorAI',
     },
-    description:
-      data?.description ||
-      'От новичка до эксперта - наши AI-тесты помогут вам оценить уровень знаний и найти точки роста. Выбирайте направление, отвечайте на вопросы, развивайтесь. Прокачивайте навыки с нами!',
+    description: data?.description || 'Искусственный интеллект, который улучшает твои знания',
     keywords: [
       'gradiorAI',
       'Gradior AI',
-      'генерация тестов',
-      'генерация собеседования',
+      'gradior',
+      'генерация',
+      'тесты',
+      'собеседования',
       'реальное собеседование',
       'gradiorAI пройти собеседование',
       'gradior пройти собеседование',
@@ -56,9 +59,7 @@ export const getMetaData = (data?: Partial<Metadata>) => {
     },
     openGraph: {
       title: data?.openGraph?.title || 'gradiorAI — Ваш ИИ-помощник в подготовке к собеседованиям',
-      description:
-        data?.openGraph?.description ||
-        'От новичка до эксперта - наши AI-тесты помогут вам оценить уровень знаний и найти точки роста. Выбирайте направление, отвечайте на вопросы, развивайтесь. Прокачивайте навыки с нами!',
+      description: data?.openGraph?.description || 'Искусственный интеллект, который улучшает твои знания',
       url: 'https://gradiorai.ru/',
       siteName: 'gradiorAI',
       locale: 'ru_RU',
