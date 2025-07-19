@@ -3,7 +3,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { IInterview } from '@/app/(views)/(interview)/interview/types';
 import { useParams, useRouter } from 'next/navigation';
-import InterviewMessage from '@/app/(views)/(interview)/interview/[id]/components/InterviewMessage';
 import Api from '@/core/api/api';
 import errorHandler from '@/core/utils/error/errorHandler';
 import { useAppDispatch } from '@/hooks/redux';
@@ -14,6 +13,7 @@ import CustomIcon from '@/components/ui/icon/CustomIcon';
 import routeChecker from '@/hoc/routeChecker';
 import UIButton from '@/components/ui/button/UIButton';
 import { cn } from '@/lib/utils';
+import MarkdownMessage from '@/components/markdown-message/MarkdownMessage';
 
 const CurrentInterviewPage = () => {
   const { id } = useParams();
@@ -166,7 +166,7 @@ const CurrentInterviewPage = () => {
           ref={scrollContainerRef}
         >
           {interview?.messages.map((message) => (
-            <InterviewMessage
+            <MarkdownMessage
               key={message.id}
               className={`lg:max-w-[70%] max-w-[85%] mb-2 ${message.is_human ? 'ml-auto' : 'mr-auto'}`}
               message={message.text}
@@ -174,7 +174,7 @@ const CurrentInterviewPage = () => {
             />
           ))}
           {isGenerating && !!generatedMessage && (
-            <InterviewMessage
+            <MarkdownMessage
               className={'lg:max-w-[70%] max-w-[85%] mb-2 mr-auto'}
               message={generatedMessage}
               isHuman={false}
