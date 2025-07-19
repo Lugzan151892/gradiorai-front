@@ -65,11 +65,6 @@ const interDisplay = localFont({
   variable: '--font-inter-display',
 });
 
-const isProduction = process.env.IS_PRODUCTION === 'true';
-
-// eslint-disable-next-line no-console
-console.log('Главный стенд: ', isProduction);
-
 export const metadata: Metadata = getMetaData();
 
 const RootLayout: React.FC<Readonly<{ children: React.ReactNode }>> = ({ children }) => {
