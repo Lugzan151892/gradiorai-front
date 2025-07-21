@@ -535,6 +535,12 @@ const Home = () => {
               >
                 Проверка резюме
               </div>
+              <div
+                className={'cursor-pointer hover:underline hover:text-main-purple'}
+                onClick={() => router.push('/interview/resume-create')}
+              >
+                Создание резюме
+              </div>
             </div>
           </div>
           <div className={'flex flex-col gap-8'}>
