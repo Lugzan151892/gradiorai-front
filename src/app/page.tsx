@@ -1,27 +1,30 @@
 'use client';
 import UIButton from '@/components/ui/button/UIButton';
 import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import AppLayout from '@/components/app-layout/AppLayout';
 import CardItem from '@/components/main-page/card-item/CardItem';
-// import CardWithImage from '@/components/main-page/card-with-image/CardWithImage';
 import robot from '@/components/main-page/assets/robot.png';
 import Image from 'next/image';
-// import abstract from '@/components/main-page/assets/abstract.svg';
 import abstract2 from '@/components/main-page/assets/abstract2.svg';
 import butterfly from '@/components/main-page/assets/butterfly.svg';
 import donut from '@/components/main-page/assets/donut.svg';
 import mail from '@/components/main-page/assets/mail.svg';
-// import telegramm from '@/components/main-page/assets/telegramm.svg';
 import chatExample from '@/components/main-page/assets/chat-example.png';
 import testExample from '@/components/main-page/assets/test-example.png';
-import { useAppSelector } from '@/hooks/redux';
+import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { RootState } from '@/store';
 import { getRandomElement } from '@/core/utils/array';
 import logoTransparentFull from '@/assets/icons/gradior_transparent_full.png';
+import AboutBlock from '@/components/main-page/about-block/AboutBlock';
+import errorHandler from '@/core/utils/error/errorHandler';
+import Api from '@/core/api/api';
+import { setLoading } from '@/features/loading/loadingSlice';
+import { getPublicFileLink } from '@/core/utils/files';
 
 const Home = () => {
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const { user } = useAppSelector((state: RootState) => state.user);
 
@@ -31,6 +34,27 @@ const Home = () => {
     onClick: () => router.push('/tests'),
     unauth: true,
   });
+
+  const [privatePolicy, setPrivatePolicy] = useState<any>(null);
+  const [personalTerms, setPersonalTerms] = useState<any>(null);
+
+  const loadSystemFiles = useCallback(async () => {
+    try {
+      dispatch(setLoading(true));
+      const privatePolicyFile = await Api.get<undefined, any>('/system/files/privacy_policy');
+      setPrivatePolicy(privatePolicyFile.payload);
+      const personalTermsFile = await Api.get<undefined, any[]>('/system/files/personal_terms');
+      setPersonalTerms(personalTermsFile.payload);
+    } catch (e) {
+      errorHandler(e, dispatch);
+    } finally {
+      dispatch(setLoading(false));
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
+    loadSystemFiles();
+  }, [loadSystemFiles]);
 
   useEffect(() => {
     const buttons = [
@@ -136,71 +160,6 @@ const Home = () => {
             </div>
           </div>
         </section>
-        {/** Временно скрыто */}
-        {/* <section
-          className={'lg:h-[454px] rounded-b-4xl flex justify-center items-center lg:mt-[140px] mt-18 px-4 py-12'}
-          style={{ background: 'var(--main-gradient)' }}
-        >
-          <div className={'w-full lg:max-w-[808px] flex flex-col gap-6 lg:text-left text-center'}>
-            <div className={'text-4xl lg:text-5xl leading-[100%] font-bold'}>Генерация с AI </div>
-            <div className={'lg:text-xl text-base'}>
-              Превратите свой опыт в убедительные ответы с помощью нашего интеллектуального помощника. Просто укажите
-              параметры – и получите готовые варианты ответов, которые впечатлят любого работодателя
-            </div>
-            <Image
-              className={'lg:hidden flex mx-auto'}
-              height={300}
-              src={chatExample}
-              alt={'chat'}
-            />
-            <div>
-              <UIButton
-                text={'НАЧАТЬ'}
-                iconAfter={'arrow-top-right'}
-                onClick={() => {
-                  router.push('/');
-                }}
-              />
-            </div>
-          </div>
-          <Image
-            className={'hidden lg:flex'}
-            height={300}
-            src={chatExample}
-            alt={'chat'}
-          />
-        </section> */}
-        {/* <section className={'flex flex-col lg:mt-20 mt-19 lg:gap-19 gap-8'}>
-          <div className={'lg:text-2xl text-xl font-semibold text-center'}>Преимущества нашего AI-генератора</div>
-          <div className={'flex gap-4 flex-wrap px-4'}>
-            <CardWithImage
-              className={'lg:w-[49%] w-full'}
-              title={'Режим улучшения – доработка ваших черновиков'}
-              text={
-                'Загрузите свой текст и получите: оптимизацию формулировок, добавление профессиональных терминов и исправление стилистики'
-              }
-              image={'arm'}
-            />
-            <CardWithImage
-              className={'lg:w-[49%] w-full'}
-              title={'Отраслевые шаблоны для 25+ профессий'}
-              text={'Готовые шаблоны с профессиональной лексикой, включая редкие специализации IT'}
-              image={'world'}
-            />
-            <CardWithImage
-              className={'lg:w-[49%] w-full'}
-              title={'Умная адаптация под уровень позиции'}
-              text={'Наш ИИ анализирует требования вакансии и автоматически подстраивает ответы под нужный уровень'}
-              image={'romb'}
-            />
-            <CardWithImage
-              className={'lg:w-[49%] w-full'}
-              title={'Генерация вопросов работодателю'}
-              text={'10+ умных вопросов под вашу сферу, включая редкие специализации'}
-              image={'question'}
-            />
-          </div>
-        </section> */}
         <section
           className={
             'lg:h-[454px] h-[665px] rounded-b-4xl flex justify-center items-center lg:mt-[140px] mt-18 px-4 py-12'
@@ -405,20 +364,6 @@ const Home = () => {
                 alt={'abstract'}
               />
             </div>
-            {/* <div className={'flex border-1 border-main-gray rounded-3xl p-4 relative overflow-hidden'}>
-              <div className={'flex flex-col gap-4 max-w-[70%]'}>
-                <div className={'lg:text-xl text-base font-semibold leading-[100%]'}>Выберите вакансию</div>
-                <div className={'lg:text-lg text-sm leading-[24px]'}>
-                  Укажите должность (например, Data Analyst) или загрузите описание вакансии. AI определит необходмые
-                  требования и навыки
-                </div>
-              </div>
-              <Image
-                className={'absolute lg:right-0 lg:bottom-3 -right-10 -bottom-2'}
-                src={abstract}
-                alt={'abstract'}
-              />
-            </div> */}
             <div className={'flex border-1 border-main-gray rounded-3xl p-4 relative overflow-hidden'}>
               <div className={'flex flex-col gap-4 max-w-[70%]'}>
                 <div className={'lg:text-xl text-base font-semibold leading-[100%]'}>Отчет с улучшениями</div>
@@ -468,26 +413,42 @@ const Home = () => {
             </div>
           </div>
         </section>
-        {/* <section
-          className={'lg:h-[454px] h-[544px] rounded-b-4xl flex justify-center items-center lg:mt-[140px] mt-18'}
-          style={{ background: 'var(--main-gradient)' }}
+        <section
+          className={'lg:pt-[80px] pt-18'}
+          id={'faq'}
         >
-          <div className={'w-full lg:max-w-[808px] flex flex-col items-center gap-6 text-center'}>
-            <div className={'lg:text-xl text-base'}>
-              gradiorAI – ваш умный помощник в подготовке к собеседованиям. Тренируйтесь с AI, проходите симуляции,
-              улучшайте резюме и получайте офферы быстрее!
-            </div>
-            <div>
-              <UIButton
-                text={'ПРОВЕРИТЬ РЕЗЮМЕ'}
-                iconAfter={'arrow-top-right'}
-                onClick={() => {
-                  router.push('/');
-                }}
-              />
-            </div>
+          <div className={'lg:text-5xl text-4xl font-bold mb-6 tracking-widest'}>FAQ</div>
+          <div className={'flex flex-col gap-4'}>
+            <AboutBlock
+              title={'Что представляет собой ваша платформа?'}
+              content={
+                'Наша платформа помогает подготовиться к собеседованиям с помощью онлайн-собеседований и онлайн-тестов, делает анализ резюме с рекомендациями по улучшению.'
+              }
+            />
+            <AboutBlock
+              title={'Какие направления и профессии доступны для подготовки?'}
+              content={
+                'Мы предлагаем подготовку по IT специальностям, Front End, Front End, менеджменту, и другим востребованным направлениям. Список регулярно обновляется.'
+              }
+            />
+            <AboutBlock
+              title={'Как работает проверка резюме?'}
+              content={
+                'Вы загружаете свое резюме в систему, после чего получаете подробный анализ с рекомендациями по структуре, стилю, ключевым словам и сильным/слабым сторонам.'
+              }
+            />
+            <AboutBlock
+              title={'Подходит ли платформа новичкам без опыта работы?'}
+              content={
+                'Да, у нас есть отдельные блоки вопросов и подготовка для тех, кто только начинает карьеру, с разбором базовых знаний.'
+              }
+            />
+            <AboutBlock
+              title={'Ваша платформа бесплатна?'}
+              content={'Да, все предоставляемые нами инструменты абсолютно бесплатны.'}
+            />
           </div>
-        </section> */}
+        </section>
       </div>
       <footer className={'lg:h-[300px] bg-main-black flex lg:items-center lg:justify-center mt-25 p-4'}>
         <div className={'flex lg:flex-row flex-col lg:gap-30 gap-12'}>
@@ -507,16 +468,31 @@ const Home = () => {
               </div>
             </div>
             <div className={'grow'} />
-            {/* <div className={'flex flex-col gap-3 text-sm font-light text-text-low-white'}>
-                <div>Политика конфиденциальности</div>
-                <div>Условия использования</div>
-              </div> */}
+            {privatePolicy && personalTerms && (
+              <div className={'flex flex-col gap-3 text-sm font-light text-text-low-white'}>
+                <a
+                  className={'cursor-pointer hover:underline hover:text-main-purple'}
+                  target={'_blank'}
+                  href={getPublicFileLink(personalTerms?.path || '')}
+                  rel={'noreferrer'}
+                >
+                  Условия использования
+                </a>
+                <a
+                  className={'cursor-pointer hover:underline hover:text-main-purple'}
+                  target={'_blank'}
+                  href={getPublicFileLink(privatePolicy?.path || '')}
+                  rel={'noreferrer'}
+                >
+                  Политика конфиденциальности
+                </a>
+              </div>
+            )}
             <div className={'text-sm font-light text-text-low-white'}>2025. Gradior. Все права защищены</div>
           </div>
           <div className={'flex flex-col gap-8'}>
             <div className={'font-medium text-base leading-[24px]'}>ИНСТРУМЕНТЫ</div>
             <div className={'flex flex-col gap-3 text-sm font-light text-text-low-white'}>
-              {/* <div className={'cursor-pointer hover:underline hover:text-main-purple'}>Генерация с AI</div> */}
               <div
                 className={'cursor-pointer hover:underline hover:text-main-purple'}
                 onClick={() => router.push('/interview')}
