@@ -47,6 +47,15 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
       text: 'СОЗДАНИЕ РЕЗЮМЕ',
       href: '/interview/resume-create',
     },
+    {
+      id: 4,
+      text: 'FAQ',
+      href: '/interview/resume-create',
+      onClick: () => {
+        const el = document.getElementById('faq');
+        el?.scrollIntoView({ behavior: 'smooth' });
+      },
+    },
   ];
 
   return (
@@ -79,7 +88,10 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
                 'px-4 py-1 cursor-pointer rounded-3xl transition-colors duration-150 hover:[background:var(--main-gray)] hover:[box-shadow:inset_0_0_0_1px_hsla(0,0%,100%,0.04)]'
               }
               key={el.id}
-              onClick={() => router.push(el.href)}
+              onClick={() => {
+                if (el.onClick) el.onClick();
+                else router.push(el.href);
+              }}
             >
               <div className={'font-medium text-sm'}>{el.text}</div>
             </div>
