@@ -1,17 +1,54 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { clsx } from 'clsx';
 import { useRouter } from 'next/navigation';
 import HeaderUserState from '@/components/header/components/HeaderUserState';
 import Image from 'next/image';
 import logoTransparentFull from '@/assets/icons/gradior_transparent_full.png';
+import CustomIcon from '@/components/ui/icon/CustomIcon';
+import IconMarkup from '@/components/ui/icon/utils/IconMarkup';
+import { cn } from '@/lib/utils';
+
+interface ILinkItem {
+  id: string;
+  text: string;
+  href?: string;
+  onClick?: () => void;
+  submenu?: {
+    subTitle: string;
+    links: Array<{
+      id: number;
+      text: string;
+      description: string;
+      href: string;
+      icon: keyof typeof IconMarkup;
+    }>;
+  };
+}
 
 const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement | null>; withState?: boolean }>> = ({
   scrollRef,
   withState,
 }) => {
   const [scrolled, setScrolled] = useState(false);
+  const [hoveredLinkId, setHoveredLinkId] = useState<string | null>(null);
+  const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const cancelHoverTimeout = () => {
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+      hoverTimeoutRef.current = null;
+    }
+  };
+
+  const delayedSetHoveredId = (id: string | null) => {
+    cancelHoverTimeout();
+    hoverTimeoutRef.current = setTimeout(() => {
+      setHoveredLinkId(id);
+      hoverTimeoutRef.current = null;
+    }, 300);
+  };
 
   useEffect(() => {
     const scrollEl = scrollRef?.current;
@@ -26,31 +63,55 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
 
   const router = useRouter();
 
-  const links = [
+  const links: ILinkItem[] = [
     {
-      id: 1,
-      text: 'СОБЕСЕДОВАНИЕ',
-      href: '/interview',
+      id: 'INSTRUMENTS',
+      text: 'ИНСТРУМЕНТЫ',
+      submenu: {
+        subTitle: 'Инструменты',
+        links: [
+          {
+            id: 1,
+            text: 'СОБЕСЕДОВАНИЕ',
+            description: 'Пройти собеседование с AI',
+            href: '/interview',
+            icon: 'settings-new',
+          },
+          {
+            id: 2,
+            text: 'ТЕСТИРОВАНИЕ',
+            description: 'Пройти тестирование с AI',
+            href: '/tests',
+            icon: 'settings-new',
+          },
+          {
+            id: 3,
+            text: 'ПРОВЕРКА РЕЗЮМЕ',
+            description: 'Проверить резюме с AI',
+            href: '/interview/resume-check',
+            icon: 'settings-new',
+          },
+          {
+            id: 4,
+            text: 'СОЗДАНИЕ РЕЗЮМЕ',
+            description: 'Создать резюме с AI',
+            href: '/interview/resume-create',
+            icon: 'settings-new',
+          },
+        ],
+      },
     },
     {
-      id: 2,
-      text: 'ТЕСТИРОВАНИЕ',
-      href: '/tests',
-    },
-    {
-      id: 3,
-      text: 'ПРОВЕРКА РЕЗЮМЕ',
-      href: '/interview/resume-check',
-    },
-    {
-      id: 4,
-      text: 'СОЗДАНИЕ РЕЗЮМЕ',
-      href: '/interview/resume-create',
-    },
-    {
-      id: 4,
+      id: 'FAQ',
       text: 'FAQ',
-      href: '/interview/resume-create',
+      onClick: () => {
+        const el = document.getElementById('faq');
+        el?.scrollIntoView({ behavior: 'smooth' });
+      },
+    },
+    {
+      id: 'ABOUT',
+      text: 'О НАС',
       onClick: () => {
         const el = document.getElementById('faq');
         el?.scrollIntoView({ behavior: 'smooth' });
@@ -81,19 +142,69 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
         </div>
       </div>
       {withState && (
-        <div className={'p-2 xl:flex hidden gap-2 rounded-3xl bg-main-dark border-1 border-main-gray'}>
+        <div
+          className={'relative p-2 xl:flex hidden gap-2 rounded-3xl bg-main-dark border-1 border-main-gray'}
+          onMouseLeave={() => delayedSetHoveredId(null)}
+        >
           {links.map((el) => (
             <div
-              className={
-                'px-4 py-1 cursor-pointer rounded-3xl transition-colors duration-150 hover:[background:var(--main-gray)] hover:[box-shadow:inset_0_0_0_1px_hsla(0,0%,100%,0.04)]'
-              }
               key={el.id}
-              onClick={() => {
-                if (el.onClick) el.onClick();
-                else router.push(el.href);
+              className={'relative'}
+              onMouseEnter={() => {
+                cancelHoverTimeout();
+                setHoveredLinkId(el.submenu ? el.id : null);
               }}
             >
-              <div className={'font-medium text-sm'}>{el.text}</div>
+              <div
+                className={clsx(
+                  'px-4 py-1 cursor-pointer rounded-3xl transition-colors duration-150 hover:[background:var(--main-gray)] hover:[box-shadow:inset_0_0_0_1px_hsla(0,0%,100%,0.04)]'
+                )}
+                onClick={() => {
+                  if (el.onClick) el.onClick();
+                  else if (el.href) router.push(el.href);
+                }}
+              >
+                <div className={'font-medium text-sm'}>{el.text}</div>
+              </div>
+              {el.submenu && hoveredLinkId === el.id && (
+                <div
+                  className={
+                    'absolute top-full mt-4 left-0 gap-2 rounded-3xl bg-main-dark border-1 border-main-gray shadow-lg z-20 p-2 flex flex-col justify-center gap-3 p-4'
+                  }
+                  onMouseEnter={() => {
+                    cancelHoverTimeout();
+                    setHoveredLinkId(el.id);
+                  }}
+                  onMouseLeave={() => delayedSetHoveredId(null)}
+                >
+                  <div className={'text-text-disabled pl-2'}>{el.submenu.subTitle}</div>
+                  {el.submenu.links.map((sub) => (
+                    <div
+                      key={sub.id}
+                      className={cn(
+                        'group cursor-pointer rounded-2xl transition-colors duration-150 hover:[background:var(--main-gray)] hover:[box-shadow:inset_0_0_0_1px_hsla(0,0%,100%,0.04)] text-nowrap',
+                        'flex items-center gap-2 p-2'
+                      )}
+                      onClick={() => router.push(sub.href)}
+                    >
+                      <div
+                        className={
+                          'p-2 transition-colors duration-300 bg-transparent group-hover:[background-image:var(--main-gradient)] border-1 border-main-gray rounded-3xl'
+                        }
+                      >
+                        <CustomIcon
+                          size={16}
+                          name={sub.icon}
+                        />
+                      </div>
+                      <div className={'flex flex-col gap-1'}>
+                        <div>{sub.text}</div>
+                        <div className={'text-text-disabled text-xs'}>{sub.description}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           ))}
         </div>
