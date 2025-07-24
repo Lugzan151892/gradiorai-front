@@ -411,12 +411,13 @@ const Home = () => {
                 }}
               />
             </div>
+            <div
+              className={'mt-10'}
+              id={'faq'}
+            />
           </div>
         </section>
-        <section
-          className={'lg:pt-[80px] pt-18'}
-          id={'faq'}
-        >
+        <section className={'lg:pt-[80px] pt-18'}>
           <div className={'text-base text-text-disabled text-center font-bold mb-1 tracking-wide'}>FAQ</div>
           <div className={'text-4xl font-bold mb-6 tracking-wide text-center'}>Часто задаваемые вопросы</div>
           <div className={'flex flex-col gap-4'}>
