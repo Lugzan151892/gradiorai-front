@@ -7,9 +7,10 @@ import { cn } from '@/lib/utils';
 
 interface ScrollAreaProps extends React.ComponentProps<typeof ScrollAreaPrimitive.Root> {
   viewportRef?: React.Ref<HTMLDivElement>;
+  scrollbarTopOffset?: number | string;
 }
 
-function ScrollArea({ className, children, viewportRef, ...props }: ScrollAreaProps) {
+function ScrollArea({ className, children, viewportRef, scrollbarTopOffset = 0, ...props }: ScrollAreaProps) {
   return (
     <ScrollAreaPrimitive.Root
       data-slot={'scroll-area'}
@@ -25,7 +26,7 @@ function ScrollArea({ className, children, viewportRef, ...props }: ScrollAreaPr
       >
         {children}
       </ScrollAreaPrimitive.Viewport>
-      <ScrollBar />
+      <ScrollBar topOffset={scrollbarTopOffset} />
       <ScrollAreaPrimitive.Corner />
     </ScrollAreaPrimitive.Root>
   );
@@ -34,18 +35,22 @@ function ScrollArea({ className, children, viewportRef, ...props }: ScrollAreaPr
 function ScrollBar({
   className,
   orientation = 'vertical',
+  topOffset = 0,
   ...props
-}: React.ComponentProps<typeof ScrollAreaPrimitive.ScrollAreaScrollbar>) {
+}: React.ComponentProps<typeof ScrollAreaPrimitive.ScrollAreaScrollbar> & {
+  topOffset?: number | string;
+}) {
   return (
     <ScrollAreaPrimitive.ScrollAreaScrollbar
       data-slot={'scroll-area-scrollbar'}
       orientation={orientation}
       className={cn(
         'flex touch-none p-px transition-colors select-none',
-        orientation === 'vertical' && 'h-full w-2.5 border-l border-l-transparent',
+        orientation === 'vertical' && 'w-2.5 border-l border-l-transparent',
         orientation === 'horizontal' && 'h-2.5 flex-col border-t border-t-transparent',
         className
       )}
+      style={{ top: typeof topOffset === 'number' ? `${topOffset}px` : topOffset }}
       {...props}
     >
       <ScrollAreaPrimitive.ScrollAreaThumb

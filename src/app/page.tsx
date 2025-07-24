@@ -418,9 +418,7 @@ const Home = () => {
           id={'faq'}
         >
           <div className={'text-base text-text-disabled text-center font-bold mb-1 tracking-wide'}>FAQ</div>
-          <div className={'lg:text-5xl text-4xl font-bold mb-6 tracking-wide text-center'}>
-            Часто задаваемые вопросы
-          </div>
+          <div className={'text-4xl font-bold mb-6 tracking-wide text-center'}>Часто задаваемые вопросы</div>
           <div className={'flex flex-col gap-4'}>
             <AboutBlock
               title={'Что представляет собой ваша платформа?'}

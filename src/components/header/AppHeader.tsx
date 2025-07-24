@@ -81,7 +81,7 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
           {
             id: 1,
             text: 'СОБЕСЕДОВАНИЕ',
-            description: 'Пройти собеседование с AI',
+            description: 'Пройти собеседование с AI Пройти собеседование с AI',
             href: '/interview',
             icon: 'settings-new',
           },
@@ -122,9 +122,9 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
   return (
     <div
       className={clsx(
-        'flex fixed top-0 left-0 right-0 z-10 h-[112px] bg-bg-header shadow-indigo-900 lg:px-60 px-4 items-center transition-shadow duration-300',
+        'flex fixed top-0 left-0 right-0 z-10 h-[112px] shadow-indigo-900 lg:px-60 px-4 bg-main-dark items-center transition-shadow transition-colors duration-300',
         withState ? 'justify-between' : 'justify-center',
-        scrolled && 'shadow-xl'
+        scrolled && 'shadow-xl bg-main-dark'
       )}
     >
       <div className={'flex items-center'}>
@@ -143,7 +143,9 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
       </div>
       {withState && (
         <div
-          className={'relative p-2 xl:flex hidden gap-2 rounded-3xl bg-main-dark border-1 border-main-gray'}
+          className={clsx(
+            'absolute top-[33px] left-[50%] transform-[translate(-50%,0)] p-2 xl:flex hidden gap-2 rounded-3xl border-1 border-main-gray bg-main-dark'
+          )}
           onMouseLeave={() => delayedSetHoveredId(null)}
         >
           {links.map((el) => (
