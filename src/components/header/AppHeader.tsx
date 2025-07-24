@@ -65,6 +65,14 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
 
   const links: ILinkItem[] = [
     {
+      id: 'ABOUT',
+      text: 'О НАС',
+      onClick: () => {
+        const el = document.getElementById('faq');
+        el?.scrollIntoView({ behavior: 'smooth' });
+      },
+    },
+    {
       id: 'INSTRUMENTS',
       text: 'ИНСТРУМЕНТЫ',
       submenu: {
@@ -73,7 +81,7 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
           {
             id: 1,
             text: 'СОБЕСЕДОВАНИЕ',
-            description: 'Пройти собеседование с AI',
+            description: 'Пройти собеседование с AI Пройти собеседование с AI',
             href: '/interview',
             icon: 'settings-new',
           },
@@ -109,22 +117,14 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
         el?.scrollIntoView({ behavior: 'smooth' });
       },
     },
-    {
-      id: 'ABOUT',
-      text: 'О НАС',
-      onClick: () => {
-        const el = document.getElementById('faq');
-        el?.scrollIntoView({ behavior: 'smooth' });
-      },
-    },
   ];
 
   return (
     <div
       className={clsx(
-        'flex fixed top-0 left-0 right-0 z-10 h-[112px] bg-bg-header shadow-indigo-900 lg:px-60 px-4 items-center transition-shadow duration-300',
+        'flex fixed top-0 left-0 right-0 z-10 h-[112px] shadow-indigo-900 lg:px-60 px-4 bg-main-dark items-center transition-shadow transition-colors duration-300',
         withState ? 'justify-between' : 'justify-center',
-        scrolled && 'shadow-xl'
+        scrolled && 'shadow-xl bg-main-dark'
       )}
     >
       <div className={'flex items-center'}>
@@ -143,7 +143,9 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
       </div>
       {withState && (
         <div
-          className={'relative p-2 xl:flex hidden gap-2 rounded-3xl bg-main-dark border-1 border-main-gray'}
+          className={clsx(
+            'absolute top-[33px] left-[50%] transform-[translate(-50%,0)] p-2 xl:flex hidden gap-2 rounded-3xl border-1 border-main-gray bg-main-dark'
+          )}
           onMouseLeave={() => delayedSetHoveredId(null)}
         >
           {links.map((el) => (
@@ -169,7 +171,7 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
               {el.submenu && hoveredLinkId === el.id && (
                 <div
                   className={
-                    'absolute top-full mt-4 left-0 gap-2 rounded-3xl bg-main-dark border-1 border-main-gray shadow-lg z-20 p-2 flex flex-col justify-center gap-3 p-4'
+                    'absolute top-full mt-4 left-[50%] transform-[translate(-50%,0)] gap-2 rounded-3xl bg-main-dark border-1 border-main-gray shadow-lg z-20 p-2 flex flex-col justify-center gap-3 p-4'
                   }
                   onMouseEnter={() => {
                     cancelHoverTimeout();
