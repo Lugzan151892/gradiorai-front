@@ -6,19 +6,21 @@ const AppLayout: React.FC<Readonly<{ children: React.ReactNode; withState?: bool
   children,
   withState = true,
 }) => {
-  const scrollRef = useRef<HTMLDivElement | null>(null);
+  const viewportRef = useRef<HTMLDivElement | null>(null);
 
   return (
-    <div className={'flex flex-col pt-[112px] [height:100dvh]'}>
+    <div className={'flex flex-col [height:100dvh]'}>
       <AppHeader
-        scrollRef={scrollRef}
+        scrollRef={viewportRef}
         withState={withState}
       />
-      <main
-        className={'flex-1 overflow-hidden'}
-        ref={scrollRef}
-      >
-        <ScrollArea>{children}</ScrollArea>
+      <main className={'flex-1 overflow-hidden'}>
+        <ScrollArea
+          viewportRef={viewportRef}
+          scrollbarTopOffset={112}
+        >
+          <div className={'pt-[112px]'}>{children}</div>
+        </ScrollArea>
       </main>
     </div>
   );
