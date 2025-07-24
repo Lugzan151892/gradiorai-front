@@ -81,7 +81,7 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
           {
             id: 1,
             text: 'СОБЕСЕДОВАНИЕ',
-            description: 'Пройти собеседование с AI Пройти собеседование с AI',
+            description: 'Пройти собеседование с AI',
             href: '/interview',
             icon: 'settings-new',
           },
