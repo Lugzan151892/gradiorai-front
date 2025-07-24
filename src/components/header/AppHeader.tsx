@@ -127,22 +127,20 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
         scrolled && 'shadow-xl'
       )}
     >
-      {!scrolled && (
-        <div className={'flex items-center'}>
-          <Image
-            src={logoTransparentFull}
-            alt={'gradiorai'}
-            width={32}
-            height={32}
-          />
-          <div
-            className={'ml-2 cursor-pointer text-white lg:text-2xl text-base'}
-            onClick={() => router.push('/')}
-          >
-            gradiorAI
-          </div>
+      <div className={'flex items-center'}>
+        <Image
+          src={logoTransparentFull}
+          alt={'gradiorai'}
+          width={32}
+          height={32}
+        />
+        <div
+          className={'ml-2 cursor-pointer text-white lg:text-2xl text-base'}
+          onClick={() => router.push('/')}
+        >
+          gradiorAI
         </div>
-      )}
+      </div>
       {withState && (
         <div
           className={'relative p-2 xl:flex hidden gap-2 rounded-3xl bg-main-dark border-1 border-main-gray'}
