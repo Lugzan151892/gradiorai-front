@@ -65,6 +65,14 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
 
   const links: ILinkItem[] = [
     {
+      id: 'ABOUT',
+      text: 'О НАС',
+      onClick: () => {
+        const el = document.getElementById('faq');
+        el?.scrollIntoView({ behavior: 'smooth' });
+      },
+    },
+    {
       id: 'INSTRUMENTS',
       text: 'ИНСТРУМЕНТЫ',
       submenu: {
@@ -109,14 +117,6 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
         el?.scrollIntoView({ behavior: 'smooth' });
       },
     },
-    {
-      id: 'ABOUT',
-      text: 'О НАС',
-      onClick: () => {
-        const el = document.getElementById('faq');
-        el?.scrollIntoView({ behavior: 'smooth' });
-      },
-    },
   ];
 
   return (
@@ -127,20 +127,22 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
         scrolled && 'shadow-xl'
       )}
     >
-      <div className={'flex items-center'}>
-        <Image
-          src={logoTransparentFull}
-          alt={'gradiorai'}
-          width={32}
-          height={32}
-        />
-        <div
-          className={'ml-2 cursor-pointer text-white lg:text-2xl text-base'}
-          onClick={() => router.push('/')}
-        >
-          gradiorAI
+      {!scrolled && (
+        <div className={'flex items-center'}>
+          <Image
+            src={logoTransparentFull}
+            alt={'gradiorai'}
+            width={32}
+            height={32}
+          />
+          <div
+            className={'ml-2 cursor-pointer text-white lg:text-2xl text-base'}
+            onClick={() => router.push('/')}
+          >
+            gradiorAI
+          </div>
         </div>
-      </div>
+      )}
       {withState && (
         <div
           className={'relative p-2 xl:flex hidden gap-2 rounded-3xl bg-main-dark border-1 border-main-gray'}
@@ -169,7 +171,7 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
               {el.submenu && hoveredLinkId === el.id && (
                 <div
                   className={
-                    'absolute top-full mt-4 left-0 gap-2 rounded-3xl bg-main-dark border-1 border-main-gray shadow-lg z-20 p-2 flex flex-col justify-center gap-3 p-4'
+                    'absolute top-full mt-4 left-[50%] transform-[translate(-50%,0)] gap-2 rounded-3xl bg-main-dark border-1 border-main-gray shadow-lg z-20 p-2 flex flex-col justify-center gap-3 p-4'
                   }
                   onMouseEnter={() => {
                     cancelHoverTimeout();
