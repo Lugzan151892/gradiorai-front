@@ -440,6 +440,130 @@ const iconMarkup = {
       fill={'currentColor'}
     />
   ),
+  'to-do-list': (
+    <g fill={'none'}>
+      <path
+        d={
+          'M8 5H4C3.44772 5 3 5.44772 3 6V10C3 10.5523 3.44772 11 4 11H8C8.55228 11 9 10.5523 9 10V6C9 5.44772 8.55228 5 8 5Z'
+        }
+        stroke={'currentColor'}
+        strokeWidth={'2'}
+        strokeLinecap={'round'}
+        strokeLinejoin={'round'}
+      />
+      <path
+        d={'M3 17L5 19L9 15'}
+        stroke={'currentColor'}
+        fill={'currentColor'}
+        strokeWidth={'2'}
+        strokeLinecap={'round'}
+        strokeLinejoin={'round'}
+      />
+      <path
+        d={'M13 6H21'}
+        stroke={'currentColor'}
+        fill={'currentColor'}
+        strokeWidth={'2'}
+        strokeLinecap={'round'}
+        strokeLinejoin={'round'}
+      />
+      <path
+        d={'M13 12H21'}
+        stroke={'currentColor'}
+        fill={'currentColor'}
+        strokeWidth={'2'}
+        strokeLinecap={'round'}
+        strokeLinejoin={'round'}
+      />
+      <path
+        d={'M13 18H21'}
+        stroke={'currentColor'}
+        fill={'currentColor'}
+        strokeWidth={'2'}
+        strokeLinecap={'round'}
+        strokeLinejoin={'round'}
+      />
+    </g>
+  ),
+  'file-check': (
+    <g fill={'none'}>
+      <path
+        d={
+          'M4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V7L15 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V8'
+        }
+        stroke={'currentColor'}
+        strokeWidth={'2'}
+        strokeLinecap={'round'}
+        strokeLinejoin={'round'}
+      />
+      <path
+        d={'M14 2V6C14 6.53043 14.2107 7.03914 14.5858 7.41421C14.9609 7.78929 15.4696 8 16 8H20'}
+        stroke={'currentColor'}
+        strokeWidth={'2'}
+        strokeLinecap={'round'}
+        strokeLinejoin={'round'}
+      />
+      <path
+        d={'M3 15L5 17L9 13'}
+        stroke={'currentColor'}
+        strokeWidth={'2'}
+        strokeLinecap={'round'}
+        strokeLinejoin={'round'}
+      />
+    </g>
+  ),
+  'file-create': (
+    <g fill={'none'}>
+      <path
+        d={
+          'M4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V7L15 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V8'
+        }
+        stroke={'currentColor'}
+        strokeWidth={'2'}
+        strokeLinecap={'round'}
+        strokeLinejoin={'round'}
+      />
+      <path
+        d={'M14 2V6C14 6.53043 14.2107 7.03914 14.5858 7.41421C14.9609 7.78929 15.4696 8 16 8H20'}
+        stroke={'currentColor'}
+        strokeWidth={'2'}
+        strokeLinecap={'round'}
+        strokeLinejoin={'round'}
+      />
+      <path
+        d={'M3 15H9'}
+        stroke={'currentColor'}
+        strokeWidth={'2'}
+        strokeLinecap={'round'}
+        strokeLinejoin={'round'}
+      />
+      <path
+        d={'M6 12V18'}
+        stroke={'currentColor'}
+        strokeWidth={'2'}
+        strokeLinecap={'round'}
+        strokeLinejoin={'round'}
+      />
+    </g>
+  ),
+  'two-users': (
+    <g
+      fill={'none'}
+      stroke={'currentColor'}
+      strokeWidth={'2'}
+      strokeLinecap={'round'}
+      strokeLinejoin={'round'}
+    >
+      <path d={'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2'} />
+      <path d={'M16 3.128a4 4 0 0 1 0 7.744'} />
+      <path d={'M22 21v-2a4 4 0 0 0-3-3.87'} />
+      <circle
+        cx={'9'}
+        cy={'7'}
+        r={'4'}
+      />
+    </g>
+  ),
 
   /** END NEW DESIGN */
   cross: (
