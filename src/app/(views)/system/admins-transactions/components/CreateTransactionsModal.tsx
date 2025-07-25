@@ -6,7 +6,6 @@ import { setLoading } from '@/features/loading/loadingSlice';
 import errorHandler from '@/core/utils/error/errorHandler';
 import UIFilterButton from '@/components/ui/filter-button/UIFilterButton';
 import UIButton from '@/components/ui/button/UIButton';
-import UIDatePicker from '@/components/date-picker/UIDatePicker';
 import { IUser } from '@/core/interfaces/types';
 import { RootState } from '@/store';
 import UIInput from '@/components/ui/input/UIInput';
@@ -21,7 +20,6 @@ const CreateTransactionModal: React.FC<ICreateTransactionModalProps> = ({ open =
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state: RootState) => state.user);
 
-  const [date, setDate] = useState<Date | undefined>(undefined);
   const [admins, setAdmins] = useState<IUser[]>([]);
   const [selectedUser, setSelectedUser] = useState<number | undefined>(user?.id);
 
@@ -56,11 +54,6 @@ const CreateTransactionModal: React.FC<ICreateTransactionModalProps> = ({ open =
       onClose={onClose}
     >
       <div className={'m-6 flex flex-col'}>
-        <UIDatePicker
-          label={'Дата транзакции'}
-          value={date}
-          onSetValue={(date) => setDate(date)}
-        />
         <div className={'flex flex-col mt-4'}>
           <div className={'text-xl'}>Выберите, кто производил оплату</div>
           <div className={'flex flex-wrap gap-3 justify-center'}>
