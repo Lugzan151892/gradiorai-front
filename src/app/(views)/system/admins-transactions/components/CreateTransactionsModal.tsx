@@ -9,6 +9,8 @@ import UIButton from '@/components/ui/button/UIButton';
 import { IUser } from '@/core/interfaces/types';
 import { RootState } from '@/store';
 import UIInput from '@/components/ui/input/UIInput';
+import UIDatePicker from '@/components/ui/datepicker/UIDatepicker';
+import UITextarea from '@/components/ui/textarea/UITextarea';
 
 interface ICreateTransactionModalProps {
   open?: boolean;
@@ -21,7 +23,9 @@ const CreateTransactionModal: React.FC<ICreateTransactionModalProps> = ({ open =
   const { user } = useAppSelector((state: RootState) => state.user);
 
   const [admins, setAdmins] = useState<IUser[]>([]);
+  const [date, setDate] = useState('');
   const [selectedUser, setSelectedUser] = useState<number | undefined>(user?.id);
+  const [paymentReason, setPaymentReason] = useState('');
 
   const loadAdmins = useCallback(async () => {
     try {
@@ -71,6 +75,20 @@ const CreateTransactionModal: React.FC<ICreateTransactionModalProps> = ({ open =
         <UIInput
           label={'Укажите сумму'}
           type={'number'}
+        />
+        <UIDatePicker
+          label={'Дата платежа'}
+          value={date}
+          onChange={setDate}
+        />
+        <UITextarea
+          className={'mt-6'}
+          id={'user-description'}
+          label={'Тип услуги'}
+          hint={'Опишите, на что были потрачены средства'}
+          value={paymentReason}
+          rows={3}
+          onInput={setPaymentReason}
         />
         <div className={'w-full flex mt-6 mb-6'}>
           <UIButton

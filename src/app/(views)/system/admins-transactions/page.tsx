@@ -10,14 +10,11 @@ import { setLoading } from '@/features/loading/loadingSlice';
 import { useAppDispatch } from '@/hooks/redux';
 import React, { useCallback, useEffect, useState } from 'react';
 import CreateTransactionModal from './components/CreateTransactionsModal';
-import UIInput from '@/components/ui/input/UIInput';
-import UIDatePicker from '@/components/ui/datepicker/UIDatepicker';
 
 const AdminTransactions = () => {
   const [adminsTransactions, setAdminsTransactions] = useState<ISystemTransaction[]>([]);
   const [openCreateModal, setOpenCreateModal] = useState(false);
   const dispatch = useAppDispatch();
-  const [date, setDate] = useState('');
 
   const loadTransactions = useCallback(async () => {
     try {
@@ -46,19 +43,6 @@ const AdminTransactions = () => {
           onClick={() => setOpenCreateModal(true)}
         />
       </div>
-      <UIInput
-        label={'Телефон'}
-        type={'password'}
-        mask={{
-          mask: '+{7} (000) 000-00-00',
-        }}
-        onInput={console.log}
-      />
-      <UIDatePicker
-        label={'Дата рождения'}
-        value={date}
-        onChange={setDate}
-      />
       <div className={'w-full px-4 mt-4 h-full overflow-hidden'}>
         <ScrollArea>
           <div className={'mb-4 relative bg-modal'}>
