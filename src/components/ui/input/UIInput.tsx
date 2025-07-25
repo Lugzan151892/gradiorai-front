@@ -20,7 +20,7 @@ interface Props extends Pick<React.ComponentProps<'input'>, 'id' | 'disabled' | 
 
   mask?: MaskedOptions<any>;
   decimalScale?: number;
-  suffix?: string;
+  suffix?: string | React.ReactNode;
 }
 
 const UIInput: React.FC<Props> = ({
@@ -165,11 +165,14 @@ const UIInput: React.FC<Props> = ({
           </div>
         )}
 
-        {hasSuffix && (
-          <span className={'absolute right-4 top-1/2 -translate-y-1/2 text-white pointer-events-none select-none'}>
-            {suffix}
-          </span>
-        )}
+        {hasSuffix &&
+          (typeof suffix === 'string' ? (
+            <span className={'absolute right-4 top-1/2 -translate-y-1/2 text-white pointer-events-none select-none'}>
+              {suffix}
+            </span>
+          ) : (
+            <div className={'absolute right-4 top-1/2 -translate-y-1/2'}>{suffix}</div>
+          ))}
       </div>
       <div className={'min-h-4'}>
         {errorsList.length && !disabled ? (
