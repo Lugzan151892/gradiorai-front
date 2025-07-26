@@ -178,6 +178,7 @@ const CreateTransactionModal: React.FC<ICreateTransactionModalProps> = ({ open =
           label={'Дата платежа'}
           value={transaction?.paid_time}
           error={dateError}
+          mask={'DD.MM.YYYY'}
           onInput={() => setDateError('')}
           onChange={(val) =>
             setTransaction((prev) => ({
