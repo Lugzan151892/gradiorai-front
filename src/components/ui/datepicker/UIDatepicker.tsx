@@ -12,6 +12,7 @@ import { DateValue } from 'imask/esm/masked/date';
 interface UIDatePickerProps {
   value?: string;
   onChange?: (val: string) => void;
+  onInput?: (val: string) => void;
   placeholder?: string;
   label?: string;
   disabled?: boolean;
@@ -22,6 +23,7 @@ interface UIDatePickerProps {
 const UIDatePicker: React.FC<UIDatePickerProps> = ({
   value,
   onChange,
+  onInput,
   placeholder = 'дд.мм.гггг',
   label,
   disabled,
@@ -46,6 +48,7 @@ const UIDatePicker: React.FC<UIDatePickerProps> = ({
       .toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' })
       .replace(/\//g, '.');
     onChange?.(formatted);
+    onInput?.(formatted);
     setIsCalendarOpen(false);
   };
 
@@ -96,7 +99,7 @@ const UIDatePicker: React.FC<UIDatePickerProps> = ({
         type={'text'}
         label={label}
         value={value}
-        onInput={(val) => onChange?.(val)}
+        onInput={(val) => onInput?.(val)}
         onChange={(val) => onChange?.(val)}
         mask={dateMask}
         placeholder={placeholder}

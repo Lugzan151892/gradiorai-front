@@ -83,7 +83,10 @@ const AdminTransactions = () => {
           </div>
         </ScrollArea>
       </div>
-      <CreateTransactionModal open={openCreateModal} />
+      <CreateTransactionModal
+        open={openCreateModal}
+        onClose={() => setOpenCreateModal(false)}
+      />
     </div>
   );
 };

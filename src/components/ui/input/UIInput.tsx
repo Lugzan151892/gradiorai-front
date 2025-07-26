@@ -125,10 +125,8 @@ const UIInput: React.FC<Props> = ({
           id={id}
           value={internalValue}
           onChange={(e) => {
-            if (!mask && type !== 'number') {
-              setInternalValue(e.target.value);
-              onInput?.(e.target.value);
-            }
+            setInternalValue(e.target.value);
+            onInput?.(e.target.value);
           }}
           onKeyDown={handleKeyDown}
           type={currentInputType}
