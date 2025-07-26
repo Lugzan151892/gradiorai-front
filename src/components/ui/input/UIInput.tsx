@@ -77,6 +77,11 @@ const UIInput: React.FC<Props> = ({
         setInternalValue(val);
         onInput?.(val);
       });
+
+      maskRef.current.on('complete', () => {
+        const val = maskRef.current!.value;
+        onChange?.(val);
+      });
     }
 
     return () => {
@@ -85,7 +90,7 @@ const UIInput: React.FC<Props> = ({
         maskRef.current = null;
       }
     };
-  }, [mask, decimalScale, type, onInput]);
+  }, [mask, decimalScale, type, onInput, onChange]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
@@ -127,6 +132,7 @@ const UIInput: React.FC<Props> = ({
           onChange={(e) => {
             setInternalValue(e.target.value);
             onInput?.(e.target.value);
+            onChange?.(e.target.value);
           }}
           onKeyDown={handleKeyDown}
           type={currentInputType}

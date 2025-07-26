@@ -14,7 +14,16 @@ import CreateTransactionModal from './components/CreateTransactionsModal';
 const AdminTransactions = () => {
   const [adminsTransactions, setAdminsTransactions] = useState<ISystemTransaction[]>([]);
   const [openCreateModal, setOpenCreateModal] = useState(false);
+  const [currentTransactionId, setCurrentTransactionId] = useState<number>(0);
   const dispatch = useAppDispatch();
+
+  const openTransactionModal = (transactionId?: number) => {
+    if (transactionId) {
+      setCurrentTransactionId(transactionId);
+    }
+
+    setOpenCreateModal(true);
+  };
 
   const loadTransactions = useCallback(async () => {
     try {
@@ -29,6 +38,22 @@ const AdminTransactions = () => {
     }
   }, [dispatch]);
 
+  const handleDeleteTransaction = async (transactionId: number) => {
+    if (!transactionId) {
+      return;
+    }
+
+    try {
+      dispatch(setLoading(true));
+      await Api.delete<{ id: number }, null>('/user/system-transactions/transaction', { id: transactionId });
+      loadTransactions();
+    } catch (e) {
+      errorHandler(e, dispatch);
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
+
   useEffect(() => {
     loadTransactions();
   }, [loadTransactions]);
@@ -40,7 +65,7 @@ const AdminTransactions = () => {
         <UIButton
           className={'ml-2'}
           text={'Добавить затраты'}
-          onClick={() => setOpenCreateModal(true)}
+          onClick={() => openTransactionModal()}
         />
       </div>
       <div className={'w-full px-4 mt-4 h-full overflow-hidden'}>
@@ -48,36 +73,43 @@ const AdminTransactions = () => {
           <div className={'mb-4 relative bg-modal'}>
             <div
               className={
-                'sticky top-0 left-0 border grid grid-cols-[3%_15%_12%_15%_10%_10%_19%_16%] min-h-8 border bg-modal'
+                'sticky top-0 left-0 border grid grid-cols-[3%_15%_12%_15%_10%_25%_20%] min-h-8 border bg-modal'
               }
             >
               <div className={'text-2xl border-r text-center'}>ID</div>
-              <div className={'text-2xl border-r px-2'}>EMAIL</div>
-              <div className={'text-2xl border-r px-2'}>Дата регистрации</div>
-              <div className={'text-2xl border-r px-2'}>Последний вход</div>
-              <div className={'text-2xl border-r px-2'}>Последний IP</div>
-              <div className={'text-2xl border-r px-2'}>3 последних IP</div>
-              <div className={'text-2xl border-r px-2'}>Кол-во пройденных вопросов</div>
-              <div className={'text-2xl text-center'}>STATUS</div>
+              <div className={'text-2xl border-r px-2'}>Пользователь</div>
+              <div className={'text-2xl border-r px-2'}>Дата создания</div>
+              <div className={'text-2xl border-r px-2'}>Фактическая дата оплаты</div>
+              <div className={'text-2xl border-r px-2'}>Сумма</div>
+              <div className={'text-2xl border-r px-2'}>Причина оплаты</div>
+              <div className={'text-2xl text-center'}>Действия</div>
             </div>
             {adminsTransactions.length &&
               adminsTransactions.map((transaction) => (
                 <div
                   key={transaction.id}
-                  className={'border w-full grid grid-cols-[3%_15%_12%_15%_10%_10%_19%_16%]'}
+                  className={'border w-full grid grid-cols-[3%_15%_12%_15%_10%_25%_20%]'}
                 >
                   <div className={'text-xl border-r text-center'}>{transaction.id}</div>
-                  <div className={'text-xl border-r px-2'}>{transaction.amount}</div>
+                  <div className={'text-xl border-r px-2'}>{transaction.transaction_maker.email}</div>
                   <div className={'text-xl border-r px-2'}>
                     {transaction.created_at ? normalizeServerDate(transaction.created_at) : ''}
                   </div>
                   <div className={'text-xl border-r px-2'}>
                     {transaction.paid_time ? normalizeServerDate(transaction.paid_time) : ''}
                   </div>
-                  <div className={'text-xl border-r px-2'}>{transaction.transaction_maker_id || ''}</div>
-                  <div className={'text-xl border-r px-2'}>test</div>
-                  <div className={'text-xl border-r text-center'}>test</div>
-                  <div className={'text-xl text-center'}>test</div>
+                  <div className={'text-xl border-r px-2'}>{`${transaction.amount || 0} р.`}</div>
+                  <div className={'text-xl border-r px-2'}>{transaction.reason}</div>
+                  <div className={'text-xl text-center py-2 flex gap-2 justify-center'}>
+                    <UIButton
+                      text={'Изменить'}
+                      onClick={() => openTransactionModal(transaction.id)}
+                    />
+                    <UIButton
+                      text={'Удалить'}
+                      onClick={() => handleDeleteTransaction(transaction.id)}
+                    />
+                  </div>
                 </div>
               ))}
           </div>
@@ -85,6 +117,7 @@ const AdminTransactions = () => {
       </div>
       <CreateTransactionModal
         open={openCreateModal}
+        transactionId={currentTransactionId}
         onClose={() => setOpenCreateModal(false)}
       />
     </div>

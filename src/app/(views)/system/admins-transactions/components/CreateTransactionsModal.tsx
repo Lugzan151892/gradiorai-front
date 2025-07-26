@@ -11,6 +11,7 @@ import { RootState } from '@/store';
 import UIInput from '@/components/ui/input/UIInput';
 import UIDatePicker from '@/components/ui/datepicker/UIDatepicker';
 import UITextarea from '@/components/ui/textarea/UITextarea';
+import { normalizeServerDate } from '@/core/utils/date';
 
 interface ICreateTransactionModalProps {
   open?: boolean;
@@ -69,7 +70,8 @@ const CreateTransactionModal: React.FC<ICreateTransactionModalProps> = ({ open =
       });
 
       if (result.payload) {
-        setTransaction(result.payload);
+        const data = { ...result.payload, paid_time: normalizeServerDate(result.payload.paid_time) };
+        setTransaction(data);
       }
     } catch (e) {
       errorHandler(e, dispatch);
@@ -93,7 +95,7 @@ const CreateTransactionModal: React.FC<ICreateTransactionModalProps> = ({ open =
   const handleCheckIsFieldsValid = () => {
     const amountErrorMsg = +(transaction?.amount || 0) ? '' : 'Поле не заполнено';
     const dateEmptyMessage = transaction?.paid_time ? '' : 'Поле не заполнено';
-    const dateErrorMsg = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(transaction?.paid_time || '')
+    const dateErrorMsg = /^(0[1-9]|[12][0-9]|3[01])\.(0[1-9]|1[0-2])\.(19|20)\d{2}$/.test(transaction?.paid_time || '')
       ? ''
       : 'Неверный формат даты';
     const reasonErrorMessage = transaction?.reason ? '' : 'Поле не заполнено';
@@ -116,18 +118,14 @@ const CreateTransactionModal: React.FC<ICreateTransactionModalProps> = ({ open =
     try {
       dispatch(setLoading(true));
       const result = transaction?.id
-        ? await Api.put<Partial<ISystemTransaction>, { id: number }>(
-            '/user/system-transactions/transaction',
-            transaction
-          )
-        : await Api.post<Partial<ISystemTransaction>, { id: number }>(
-            '/user/system-transactions/transaction',
-            transaction
-          );
+        ? await Api.put<Partial<ISystemTransaction>, { id: number }>('/user/system-transactions/add', transaction)
+        : await Api.post<Partial<ISystemTransaction>, { id: number }>('/user/system-transactions/add', transaction);
 
       if (result.payload) {
         setTransaction(result.payload);
       }
+
+      onClose?.();
     } catch (e) {
       errorHandler(e, dispatch);
     } finally {
@@ -138,7 +136,7 @@ const CreateTransactionModal: React.FC<ICreateTransactionModalProps> = ({ open =
   return (
     <CustomModal
       open={open}
-      caption={'Добавить транзакцию'}
+      caption={transaction.id ? 'Изменить транзакцию' : 'Добавить транзакцию'}
       onClose={onClose}
     >
       <div className={'m-6 flex flex-col'}>
@@ -167,12 +165,12 @@ const CreateTransactionModal: React.FC<ICreateTransactionModalProps> = ({ open =
           error={amountError}
           value={transaction?.amount}
           onInput={() => setAmountError('')}
-          onChange={(val) =>
+          onChange={(val) => {
             setTransaction((prev) => ({
               ...prev,
               amount: +val,
-            }))
-          }
+            }));
+          }}
         />
         <UIDatePicker
           label={'Дата платежа'}
@@ -180,12 +178,12 @@ const CreateTransactionModal: React.FC<ICreateTransactionModalProps> = ({ open =
           error={dateError}
           mask={'DD.MM.YYYY'}
           onInput={() => setDateError('')}
-          onChange={(val) =>
+          onChange={(val) => {
             setTransaction((prev) => ({
               ...prev,
               paid_time: val,
-            }))
-          }
+            }));
+          }}
         />
         <UITextarea
           className={'mt-6'}
@@ -206,7 +204,7 @@ const CreateTransactionModal: React.FC<ICreateTransactionModalProps> = ({ open =
         <div className={'w-full flex mt-6 mb-6'}>
           <UIButton
             className={'mx-auto'}
-            text={'Сохранить платеж'}
+            text={transaction.id ? 'Изменить платеж' : 'Сохранить платеж'}
             onClick={saveTransaction}
           />
         </div>
