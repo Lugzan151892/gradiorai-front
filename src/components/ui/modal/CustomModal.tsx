@@ -41,7 +41,9 @@ const CustomModal: React.FC<ICustomModalProps> = ({
         open={open}
         as={'div'}
         className={'relative z-10 focus:outline-none'}
-        onClose={onClose || close}
+        onClose={() => {
+          if (onClose) onClose(open);
+        }}
       >
         <DialogBackdrop className={'fixed inset-0 bg-black opacity-80'} />
         <div className={'fixed inset-0 z-10 w-screen overflow-y-auto'}>
