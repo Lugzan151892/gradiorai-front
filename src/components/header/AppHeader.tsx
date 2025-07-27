@@ -64,14 +64,14 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
   const router = useRouter();
 
   const links: ILinkItem[] = [
-    {
-      id: 'ABOUT',
-      text: 'О НАС',
-      onClick: () => {
-        const el = document.getElementById('faq');
-        el?.scrollIntoView({ behavior: 'smooth' });
-      },
-    },
+    // {
+    //   id: 'ABOUT',
+    //   text: 'О НАС',
+    //   onClick: () => {
+    //     const el = document.getElementById('faq');
+    //     el?.scrollIntoView({ behavior: 'smooth' });
+    //   },
+    // },
     {
       id: 'INSTRUMENTS',
       text: 'ИНСТРУМЕНТЫ',

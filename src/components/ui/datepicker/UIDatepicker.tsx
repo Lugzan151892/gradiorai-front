@@ -5,8 +5,8 @@ import { useRef, useState, useEffect } from 'react';
 import IMask, { MaskedDateOptions } from 'imask';
 import { CalendarDays } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import UICalendar from '../calendar/UICalendar';
-import UIInput from '../input/UIInput';
+import UICalendar from '@/components/ui/calendar/UICalendar';
+import UIInput from '@/components/ui/input/UIInput';
 import { DateValue } from 'imask/esm/masked/date';
 
 interface UIDatePickerProps {
