@@ -89,3 +89,13 @@ export interface IActionsLog {
   interview_id?: number;
   content?: string;
 }
+
+export interface ISystemTransaction {
+  id: number;
+  created_at: string;
+  transaction_maker: IUser;
+  paid_time: string;
+  transaction_maker_id: number;
+  amount: number;
+  reason: string;
+}
