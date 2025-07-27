@@ -10,17 +10,17 @@ import { setLoading } from '@/features/loading/loadingSlice';
 import { useAppDispatch } from '@/hooks/redux';
 import React, { useCallback, useEffect, useState } from 'react';
 import CreateTransactionModal from './components/CreateTransactionsModal';
+import UIFilterButton from '@/components/ui/filter-button/UIFilterButton';
 
 const AdminTransactions = () => {
   const [adminsTransactions, setAdminsTransactions] = useState<ISystemTransaction[]>([]);
   const [openCreateModal, setOpenCreateModal] = useState(false);
+  const [onlyMine, setOnlyMine] = useState(false);
   const [currentTransactionId, setCurrentTransactionId] = useState<number>(0);
   const dispatch = useAppDispatch();
 
-  const openTransactionModal = (transactionId?: number) => {
-    if (transactionId) {
-      setCurrentTransactionId(transactionId);
-    }
+  const openTransactionModal = (transactionId: number) => {
+    setCurrentTransactionId(transactionId);
 
     setOpenCreateModal(true);
   };
@@ -28,7 +28,9 @@ const AdminTransactions = () => {
   const loadTransactions = useCallback(async () => {
     try {
       dispatch(setLoading(true));
-      const result = await Api.get<undefined, ISystemTransaction[]>('/user/system-transactions/all');
+      const result = await Api.get<{ only_mine: boolean }, ISystemTransaction[]>('/user/system-transactions/all', {
+        only_mine: onlyMine,
+      });
 
       setAdminsTransactions(result.payload);
     } catch (e) {
@@ -36,7 +38,7 @@ const AdminTransactions = () => {
     } finally {
       dispatch(setLoading(false));
     }
-  }, [dispatch]);
+  }, [dispatch, onlyMine]);
 
   const handleDeleteTransaction = async (transactionId: number) => {
     if (!transactionId) {
@@ -65,7 +67,21 @@ const AdminTransactions = () => {
         <UIButton
           className={'ml-2'}
           text={'Добавить затраты'}
-          onClick={() => openTransactionModal()}
+          onClick={() => openTransactionModal(0)}
+        />
+      </div>
+      <div className={'flex justify-center w-full gap-2 mt-4'}>
+        <UIFilterButton
+          className={'text-center'}
+          text={'Только мои'}
+          selected={onlyMine}
+          onClick={() => setOnlyMine(true)}
+        />
+        <UIFilterButton
+          className={'text-center'}
+          text={'Все'}
+          selected={!onlyMine}
+          onClick={() => setOnlyMine(false)}
         />
       </div>
       <div className={'w-full px-4 mt-4 h-full overflow-hidden'}>
@@ -112,6 +128,12 @@ const AdminTransactions = () => {
                   </div>
                 </div>
               ))}
+            <div className={'sticky top-0 left-0 border grid grid-cols-[80%_20%] min-h-8 border bg-modal'}>
+              <div className={'text-2xl border-r ml-2'}>Всего затрачено: </div>
+              <div className={'text-2xl text-center'}>
+                {adminsTransactions.reduce((acc, cur) => (acc += cur.amount), 0) + ' р.'}
+              </div>
+            </div>
           </div>
         </ScrollArea>
       </div>
