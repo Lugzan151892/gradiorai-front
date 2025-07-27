@@ -7,6 +7,7 @@ import Providers from '@/app/providers';
 import ErrorModal from '@/features/error-modal/ErrorModal';
 import UserInitializer from '@/components/user-initializer/UserInitializer';
 import { getMetaData } from '@/core/utils/meta';
+import Script from 'next/script';
 
 const interDisplay = localFont({
   src: [
@@ -65,6 +66,7 @@ const interDisplay = localFont({
   variable: '--font-inter-display',
 });
 
+const isProduction = process.env.IS_PRODUCTION === 'true';
 export const metadata: Metadata = getMetaData();
 
 const RootLayout: React.FC<Readonly<{ children: React.ReactNode }>> = ({ children }) => {
@@ -73,6 +75,62 @@ const RootLayout: React.FC<Readonly<{ children: React.ReactNode }>> = ({ childre
       <body
         className={`${interDisplay.className} antialiased bg-[#030b1b] w-full h-full overflow-hidden leading-[100%] font-normal text-sm tracking-[0]`}
       >
+        {isProduction && (
+          <>
+            <Script
+              src={'https://www.googletagmanager.com/gtag/js?id=G-SE1HQ8CLZ3'}
+              strategy={'afterInteractive'}
+            />
+            <Script
+              id={'google-analytics'}
+              strategy={'afterInteractive'}
+            >
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-SE1HQ8CLZ3');
+              `}
+            </Script>
+            {/* Yandex.Metrika */}
+            <Script
+              id={'yandex-metrika'}
+              strategy={'afterInteractive'}
+            >
+              {`
+                (function(m,e,t,r,i,k,a){
+                  m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+                  m[i].l=1*new Date();
+                  for (var j = 0; j < document.scripts.length; j++) {
+                    if (document.scripts[j].src === r) { return; }
+                  }
+                  k=e.createElement(t),a=e.getElementsByTagName(t)[0],
+                  k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+                })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js?id=103498836', 'ym');
+
+                ym(103498836, 'init', {
+                  ssr: true,
+                  webvisor: true,
+                  clickmap: true,
+                  ecommerce: "dataLayer",
+                  accurateTrackBounce: true,
+                  trackLinks: true
+                });
+              `}
+            </Script>
+            {/* <noscript> fallback */}
+            <noscript>
+              <div>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={'https://mc.yandex.ru/watch/103498836'}
+                  style={{ position: 'absolute', left: '-9999px' }}
+                  alt={''}
+                />
+              </div>
+            </noscript>
+          </>
+        )}
         <Providers>
           {children}
           <GlobalLoader />
