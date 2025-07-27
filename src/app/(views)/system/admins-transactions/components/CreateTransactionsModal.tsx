@@ -94,6 +94,8 @@ const CreateTransactionModal: React.FC<ICreateTransactionModalProps> = ({
 
     if (transactionId) {
       loadTransactionById();
+    } else {
+      setTransaction(emptyTransaction());
     }
   }, [open, loadAdmins, transactionId, loadTransactionById]);
 
