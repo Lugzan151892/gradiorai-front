@@ -28,7 +28,12 @@ const emptyTransaction: () => Partial<ISystemTransaction> = () => ({
   reason: '',
 });
 
-const CreateTransactionModal: React.FC<ICreateTransactionModalProps> = ({ open = false, onClose, transactionId }) => {
+const CreateTransactionModal: React.FC<ICreateTransactionModalProps> = ({
+  open = false,
+  onClose,
+  transactionId,
+  onSave,
+}) => {
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state: RootState) => state.user);
   const [transaction, setTransaction] = useState<Partial<ISystemTransaction>>(emptyTransaction());
@@ -118,14 +123,21 @@ const CreateTransactionModal: React.FC<ICreateTransactionModalProps> = ({ open =
     try {
       dispatch(setLoading(true));
       const result = transaction?.id
-        ? await Api.put<Partial<ISystemTransaction>, { id: number }>('/user/system-transactions/add', transaction)
-        : await Api.post<Partial<ISystemTransaction>, { id: number }>('/user/system-transactions/add', transaction);
+        ? await Api.put<Partial<ISystemTransaction>, { id: number }>(
+            '/user/system-transactions/transaction',
+            transaction
+          )
+        : await Api.post<Partial<ISystemTransaction>, { id: number }>(
+            '/user/system-transactions/transaction',
+            transaction
+          );
 
       if (result.payload) {
         setTransaction(result.payload);
       }
 
       onClose?.();
+      onSave?.();
     } catch (e) {
       errorHandler(e, dispatch);
     } finally {

@@ -93,10 +93,10 @@ const AdminTransactions = () => {
                   <div className={'text-xl border-r text-center'}>{transaction.id}</div>
                   <div className={'text-xl border-r px-2'}>{transaction.transaction_maker.email}</div>
                   <div className={'text-xl border-r px-2'}>
-                    {transaction.created_at ? normalizeServerDate(transaction.created_at) : ''}
+                    {transaction.created_at ? normalizeServerDate(transaction.created_at, 'DD.MM.YYYY') : ''}
                   </div>
                   <div className={'text-xl border-r px-2'}>
-                    {transaction.paid_time ? normalizeServerDate(transaction.paid_time) : ''}
+                    {transaction.paid_time ? normalizeServerDate(transaction.paid_time, 'DD.MM.YYYY') : ''}
                   </div>
                   <div className={'text-xl border-r px-2'}>{`${transaction.amount || 0} р.`}</div>
                   <div className={'text-xl border-r px-2'}>{transaction.reason}</div>
@@ -119,6 +119,7 @@ const AdminTransactions = () => {
         open={openCreateModal}
         transactionId={currentTransactionId}
         onClose={() => setOpenCreateModal(false)}
+        onSave={loadTransactions}
       />
     </div>
   );
