@@ -190,7 +190,7 @@ const HeaderUserState = () => {
                 isStatic
                 className={'mb-4'}
               />
-              <div className={'flex flex-col gap-1'}>
+              <div className={'flex flex-col gap-1 h-full'}>
                 {menuItems
                   .filter((e) => !e.hide)
                   .map((item) => (
