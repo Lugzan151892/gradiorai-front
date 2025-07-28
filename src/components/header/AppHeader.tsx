@@ -64,14 +64,14 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
   const router = useRouter();
 
   const links: ILinkItem[] = [
-    // {
-    //   id: 'ABOUT',
-    //   text: 'О НАС',
-    //   onClick: () => {
-    //     const el = document.getElementById('faq');
-    //     el?.scrollIntoView({ behavior: 'smooth' });
-    //   },
-    // },
+    {
+      id: 'ABOUT',
+      text: 'О НАС',
+      onClick: () => {
+        const el = document.getElementById('about');
+        el?.scrollIntoView({ behavior: 'smooth' });
+      },
+    },
     {
       id: 'INSTRUMENTS',
       text: 'ИНСТРУМЕНТЫ',
@@ -136,7 +136,25 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
         />
         <div
           className={'ml-2 cursor-pointer text-white lg:text-2xl text-base'}
-          onClick={() => router.push('/')}
+          onClick={() => {
+            const el = document.getElementById('home');
+            if (el) {
+              const offset = 112;
+              const scrollContainer = scrollRef?.current;
+
+              if (scrollContainer) {
+                const elTop = el.getBoundingClientRect().top;
+                const containerTop = scrollContainer.getBoundingClientRect().top;
+                const scrollOffset = elTop - containerTop + scrollContainer.scrollTop - offset;
+
+                scrollContainer.scrollTo({
+                  top: scrollOffset,
+                  behavior: 'smooth',
+                });
+              }
+            }
+            router.push('/');
+          }}
         >
           gradiorAI
         </div>
