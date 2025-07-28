@@ -11,12 +11,12 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import MenuItem, { IMenuItemProps } from '@/components/header/components/MenuItem';
 import { EMENU_ITEM } from '@/components/header/interfaces';
 import Image from 'next/image';
-import userLogin from '@/assets/icons/user-profile.svg';
-import { useBreakpoint } from '@/hooks/useBreakpoints';
+import userAvatarEmpty from '@/assets/icons/user-avatar-empty.svg';
+import { cn } from '@/lib/utils';
 
 interface IMenuItem extends IMenuItemProps {
   id: EMENU_ITEM;
-  show?: boolean;
+  hide?: boolean;
 }
 
 const HeaderUserState = () => {
@@ -24,7 +24,6 @@ const HeaderUserState = () => {
   const { user } = useAppSelector((state: RootState) => state.user);
   const dispatch = useAppDispatch();
   const [showMenu, setShowMenu] = useState(false);
-  const { isMobile } = useBreakpoint();
 
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -73,6 +72,11 @@ const HeaderUserState = () => {
         router.push('/interview/resume-check');
         break;
       }
+      case EMENU_ITEM.RESUME_CREATE: {
+        setShowMenu(false);
+        router.push('/interview/resume-create');
+        break;
+      }
       case EMENU_ITEM.QUIT: {
         setShowMenu(false);
         handleLogout();
@@ -87,54 +91,43 @@ const HeaderUserState = () => {
 
   const menuItems: IMenuItem[] = [
     {
-      id: EMENU_ITEM.SUBSCRIBE,
-      text: 'Подписка',
-      icon: 'wallet',
-      onClick: () => handleMenuClick(EMENU_ITEM.SUBSCRIBE),
-      show: !!user?.admin,
-    },
-    {
-      id: EMENU_ITEM.SUPPORT,
-      text: 'Поддержка',
-      icon: 'question-outline',
-      onClick: () => handleMenuClick(EMENU_ITEM.SUPPORT),
-      show: !!user?.admin,
-    },
-    {
       id: EMENU_ITEM.SYSTEM,
       text: 'Система',
       icon: 'settings',
       onClick: () => handleMenuClick(EMENU_ITEM.SYSTEM),
-      show: !!user?.admin,
-    },
-    {
-      id: EMENU_ITEM.TESTS,
-      text: 'Пройти тестирование',
-      icon: 'settings',
-      onClick: () => handleMenuClick(EMENU_ITEM.TESTS),
-      show: isMobile,
+      hide: !user?.admin,
     },
     {
       id: EMENU_ITEM.INTERVIEW,
-      text: 'Пройти собеседование',
-      icon: 'settings',
+      text: 'Собеседование',
+      icon: 'two-users',
       onClick: () => handleMenuClick(EMENU_ITEM.INTERVIEW),
-      show: isMobile,
+    },
+    {
+      id: EMENU_ITEM.TESTS,
+      text: 'Тестирование',
+      icon: 'to-do-list',
+      onClick: () => handleMenuClick(EMENU_ITEM.TESTS),
     },
     {
       id: EMENU_ITEM.RESUME_CHECK,
-      text: 'Проверить резюме',
-      icon: 'settings',
+      text: 'Проверка резюме',
+      icon: 'file-check',
       onClick: () => handleMenuClick(EMENU_ITEM.RESUME_CHECK),
-      show: isMobile,
+    },
+    {
+      id: EMENU_ITEM.RESUME_CREATE,
+      text: 'Создание резюме',
+      icon: 'file-create',
+      onClick: () => handleMenuClick(EMENU_ITEM.RESUME_CREATE),
     },
     {
       id: EMENU_ITEM.QUIT,
       text: 'Выход',
-      icon: 'turn-off',
+      icon: 'logout',
+      color: 'var(--main-error)',
       className: 'mt-auto',
       onClick: () => handleMenuClick(EMENU_ITEM.QUIT),
-      show: true,
     },
   ];
 
@@ -173,7 +166,7 @@ const HeaderUserState = () => {
             onClick={() => setShowMenu(!showMenu)}
           >
             <Image
-              src={userLogin}
+              src={userAvatarEmpty}
               alt={'profile'}
               width={40}
               height={40}
@@ -181,28 +174,32 @@ const HeaderUserState = () => {
             <CustomIcon
               name={'menu-arrow'}
               color={'var(--main-white)'}
-              className={`ml-1 transform transition-transform duration-300 ${showMenu ? 'rotate-180' : ''}`}
+              className={cn('ml-1 transform transition-transform duration-300', showMenu && 'rotate-180')}
             />
           </div>
           {showMenu && (
             <div
-              className={
-                'z-50 p-4 bg-black rounded-xl flex flex-col overflow-hidden lg:w-[400px] w-full max-w-full lg:h-[400px] h-screen max-h-[calc(100dvh-114px)] absolute top-[114px] lg:right-[30px] right-0 overflow-y-auto'
-              }
+              className={cn(
+                'z-50 p-4 bg-black lg:border lg:border-main-gray lg:rounded-xl flex flex-col overflow-hidden',
+                'lg:w-[350px] w-full max-w-full lg:h-[420px] h-screen max-h-[calc(100dvh-90px)] absolute top-[90px] lg:right-[100px] right-0 overflow-y-auto'
+              )}
             >
               <MenuItem
                 icon={'user'}
                 text={username || ''}
                 isStatic
+                className={'mb-4'}
               />
-              {menuItems
-                .filter((e) => e.show)
-                .map((item) => (
-                  <MenuItem
-                    key={item.id}
-                    {...item}
-                  />
-                ))}
+              <div className={'flex flex-col gap-1'}>
+                {menuItems
+                  .filter((e) => !e.hide)
+                  .map((item) => (
+                    <MenuItem
+                      key={item.id}
+                      {...item}
+                    />
+                  ))}
+              </div>
             </div>
           )}
         </div>

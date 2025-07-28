@@ -5,5 +5,6 @@ export enum EMENU_ITEM {
   TESTS,
   INTERVIEW,
   RESUME_CHECK,
+  RESUME_CREATE,
   QUIT,
 }
