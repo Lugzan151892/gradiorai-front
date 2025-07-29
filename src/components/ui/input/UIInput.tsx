@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils';
 import UILabel from '@/components/ui/label/UILabel';
 
 type TInputType = 'text' | 'password' | 'email' | 'number';
+type TInpuLevel = 'default' | 'small';
 
 interface Props extends Pick<React.ComponentProps<'input'>, 'id' | 'disabled' | 'placeholder' | 'value' | 'className'> {
   label?: string;
@@ -15,9 +16,9 @@ interface Props extends Pick<React.ComponentProps<'input'>, 'id' | 'disabled' | 
   error?: string[] | string;
   linkChild?: React.ReactNode;
   success?: boolean;
+  level?: TInpuLevel;
   onInput?: (val: string) => void;
   onChange?: (val: string) => void;
-
   mask?: MaskedOptions<any>;
   decimalScale?: number;
   suffix?: string | React.ReactNode;
@@ -31,6 +32,7 @@ const UIInput: React.FC<Props> = ({
   disabled,
   placeholder,
   value,
+  level = 'default',
   error,
   linkChild,
   success,
@@ -115,7 +117,7 @@ const UIInput: React.FC<Props> = ({
     <div className={cn(className, 'flex flex-col w-full')}>
       {label && (
         <UILabel
-          className={'mb-2'}
+          className={cn('mb-2', level === 'small' && 'lg:text-lg')}
           htmlFor={id}
           error={!!errorsList.length}
           disabled={disabled}

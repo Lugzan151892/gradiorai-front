@@ -52,6 +52,11 @@ const HeaderUserState = () => {
 
   const handleMenuClick = (id: EMENU_ITEM) => {
     switch (id) {
+      case EMENU_ITEM.PROFILE: {
+        setShowMenu(false);
+        router.push('/profile/information');
+        break;
+      }
       case EMENU_ITEM.SYSTEM: {
         setShowMenu(false);
         router.push('/system');
@@ -90,6 +95,13 @@ const HeaderUserState = () => {
   };
 
   const menuItems: IMenuItem[] = [
+    {
+      id: EMENU_ITEM.PROFILE,
+      text: 'Профиль',
+      icon: 'settings',
+      onClick: () => handleMenuClick(EMENU_ITEM.PROFILE),
+      hide: !user?.admin,
+    },
     {
       id: EMENU_ITEM.SYSTEM,
       text: 'Система',
