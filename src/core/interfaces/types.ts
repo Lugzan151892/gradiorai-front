@@ -5,6 +5,7 @@ export interface IUser {
   id: number;
   email: string;
   admin: boolean;
+  username?: string;
   created_at: string;
   updated_at: string;
   last_ip?: string;
