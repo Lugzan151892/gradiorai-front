@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils';
 
 const tabs = [
   { href: '/profile/information', label: 'Профиль' },
-  { href: '/profile/interviews', label: 'Результаты' },
+  { href: '/profile/results', label: 'Результаты' },
 ];
 
 const ProfileLayout = ({ children }: { children: ReactNode }) => {
