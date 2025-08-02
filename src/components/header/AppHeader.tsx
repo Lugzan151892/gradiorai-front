@@ -126,7 +126,7 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
         'flex fixed top-0 left-0 right-0 z-10 h-[112px] shadow-indigo-900 lg:px-60 px-4 items-center transition-shadow transition-colors duration-300',
         withState ? 'justify-between' : 'justify-center',
         scrolled && 'shadow-xl bg-main-dark',
-        showMenu && 'bg-black'
+        showMenu && 'lg:bg-main-dark bg-black'
       )}
     >
       <div className={'flex items-center'}>
