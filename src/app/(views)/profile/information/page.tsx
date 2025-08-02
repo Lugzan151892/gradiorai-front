@@ -168,8 +168,8 @@ const ProfileInformation = () => {
   }, [user]);
 
   return (
-    <div className={'flex gap-6 justify-center'}>
-      <div className={'p-6 bg-main-black rounded-3xl min-h-[460px] lg:w-[460px] max-w-[460px] flex flex-col'}>
+    <div className={'flex flex-wrap lg:flex-row flex-col gap-6'}>
+      <div className={'p-6 bg-main-black rounded-3xl h-auto h-full min-h-[460px] w-[420px] flex flex-col'}>
         <div className={'text-2xl font-bold mb-6'}>Профиль пользователя</div>
         <div className={'flex flex-col items-center mb-4'}>
           <Image
@@ -180,7 +180,7 @@ const ProfileInformation = () => {
           />
           <div className={'cursor-pointer hover:underline hover:text-main-purple mt-2'}>Добавить фото</div>
         </div>
-        <div className={'flex flex-col h-full'}>
+        <div className={'flex flex-col h-full grow'}>
           <UIInput
             id={'name'}
             label={'Имя'}
@@ -198,7 +198,7 @@ const ProfileInformation = () => {
           />
         </div>
       </div>
-      <div className={'p-6 bg-main-black rounded-3xl min-h-[460px] lg:w-[460px] max-w-[460px] flex flex-col'}>
+      <div className={'p-6 bg-main-black rounded-3xl min-h-[460px] w-[420px] flex flex-col'}>
         <div className={'text-2xl font-bold mb-6'}>Изменить пароль</div>
         {passwordStep === ESET_PASSWORD_STEPS.CURRENT_PASSWORD && (
           <div className={'flex flex-col h-full gap-2'}>
