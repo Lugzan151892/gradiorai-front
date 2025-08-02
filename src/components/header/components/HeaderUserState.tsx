@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { RootState } from '@/store';
 import { logout } from '@/store/user/userSlice';
 import { useRouter } from 'next/navigation';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import MenuItem, { IMenuItemProps } from '@/components/header/components/MenuItem';
 import { EMENU_ITEM } from '@/components/header/interfaces';
 import Image from 'next/image';
@@ -19,11 +19,15 @@ interface IMenuItem extends IMenuItemProps {
   hide?: boolean;
 }
 
-const HeaderUserState = () => {
+interface IHeaderUserStateProps {
+  showMenu?: boolean;
+  setShowMenu?: (val: boolean) => void;
+}
+
+const HeaderUserState: React.FC<Readonly<IHeaderUserStateProps>> = ({ showMenu, setShowMenu }) => {
   const router = useRouter();
   const { user } = useAppSelector((state: RootState) => state.user);
   const dispatch = useAppDispatch();
-  const [showMenu, setShowMenu] = useState(false);
 
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -53,42 +57,42 @@ const HeaderUserState = () => {
   const handleMenuClick = (id: EMENU_ITEM) => {
     switch (id) {
       case EMENU_ITEM.PROFILE: {
-        setShowMenu(false);
+        setShowMenu?.(false);
         router.push('/profile/information');
         break;
       }
       case EMENU_ITEM.SYSTEM: {
-        setShowMenu(false);
+        setShowMenu?.(false);
         router.push('/system');
         break;
       }
       case EMENU_ITEM.TESTS: {
-        setShowMenu(false);
+        setShowMenu?.(false);
         router.push('/tests');
         break;
       }
       case EMENU_ITEM.INTERVIEW: {
-        setShowMenu(false);
+        setShowMenu?.(false);
         router.push('/interview');
         break;
       }
       case EMENU_ITEM.RESUME_CHECK: {
-        setShowMenu(false);
+        setShowMenu?.(false);
         router.push('/interview/resume-check');
         break;
       }
       case EMENU_ITEM.RESUME_CREATE: {
-        setShowMenu(false);
+        setShowMenu?.(false);
         router.push('/interview/resume-create');
         break;
       }
       case EMENU_ITEM.QUIT: {
-        setShowMenu(false);
+        setShowMenu?.(false);
         handleLogout();
         break;
       }
       default: {
-        setShowMenu(false);
+        setShowMenu?.(false);
         break;
       }
     }
@@ -146,7 +150,7 @@ const HeaderUserState = () => {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setShowMenu(false);
+        setShowMenu?.(false);
       }
     };
 
@@ -157,7 +161,7 @@ const HeaderUserState = () => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [showMenu]);
+  }, [showMenu, setShowMenu]);
 
   return (
     <>
@@ -175,7 +179,7 @@ const HeaderUserState = () => {
         >
           <div
             className={'flex items-center cursor-pointer'}
-            onClick={() => setShowMenu(!showMenu)}
+            onClick={() => setShowMenu?.(!showMenu)}
           >
             <Image
               src={userAvatarEmpty}
@@ -193,7 +197,7 @@ const HeaderUserState = () => {
             <div
               className={cn(
                 'z-50 p-4 bg-black lg:border lg:border-main-gray lg:rounded-xl flex flex-col overflow-hidden',
-                'lg:w-[350px] w-full max-w-full lg:h-[420px] h-screen max-h-[calc(100dvh-90px)] absolute top-[90px] lg:right-[100px] right-0 overflow-y-auto'
+                'lg:w-[350px] w-full max-w-full lg:max-h-[500px] h-screen max-h-[calc(100dvh-90px)] absolute top-[90px] lg:right-[100px] right-0 overflow-y-auto'
               )}
             >
               <MenuItem
