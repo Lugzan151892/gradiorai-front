@@ -34,7 +34,7 @@ const MenuItem: React.FC<Readonly<IMenuItemProps>> = ({ icon, text, className, i
           size={24}
         />
       )}
-      <div className={cn('ml-3 text-lg', isStatic && 'font-bold')}>{text}</div>
+      <div className={cn('ml-3 text-base', isStatic && 'font-bold')}>{text}</div>
     </div>
   );
 };
