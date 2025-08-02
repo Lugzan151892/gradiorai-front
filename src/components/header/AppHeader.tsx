@@ -32,6 +32,7 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
   withState,
 }) => {
   const [scrolled, setScrolled] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
   const [hoveredLinkId, setHoveredLinkId] = useState<string | null>(null);
   const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -122,9 +123,10 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
   return (
     <div
       className={clsx(
-        'flex fixed top-0 left-0 right-0 z-10 h-[112px] shadow-indigo-900 lg:px-60 px-4 bg-main-dark items-center transition-shadow transition-colors duration-300',
+        'flex fixed top-0 left-0 right-0 z-10 h-[112px] shadow-indigo-900 lg:px-60 px-4 items-center transition-shadow transition-colors duration-300',
         withState ? 'justify-between' : 'justify-center',
-        scrolled && 'shadow-xl bg-main-dark'
+        scrolled && 'shadow-xl bg-main-dark',
+        showMenu && 'bg-black'
       )}
     >
       <div className={'flex items-center'}>
@@ -229,7 +231,12 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
           ))}
         </div>
       )}
-      {withState && <HeaderUserState />}
+      {withState && (
+        <HeaderUserState
+          showMenu={showMenu}
+          setShowMenu={setShowMenu}
+        />
+      )}
     </div>
   );
 };
