@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils';
 
 const tabs = [
   { href: '/profile/information', label: 'Профиль' },
-  { href: '/profile/interviews', label: 'Результаты' },
+  { href: '/profile/results', label: 'Результаты' },
 ];
 
 const ProfileLayout = ({ children }: { children: ReactNode }) => {
@@ -16,8 +16,8 @@ const ProfileLayout = ({ children }: { children: ReactNode }) => {
 
   return (
     <AppLayoutClient withState>
-      <div className={'lg:mt-6 w-full max-w-[1440px] mx-auto'}>
-        <div className={'mb-4 flex gap-4 pb-2'}>
+      <div className={'lg:mt-6 lg:w-full lg:max-w-[1440px] max-w-[468px] mx-auto px-4 pb-4'}>
+        <div className={'mb-4 flex gap-4 pb-2 justify-self-start'}>
           {tabs.map((tab) => (
             <Link
               key={tab.href}
