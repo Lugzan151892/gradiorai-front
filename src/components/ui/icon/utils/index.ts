@@ -32,6 +32,8 @@ const getIconViewBox = (name: keyof typeof IconMarkup) => {
     case 'item-list':
     case 'item-education':
       return '0 0 50 50';
+    case 'profile':
+      return '0 0 26 26';
     default:
       return '0 0 24 24';
   }

@@ -40,7 +40,7 @@ const HeaderUserState: React.FC<Readonly<IHeaderUserStateProps>> = ({ showMenu, 
       return null;
     }
 
-    return `${user.email}${user.admin ? ' (ADMIN)' : ''}`;
+    return `${user.username || user.email}${user.admin ? ' (ADMIN)' : ''}`;
   }, [user]);
 
   const handleLogout = async () => {
@@ -102,7 +102,7 @@ const HeaderUserState: React.FC<Readonly<IHeaderUserStateProps>> = ({ showMenu, 
     {
       id: EMENU_ITEM.PROFILE,
       text: 'Профиль',
-      icon: 'settings',
+      icon: 'profile',
       onClick: () => handleMenuClick(EMENU_ITEM.PROFILE),
       hide: !user?.admin,
     },
