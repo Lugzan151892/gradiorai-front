@@ -2,7 +2,6 @@
 
 import React, { useCallback, useEffect, useState } from 'react';
 import Image from 'next/image';
-// import { RootState } from '@/store';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { setLoading } from '@/features/loading/loadingSlice';
@@ -16,13 +15,21 @@ import { normalizeServerDate } from '@/core/utils/date';
 import deleteBasket from '@/assets/icons/delete_basket.svg';
 import { cn } from '@/lib/utils';
 import InterviewModal from './components/InterviewModal';
+import { useConfirm } from '@/features/confirm-provider/ConfirmProvider';
+import UISelect from '@/components/ui/select/UISelect';
+import UILabel from '@/components/ui/label/UILabel';
+import { resultOptions, statusOptions, timeOptions } from './utils';
 
 const ProfileResults = () => {
-  // const { user } = useAppSelector((state: RootState) => state.user);
+  const confirm = useConfirm();
   const [interviews, setInterviews] = useState<IInterview[]>([]);
   const dispatch = useAppDispatch();
   const [currentInterview, setCurrentInterview] = useState<null | IInterview>(null);
   const [interviewModal, setInterviewModal] = useState(false);
+
+  const [statusFilter, setStatusFilter] = useState(1);
+  const [timeFilter, setTimeFilter] = useState(1);
+  const [resultFilter, setResultFilter] = useState(1);
 
   const loadInterviewById = async (id: string) => {
     if (!id) {
@@ -63,8 +70,21 @@ const ProfileResults = () => {
     }
   }, [dispatch]);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleDeleteInterview = async (id: string) => {
+    if (!id) return;
+
+    const checkConfirm = await confirm({
+      caption: 'Удалить собеседование?',
+      content: 'Вы действительно хотите удалить это собеседование? Это действие необратимо.',
+      type: 'warning',
+      buttons: [
+        { key: 'yes', label: 'Удалить', type: 'danger' },
+        { key: 'no', label: 'Отмена', type: 'default' },
+      ],
+    });
+
+    if (checkConfirm !== 'yes') return;
+
     try {
       const result = await Api.delete<{ id: string }, { message: string }>('/interview/delete', { id });
 
@@ -86,7 +106,37 @@ const ProfileResults = () => {
 
   return (
     <div className={'flex flex-col gap-6'}>
-      <div>Здесь будут фильтры</div>
+      <div>
+        <div className={'flex gap-4'}>
+          <div className={'flex flex-col gap-2'}>
+            <UILabel>Статус</UILabel>
+            <UISelect
+              value={statusFilter}
+              options={statusOptions}
+              optionType={'number'}
+              onChange={(val) => setStatusFilter(val as number)}
+            />
+          </div>
+          <div className={'flex flex-col gap-2'}>
+            <UILabel>Дата</UILabel>
+            <UISelect
+              value={timeFilter}
+              options={timeOptions}
+              optionType={'number'}
+              onChange={(val) => setTimeFilter(val as number)}
+            />
+          </div>
+          <div className={'flex flex-col gap-2'}>
+            <UILabel>Оценка</UILabel>
+            <UISelect
+              value={resultFilter}
+              options={resultOptions}
+              optionType={'number'}
+              onChange={(val) => setResultFilter(val as number)}
+            />
+          </div>
+        </div>
+      </div>
       <div className={'h-[calc(100dvh-250px)]'}>
         <ScrollArea>
           <div className={'flex flex-col gap-4 h-full mr-4'}>
@@ -110,6 +160,10 @@ const ProfileResults = () => {
                   className={'ml-auto cursor-pointer'}
                   src={deleteBasket}
                   alt={'delete'}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDeleteInterview(interview.id);
+                  }}
                 />
               </div>
             ))}
