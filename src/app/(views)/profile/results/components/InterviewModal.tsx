@@ -42,7 +42,7 @@ const InterviewModal: React.FC<IInterviewModalProps> = ({ open = false, onClose,
       caption={'История собеседования'}
       onClose={onClose}
     >
-      <div className={'w-full max-w-[840px] h-[calc(100dvh-112px)] lg:mx-auto flex flex-col p-6'}>
+      <div className={'lg:min-w-[400px] max-w-[840px] h-[calc(100dvh-112px)] lg:mx-auto flex flex-col p-6'}>
         <div className={'flex flex-col gap-2 mb-6'}>
           <div className={'flex items-center gap-2'}>
             <CustomIcon name={'calendar'} />
@@ -99,7 +99,7 @@ const InterviewModal: React.FC<IInterviewModalProps> = ({ open = false, onClose,
         </div>
         {!interview?.finished && (
           <UIButton
-            className={'mx-auto lg:w-auto w-full mt-6'}
+            className={'mx-auto lg:w-auto w-full max-w-full mt-6'}
             iconAfter={'arrow-top-right'}
             text={'ВОЗОБНОВИТЬ СОБЕСЕДОВАНИЕ'}
             onClick={() => router.push(`/interview/${interview?.id}`)}
