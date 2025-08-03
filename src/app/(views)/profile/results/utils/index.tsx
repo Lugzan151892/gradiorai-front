@@ -8,17 +8,17 @@ export enum EINTERVIEW_STATUS_FILTER {
   IN_PROGRESS,
 }
 export enum EINTERVIEW_TIME_FILTER {
-  ALL = 1,
-  TODAY,
-  WEEK,
-  MONTH,
-  THREE_MONTHS,
+  ALL = 'ALL',
+  TODAY = '1d',
+  WEEK = '7d',
+  MONTH = '30d',
+  THREE_MONTHS = '90d',
 }
 export enum EINTERVIEW_RESULT_FILTER {
   ALL = 1,
-  FIVE,
-  FOUR,
-  THREE_AND_LESS,
+  EIGHT_AND_MORE,
+  FROM_FIVE_TO_EIGHT,
+  FOUR_AND_LESS,
 }
 
 export const statusOptions = [
@@ -69,41 +69,41 @@ export const resultOptions = [
     text: 'Любая',
   },
   {
-    id: EINTERVIEW_RESULT_FILTER.FIVE,
-    text: '5.0',
+    id: EINTERVIEW_RESULT_FILTER.EIGHT_AND_MORE,
+    text: '8.0 и выше',
     item: (
       <div className={'flex items-center gap-3'}>
         <CustomIcon
           color={'var(--main-yellow)'}
           name={'result-star'}
         />
-        <div>5.0</div>
+        <div>8.0 и выше</div>
       </div>
     ),
   },
   {
-    id: EINTERVIEW_RESULT_FILTER.FOUR,
-    text: '4.0',
+    id: EINTERVIEW_RESULT_FILTER.FROM_FIVE_TO_EIGHT,
+    text: 'от 5.0 до 8.0',
     item: (
       <div className={'flex items-center gap-3'}>
         <CustomIcon
           color={'var(--main-yellow)'}
           name={'result-star'}
         />
-        <div>4.0</div>
+        <div>от 5.0 до 8.0</div>
       </div>
     ),
   },
   {
-    id: EINTERVIEW_RESULT_FILTER.THREE_AND_LESS,
-    text: '3.0 и ниже',
+    id: EINTERVIEW_RESULT_FILTER.FOUR_AND_LESS,
+    text: '4.0 и ниже',
     item: (
       <div className={'flex items-center gap-3'}>
         <CustomIcon
           color={'var(--main-yellow)'}
           name={'result-star'}
         />
-        <div>3.0 и ниже</div>
+        <div>4.0 и ниже</div>
       </div>
     ),
   },
