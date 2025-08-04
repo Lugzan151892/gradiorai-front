@@ -14,6 +14,7 @@ import Api from '@/core/api/api';
 import errorHandler from '@/core/utils/error/errorHandler';
 import { openModal } from '@/store/tech/techSlice';
 import { getUserData } from '@/store/user/userSlice';
+import { AvatarUploadModal } from '../components/AvatarUploadModal';
 
 enum ESET_PASSWORD_STEPS {
   CURRENT_PASSWORD = 1,
@@ -37,6 +38,8 @@ const ProfileInformation = () => {
 
   const [code, setCode] = useState('');
   const [codeError, setCodeError] = useState(false);
+
+  const [openAvatarModal, setOpenAvatarModal] = useState(false);
 
   const handleRequestCode = async () => {
     try {
@@ -178,7 +181,12 @@ const ProfileInformation = () => {
             width={80}
             height={80}
           />
-          <div className={'cursor-pointer hover:underline hover:text-main-purple mt-2'}>Добавить фото</div>
+          <div
+            className={'cursor-pointer hover:underline hover:text-main-purple mt-2'}
+            onClick={() => setOpenAvatarModal(true)}
+          >
+            Добавить фото
+          </div>
         </div>
         <div className={'flex flex-col h-full grow'}>
           <UIInput
@@ -272,6 +280,7 @@ const ProfileInformation = () => {
           onFileSelected={setUserCV}
         />
       </div>
+      <AvatarUploadModal open={openAvatarModal} />
     </div>
   );
 };
