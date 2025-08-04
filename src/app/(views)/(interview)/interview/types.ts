@@ -20,6 +20,8 @@ export interface IInterview {
   user_prompt: string;
   messages: Array<IInterviewMessage>;
   result: string;
+  success: boolean;
+  score: string;
   recomendations: string;
   approved: boolean;
   finished: boolean;
