@@ -48,7 +48,7 @@ const UIButton: React.FC<ICustomButtonProps> = ({
             name={iconBefore}
           />
         )}
-        <span>{children || text}</span>
+        <span className={'truncate overflow-hidden whitespace-nowrap flex-1'}>{children || text}</span>
         {iconAfter && (
           <CustomIcon
             className={'ml-3'}
