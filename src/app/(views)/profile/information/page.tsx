@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import UIInput from '@/components/ui/input/UIInput';
 import UIButton from '@/components/ui/button/UIButton';
 import FileDropzone from '@/components/ui/file-dropzone/FileDropzone';
@@ -39,6 +39,19 @@ const ProfileInformation = () => {
   const [codeError, setCodeError] = useState(false);
 
   const [openAvatarModal, setOpenAvatarModal] = useState(false);
+
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const [avatarFile, setAvatarFile] = useState<File | null>(null);
+  const handleClick = () => {
+    fileInputRef.current?.click();
+  };
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setAvatarFile(file);
+      setOpenAvatarModal(true);
+    }
+  };
 
   const handleRequestCode = async () => {
     try {
@@ -175,9 +188,16 @@ const ProfileInformation = () => {
         <div className={'text-2xl font-bold mb-6'}>Профиль пользователя</div>
         <div className={'flex flex-col items-center mb-4'}>
           <UserAvatar size={80} />
+          <input
+            type={'file'}
+            accept={'image/*'}
+            ref={fileInputRef}
+            onChange={handleFileChange}
+            hidden
+          />
           <div
             className={'cursor-pointer hover:underline hover:text-main-purple mt-2'}
-            onClick={() => setOpenAvatarModal(true)}
+            onClick={handleClick}
           >
             Добавить фото
           </div>
@@ -274,7 +294,13 @@ const ProfileInformation = () => {
           onFileSelected={setUserCV}
         />
       </div>
-      <AvatarUploadModal open={openAvatarModal} />
+      {avatarFile && (
+        <AvatarUploadModal
+          file={avatarFile}
+          open={openAvatarModal}
+          onOpenChange={setOpenAvatarModal}
+        />
+      )}
     </div>
   );
 };

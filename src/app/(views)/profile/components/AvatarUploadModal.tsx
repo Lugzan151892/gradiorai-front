@@ -2,17 +2,17 @@
 'use client';
 import CustomModal from '@/components/ui/modal/CustomModal';
 import Api from '@/core/api/api';
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import Cropper from 'react-easy-crop';
 import { Area } from 'react-easy-crop';
 
 interface AvatarUploadModalProps {
+  file: File;
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onAvatarSaved: (url: string) => void;
 }
 
-export const AvatarUploadModal: React.FC<AvatarUploadModalProps> = ({ open, onOpenChange, onAvatarSaved }) => {
+export const AvatarUploadModal: React.FC<AvatarUploadModalProps> = ({ file, open, onOpenChange }) => {
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
@@ -23,14 +23,11 @@ export const AvatarUploadModal: React.FC<AvatarUploadModalProps> = ({ open, onOp
     setCroppedAreaPixels(croppedAreaPixels);
   }, []);
 
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
+  const handleFileChange = useCallback(() => {
     const reader = new FileReader();
     reader.onload = () => setImageSrc(reader.result as string);
     reader.readAsDataURL(file);
-  };
+  }, [file]);
 
   const getCroppedImage = async (): Promise<Blob | null> => {
     if (!imageSrc || !croppedAreaPixels) return null;
@@ -75,41 +72,34 @@ export const AvatarUploadModal: React.FC<AvatarUploadModalProps> = ({ open, onOp
     if (!blob) return;
 
     const avatar = new File([blob], 'avatar.jpg', { type: 'image/jpeg' });
-    const result = await Api.postFormData<{ file: File }, any>('/user/files/avatar', { file: avatar });
+    await Api.postFormData<{ file: File }, any>('/user/files/avatar', { file: avatar });
 
-    console.log(result);
-
-    const formData = new FormData();
-    formData.append('file', blob, 'avatar.jpg');
-
-    const res = await fetch('/api/avatar', {
-      method: 'POST',
-      body: formData,
-    });
-
-    const data = await res.json();
-    onAvatarSaved(data.url);
     setIsSaving(false);
     onOpenChange(false);
   };
+
+  useEffect(() => {
+    handleFileChange();
+  }, [handleFileChange]);
 
   return (
     <CustomModal
       caption={'Загрузить аватар'}
       open={open}
     >
-      {!imageSrc && (
-        <div className={'flex flex-col items-center'}>
-          <input
-            type={'file'}
-            accept={'image/*'}
-            onChange={handleFileChange}
-          />
-        </div>
-      )}
-
+      <div className={'px-4 mb-4'}>
+        <input
+          type={'range'}
+          min={1}
+          max={3}
+          step={0.1}
+          value={zoom}
+          onChange={(e) => setZoom(Number(e.target.value))}
+          className={'mt-4 w-full z-10'}
+        />
+      </div>
       {imageSrc && (
-        <div className={'relative w-full h-[300px] bg-gray-100'}>
+        <div className={'relative w-full h-[300px] bg-black'}>
           <Cropper
             image={imageSrc}
             crop={crop}
@@ -120,19 +110,10 @@ export const AvatarUploadModal: React.FC<AvatarUploadModalProps> = ({ open, onOp
             onZoomChange={setZoom}
             onCropComplete={onCropComplete}
           />
-          <input
-            type={'range'}
-            min={1}
-            max={3}
-            step={0.1}
-            value={zoom}
-            onChange={(e) => setZoom(Number(e.target.value))}
-            className={'mt-4 w-full'}
-          />
         </div>
       )}
 
-      <div className={'flex justify-end gap-2 mt-4'}>
+      <div className={'flex justify-end gap-2 mt-4 px-4 py-4 border-t-1 border-main-gray'}>
         <button
           onClick={() => onOpenChange(false)}
           className={'text-gray-600 px-4 py-2'}
