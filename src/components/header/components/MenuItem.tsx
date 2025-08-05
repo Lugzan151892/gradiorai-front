@@ -1,9 +1,8 @@
 import CustomIcon from '@/components/ui/icon/CustomIcon';
 import IconMarkup from '@/components/ui/icon/utils/IconMarkup';
 import React from 'react';
-import Image from 'next/image';
-import userAvatarEmpty from '@/assets/icons/user-avatar-empty.svg';
 import { cn } from '@/lib/utils';
+import UserAvatar from '@/components/user-avatar/UserAvatar';
 
 export interface IMenuItemProps {
   icon: keyof typeof IconMarkup;
@@ -21,12 +20,7 @@ const MenuItem: React.FC<Readonly<IMenuItemProps>> = ({ icon, text, className, i
       onClick={onClick}
     >
       {icon === 'user' ? (
-        <Image
-          src={userAvatarEmpty}
-          alt={'profile'}
-          width={40}
-          height={40}
-        />
+        <UserAvatar size={40} />
       ) : (
         <CustomIcon
           name={icon}

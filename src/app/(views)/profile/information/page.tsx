@@ -1,8 +1,6 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
-import userAvatarEmpty from '@/assets/icons/user-avatar-empty.svg';
 import UIInput from '@/components/ui/input/UIInput';
 import UIButton from '@/components/ui/button/UIButton';
 import FileDropzone from '@/components/ui/file-dropzone/FileDropzone';
@@ -15,6 +13,7 @@ import errorHandler from '@/core/utils/error/errorHandler';
 import { openModal } from '@/store/tech/techSlice';
 import { getUserData } from '@/store/user/userSlice';
 import { AvatarUploadModal } from '../components/AvatarUploadModal';
+import UserAvatar from '@/components/user-avatar/UserAvatar';
 
 enum ESET_PASSWORD_STEPS {
   CURRENT_PASSWORD = 1,
@@ -175,12 +174,7 @@ const ProfileInformation = () => {
       <div className={'p-6 bg-main-black rounded-3xl h-auto h-full min-h-[460px] w-[420px] flex flex-col'}>
         <div className={'text-2xl font-bold mb-6'}>Профиль пользователя</div>
         <div className={'flex flex-col items-center mb-4'}>
-          <Image
-            src={userAvatarEmpty}
-            alt={'profile'}
-            width={80}
-            height={80}
-          />
+          <UserAvatar size={80} />
           <div
             className={'cursor-pointer hover:underline hover:text-main-purple mt-2'}
             onClick={() => setOpenAvatarModal(true)}
