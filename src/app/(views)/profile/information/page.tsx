@@ -1,8 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import Image from 'next/image';
-import userAvatarEmpty from '@/assets/icons/user-avatar-empty.svg';
+import React, { useEffect, useRef, useState } from 'react';
 import UIInput from '@/components/ui/input/UIInput';
 import UIButton from '@/components/ui/button/UIButton';
 import FileDropzone from '@/components/ui/file-dropzone/FileDropzone';
@@ -14,6 +12,8 @@ import Api from '@/core/api/api';
 import errorHandler from '@/core/utils/error/errorHandler';
 import { openModal } from '@/store/tech/techSlice';
 import { getUserData } from '@/store/user/userSlice';
+import { AvatarUploadModal } from '../components/AvatarUploadModal';
+import UserAvatar from '@/components/user-avatar/UserAvatar';
 
 enum ESET_PASSWORD_STEPS {
   CURRENT_PASSWORD = 1,
@@ -37,6 +37,21 @@ const ProfileInformation = () => {
 
   const [code, setCode] = useState('');
   const [codeError, setCodeError] = useState(false);
+
+  const [openAvatarModal, setOpenAvatarModal] = useState(false);
+
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const [avatarFile, setAvatarFile] = useState<File | null>(null);
+  const handleClick = () => {
+    fileInputRef.current?.click();
+  };
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setAvatarFile(file);
+      setOpenAvatarModal(true);
+    }
+  };
 
   const handleRequestCode = async () => {
     try {
@@ -172,13 +187,20 @@ const ProfileInformation = () => {
       <div className={'p-6 bg-main-black rounded-3xl h-auto h-full min-h-[460px] w-[420px] flex flex-col'}>
         <div className={'text-2xl font-bold mb-6'}>Профиль пользователя</div>
         <div className={'flex flex-col items-center mb-4'}>
-          <Image
-            src={userAvatarEmpty}
-            alt={'profile'}
-            width={80}
-            height={80}
+          <UserAvatar size={80} />
+          <input
+            type={'file'}
+            accept={'image/*'}
+            ref={fileInputRef}
+            onChange={handleFileChange}
+            hidden
           />
-          <div className={'cursor-pointer hover:underline hover:text-main-purple mt-2'}>Добавить фото</div>
+          <div
+            className={'cursor-pointer hover:underline hover:text-main-purple mt-2'}
+            onClick={handleClick}
+          >
+            Добавить фото
+          </div>
         </div>
         <div className={'flex flex-col h-full grow'}>
           <UIInput
@@ -272,6 +294,13 @@ const ProfileInformation = () => {
           onFileSelected={setUserCV}
         />
       </div>
+      {avatarFile && (
+        <AvatarUploadModal
+          file={avatarFile}
+          open={openAvatarModal}
+          onOpenChange={setOpenAvatarModal}
+        />
+      )}
     </div>
   );
 };

@@ -10,9 +10,8 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useMemo, useRef } from 'react';
 import MenuItem, { IMenuItemProps } from '@/components/header/components/MenuItem';
 import { EMENU_ITEM } from '@/components/header/interfaces';
-import Image from 'next/image';
-import userAvatarEmpty from '@/assets/icons/user-avatar-empty.svg';
 import { cn } from '@/lib/utils';
+import UserAvatar from '@/components/user-avatar/UserAvatar';
 
 interface IMenuItem extends IMenuItemProps {
   id: EMENU_ITEM;
@@ -181,12 +180,7 @@ const HeaderUserState: React.FC<Readonly<IHeaderUserStateProps>> = ({ showMenu, 
             className={'flex items-center cursor-pointer'}
             onClick={() => setShowMenu?.(!showMenu)}
           >
-            <Image
-              src={userAvatarEmpty}
-              alt={'profile'}
-              width={40}
-              height={40}
-            />
+            <UserAvatar size={40} />
             <CustomIcon
               name={'menu-arrow'}
               color={'var(--main-white)'}
