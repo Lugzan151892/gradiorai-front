@@ -1,7 +1,7 @@
-import { getPublicFileLink } from '@/core/utils/files';
 import Image from 'next/image';
 import React, { useState } from 'react';
 import userAvatarEmpty from '@/assets/icons/user-avatar-empty.svg';
+import { API_PATH } from '@/core/api/api';
 
 const UserAvatar: React.FC<
   Readonly<{
@@ -10,7 +10,7 @@ const UserAvatar: React.FC<
   }>
 > = ({ size = 40, alt = 'profile' }) => {
   const [imgError, setImgError] = useState(false);
-  const imgSrc = imgError ? userAvatarEmpty : getPublicFileLink('user/files/download/avatar');
+  const imgSrc = imgError ? userAvatarEmpty : `${API_PATH}/user/files/download/avatar`;
 
   return (
     <Image
