@@ -2,7 +2,7 @@ import SystemError from '@/core/utils/error/SystemError';
 import UserError from '@/core/utils/error/UserError';
 import { IResponse, IResponseSilent } from '@/core/api/interfaces';
 
-const API_PATH = process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : `/api`;
+export const API_PATH = process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : `/api`;
 
 type TApiMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
 type ResponseType<R, S extends boolean> = S extends true ? IResponseSilent<R> : IResponse<R>;
