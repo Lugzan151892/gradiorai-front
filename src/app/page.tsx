@@ -41,9 +41,9 @@ const Home = () => {
   const loadSystemFiles = useCallback(async () => {
     try {
       dispatch(setLoading(true));
-      const privatePolicyFile = await Api.get<undefined, any>('/system/files/privacy_policy');
+      const privatePolicyFile = await Api.getSilent<undefined, any>('/system/files/privacy_policy');
       setPrivatePolicy(privatePolicyFile.payload);
-      const personalTermsFile = await Api.get<undefined, any[]>('/system/files/personal_terms');
+      const personalTermsFile = await Api.getSilent<undefined, any[]>('/system/files/personal_terms');
       setPersonalTerms(personalTermsFile.payload);
     } catch (e) {
       errorHandler(e, dispatch);
