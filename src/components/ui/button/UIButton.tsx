@@ -6,7 +6,7 @@ import CustomIcon from '../icon/CustomIcon';
 interface ICustomButtonProps {
   text?: string;
   className?: string;
-  type?: 'default' | 'transparent';
+  type?: 'default' | 'transparent' | 'square';
   children?: Readonly<React.ReactNode>;
   iconAfter?: keyof typeof iconMarkup;
   iconBefore?: keyof typeof iconMarkup;
@@ -25,18 +25,26 @@ const UIButton: React.FC<ICustomButtonProps> = ({
   type = 'default',
 }) => {
   const disabledClass = disabled ? 'pointer-events-none text-text-disabled' : 'cursor-pointer text-text-black';
-  const typeClasses =
-    type === 'default'
-      ? 'bg-main-white font-medium px-6 text-sm/[22px]'
-      : 'text-xs bg-transparent text-text-disabled border-1 border-main-gray';
+  const typeClasses = () => {
+    switch (type) {
+      case 'square':
+      case 'default':
+        return 'bg-main-white font-medium px-6 text-sm/[22px]';
+      case 'transparent':
+        return 'text-xs bg-transparent text-text-disabled border-1 border-main-gray';
+      default:
+        return '';
+    }
+  };
 
   return (
     <button
       className={cn(
-        'rounded-4xl py-2 px-3 hover:[box-shadow:inset_0_4px_4px_rgba(0,0,0,0.25)]',
+        'py-2 px-3 hover:[box-shadow:inset_0_4px_4px_rgba(0,0,0,0.25)]',
+        type === 'square' ? 'rounded-[10px]' : 'rounded-4xl',
         className,
         disabledClass,
-        typeClasses
+        typeClasses()
       )}
       onClick={onClick}
     >

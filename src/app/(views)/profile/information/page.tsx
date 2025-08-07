@@ -12,7 +12,7 @@ import Api from '@/core/api/api';
 import errorHandler from '@/core/utils/error/errorHandler';
 import { openModal } from '@/store/tech/techSlice';
 import { getUserData } from '@/store/user/userSlice';
-import { AvatarUploadModal } from '../components/AvatarUploadModal';
+import { AvatarUploadModal } from '@/app/(views)/profile/components/AvatarUploadModal';
 import UserAvatar from '@/components/user-avatar/UserAvatar';
 
 enum ESET_PASSWORD_STEPS {
@@ -178,6 +178,22 @@ const ProfileInformation = () => {
     }
   };
 
+  const handleUploadCv = async (file: File | null) => {
+    if (!file) {
+      return;
+    }
+
+    setUserCV(file);
+    try {
+      dispatch(setLoading(true));
+      await Api.postFormData<{ file: File }, any>('/user/files/cv', { file });
+    } catch (e) {
+      errorHandler(e, dispatch);
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
+
   useEffect(() => {
     setUsername(user?.username || '');
   }, [user]);
@@ -206,6 +222,7 @@ const ProfileInformation = () => {
           <UIInput
             id={'name'}
             label={'Имя'}
+            level={'square'}
             value={username}
             error={usernameError}
             onInput={(val) => {
@@ -215,6 +232,7 @@ const ProfileInformation = () => {
           />
           <UIButton
             className={'mt-auto'}
+            type={'square'}
             text={'ИЗМЕНИТЬ'}
             onClick={handleSetUsername}
           />
@@ -225,7 +243,7 @@ const ProfileInformation = () => {
         {passwordStep === ESET_PASSWORD_STEPS.CURRENT_PASSWORD && (
           <div className={'flex flex-col h-full gap-2'}>
             <UIInput
-              level={'small'}
+              level={'square'}
               label={'Текущий пароль'}
               type={'password'}
               value={password}
@@ -236,7 +254,7 @@ const ProfileInformation = () => {
               }}
             />
             <UIInput
-              level={'small'}
+              level={'square'}
               label={'Новый пароль'}
               type={'password'}
               value={newPassword}
@@ -247,7 +265,7 @@ const ProfileInformation = () => {
               }}
             />
             <UIInput
-              level={'small'}
+              level={'square'}
               label={'Подтвердите пароль'}
               type={'password'}
               value={repeatedNewPassword}
@@ -259,6 +277,7 @@ const ProfileInformation = () => {
             />
             <UIButton
               className={'mt-auto'}
+              type={'square'}
               text={'ИЗМЕНИТЬ'}
               onClick={handleSetPassword}
             />
@@ -291,7 +310,7 @@ const ProfileInformation = () => {
           maxFileSize={2}
           file={userCV}
           formats={['docx', 'pdf']}
-          onFileSelected={setUserCV}
+          onFileSelected={(e) => handleUploadCv(e)}
         />
       </div>
       {avatarFile && (
