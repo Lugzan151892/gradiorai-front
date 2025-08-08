@@ -103,7 +103,6 @@ const HeaderUserState: React.FC<Readonly<IHeaderUserStateProps>> = ({ showMenu, 
       text: 'Профиль',
       icon: 'profile',
       onClick: () => handleMenuClick(EMENU_ITEM.PROFILE),
-      hide: !user?.admin,
     },
     {
       id: EMENU_ITEM.SYSTEM,
