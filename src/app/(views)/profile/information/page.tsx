@@ -233,7 +233,7 @@ const ProfileInformation = () => {
             className={'cursor-pointer hover:underline hover:text-main-purple mt-2'}
             onClick={handleClick}
           >
-            Добавить фото
+            {user?.files.some((file) => file.type === 'AVATAR') ? 'Изменить аватар' : 'Добавить аватар'}
           </div>
         </div>
         <div className={'flex flex-col h-full grow'}>
@@ -336,6 +336,7 @@ const ProfileInformation = () => {
           file={avatarFile}
           open={openAvatarModal}
           onOpenChange={setOpenAvatarModal}
+          onFileChanged={() => dispatch(getUserData())}
         />
       )}
     </div>
