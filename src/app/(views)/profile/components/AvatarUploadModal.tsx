@@ -10,9 +10,10 @@ interface AvatarUploadModalProps {
   file: File;
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onFileChanged?: () => void;
 }
 
-export const AvatarUploadModal: React.FC<AvatarUploadModalProps> = ({ file, open, onOpenChange }) => {
+export const AvatarUploadModal: React.FC<AvatarUploadModalProps> = ({ file, open, onOpenChange, onFileChanged }) => {
   const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
@@ -76,6 +77,7 @@ export const AvatarUploadModal: React.FC<AvatarUploadModalProps> = ({ file, open
 
     setIsSaving(false);
     onOpenChange(false);
+    onFileChanged?.();
   };
 
   useEffect(() => {
