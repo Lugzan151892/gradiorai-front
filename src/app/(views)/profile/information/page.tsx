@@ -14,6 +14,7 @@ import { openModal } from '@/store/tech/techSlice';
 import { getUserData } from '@/store/user/userSlice';
 import { AvatarUploadModal } from '@/app/(views)/profile/components/AvatarUploadModal';
 import UserAvatar from '@/components/user-avatar/UserAvatar';
+import { IFile } from '@/core/interfaces/types';
 
 enum ESET_PASSWORD_STEPS {
   CURRENT_PASSWORD = 1,
@@ -25,7 +26,7 @@ const ProfileInformation = () => {
   const dispatch = useAppDispatch();
   const [username, setUsername] = useState('');
   const [usernameError, setUsernameError] = useState('');
-  const [userCV, setUserCV] = useState<null | File>(null);
+  const [userCV, setUserCV] = useState<null | File | IFile>(null);
   const [passwordStep, setPasswordStep] = useState(ESET_PASSWORD_STEPS.CURRENT_PASSWORD);
 
   const [password, setPassword] = useState('');
@@ -178,12 +179,25 @@ const ProfileInformation = () => {
     }
   };
 
+  const deleteUserFile = async (type: 'avatar' | 'cv') => {
+    try {
+      dispatch(setLoading(true));
+      await Api.delete('/user/files/' + type);
+    } catch (e) {
+      errorHandler(e, dispatch);
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
+
   const handleUploadCv = async (file: File | null) => {
+    setUserCV(file);
+
     if (!file) {
+      deleteUserFile('cv');
       return;
     }
 
-    setUserCV(file);
     try {
       dispatch(setLoading(true));
       await Api.postFormData<{ file: File }, any>('/user/files/cv', { file });
@@ -196,11 +210,15 @@ const ProfileInformation = () => {
 
   useEffect(() => {
     setUsername(user?.username || '');
+    const userCv = user?.files.find((file) => file.type === 'CV');
+    if (userCv) {
+      setUserCV(userCv);
+    }
   }, [user]);
 
   return (
     <div className={'flex flex-wrap lg:flex-row flex-col gap-6'}>
-      <div className={'p-6 bg-main-black rounded-3xl h-auto h-full min-h-[460px] w-[420px] flex flex-col'}>
+      <div className={'p-6 bg-main-black rounded-3xl h-auto h-full min-h-[460px] lg:w-[420px] w-full flex flex-col'}>
         <div className={'text-2xl font-bold mb-6'}>Профиль пользователя</div>
         <div className={'flex flex-col items-center mb-4'}>
           <UserAvatar size={80} />
@@ -238,7 +256,7 @@ const ProfileInformation = () => {
           />
         </div>
       </div>
-      <div className={'p-6 bg-main-black rounded-3xl min-h-[460px] w-[420px] flex flex-col'}>
+      <div className={'p-6 bg-main-black rounded-3xl min-h-[460px] lg:w-[420px] w-full flex flex-col'}>
         <div className={'text-2xl font-bold mb-6'}>Изменить пароль</div>
         {passwordStep === ESET_PASSWORD_STEPS.CURRENT_PASSWORD && (
           <div className={'flex flex-col h-full gap-2'}>

@@ -5,6 +5,7 @@ import CustomIcon from '../icon/CustomIcon';
 import UILabel from '../label/UILabel';
 import { cn } from '@/lib/utils';
 import { formatFileSize } from '@/core/utils/files';
+import { IFile } from '@/core/interfaces/types';
 
 const BYTES_IN_MB = 1024 * 1024;
 
@@ -13,82 +14,75 @@ interface IFileDropzoneProps {
   maxFileSize?: number;
   className?: string;
   label?: string;
-  file?: File | null;
+  file?: IFile | File | null;
+  filePath?: string; // для файла из БД, если нужно прямой путь
   error?: string[] | string;
   id?: string;
   formats?: Array<string>;
 }
 
-const FileDropzone: React.FC<Readonly<IFileDropzoneProps>> = ({
+const FileDropzone: React.FC<IFileDropzoneProps> = ({
   onFileSelected,
   maxFileSize,
   formats,
   file,
+  filePath,
   className,
   error,
   label,
   id,
 }) => {
   const [isDragOver, setIsDragOver] = useState(false);
+  const [insideErrors, setInsideErrors] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [insideErrors, setInsideErrors] = useState<Array<string>>([]);
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragOver(true);
   };
 
-  const handleDragLeave = () => {
-    setIsDragOver(false);
+  const handleDragLeave = () => setIsDragOver(false);
+
+  const getFileExtension = (filename: string) => {
+    const lastDotIndex = filename.lastIndexOf('.');
+    return lastDotIndex === -1 ? null : filename.slice(lastDotIndex + 1).toLowerCase();
   };
 
-  function getFileExtension(filename: string): string | null {
-    const lastDotIndex = filename.lastIndexOf('.');
-    if (lastDotIndex === -1) return null;
-    return filename.slice(lastDotIndex + 1).toLowerCase();
-  }
-
-  const getInsideErrors = (file: File) => {
-    const errorType = formats && !formats.includes(getFileExtension(file.name) || '') ? 'Неверный формат файла' : '';
-    const errorSize = maxFileSize && file.size > maxFileSize * BYTES_IN_MB ? 'Размер файла превышает допустимый' : '';
-
+  const getInsideErrors = (f: File) => {
+    const errorType = formats && !formats.includes(getFileExtension(f.name) || '') ? 'Неверный формат файла' : '';
+    const errorSize = maxFileSize && f.size > maxFileSize * BYTES_IN_MB ? 'Размер файла превышает допустимый' : '';
     return [errorType, errorSize].filter(Boolean);
   };
 
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragOver(false);
-    if (e.dataTransfer.files.length > 0) {
-      const errors = getInsideErrors(e.dataTransfer.files[0]);
+    const droppedFile = e.dataTransfer.files?.[0];
+    if (!droppedFile) return;
 
-      if (errors.length) {
-        setInsideErrors(errors);
-
-        return;
-      }
-      onFileSelected(e.dataTransfer.files[0]);
-      setInsideErrors([]);
+    const errors = getInsideErrors(droppedFile);
+    if (errors.length) {
+      setInsideErrors(errors);
+      return;
     }
+    onFileSelected(droppedFile);
+    setInsideErrors([]);
   };
 
-  const handleClick = () => {
-    fileInputRef.current?.click();
-  };
+  const handleClick = () => fileInputRef.current?.click();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      const errors = getInsideErrors(e.target.files[0]);
+    const selectedFile = e.target.files?.[0];
+    if (!selectedFile) return;
 
-      if (errors.length) {
-        setInsideErrors(errors);
-
-        return;
-      }
-
-      onFileSelected(e.target.files[0]);
-      setInsideErrors([]);
-      e.target.value = '';
+    const errors = getInsideErrors(selectedFile);
+    if (errors.length) {
+      setInsideErrors(errors);
+      return;
     }
+    onFileSelected(selectedFile);
+    setInsideErrors([]);
+    e.target.value = '';
   };
 
   const errorsList = Array.isArray(error)
@@ -98,6 +92,12 @@ const FileDropzone: React.FC<Readonly<IFileDropzoneProps>> = ({
       : insideErrors;
 
   const borderClasses = errorsList.length ? 'border-error' : 'border-main-gray';
+
+  const isNewFile = file instanceof File;
+  const isDbFile = file && !(file instanceof File);
+  const fileName = isNewFile ? file?.name : isDbFile ? (file as IFile).originalName : '';
+  const fileSize = isNewFile ? file?.size : isDbFile ? (file as IFile).size : 0;
+  const fileLink = isNewFile ? URL.createObjectURL(file as File) : isDbFile ? filePath || (file as IFile).path : '';
 
   return (
     <div className={cn(className, 'flex flex-col w-full')}>
@@ -119,23 +119,32 @@ const FileDropzone: React.FC<Readonly<IFileDropzoneProps>> = ({
         }`}
       >
         <div className={cn('border-1 border-dashed flex flex-col items-center p-4 text-text-disabled', borderClasses)}>
-          <p className={'text-sm mb-8'}>Перетащите файл сюда или нажмите, чтобы выбрать</p>
+          <p className={'text-sm mb-8'}>{file ? 'Файл добавлен' : 'Перетащите файл сюда или нажмите, чтобы выбрать'}</p>
           <div className={'h-15 w-15 rounded-full border-main-gray border-1 flex items-center justify-center mb-8'}>
             <CustomIcon
               name={file ? 'document-ready' : 'document-upload'}
               size={32}
             />
           </div>
-          {file && <p className={'text-xs mb-2'}>{`${file.name} ${formatFileSize(file.size)}`}</p>}
+          {file && (
+            <a
+              className={'text-xs mb-2 cursor-pointer hover:underline hover:text-main-purple'}
+              target={'_blank'}
+              href={fileLink}
+              rel={'noreferrer'}
+              download={fileName || undefined}
+              onClick={(e) => e.stopPropagation()} // чтобы не триггерить fileInput
+            >
+              {`${fileName} (${formatFileSize(fileSize)})`}
+            </a>
+          )}
           {file && (
             <div
               className={'flex gap-2 items-center'}
               onClick={(e) => {
                 e.stopPropagation();
                 onFileSelected(null);
-                if (fileInputRef.current) {
-                  fileInputRef.current.value = '';
-                }
+                if (fileInputRef.current) fileInputRef.current.value = '';
               }}
             >
               <CustomIcon
@@ -145,10 +154,8 @@ const FileDropzone: React.FC<Readonly<IFileDropzoneProps>> = ({
               <div className={'text-xs'}>Удалить</div>
             </div>
           )}
-          {maxFileSize && !file ? (
-            <p className={'text-xs mb-2'}>{`Максимальный размер файла: ${maxFileSize} Mb`}</p>
-          ) : null}
-          {!file && formats && formats.length ? (
+          {maxFileSize && !file && <p className={'text-xs mb-2'}>{`Максимальный размер файла: ${maxFileSize} Mb`}</p>}
+          {!file && formats?.length ? (
             <p className={'text-xs mt-1'}>{`Допустимые форматы: ${formats.map((e) => e.toUpperCase()).join(', ')}`}</p>
           ) : null}
           <input
@@ -160,15 +167,14 @@ const FileDropzone: React.FC<Readonly<IFileDropzoneProps>> = ({
           />
         </div>
       </div>
-      <div className={'min-h-4'}>
-        {!!errorsList.length && (
-          <div className={'mt-2 text-xs text-error flex flex-col items-start'}>
-            {errorsList.map((e) => (
-              <span key={e}>{e}</span>
-            ))}
-          </div>
-        )}
-      </div>
+
+      {errorsList.length > 0 && (
+        <div className={'mt-2 text-xs text-error flex flex-col items-start'}>
+          {errorsList.map((e) => (
+            <span key={e}>{e}</span>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
