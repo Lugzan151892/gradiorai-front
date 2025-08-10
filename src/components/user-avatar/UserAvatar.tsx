@@ -1,7 +1,9 @@
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import userAvatarEmpty from '@/assets/icons/user-avatar-empty.svg';
 import { API_PATH } from '@/core/api/api';
+import { RootState } from '@/store';
+import { useAppSelector } from '@/hooks/redux';
 
 const UserAvatar: React.FC<
   Readonly<{
@@ -10,7 +12,15 @@ const UserAvatar: React.FC<
   }>
 > = ({ size = 40, alt = 'profile' }) => {
   const [imgError, setImgError] = useState(false);
-  const imgSrc = imgError ? userAvatarEmpty : `${API_PATH}/user/files/download/avatar`;
+  const { user } = useAppSelector((state: RootState) => state.user);
+
+  const avatarVersion = useMemo(() => {
+    const savedAvatar = user?.files.find((file) => file.type === 'AVATAR');
+    const version = savedAvatar?.updatedAt ? new Date(savedAvatar.updatedAt).getTime() : '';
+    return version;
+  }, [user]);
+
+  const imgSrc = imgError ? userAvatarEmpty : `${API_PATH}/user/files/download/avatar?v=${avatarVersion}`;
 
   return (
     <Image

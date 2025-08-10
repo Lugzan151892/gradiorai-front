@@ -114,5 +114,6 @@ export interface IFile {
   path: string;
   public: boolean;
   createdAt: string;
+  updatedAt: string;
   type: string;
 }
