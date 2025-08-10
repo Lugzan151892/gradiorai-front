@@ -241,6 +241,7 @@ const ProfileInformation = () => {
             id={'name'}
             label={'Имя'}
             level={'square'}
+            autoComplete={false}
             value={username}
             error={usernameError}
             onInput={(val) => {
@@ -264,6 +265,7 @@ const ProfileInformation = () => {
               level={'square'}
               label={'Текущий пароль'}
               type={'password'}
+              autoComplete={false}
               value={password}
               error={passwordError}
               onInput={(val) => {
