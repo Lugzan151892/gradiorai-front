@@ -101,3 +101,16 @@ export interface ISystemTransaction {
   amount: number;
   reason: string;
 }
+
+export interface IFile {
+  id: string;
+  /** Уникальное имя файла */
+  filename: string;
+  /** Название файла указанное при загружке */
+  originalName: string;
+  mimetype: string;
+  size: number;
+  path: string;
+  public: boolean;
+  createdAt: string;
+}

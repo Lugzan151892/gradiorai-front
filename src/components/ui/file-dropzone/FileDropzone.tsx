@@ -5,6 +5,7 @@ import CustomIcon from '../icon/CustomIcon';
 import UILabel from '../label/UILabel';
 import { cn } from '@/lib/utils';
 import { formatFileSize } from '@/core/utils/files';
+import { IFile } from '@/core/interfaces/types';
 
 const BYTES_IN_MB = 1024 * 1024;
 
@@ -13,7 +14,7 @@ interface IFileDropzoneProps {
   maxFileSize?: number;
   className?: string;
   label?: string;
-  file?: File | null;
+  file?: IFile | File | null;
   error?: string[] | string;
   id?: string;
   formats?: Array<string>;
@@ -119,14 +120,18 @@ const FileDropzone: React.FC<Readonly<IFileDropzoneProps>> = ({
         }`}
       >
         <div className={cn('border-1 border-dashed flex flex-col items-center p-4 text-text-disabled', borderClasses)}>
-          <p className={'text-sm mb-8'}>Перетащите файл сюда или нажмите, чтобы выбрать</p>
+          <p className={'text-sm mb-8'}>{file ? 'Файл добавлен' : 'Перетащите файл сюда или нажмите, чтобы выбрать'}</p>
           <div className={'h-15 w-15 rounded-full border-main-gray border-1 flex items-center justify-center mb-8'}>
             <CustomIcon
               name={file ? 'document-ready' : 'document-upload'}
               size={32}
             />
           </div>
-          {file && <p className={'text-xs mb-2'}>{`${file.name} ${formatFileSize(file.size)}`}</p>}
+          {file && (
+            <p
+              className={'text-xs mb-2'}
+            >{`${file instanceof File ? file?.name : file.originalName} ${formatFileSize(file.size)}`}</p>
+          )}
           {file && (
             <div
               className={'flex gap-2 items-center'}

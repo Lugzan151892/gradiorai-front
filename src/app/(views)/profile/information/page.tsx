@@ -179,11 +179,11 @@ const ProfileInformation = () => {
   };
 
   const handleUploadCv = async (file: File | null) => {
+    setUserCV(file);
     if (!file) {
       return;
     }
 
-    setUserCV(file);
     try {
       dispatch(setLoading(true));
       await Api.postFormData<{ file: File }, any>('/user/files/cv', { file });
