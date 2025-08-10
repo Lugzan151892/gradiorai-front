@@ -22,6 +22,7 @@ export interface IUser {
     question_id: number;
     user_id: number;
   }>;
+  files: Array<IFile>;
 }
 
 export interface IUserReview {
@@ -113,4 +114,5 @@ export interface IFile {
   path: string;
   public: boolean;
   createdAt: string;
+  type: string;
 }
