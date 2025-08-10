@@ -169,7 +169,7 @@ const ProfileResults = () => {
           </div>
         </div>
       </div>
-      <div className={'h-[calc(100dvh-250px)]'}>
+      <div className={'max-h-[calc(100dvh-300px)]'}>
         <ScrollArea>
           <div className={'flex flex-col gap-4 h-full mr-4'}>
             {interviews
@@ -182,13 +182,28 @@ const ProfileResults = () => {
                   key={interview.id}
                   onClick={() => handleOpenInterviewModal(interview.id)}
                 >
-                  <CustomIcon name={'calendar'} />
-                  <div>{normalizeServerDate(interview.created_at)}</div>
-                  <div>
-                    <span>Статус: </span>
-                    <span className={cn(interview.finished && 'text-success', !interview.finished && 'text-main-blue')}>
-                      {interview.finished ? 'Пройдено' : 'В процессе'}
-                    </span>
+                  <div className={'flex lg:flex-row flex-col gap-6'}>
+                    <div className={'flex items-center'}>
+                      <CustomIcon name={'calendar'} />
+                      <div className={'ml-1'}>{normalizeServerDate(interview.created_at, 'DD.MM.YYYY')}</div>
+                      {interview.score && (
+                        <div className={'ml-6'}>
+                          <div className={'flex items-center gap-2'}>
+                            <CustomIcon
+                              color={'var(--main-yellow)'}
+                              name={'result-star'}
+                            />
+                            <div>{`${interview.score.replace('/', ' / ')}`}</div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                    <div className={'lg:ml-0 ml-1 flex items-center'}>
+                      <span className={'mr-2'}>Статус: </span>
+                      <span className={cn(interview.finished && 'text-success', !interview.finished && 'text-yellow')}>
+                        {interview.finished ? 'Пройдено' : 'В процессе'}
+                      </span>
+                    </div>
                   </div>
                   <Image
                     className={'ml-auto cursor-pointer'}
