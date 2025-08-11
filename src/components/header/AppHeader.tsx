@@ -8,6 +8,8 @@ import logoTransparentFull from '@/assets/icons/gradior_transparent_full.png';
 import CustomIcon from '@/components/ui/icon/CustomIcon';
 import IconMarkup from '@/components/ui/icon/utils/IconMarkup';
 import { cn } from '@/lib/utils';
+import { sleep } from '@/core/utils/common';
+import { usePathname } from 'next/navigation';
 
 interface ILinkItem {
   id: string;
@@ -62,12 +64,17 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
   }, [scrollRef]);
 
   const router = useRouter();
+  const pathName = usePathname();
 
   const links: ILinkItem[] = [
     {
       id: 'ABOUT',
       text: 'О НАС',
-      onClick: () => {
+      onClick: async () => {
+        if (pathName !== '/') {
+          router.push('/');
+          await sleep(300);
+        }
         const el = document.getElementById('about');
         el?.scrollIntoView({ behavior: 'smooth' });
       },
@@ -112,7 +119,11 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
     {
       id: 'FAQ',
       text: 'FAQ',
-      onClick: () => {
+      onClick: async () => {
+        if (pathName !== '/') {
+          router.push('/');
+          await sleep(300);
+        }
         const el = document.getElementById('faq');
         el?.scrollIntoView({ behavior: 'smooth' });
       },

@@ -58,6 +58,11 @@ const SystemPage = () => {
       text: 'Затраты на сервис',
       href: 'system/admins-transactions',
     },
+    {
+      id: 11,
+      text: 'Список бэкапов',
+      href: 'system/backups',
+    },
   ];
   return (
     <div className={'flex items-center h-full w-full justify-center my-auto'}>
