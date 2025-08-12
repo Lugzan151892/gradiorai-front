@@ -15,6 +15,7 @@ import { getUserData } from '@/store/user/userSlice';
 import { AvatarUploadModal } from '@/app/(views)/profile/components/AvatarUploadModal';
 import UserAvatar from '@/components/user-avatar/UserAvatar';
 import { IFile } from '@/core/interfaces/types';
+import CustomIcon from '@/components/ui/icon/CustomIcon';
 
 enum ESET_PASSWORD_STEPS {
   CURRENT_PASSWORD = 1,
@@ -44,6 +45,7 @@ const ProfileInformation = () => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const handleClick = () => {
+    setAvatarFile(null);
     fileInputRef.current?.click();
   };
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -326,12 +328,18 @@ const ProfileInformation = () => {
       </div>
       <div className={'p-6 bg-main-black rounded-3xl min-h-[460px] lg:w-[460px] max-w-[460px]'}>
         <div className={'text-2xl font-bold mb-6'}>Файл для собеседований</div>
-        <FileDropzone
-          maxFileSize={2}
-          file={userCV}
-          formats={['docx', 'pdf']}
-          onFileSelected={(e) => handleUploadCv(e)}
-        />
+        <div>
+          <div className={'flex items-center gap-2 mb-4'}>
+            <CustomIcon name={'info-icon'} />
+            <div>Вы можете добавить файл по умолчанию, для добавления информации к собеседованию</div>
+          </div>
+          <FileDropzone
+            maxFileSize={2}
+            file={userCV}
+            formats={['docx', 'pdf']}
+            onFileSelected={(e) => handleUploadCv(e)}
+          />
+        </div>
       </div>
       {avatarFile && (
         <AvatarUploadModal
