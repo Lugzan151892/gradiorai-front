@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import UIInput from '@/components/ui/input/UIInput';
 import UIButton from '@/components/ui/button/UIButton';
 import FileDropzone from '@/components/ui/file-dropzone/FileDropzone';
@@ -8,7 +8,7 @@ import CustomCodeInput from '@/components/ui/code-input/CustomCodeInput';
 import { RootState } from '@/store';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { setLoading } from '@/features/loading/loadingSlice';
-import Api from '@/core/api/api';
+import Api, { API_PATH } from '@/core/api/api';
 import errorHandler from '@/core/utils/error/errorHandler';
 import { openModal } from '@/store/tech/techSlice';
 import { getUserData } from '@/store/user/userSlice';
@@ -210,6 +210,12 @@ const ProfileInformation = () => {
     }
   };
 
+  const dbFilePath = useMemo(() => {
+    const isDbFile = userCV && !(userCV instanceof File);
+
+    return isDbFile ? `${API_PATH}/user/files/download/cv` : undefined;
+  }, [userCV]);
+
   useEffect(() => {
     setUsername(user?.username || '');
     const userCv = user?.files.find((file) => file.type === 'CV');
@@ -336,6 +342,7 @@ const ProfileInformation = () => {
           <FileDropzone
             maxFileSize={2}
             file={userCV}
+            filePath={dbFilePath}
             formats={['docx', 'pdf']}
             onFileSelected={(e) => handleUploadCv(e)}
           />

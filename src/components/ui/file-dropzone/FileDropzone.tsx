@@ -133,7 +133,7 @@ const FileDropzone: React.FC<IFileDropzoneProps> = ({
               href={fileLink}
               rel={'noreferrer'}
               download={fileName || undefined}
-              onClick={(e) => e.stopPropagation()} // чтобы не триггерить fileInput
+              onClick={(e) => e.stopPropagation()}
             >
               {`${fileName} (${formatFileSize(fileSize)})`}
             </a>
