@@ -32,11 +32,11 @@ export const statusOptions = [
   },
   {
     id: EINTERVIEW_STATUS_FILTER.FAILED,
-    text: 'Не пройдено',
+    text: 'Неудачно',
   },
   {
     id: EINTERVIEW_STATUS_FILTER.IN_PROGRESS,
-    text: 'Не завершено',
+    text: 'В процессе',
   },
 ];
 
