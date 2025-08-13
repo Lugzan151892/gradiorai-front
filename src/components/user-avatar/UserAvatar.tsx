@@ -20,7 +20,7 @@ const UserAvatar: React.FC<
     return version;
   }, [user]);
 
-  const imgSrc = imgError ? userAvatarEmpty : `${API_PATH}/user/files/download/avatar?v=${avatarVersion}`;
+  const imgSrc = imgError ? userAvatarEmpty : `${API_PATH}/user/files/view/avatar?v=${avatarVersion}`;
 
   return (
     <Image

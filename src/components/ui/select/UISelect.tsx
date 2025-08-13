@@ -8,6 +8,7 @@ interface IUISelectProps {
   optionType?: 'string' | 'number';
   id?: string;
   value?: string | number;
+  className?: string;
   placeholder?: string;
   onChange?: (val: string | number) => void;
 }
@@ -15,6 +16,7 @@ interface IUISelectProps {
 const UISelect: React.FC<Readonly<IUISelectProps>> = ({
   options,
   optionType = 'string',
+  className,
   value,
   placeholder,
   onChange,
@@ -29,7 +31,7 @@ const UISelect: React.FC<Readonly<IUISelectProps>> = ({
       value={value ? String(value) : undefined}
       onValueChange={handleChange}
     >
-      <SelectTrigger className={'w-[180px]'}>
+      <SelectTrigger className={className}>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
       <SelectContent>
