@@ -2,7 +2,7 @@ import SystemError from '@/core/utils/error/SystemError';
 import UserError from '@/core/utils/error/UserError';
 import { IResponse, IResponseSilent } from '@/core/api/interfaces';
 
-const API_PATH = process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : `/api`;
+export const API_PATH = process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : `/api`;
 
 type TApiMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
 type ResponseType<R, S extends boolean> = S extends true ? IResponseSilent<R> : IResponse<R>;
@@ -166,6 +166,34 @@ class Api {
 
   static createEvent(path: string) {
     return new EventSource(API_PATH + path);
+  }
+
+  static async download(path: string, filename: string) {
+    const authToken = localStorage.getItem('token');
+
+    const response = await fetch(API_PATH + path, {
+      method: 'GET',
+      headers: {
+        ...(authToken && { Authorization: `Bearer ${authToken}` }),
+      },
+      credentials: 'include',
+    });
+
+    if (!response.ok) {
+      throw new Error(`Ошибка скачивания: ${response.status}`);
+    }
+
+    const blob = await response.blob();
+    const url = window.URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', filename);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    window.URL.revokeObjectURL(url);
   }
 }
 
