@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import UIInput from '@/components/ui/input/UIInput';
 import UIButton from '@/components/ui/button/UIButton';
 import FileDropzone from '@/components/ui/file-dropzone/FileDropzone';
@@ -8,13 +8,14 @@ import CustomCodeInput from '@/components/ui/code-input/CustomCodeInput';
 import { RootState } from '@/store';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { setLoading } from '@/features/loading/loadingSlice';
-import Api from '@/core/api/api';
+import Api, { API_PATH } from '@/core/api/api';
 import errorHandler from '@/core/utils/error/errorHandler';
 import { openModal } from '@/store/tech/techSlice';
 import { getUserData } from '@/store/user/userSlice';
 import { AvatarUploadModal } from '@/app/(views)/profile/components/AvatarUploadModal';
 import UserAvatar from '@/components/user-avatar/UserAvatar';
 import { IFile } from '@/core/interfaces/types';
+import CustomIcon from '@/components/ui/icon/CustomIcon';
 
 enum ESET_PASSWORD_STEPS {
   CURRENT_PASSWORD = 1,
@@ -44,6 +45,7 @@ const ProfileInformation = () => {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const handleClick = () => {
+    setAvatarFile(null);
     fileInputRef.current?.click();
   };
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -208,6 +210,12 @@ const ProfileInformation = () => {
     }
   };
 
+  const dbFilePath = useMemo(() => {
+    const isDbFile = userCV && !(userCV instanceof File);
+
+    return isDbFile ? `${API_PATH}/user/files/download/cv` : undefined;
+  }, [userCV]);
+
   useEffect(() => {
     setUsername(user?.username || '');
     const userCv = user?.files.find((file) => file.type === 'CV');
@@ -326,12 +334,19 @@ const ProfileInformation = () => {
       </div>
       <div className={'p-6 bg-main-black rounded-3xl min-h-[460px] lg:w-[460px] max-w-[460px]'}>
         <div className={'text-2xl font-bold mb-6'}>Файл для собеседований</div>
-        <FileDropzone
-          maxFileSize={2}
-          file={userCV}
-          formats={['docx', 'pdf']}
-          onFileSelected={(e) => handleUploadCv(e)}
-        />
+        <div>
+          <div className={'flex items-center gap-2 mb-4'}>
+            <CustomIcon name={'info-icon'} />
+            <div>Вы можете добавить файл по умолчанию, для добавления информации к собеседованию</div>
+          </div>
+          <FileDropzone
+            maxFileSize={2}
+            file={userCV}
+            filePath={dbFilePath}
+            formats={['docx', 'pdf']}
+            onFileSelected={(e) => handleUploadCv(e)}
+          />
+        </div>
       </div>
       {avatarFile && (
         <AvatarUploadModal

@@ -140,27 +140,32 @@ const ProfileResults = () => {
   return (
     <div className={'flex flex-col gap-6'}>
       <div>
-        <div className={'flex gap-4'}>
-          <div className={'flex flex-col gap-2'}>
-            <UILabel>Статус</UILabel>
-            <UISelect
-              value={statusFilter}
-              options={statusOptions}
-              optionType={'number'}
-              onChange={(val) => setStatusFilter(val as number)}
-            />
+        <div className={'flex gap-4 lg:flex-row flex-col'}>
+          <div className={'flex gap-4 lg:w-auto w-full'}>
+            <div className={'flex flex-col gap-2 lg:w-auto w-full'}>
+              <UILabel>Статус</UILabel>
+              <UISelect
+                className={'lg:w-[180px] w-full'}
+                value={statusFilter}
+                options={statusOptions}
+                optionType={'number'}
+                onChange={(val) => setStatusFilter(val as number)}
+              />
+            </div>
+            <div className={'flex flex-col gap-2 lg:w-auto w-full'}>
+              <UILabel>Дата</UILabel>
+              <UISelect
+                className={'lg:w-[180px] w-full'}
+                value={timeFilter}
+                options={timeOptions}
+                onChange={(val) => setTimeFilter(val as EINTERVIEW_TIME_FILTER)}
+              />
+            </div>
           </div>
-          <div className={'flex flex-col gap-2'}>
-            <UILabel>Дата</UILabel>
-            <UISelect
-              value={timeFilter}
-              options={timeOptions}
-              onChange={(val) => setTimeFilter(val as EINTERVIEW_TIME_FILTER)}
-            />
-          </div>
-          <div className={'flex flex-col gap-2'}>
+          <div className={'flex flex-col gap-2 w-full'}>
             <UILabel>Оценка</UILabel>
             <UISelect
+              className={'lg:w-[180px] w-full'}
               value={resultFilter}
               options={resultOptions}
               optionType={'number'}
@@ -171,7 +176,7 @@ const ProfileResults = () => {
       </div>
       <div className={'max-h-[calc(100dvh-300px)]'}>
         <ScrollArea>
-          <div className={'flex flex-col gap-4 h-full mr-4'}>
+          <div className={'flex flex-col gap-4 h-full lg:mr-4'}>
             {interviews
               .filter((el) => handleFilterInterview(el))
               .map((interview) => (
