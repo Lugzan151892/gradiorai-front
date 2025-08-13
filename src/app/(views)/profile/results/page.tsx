@@ -205,8 +205,8 @@ const ProfileResults = () => {
                     </div>
                     <div className={'lg:ml-0 ml-1 flex items-center'}>
                       <span className={'mr-2'}>Статус: </span>
-                      <span className={cn(interview.finished && 'text-success', !interview.finished && 'text-yellow')}>
-                        {interview.finished ? 'Пройдено' : 'В процессе'}
+                      <span className={cn(interview.finished && (interview.success ? 'text-success' : 'text-error'), !interview.finished && 'text-yellow')}>
+                        {interview.finished ? (interview.success ? 'Успешно пройдено' : 'Неудачно') : 'В процессе'}
                       </span>
                     </div>
                   </div>
