@@ -118,13 +118,17 @@ export const AvatarUploadModal: React.FC<AvatarUploadModalProps> = ({ file, open
       <div className={'flex justify-end gap-2 mt-4 px-4 py-4 border-t-1 border-main-gray'}>
         <button
           onClick={() => onOpenChange(false)}
-          className={'text-gray-600 px-4 py-2'}
+          className={
+            'text-gray-600 px-4 py-2 border-1 border-main-gray cursor-pointer rounded hover:border-main-white hover:text-main-white'
+          }
         >
           Отмена
         </button>
         <button
           onClick={handleSave}
-          className={'bg-blue-600 text-white px-4 py-2 rounded'}
+          className={
+            'bg-main-blue text-white px-4 py-2 rounded cursor-pointer hover:bg-transparent border-1 border-transparent hover:border-main-blue'
+          }
           disabled={isSaving}
         >
           {isSaving ? 'Сохраняю...' : 'Сохранить'}
