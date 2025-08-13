@@ -41,9 +41,9 @@ const Home = () => {
   const loadSystemFiles = useCallback(async () => {
     try {
       dispatch(setLoading(true));
-      const privatePolicyFile = await Api.get<undefined, any>('/system/files/privacy_policy');
+      const privatePolicyFile = await Api.getSilent<undefined, any>('/system/files/privacy_policy');
       setPrivatePolicy(privatePolicyFile.payload);
-      const personalTermsFile = await Api.get<undefined, any[]>('/system/files/personal_terms');
+      const personalTermsFile = await Api.getSilent<undefined, any[]>('/system/files/personal_terms');
       setPersonalTerms(personalTermsFile.payload);
     } catch (e) {
       errorHandler(e, dispatch);
@@ -89,6 +89,7 @@ const Home = () => {
 
   return (
     <AppLayout>
+      <div id={'home'} />
       <div className={'lg:mt-6 w-full max-w-[1440px] mx-auto'}>
         <section
           className={'lg:h-[758px] h-[544px] rounded-b-4xl flex flex-col justify-center items-center px-4'}
@@ -256,6 +257,63 @@ const Home = () => {
               </div>
             </div>
           </div>
+          <div
+            className={'mb-20'}
+            id={'about'}
+          />
+        </section>
+        <section className={'lg:pt-[80px] pt-18 px-4'}>
+          <div className={'text-base text-text-disabled text-center font-bold mb-1 tracking-wide'}>О нас</div>
+          <div className={'text-4xl font-bold mb-6 tracking-wide text-center'}>Подробнее про gradiorAI</div>
+          <div className={'flex flex-wrap gap-6'}>
+            <div className={'p-6 border border-main-gray rounded-3xl w-full'}>
+              <div className={'text-xl font-bold'}>Почему нам доверяют подготовку к собеседованиям</div>
+              <div className={'mt-4 lg:text-lg text-sm'}>
+                Gradior AI помогает уверенно проходить технические интервью, используя силу ИИ. Мы создаем инструменты,
+                которые учат на практике, анализируют ошибки и превращают их в рост.
+              </div>
+            </div>
+            <div className={'p-6 border border-main-gray rounded-3xl w-full'}>
+              <div className={'text-xl font-bold'}>Как все началось</div>
+              <div className={'mt-4 lg:text-lg text-sm'}>
+                Gradior AI — команда разработчиков, дизайнеров и карьерных экспертов. Мы сами сталкивались с трудными
+                интервью, паникой и ощущением «я не готов». Поэтому мы объединились, чтобы создать сервис, который
+                тренирует тебя как личный ментор. Без воды. Только практика.
+              </div>
+            </div>
+          </div>
+          <div className={'flex mt-10 gap-6 lg:flex-nowrap flex-wrap'}>
+            <div className={'flex gap-6 w-full'}>
+              <div
+                className={'p-6 border border-main-gray rounded-3xl w-full min-h-[180px] flex flex-col justify-between'}
+              >
+                <div className={'text-4xl font-bold text-main-purple'}>87%</div>
+                <div className={'lg:text-sm text-xs'}>
+                  пользователей чувствуют себя увереннее на реальных собеседованиях
+                </div>
+              </div>
+              <div
+                className={'p-6 border border-main-gray rounded-3xl w-full min-h-[180px] flex flex-col justify-between'}
+              >
+                <div className={'text-4xl font-bold text-main-purple'}>+24%</div>
+                <div className={'lg:text-sm text-xs'}>рост шансов пройти отбор после использования Gradior AI</div>
+              </div>
+            </div>
+            <div className={'flex gap-6 w-full'}>
+              <div
+                className={'p-6 border border-main-gray rounded-3xl w-full min-h-[180px] flex flex-col justify-between'}
+              >
+                <div className={'text-4xl font-bold text-main-purple'}>&gt; 5000</div>
+                <div className={'lg:text-sm text-xs'}>смоделированных собеседований</div>
+              </div>
+              <div
+                className={'p-6 border border-main-gray rounded-3xl w-full min-h-[180px] flex flex-col justify-between'}
+              >
+                <div className={'text-4xl font-bold text-main-purple'}>до 5х</div>
+                <div className={'lg:text-sm text-xs'}>ускорения подготовки по сравнению с самостоятельной работой</div>
+              </div>
+            </div>
+          </div>
         </section>
         <section
           className={'lg:h-[454px] rounded-b-4xl flex justify-center items-center lg:mt-[140px] mt-18 px-4 py-12'}
@@ -417,7 +475,7 @@ const Home = () => {
             />
           </div>
         </section>
-        <section className={'lg:pt-[80px] pt-18'}>
+        <section className={'lg:pt-[80px] pt-18 px-4'}>
           <div className={'text-base text-text-disabled text-center font-bold mb-1 tracking-wide'}>FAQ</div>
           <div className={'text-4xl font-bold mb-6 tracking-wide text-center'}>Часто задаваемые вопросы</div>
           <div className={'flex flex-col gap-4'}>

@@ -1,6 +1,7 @@
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
 import React from 'react';
 import CustomIcon from '@/components/ui/icon/CustomIcon';
+import { cn } from '@/lib/utils';
 
 interface ICustomModalProps {
   open?: boolean;
@@ -30,10 +31,10 @@ const CustomModal: React.FC<ICustomModalProps> = ({
       case 'warning':
         return type;
       default:
-        return 'main-blue';
+        return 'main-gray';
     }
   };
-  const widthClasses = fullScreen ? 'w-full h-full' : 'w-full max-w-md';
+  const widthClasses = fullScreen ? 'w-full h-full' : 'w-auto';
 
   return (
     <>
@@ -57,17 +58,22 @@ const CustomModal: React.FC<ICustomModalProps> = ({
               }
             >
               {header || (
-                <div className={'grid grid-cols-[1fr_40px] items-center py-2 justify-items-center border-b'}>
+                <div
+                  className={cn(
+                    'grid grid-cols-[40px_1fr_40px] items-center py-2 px-4 justify-items-center border-b',
+                    `border-${typeColor()} `
+                  )}
+                >
                   <DialogTitle
                     as={'h3'}
-                    className={'lg:text-2xl text-center text-xl lg:p-auto px-2 py-2 font-medium'}
+                    className={'lg:text-2xl text-center text-xl lg:p-auto px-2 py-2 font-medium col-start-2 col-end-3'}
                   >
                     {caption}
                   </DialogTitle>
                   <CustomIcon
                     color={'var(--main-white)'}
                     name={'cross'}
-                    className={'cursor-pointer'}
+                    className={'cursor-pointer col-start-3 col-end-4'}
                     onClick={onClose ? () => onClose(false) : undefined}
                   />
                 </div>

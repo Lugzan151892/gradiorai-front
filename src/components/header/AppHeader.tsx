@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { clsx } from 'clsx';
 import { useRouter } from 'next/navigation';
 import HeaderUserState from '@/components/header/components/HeaderUserState';
 import Image from 'next/image';
@@ -9,6 +8,8 @@ import logoTransparentFull from '@/assets/icons/gradior_transparent_full.png';
 import CustomIcon from '@/components/ui/icon/CustomIcon';
 import IconMarkup from '@/components/ui/icon/utils/IconMarkup';
 import { cn } from '@/lib/utils';
+import { sleep } from '@/core/utils/common';
+import { usePathname } from 'next/navigation';
 
 interface ILinkItem {
   id: string;
@@ -32,6 +33,7 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
   withState,
 }) => {
   const [scrolled, setScrolled] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
   const [hoveredLinkId, setHoveredLinkId] = useState<string | null>(null);
   const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -62,16 +64,21 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
   }, [scrollRef]);
 
   const router = useRouter();
+  const pathName = usePathname();
 
   const links: ILinkItem[] = [
-    // {
-    //   id: 'ABOUT',
-    //   text: 'О НАС',
-    //   onClick: () => {
-    //     const el = document.getElementById('faq');
-    //     el?.scrollIntoView({ behavior: 'smooth' });
-    //   },
-    // },
+    {
+      id: 'ABOUT',
+      text: 'О НАС',
+      onClick: async () => {
+        if (pathName !== '/') {
+          router.push('/');
+          await sleep(300);
+        }
+        const el = document.getElementById('about');
+        el?.scrollIntoView({ behavior: 'smooth' });
+      },
+    },
     {
       id: 'INSTRUMENTS',
       text: 'ИНСТРУМЕНТЫ',
@@ -112,7 +119,11 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
     {
       id: 'FAQ',
       text: 'FAQ',
-      onClick: () => {
+      onClick: async () => {
+        if (pathName !== '/') {
+          router.push('/');
+          await sleep(300);
+        }
         const el = document.getElementById('faq');
         el?.scrollIntoView({ behavior: 'smooth' });
       },
@@ -121,10 +132,11 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
 
   return (
     <div
-      className={clsx(
-        'flex fixed top-0 left-0 right-0 z-10 h-[112px] shadow-indigo-900 lg:px-60 px-4 bg-main-dark items-center transition-shadow transition-colors duration-300',
+      className={cn(
+        'flex fixed top-0 left-0 right-0 z-10 h-[112px] shadow-indigo-900 lg:px-60 px-4 items-center transition-shadow duration-300',
         withState ? 'justify-between' : 'justify-center',
-        scrolled && 'shadow-xl bg-main-dark'
+        scrolled && 'shadow-xl bg-main-dark',
+        showMenu && 'lg:bg-main-dark bg-black'
       )}
     >
       <div className={'flex items-center'}>
@@ -136,14 +148,32 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
         />
         <div
           className={'ml-2 cursor-pointer text-white lg:text-2xl text-base'}
-          onClick={() => router.push('/')}
+          onClick={() => {
+            const el = document.getElementById('home');
+            if (el) {
+              const offset = 112;
+              const scrollContainer = scrollRef?.current;
+
+              if (scrollContainer) {
+                const elTop = el.getBoundingClientRect().top;
+                const containerTop = scrollContainer.getBoundingClientRect().top;
+                const scrollOffset = elTop - containerTop + scrollContainer.scrollTop - offset;
+
+                scrollContainer.scrollTo({
+                  top: scrollOffset,
+                  behavior: 'smooth',
+                });
+              }
+            }
+            router.push('/');
+          }}
         >
           gradiorAI
         </div>
       </div>
       {withState && (
         <div
-          className={clsx(
+          className={cn(
             'absolute top-[33px] left-[50%] transform-[translate(-50%,0)] p-2 xl:flex hidden gap-2 rounded-3xl border-1 border-main-gray bg-main-dark'
           )}
           onMouseLeave={() => delayedSetHoveredId(null)}
@@ -158,7 +188,7 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
               }}
             >
               <div
-                className={clsx(
+                className={cn(
                   'px-4 py-1 cursor-pointer rounded-3xl transition-colors duration-150 hover:[background:var(--main-gray)] hover:[box-shadow:inset_0_0_0_1px_hsla(0,0%,100%,0.04)]'
                 )}
                 onClick={() => {
@@ -211,7 +241,12 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
           ))}
         </div>
       )}
-      {withState && <HeaderUserState />}
+      {withState && (
+        <HeaderUserState
+          showMenu={showMenu}
+          setShowMenu={setShowMenu}
+        />
+      )}
     </div>
   );
 };

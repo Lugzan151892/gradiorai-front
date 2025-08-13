@@ -8,16 +8,18 @@ import { cn } from '@/lib/utils';
 import UILabel from '@/components/ui/label/UILabel';
 
 type TInputType = 'text' | 'password' | 'email' | 'number';
+type TInpuLevel = 'default' | 'small' | 'square';
 
 interface Props extends Pick<React.ComponentProps<'input'>, 'id' | 'disabled' | 'placeholder' | 'value' | 'className'> {
   label?: string;
   type?: TInputType;
   error?: string[] | string;
   linkChild?: React.ReactNode;
+  autoComplete?: boolean;
   success?: boolean;
+  level?: TInpuLevel;
   onInput?: (val: string) => void;
   onChange?: (val: string) => void;
-
   mask?: MaskedOptions<any>;
   decimalScale?: number;
   suffix?: string | React.ReactNode;
@@ -31,6 +33,8 @@ const UIInput: React.FC<Props> = ({
   disabled,
   placeholder,
   value,
+  level = 'default',
+  autoComplete = true,
   error,
   linkChild,
   success,
@@ -115,7 +119,7 @@ const UIInput: React.FC<Props> = ({
     <div className={cn(className, 'flex flex-col w-full')}>
       {label && (
         <UILabel
-          className={'mb-2'}
+          className={cn('mb-2', level === 'small' && 'lg:text-lg', level === 'square' && 'lg:text-lg font-normal')}
           htmlFor={id}
           error={!!errorsList.length}
           disabled={disabled}
@@ -137,12 +141,13 @@ const UIInput: React.FC<Props> = ({
           onKeyDown={handleKeyDown}
           type={currentInputType}
           name={type}
-          autoComplete={type}
+          autoComplete={autoComplete ? type : 'off'}
           disabled={disabled}
           placeholder={placeholder}
           className={cn(
-            'text-white border-1 p-4 min-h-12 text-sm rounded-4xl border-main-gray w-full',
+            'text-white border-1 min-h-12 text-sm border-main-gray w-full',
             'focus:outline-none focus:ring-0',
+            level === 'square' ? 'rounded-[10px] p-2' : 'rounded-4xl p-4',
             success && 'border-main-green',
             errorsList.length && 'border-error text-error',
             disabled && 'text-main-gray border-main-gray',

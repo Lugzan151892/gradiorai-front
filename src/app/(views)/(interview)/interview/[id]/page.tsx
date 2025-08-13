@@ -250,19 +250,6 @@ const CurrentInterviewPage = () => {
             </div>
           </UITextarea>
         </div>
-        {/* {showScrollToBottom && (
-          <button
-            className={'fixed bottom-28 right-8 p-2 bg-main-blue text-white rounded-full shadow-lg z-50'}
-            onClick={() => {
-              scrollContainerRef.current?.scrollTo({
-                top: scrollContainerRef.current.scrollHeight,
-                behavior: 'smooth',
-              });
-            }}
-          >
-            ⬇️ Вниз
-          </button>
-        )} */}
       </div>
     </div>
   );
