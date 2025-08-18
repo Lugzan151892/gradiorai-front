@@ -8,6 +8,7 @@ import { setLoading } from '@/features/loading/loadingSlice';
 import { useAppDispatch } from '@/hooks/redux';
 import React, { useCallback, useEffect, useState } from 'react';
 import { ScrollArea } from '@/components/ui/scroll-area/ScrollArea';
+import routeChecker from '@/hoc/routeChecker';
 
 const SystemUsers = () => {
   const [users, setUsers] = useState<IUser[]>([]);
@@ -86,4 +87,4 @@ const SystemUsers = () => {
   );
 };
 
-export default SystemUsers;
+export default routeChecker(SystemUsers, 'adminOnly');
