@@ -10,6 +10,7 @@ import { IInterview } from '@/app/(views)/(interview)/interview/types';
 import UIButton from '@/components/ui/button/UIButton';
 import { openModal } from '@/store/tech/techSlice';
 import { ScrollArea } from '@/components/ui/scroll-area/ScrollArea';
+import routeChecker from '@/hoc/routeChecker';
 
 const SystemInterviews = () => {
   const [interviews, setInterviews] = useState<IInterview[]>([]);
@@ -97,4 +98,4 @@ const SystemInterviews = () => {
   );
 };
 
-export default SystemInterviews;
+export default routeChecker(SystemInterviews, 'adminOnly');
