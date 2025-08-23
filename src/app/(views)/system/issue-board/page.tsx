@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { ScrollArea } from '@/components/ui/scroll-area/ScrollArea';
 import routeChecker from '@/hoc/routeChecker';
 import { ITask, ETASK_STATUS } from '@/app/(views)/system/issue-board/interfaces';
 import TaskItem from '@/app/(views)/system/issue-board/components/TaskItem';
