@@ -47,6 +47,14 @@ const SystemUsers = () => {
     }
   }, [dispatch]);
 
+  const addTaskToBackLog = async (index: number) => {
+    const currentGeneratedTasks = gptTasks;
+    const removedTask = currentGeneratedTasks.splice(index, 1);
+    await createOrEditTask(removedTask[0]);
+
+    setGptTasks(currentGeneratedTasks);
+  };
+
   const createOrEditTask = async (task: ITask) => {
     try {
       dispatch(setLoading(true));
@@ -98,9 +106,9 @@ const SystemUsers = () => {
     try {
       dispatch(setLoading(true));
 
-      const result = await Api.get<undefined, ITask[]>(`/gpt/analyze`);
+      const result = await Api.get<undefined, { response: { tasks: ITask[] }; usage: any }>('/system/tasks/generate');
 
-      setGptTasks(result.payload);
+      setGptTasks(result.payload.response.tasks);
     } catch (e) {
       errorHandler(e, dispatch);
     } finally {
@@ -114,11 +122,13 @@ const SystemUsers = () => {
 
   return (
     <div className={'flex flex-col h-full items-center px-4'}>
-      <div className={'text-5xl mb-5'}>Доска задач + аналитика</div>
-      <UIButton
-        text={'Создать задачу'}
-        onClick={addNewTask}
-      />
+      <div className={'mb-5 flex items-center gap-5'}>
+        <div className={'text-3xl'}>Доска задач + аналитика</div>
+        <UIButton
+          text={'Создать задачу'}
+          onClick={addNewTask}
+        />
+      </div>
       <div className={'w-full p-4 bg-main-black rounded-xl'}>
         <div className={'flex gap-6 h-full'}>
           <div className={'w-full p-2 flex flex-col'}>
@@ -164,30 +174,34 @@ const SystemUsers = () => {
           onClick={generateGptRecomendations}
         />
       </div>
-      <div className={'w-full p-4 bg-main-black rounded-xl'}>
-        <div className={'flex gap-6 h-full'}>
-          <div className={'w-full p-2 flex flex-col'}>
-            <div className={'text-2xl mb-2'}>BACKLOG</div>
-            <div className={'flex-1 min-h-0 max-h-[calc(100dvh-300px)] overflow-y-auto px-2'}>
-              <div className={'flex flex-col gap-2'}>
-                {gptTasks.map((task) => (
-                  <div
-                    className={'flex gap-2 items-center'}
-                    key={task.id}
-                  >
-                    <TaskItem
-                      className={'flex-grow'}
-                      task={task}
-                      isSuggestion
-                    />
-                    <UIButton text={'Перевести в бэклог'} />
-                  </div>
-                ))}
+      {!!gptTasks.length && (
+        <div className={'w-full p-4 bg-main-black rounded-xl'}>
+          <div className={'flex gap-6 h-full'}>
+            <div className={'w-full p-2 flex flex-col'}>
+              <div className={'flex-1 min-h-0 max-h-[calc(100dvh-300px)] overflow-y-auto px-2'}>
+                <div className={'flex flex-col gap-2'}>
+                  {gptTasks.map((task, iTask) => (
+                    <div
+                      className={'flex gap-2 items-center'}
+                      key={iTask}
+                    >
+                      <TaskItem
+                        className={'flex-grow'}
+                        task={task}
+                        isSuggestion
+                      />
+                      <UIButton
+                        text={'Перевести в бэклог'}
+                        onClick={() => addTaskToBackLog(iTask)}
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
       {currentTask && (
         <AddTaskModal
           open={openTaskModal}
