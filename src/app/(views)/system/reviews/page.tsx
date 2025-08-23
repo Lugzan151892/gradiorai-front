@@ -8,6 +8,7 @@ import { setLoading } from '@/features/loading/loadingSlice';
 import { useAppDispatch } from '@/hooks/redux';
 import React, { useCallback, useEffect, useState } from 'react';
 import { ScrollArea } from '@/components/ui/scroll-area/ScrollArea';
+import routeChecker from '@/hoc/routeChecker';
 
 const SystemReviews = () => {
   const [reviews, setReviews] = useState<IUserReview[]>([]);
@@ -73,4 +74,4 @@ const SystemReviews = () => {
   );
 };
 
-export default SystemReviews;
+export default routeChecker(SystemReviews, 'adminOnly');
