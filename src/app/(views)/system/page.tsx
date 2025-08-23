@@ -63,6 +63,11 @@ const SystemPage = () => {
       text: 'Список бэкапов',
       href: 'system/backups',
     },
+    {
+      id: 12,
+      text: 'Доска задач + аналитика',
+      href: 'system/issue-board',
+    },
   ];
   return (
     <div className={'flex items-center h-full w-full justify-center my-auto'}>

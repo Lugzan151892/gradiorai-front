@@ -10,6 +10,7 @@ import { ScrollArea } from '@/components/ui/scroll-area/ScrollArea';
 import { IActionsLog } from '@/core/interfaces/types';
 import { EGPT_SETTINGS_TYPE } from '@/core/interfaces/enums';
 import ContentModal from './components/ContentModal';
+import routeChecker from '@/hoc/routeChecker';
 
 const SystemActionsLog = () => {
   const [logs, setLogs] = useState<IActionsLog[]>([]);
@@ -104,4 +105,4 @@ const SystemActionsLog = () => {
   );
 };
 
-export default SystemActionsLog;
+export default routeChecker(SystemActionsLog, 'adminOnly');
