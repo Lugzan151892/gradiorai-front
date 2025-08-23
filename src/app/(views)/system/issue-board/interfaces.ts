@@ -4,7 +4,7 @@ export enum ETASK_STATUS {
 }
 
 export interface ITask {
-  id: number;
+  id: string;
   title: string;
   description: string;
   status: ETASK_STATUS;
