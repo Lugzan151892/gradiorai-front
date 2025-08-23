@@ -38,12 +38,12 @@ const AddTaskModal: React.FC<IAddTaskModalProps> = ({ task, open, onSave, onClos
         <UITextarea
           className={'mb-10'}
           label={'Описание задачи'}
-          value={task.description}
+          value={task.content}
           onInput={(val) =>
             setCurrentTask((prev) => {
               return {
                 ...prev,
-                description: val,
+                content: val,
               };
             })
           }

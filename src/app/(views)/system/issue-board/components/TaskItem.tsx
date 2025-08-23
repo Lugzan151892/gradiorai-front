@@ -41,7 +41,7 @@ const TaskItem: React.FC<ITaskItemProps> = ({
         )}
       </div>
       <MarkdownMessage
-        message={task.description}
+        message={task.content}
         isHuman
       />
       {!isSuggestion && (

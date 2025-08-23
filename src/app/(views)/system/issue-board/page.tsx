@@ -9,14 +9,14 @@ import Api from '@/core/api/api';
 import errorHandler from '@/core/utils/error/errorHandler';
 import { useAppDispatch } from '@/hooks/redux';
 import { setLoading } from '@/features/loading/loadingSlice';
-import AddTaskModal from './components/AddTaskModal';
+import AddTaskModal from '@/app/(views)/system/issue-board/components/AddTaskModal';
 
 const emptyTask: () => ITask = () => {
   return {
     id: '',
     title: '',
     status: ETASK_STATUS.TODO,
-    description: '',
+    content: '',
   };
 };
 
@@ -27,12 +27,9 @@ const SystemUsers = () => {
   const [gptTasks, setGptTasks] = useState<ITask[]>([]);
   const dispatch = useAppDispatch();
 
-  const setTaskStatus = (taskId: string, newStatus: ETASK_STATUS) => {
-    setTasks((prevTasks) => prevTasks.map((task) => (task.id === taskId ? { ...task, status: newStatus } : task)));
-  };
-
   const addNewTask = () => {
-    setCurrentTask(emptyTask());
+    const newTask = emptyTask();
+    setCurrentTask(newTask);
     setOpenTaskModal(true);
   };
 
@@ -70,9 +67,12 @@ const SystemUsers = () => {
     try {
       dispatch(setLoading(true));
 
+      setCurrentTask(null);
+
       const result = await Api.get<undefined, ITask>(`/system/tasks/${taskId}`);
 
       setCurrentTask(result.payload);
+      setOpenTaskModal(true);
     } catch (e) {
       errorHandler(e, dispatch);
     } finally {
@@ -94,45 +94,22 @@ const SystemUsers = () => {
     }
   };
 
+  const generateGptRecomendations = async () => {
+    try {
+      dispatch(setLoading(true));
+
+      const result = await Api.get<undefined, ITask[]>(`/gpt/analyze`);
+
+      setGptTasks(result.payload);
+    } catch (e) {
+      errorHandler(e, dispatch);
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
+
   useEffect(() => {
     loadTasks();
-    setTasks([
-      {
-        id: '1',
-        title: 'Task 1',
-        description:
-          '1. Сделать доску в сервисе для заполнения. 2. Сделать кнопку для анализа генерации задач 3. Придумать промт',
-        status: ETASK_STATUS.TODO,
-      },
-      {
-        id: '2',
-        title: 'Task 2',
-        description:
-          '1. Сделать доску в сервисе для заполнения. 2. Сделать кнопку для анализа генерации задач 3. Придумать промт',
-        status: ETASK_STATUS.TODO,
-      },
-      {
-        id: '3',
-        title: 'Task 3',
-        description:
-          '1. Сделать доску в сервисе для заполнения. 2. Сделать кнопку для анализа генерации задач 3. Придумать промт',
-        status: ETASK_STATUS.TODO,
-      },
-      {
-        id: '4',
-        title: 'Task 4',
-        description:
-          '1. Сделать доску в сервисе для заполнения. 2. Сделать кнопку для анализа генерации задач 3. Придумать промт',
-        status: ETASK_STATUS.TODO,
-      },
-      {
-        id: '5',
-        title: 'Task 5',
-        description:
-          '1. Сделать доску в сервисе для заполнения. 2. Сделать кнопку для анализа генерации задач 3. Придумать промт',
-        status: ETASK_STATUS.TODO,
-      },
-    ]);
   }, [loadTasks]);
 
   return (
@@ -156,7 +133,7 @@ const SystemUsers = () => {
                       task={task}
                       handleEdit={() => editTask(task.id)}
                       handleDelete={() => deleteTask(task.id)}
-                      setTaskStatus={(newStatus) => setTaskStatus(task.id, newStatus)}
+                      setTaskStatus={(newStatus) => createOrEditTask({ ...task, status: newStatus })}
                     />
                   ))}
               </div>
@@ -172,7 +149,7 @@ const SystemUsers = () => {
                     <TaskItem
                       key={task.id}
                       task={task}
-                      setTaskStatus={(newStatus) => setTaskStatus(task.id, newStatus)}
+                      setTaskStatus={(newStatus) => createOrEditTask({ ...task, status: newStatus })}
                     />
                   ))}
               </div>
@@ -180,7 +157,13 @@ const SystemUsers = () => {
           </div>
         </div>
       </div>
-      <div className={'text-5xl mb-5 mt-5'}>Предложения задач от Чата</div>
+      <div className={'my-5 flex justify-center gap-5'}>
+        <div className={'text-3xl'}>Предложения задач от Чата</div>
+        <UIButton
+          text={'Сгенерировать'}
+          onClick={generateGptRecomendations}
+        />
+      </div>
       <div className={'w-full p-4 bg-main-black rounded-xl'}>
         <div className={'flex gap-6 h-full'}>
           <div className={'w-full p-2 flex flex-col'}>
@@ -196,7 +179,6 @@ const SystemUsers = () => {
                       className={'flex-grow'}
                       task={task}
                       isSuggestion
-                      setTaskStatus={(newStatus) => setTaskStatus(task.id, newStatus)}
                     />
                     <UIButton text={'Перевести в бэклог'} />
                   </div>
@@ -211,6 +193,10 @@ const SystemUsers = () => {
           open={openTaskModal}
           task={currentTask}
           onSave={createOrEditTask}
+          onClose={() => {
+            setCurrentTask(null);
+            setOpenTaskModal(false);
+          }}
         />
       )}
     </div>
