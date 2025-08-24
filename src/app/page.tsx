@@ -21,7 +21,7 @@ import errorHandler from '@/core/utils/error/errorHandler';
 import Api from '@/core/api/api';
 import { setLoading } from '@/features/loading/loadingSlice';
 import { getPublicFileLink } from '@/core/utils/files';
-import MessengerPopup from '@/components/ui/messenger-popup/MessengerPopup';
+import MessengerPopup from '@/components/messenger-popup/MessengerPopup';
 
 const Home = () => {
   const router = useRouter();
