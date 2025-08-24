@@ -176,7 +176,7 @@ const HeaderUserState: React.FC<Readonly<IHeaderUserStateProps>> = ({ showMenu, 
           ref={menuRef}
         >
           <div
-            className={'flex items-center cursor-pointer'}
+            className={'flex items-center cursor-pointer select-none'}
             onClick={() => setShowMenu?.(!showMenu)}
           >
             <UserAvatar size={40} />
