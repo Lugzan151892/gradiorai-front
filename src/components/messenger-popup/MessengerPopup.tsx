@@ -55,10 +55,15 @@ const MessengerPopup: React.FC<IMessengerPopupProps> = ({ title, delay = 2000, c
   if (!isVisible) return null;
 
   return (
-    <div className={cn('fixed bottom-6 right-6 z-50 max-w-sm', className)}>
+    <div
+      className={cn(
+        'fixed lg:bottom-6 lg:right-6 bottom-4 left-1/2 lg:left-auto z-5 w-[calc(100vw-32px)] lg:w-auto lg:max-w-sm',
+        className
+      )}
+    >
       <div
         className={cn(
-          'bg-white rounded-2xl shadow-lg border border-gray-200 p-4 transition-all duration-300',
+          'bg-white rounded-2xl shadow-lg border border-gray-200 p-4 transition-all duration-300 lg:translate-x-0 -translate-x-1/2',
           isClosing ? 'opacity-0 translate-y-4 scale-95' : 'opacity-100 translate-y-0 scale-100 animate-slide-up'
         )}
       >

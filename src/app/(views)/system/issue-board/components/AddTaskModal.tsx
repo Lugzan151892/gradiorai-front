@@ -1,8 +1,8 @@
 import UIInput from '@/components/ui/input/UIInput';
 import CustomModal from '@/components/ui/modal/CustomModal';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import UIButton from '@/components/ui/button/UIButton';
-import { ITask } from '../interfaces';
+import { ITask } from '@/app/(views)/system/issue-board/interfaces';
 import UITextarea from '@/components/ui/textarea/UITextarea';
 
 interface IAddTaskModalProps {
@@ -14,6 +14,10 @@ interface IAddTaskModalProps {
 
 const AddTaskModal: React.FC<IAddTaskModalProps> = ({ task, open, onSave, onClose }) => {
   const [currentTask, setCurrentTask] = useState(task);
+
+  useEffect(() => {
+    setCurrentTask(task);
+  }, [task, open]);
 
   return (
     <CustomModal
