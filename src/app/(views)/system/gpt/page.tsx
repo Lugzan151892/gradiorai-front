@@ -58,6 +58,14 @@ const SystemGptPage = () => {
       id: EGPT_SETTINGS_TYPE.RESUME_CREATE,
       text: 'Настройки для создания резюме',
     },
+    {
+      id: EGPT_SETTINGS_TYPE.GPT_ANALYZE,
+      text: 'Настройки для генерации задач и аналитики',
+    },
+    {
+      id: EGPT_SETTINGS_TYPE.GPT_DAYLY_ADVICE,
+      text: 'Настройки для совета дня',
+    },
   ];
 
   const loadSettings = useCallback(async () => {
@@ -198,7 +206,7 @@ const SystemGptPage = () => {
                     />
                   </div>
                 </div>
-                {settingsType === 'TEST' && (
+                {settingsType === EGPT_SETTINGS_TYPE.TEST && (
                   <div className={'flex flex-col'}>
                     <div className={'lg:text-2xl text-lg text-center'}>
                       Настройки количества генерируемых вопросов GPT:
@@ -236,7 +244,7 @@ const SystemGptPage = () => {
               </div>
               <div className={'flex flex-col mb-10'}>
                 <div className={'lg:text-2xl text-lg mb-2 text-center'}>Промпты</div>
-                {settingsType === 'TEST' && (
+                {settingsType === EGPT_SETTINGS_TYPE.TEST && (
                   <div>
                     Можно использовать переменные:
                     <div className={'flex flex-col'}>
@@ -257,16 +265,17 @@ const SystemGptPage = () => {
                       onInput={(val) => handleChangeSettings({ system_message: val })}
                     />
                   </div>
-                  {settingsType === 'TEST' && (
-                    <div className={'flex w-full h-full'}>
-                      <UITextarea
-                        value={gptSettings.user_message}
-                        rows={9}
-                        label={'Пользовательское сообщение'}
-                        onInput={(val) => handleChangeSettings({ user_message: val })}
-                      />
-                    </div>
-                  )}
+                  {settingsType === EGPT_SETTINGS_TYPE.TEST ||
+                    (settingsType === EGPT_SETTINGS_TYPE.GPT_DAYLY_ADVICE && (
+                      <div className={'flex w-full h-full'}>
+                        <UITextarea
+                          value={gptSettings.user_message}
+                          rows={9}
+                          label={'Пользовательское сообщение'}
+                          onInput={(val) => handleChangeSettings({ user_message: val })}
+                        />
+                      </div>
+                    ))}
                 </div>
               </div>
               <div className={'flex items-center w-full mt-2 mb-2'}>
