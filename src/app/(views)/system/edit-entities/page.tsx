@@ -14,6 +14,7 @@ import AddSpecModal from '@/components/specialization-modals/AddSpecModal';
 import AddTechnologyModal from '@/components/technology-modals/AddTechnologyModal';
 import { ScrollArea } from '@/components/ui/scroll-area/ScrollArea';
 import UIFilterButton from '@/components/ui/filter-button/UIFilterButton';
+import routeChecker from '@/hoc/routeChecker';
 
 const EditEntitiesView = () => {
   const [choosenEntitie, setChoosenEntitie] = useState<EEDITED_ENTITIE>();
@@ -229,4 +230,4 @@ const EditEntitiesView = () => {
   );
 };
 
-export default EditEntitiesView;
+export default routeChecker(EditEntitiesView, 'adminOnly');
