@@ -2,8 +2,7 @@
 
 import React, { useCallback, useEffect, useState } from 'react';
 import Image from 'next/image';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { useAppDispatch, useAppSelector } from '@/hooks/redux';
+import { useAppDispatch } from '@/hooks/redux';
 import { setLoading } from '@/features/loading/loadingSlice';
 import Api from '@/core/api/api';
 import errorHandler from '@/core/utils/error/errorHandler';
@@ -205,7 +204,12 @@ const ProfileResults = () => {
                     </div>
                     <div className={'lg:ml-0 ml-1 flex items-center'}>
                       <span className={'mr-2'}>Статус: </span>
-                      <span className={cn(interview.finished && (interview.success ? 'text-success' : 'text-error'), !interview.finished && 'text-yellow')}>
+                      <span
+                        className={cn(
+                          interview.finished && (interview.success ? 'text-success' : 'text-error'),
+                          !interview.finished && 'text-yellow'
+                        )}
+                      >
                         {interview.finished ? (interview.success ? 'Успешно пройдено' : 'Неудачно') : 'В процессе'}
                       </span>
                     </div>

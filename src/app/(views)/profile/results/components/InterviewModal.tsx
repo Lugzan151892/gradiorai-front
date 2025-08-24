@@ -50,8 +50,13 @@ const InterviewModal: React.FC<IInterviewModalProps> = ({ open = false, onClose,
           </div>
           <div>
             <span>Статус: </span>
-            <span className={cn(interview?.finished && 'text-success', !interview?.finished && 'text-main-blue')}>
-              {interview?.finished ? 'Пройдено' : 'В процессе'}
+            <span
+              className={cn(
+                interview?.finished && (interview.success ? 'text-success' : 'text-error'),
+                !interview?.finished && 'text-yellow'
+              )}
+            >
+              {interview?.finished ? (interview.success ? 'Успешно пройдено' : 'Неудачно') : 'В процессе'}
             </span>
           </div>
         </div>
