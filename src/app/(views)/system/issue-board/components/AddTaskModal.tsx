@@ -2,7 +2,7 @@ import UIInput from '@/components/ui/input/UIInput';
 import CustomModal from '@/components/ui/modal/CustomModal';
 import React, { useEffect, useState } from 'react';
 import UIButton from '@/components/ui/button/UIButton';
-import { ITask } from '../interfaces';
+import { ITask } from '@/app/(views)/system/issue-board/interfaces';
 import UITextarea from '@/components/ui/textarea/UITextarea';
 
 interface IAddTaskModalProps {
