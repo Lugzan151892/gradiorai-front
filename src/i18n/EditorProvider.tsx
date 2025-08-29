@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { useI18n } from '@/i18n/I18nProvider';
 import Api from '@/core/api/api';
 import UISelect from '@/components/ui/select/UISelect';
@@ -19,6 +19,7 @@ export function EditorProvider({ children }: { children: React.ReactNode }) {
   const [modalPos, setModalPos] = useState<{ top: number; left: number } | null>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const hasBeenPositioned = useRef(false);
 
   /** горячая клавиша Ctrl+Shift+E */
   useEffect(() => {
@@ -30,6 +31,16 @@ export function EditorProvider({ children }: { children: React.ReactNode }) {
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
   }, [active, locale]);
+
+  const loadValue = useCallback(
+    async (ns: string, key: string) => {
+      try {
+        const resp = await Api.get<undefined, { value: string }>(`/translations/${selectedLocale}/${ns}/${key}`);
+        setValue(resp.payload?.value);
+      } catch {}
+    },
+    [selectedLocale]
+  );
 
   useEffect(() => {
     if (!active) return;
@@ -48,14 +59,26 @@ export function EditorProvider({ children }: { children: React.ReactNode }) {
       if (!attr) return;
       const [ns, key] = attr.split(':');
       setNsKey({ ns, key });
-      if (!modalPos) {
-        setModalPos({ top: Math.round(window.innerHeight * 0.2), left: Math.round(window.innerWidth / 2 - 170) });
+
+      // Устанавливаем позицию каждый раз при открытии модального окна
+      if (!hasBeenPositioned.current) {
+        const newPos = {
+          top: Math.round(window.innerHeight * 0.2),
+          left: Math.round(window.innerWidth / 2 - 170),
+        };
+        setModalPos(newPos);
+        hasBeenPositioned.current = true;
+
+        // Устанавливаем локаль только при первом открытии модального окна
         setSelectedLocale(locale as TLocale);
       }
 
+      // Определяем какую локаль использовать для API запроса
+      // const localeToUse = hasBeenPositioned.current ? selectedLocale : (locale as TLocale);
+
+      // Используем текущую выбранную локаль для API запроса
       try {
-        const resp = await Api.get<undefined, { value: string }>(`/translations/${selectedLocale}/${ns}/${key}`);
-        setValue(resp.payload?.value);
+        loadValue(ns, key);
       } catch {
         setValue(current);
       }
@@ -63,9 +86,8 @@ export function EditorProvider({ children }: { children: React.ReactNode }) {
 
     document.addEventListener('click', onClick, true);
     return () => document.removeEventListener('click', onClick, true);
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [active]);
+  }, [active, loadValue]);
 
   async function save() {
     if (!targetEl) return;
@@ -176,6 +198,7 @@ export function EditorProvider({ children }: { children: React.ReactNode }) {
                 onClick={() => {
                   setTargetEl(null);
                   setModalPos(null);
+                  hasBeenPositioned.current = false;
                 }}
               />
               <UIButton
