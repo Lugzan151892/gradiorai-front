@@ -1,17 +1,18 @@
 import React from 'react';
 import { useI18n } from '@/i18n/I18nProvider';
+import { TNameSpace, INamespaceKeyMap } from '@/i18n/interfaces/locale';
 
-export function Trans({
+export const Trans = <N extends TNameSpace, K extends INamespaceKeyMap[N]>({
   ns,
   k,
   children,
   as = 'span',
 }: {
-  ns: string;
-  k: string;
+  ns: N;
+  k: K;
   children?: React.ReactNode;
-  as?: any;
-}) {
+  as?: 'span' | 'button' | 'div';
+}) => {
   const { t } = useI18n();
   const text = t(ns, k) || (children ?? '');
   const Tag = as;
@@ -23,4 +24,4 @@ export function Trans({
       {text}
     </Tag>
   );
-}
+};
