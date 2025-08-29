@@ -21,6 +21,7 @@ import errorHandler from '@/core/utils/error/errorHandler';
 import Api from '@/core/api/api';
 import { setLoading } from '@/features/loading/loadingSlice';
 import { getPublicFileLink } from '@/core/utils/files';
+import { Trans } from '@/i18n/Trans';
 
 const Home = () => {
   const router = useRouter();
