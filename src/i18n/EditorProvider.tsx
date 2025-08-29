@@ -10,9 +10,12 @@ export function EditorProvider({ children }: { children: React.ReactNode }) {
   const [active, setActive] = useState(false);
   const [targetEl, setTargetEl] = useState<HTMLElement | null>(null);
   const [value, setValue] = useState('');
-  const [selectedLocale, setSelectedLocale] = useState<TLocale>('ru');
-  const [nsKey, setNsKey] = useState<{ ns: string; key: string } | null>(null);
   const { locale, updateTranslationInMemory } = useI18n();
+  const [selectedLocale, setSelectedLocale] = useState<TLocale>(locale);
+  const [nsKey, setNsKey] = useState<{ ns: string; key: string } | null>(null);
+  const [modalPos, setModalPos] = useState<{ top: number; left: number } | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragOffset, setDragOffset] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
 
   /** горячая клавиша Ctrl+Shift+E */
   useEffect(() => {
@@ -38,6 +41,8 @@ export function EditorProvider({ children }: { children: React.ReactNode }) {
       if (typeof maybeStopImmediate === 'function') maybeStopImmediate.call(e);
       const current = el.getAttribute('data-i18n-value') ?? el.textContent ?? '';
       setTargetEl(el);
+      // init modal position near center/top
+      setModalPos({ top: Math.round(window.innerHeight * 0.2), left: Math.round(window.innerWidth / 2 - 170) });
       const attr = el.getAttribute('data-i18n');
       if (!attr) return;
       const [ns, key] = attr.split(':');
@@ -79,6 +84,35 @@ export function EditorProvider({ children }: { children: React.ReactNode }) {
     }
   }
 
+  // drag handlers
+  function onDragStart(e: React.MouseEvent<HTMLDivElement | HTMLHeadingElement>) {
+    if (!modalPos) return;
+    setIsDragging(true);
+    setDragOffset({ x: e.clientX - modalPos.left, y: e.clientY - modalPos.top });
+    // prevent text selection while dragging
+    e.preventDefault();
+    e.stopPropagation();
+  }
+
+  useEffect(() => {
+    if (!isDragging) return;
+    const onMove = (e: MouseEvent) => {
+      setModalPos((pos) => {
+        if (!pos) return pos;
+        const nextLeft = e.clientX - dragOffset.x;
+        const nextTop = e.clientY - dragOffset.y;
+        return { top: Math.max(0, nextTop), left: Math.max(0, nextLeft) };
+      });
+    };
+    const onUp = () => setIsDragging(false);
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onUp);
+    return () => {
+      document.removeEventListener('mousemove', onMove);
+      document.removeEventListener('mouseup', onUp);
+    };
+  }, [isDragging, dragOffset.x, dragOffset.y]);
+
   return (
     <>
       {active && (
@@ -92,16 +126,20 @@ export function EditorProvider({ children }: { children: React.ReactNode }) {
         <div
           style={{
             position: 'fixed',
-            top: '20%',
-            left: '50%',
-            transform: 'translateX(-50%)',
+            top: (modalPos?.top ?? Math.round(window.innerHeight * 0.2)) + 'px',
+            left: (modalPos?.left ?? Math.round(window.innerWidth / 2 - 170)) + 'px',
             background: 'var(--main-black)',
             padding: '20px',
             border: '1px solid #ccc',
             zIndex: 10,
           }}
         >
-          <h3>Edit translation</h3>
+          <h3
+            style={{ cursor: 'grab', userSelect: 'none', margin: 0, marginBottom: '10px' }}
+            onMouseDown={onDragStart}
+          >
+            Edit translation
+          </h3>
           <div style={{ marginBottom: '10px' }}>
             <UISelect
               options={[

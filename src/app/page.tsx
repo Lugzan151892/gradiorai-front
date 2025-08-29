@@ -38,6 +38,7 @@ const Home = () => {
       <Trans
         ns={'main'}
         k={'main_do_tests'}
+        format={'uppercase'}
       />
     ),
   });
@@ -74,6 +75,7 @@ const Home = () => {
           <Trans
             ns={'main'}
             k={'main_do_tests'}
+            format={'uppercase'}
           />
         ),
       },
@@ -86,6 +88,7 @@ const Home = () => {
           <Trans
             ns={'main'}
             k={'main_do_interview'}
+            format={'uppercase'}
           />
         ),
       },
@@ -98,6 +101,7 @@ const Home = () => {
           <Trans
             ns={'main'}
             k={'main_do_check_cv'}
+            format={'uppercase'}
           />
         ),
       },
@@ -110,6 +114,7 @@ const Home = () => {
           <Trans
             ns={'main'}
             k={'main_do_create_cv'}
+            format={'uppercase'}
           />
         ),
       },
@@ -294,6 +299,7 @@ const Home = () => {
                 <Trans
                   ns={'main'}
                   k={'main_do_interview'}
+                  format={'uppercase'}
                 />
               </UIButton>
             </div>
@@ -537,6 +543,7 @@ const Home = () => {
                 <Trans
                   ns={'main'}
                   k={'main_tests_start'}
+                  format={'uppercase'}
                 />
               </UIButton>
             </div>
@@ -659,6 +666,7 @@ const Home = () => {
                 <Trans
                   ns={'main'}
                   k={'main_do_check_cv'}
+                  format={'uppercase'}
                 />
               </UIButton>
             </div>
@@ -765,6 +773,7 @@ const Home = () => {
                 <Trans
                   ns={'main'}
                   k={'main_do_create_cv'}
+                  format={'uppercase'}
                 />
               </UIButton>
             </div>
@@ -918,8 +927,9 @@ const Home = () => {
           <div className={'flex flex-col gap-8'}>
             <div className={'font-medium text-base leading-[24px]'}>
               <Trans
-                ns={'main'}
-                k={'main_instruments'}
+                ns={'common'}
+                k={'common_instruments'}
+                format={'uppercase'}
               />
             </div>
             <div className={'flex flex-col gap-3 text-sm font-light text-text-low-white'}>
@@ -964,8 +974,9 @@ const Home = () => {
           <div className={'flex flex-col gap-8'}>
             <div className={'font-medium text-base leading-[24px]'}>
               <Trans
-                ns={'main'}
-                k={'main_contacts'}
+                ns={'common'}
+                k={'common_contacts'}
+                format={'uppercase'}
               />
             </div>
             <div className={'flex flex-col gap-3 text-sm font-light text-text-low-white'}>
