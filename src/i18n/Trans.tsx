@@ -6,15 +6,26 @@ export const Trans = <N extends TNameSpace, K extends INamespaceKeyMap[N]>({
   ns,
   k,
   children,
+  format,
   as = 'span',
 }: {
   ns: N;
   k: K;
   children?: React.ReactNode;
+  format?: 'uppercase' | 'lovercase';
   as?: 'span' | 'button' | 'div';
 }) => {
   const { t } = useI18n();
-  const text = t(ns, k) || (children ?? '');
+  const formatText = (t: string) => {
+    if (!format) return t;
+    switch (format) {
+      case 'uppercase':
+        return t.toUpperCase();
+      case 'lovercase':
+        return t.toLowerCase();
+    }
+  };
+  const text = formatText(t(ns, k)) || (children ?? '');
   const Tag = as;
   return (
     <Tag
