@@ -9,6 +9,7 @@ import { setLoading } from '@/features/loading/loadingSlice';
 import { useAppDispatch } from '@/hooks/redux';
 import React, { useCallback, useEffect, useState } from 'react';
 import UIFilterButton from '@/components/ui/filter-button/UIFilterButton';
+import routeChecker from '@/hoc/routeChecker';
 
 interface IFullQuestion extends ITest {
   level: number;
@@ -166,4 +167,4 @@ const SystemQuestions = () => {
   );
 };
 
-export default SystemQuestions;
+export default routeChecker(SystemQuestions, 'adminOnly');

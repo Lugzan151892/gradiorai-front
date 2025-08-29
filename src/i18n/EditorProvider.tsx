@@ -5,6 +5,9 @@ import { useI18n } from '@/i18n/I18nProvider';
 import Api from '@/core/api/api';
 import UISelect from '@/components/ui/select/UISelect';
 import { TLocale } from '@/i18n/interfaces/locale';
+import UITextarea from '@/components/ui/textarea/UITextarea';
+import UILabel from '@/components/ui/label/UILabel';
+import UIButton from '@/components/ui/button/UIButton';
 
 export function EditorProvider({ children }: { children: React.ReactNode }) {
   const [active, setActive] = useState(false);
@@ -41,17 +44,18 @@ export function EditorProvider({ children }: { children: React.ReactNode }) {
       if (typeof maybeStopImmediate === 'function') maybeStopImmediate.call(e);
       const current = el.getAttribute('data-i18n-value') ?? el.textContent ?? '';
       setTargetEl(el);
-      // init modal position near center/top
-      setModalPos({ top: Math.round(window.innerHeight * 0.2), left: Math.round(window.innerWidth / 2 - 170) });
       const attr = el.getAttribute('data-i18n');
       if (!attr) return;
       const [ns, key] = attr.split(':');
       setNsKey({ ns, key });
-      setSelectedLocale(locale as TLocale);
+      if (!modalPos) {
+        setModalPos({ top: Math.round(window.innerHeight * 0.2), left: Math.round(window.innerWidth / 2 - 170) });
+        setSelectedLocale(locale as TLocale);
+      }
 
       try {
-        const resp = await Api.get<undefined, { value: string }>(`/translations/${locale}/${ns}/${key}`);
-        setValue(resp.payload?.value ?? current);
+        const resp = await Api.get<undefined, { value: string }>(`/translations/${selectedLocale}/${ns}/${key}`);
+        setValue(resp.payload?.value);
       } catch {
         setValue(current);
       }
@@ -59,6 +63,8 @@ export function EditorProvider({ children }: { children: React.ReactNode }) {
 
     document.addEventListener('click', onClick, true);
     return () => document.removeEventListener('click', onClick, true);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [active]);
 
   async function save() {
@@ -123,45 +129,62 @@ export function EditorProvider({ children }: { children: React.ReactNode }) {
       {children}
 
       {active && targetEl && (
-        <div
-          style={{
-            position: 'fixed',
-            top: (modalPos?.top ?? Math.round(window.innerHeight * 0.2)) + 'px',
-            left: (modalPos?.left ?? Math.round(window.innerWidth / 2 - 170)) + 'px',
-            background: 'var(--main-black)',
-            padding: '20px',
-            border: '1px solid #ccc',
-            zIndex: 10,
-          }}
-        >
-          <h3
-            style={{ cursor: 'grab', userSelect: 'none', margin: 0, marginBottom: '10px' }}
-            onMouseDown={onDragStart}
+        <>
+          <div
+            className={'rounded-xl bg-main-black p-5 border-1 border-white z-10 fixed'}
+            style={{
+              top: (modalPos?.top ?? Math.round(window.innerHeight * 0.2)) + 'px',
+              left: (modalPos?.left ?? Math.round(window.innerWidth / 2 - 170)) + 'px',
+            }}
           >
-            Edit translation
-          </h3>
-          <div style={{ marginBottom: '10px' }}>
-            <UISelect
-              options={[
-                { id: 'ru', text: 'ru' },
-                { id: 'en', text: 'en' },
-              ]}
-              value={selectedLocale}
-              onChange={handleLocaleChange}
-              className={''}
-              placeholder={'locale'}
+            <h3
+              style={{ cursor: 'grab', userSelect: 'none', margin: 0, marginBottom: '10px' }}
+              onMouseDown={onDragStart}
+              className={'text-center text-2xl'}
+            >
+              Изменить текст
+            </h3>
+            <div className={'mb-3 flex items-center'}>
+              <div>Язык: </div>
+              <UISelect
+                options={[
+                  { id: 'ru', text: 'ru' },
+                  { id: 'en', text: 'en' },
+                ]}
+                value={selectedLocale}
+                onChange={handleLocaleChange}
+                className={''}
+                placeholder={'locale'}
+              />
+            </div>
+            <UILabel
+              className={'mb-2'}
+              htmlFor={'value'}
+            >
+              Текущее значение
+            </UILabel>
+            <UITextarea
+              id={'value'}
+              className={'min-w-[350px]'}
+              rows={3}
+              value={value}
+              onInput={(e) => setValue(e)}
             />
+            <div className={'flex justify-between'}>
+              <UIButton
+                text={'Отмена'}
+                onClick={() => {
+                  setTargetEl(null);
+                  setModalPos(null);
+                }}
+              />
+              <UIButton
+                text={'Сохранить'}
+                onClick={save}
+              />
+            </div>
           </div>
-          <textarea
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            style={{ width: '300px', height: '100px' }}
-          />
-          <div>
-            <button onClick={save}>Save</button>
-            <button onClick={() => setTargetEl(null)}>Cancel</button>
-          </div>
-        </div>
+        </>
       )}
     </>
   );

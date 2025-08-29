@@ -11,6 +11,7 @@ import { useAppDispatch } from '@/hooks/redux';
 import React, { useCallback, useEffect, useState } from 'react';
 import CreateTransactionModal from './components/CreateTransactionsModal';
 import UIFilterButton from '@/components/ui/filter-button/UIFilterButton';
+import routeChecker from '@/hoc/routeChecker';
 
 const AdminTransactions = () => {
   const [adminsTransactions, setAdminsTransactions] = useState<ISystemTransaction[]>([]);
@@ -147,4 +148,4 @@ const AdminTransactions = () => {
   );
 };
 
-export default AdminTransactions;
+export default routeChecker(AdminTransactions, 'adminOnly');
