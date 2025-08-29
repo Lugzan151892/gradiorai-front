@@ -14,6 +14,7 @@ import { cn } from '@/lib/utils';
 import UserAvatar from '@/components/user-avatar/UserAvatar';
 import UISelect from '@/components/ui/select/UISelect';
 import { useI18n } from '@/i18n/I18nProvider';
+import { TLocale } from '@/i18n/interfaces/locale';
 
 interface IMenuItem extends IMenuItemProps {
   id: EMENU_ITEM;
@@ -172,7 +173,7 @@ const HeaderUserState: React.FC<Readonly<IHeaderUserStateProps>> = ({ showMenu, 
           { id: 'en', text: 'en' },
         ]}
         value={locale}
-        onChange={(val) => setLocale(String(val))}
+        onChange={(val) => setLocale(String(val) as TLocale)}
         className={''}
         placeholder={'locale'}
       />
@@ -183,7 +184,7 @@ const HeaderUserState: React.FC<Readonly<IHeaderUserStateProps>> = ({ showMenu, 
             { id: 'en', text: 'en' },
           ]}
           value={locale}
-          onChange={(val) => setLocale(String(val))}
+          onChange={(val) => setLocale(String(val) as TLocale)}
           className={''}
           placeholder={'locale'}
         />
