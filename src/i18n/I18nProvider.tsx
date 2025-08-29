@@ -1,21 +1,22 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import Api from '@/core/api/api';
-import { TLocale } from './interfaces/locale';
+import { TLocale } from '@/i18n/interfaces/locale';
+import localLocales from '@/i18n/locales/locales.json';
 
 type NamespaceMap = Record<string, Record<string, string>>;
 type LocaleMap = Record<string, NamespaceMap>;
 
 type I18nContextType = {
   locale: TLocale;
-  setLocale: (l: string) => void;
+  setLocale: (l: TLocale) => void;
   t: (ns: string, key: string, vars?: Record<string, string>) => string;
   translations: LocaleMap;
   updateTranslationInMemory: (locale: string, ns: string, key: string, value: string) => void;
 };
 
 const I18nContext = createContext<I18nContextType>({
-  locale: 'en',
-  setLocale: (_: string) => {},
+  locale: 'en' as TLocale,
+  setLocale: (_: TLocale) => {},
   t: (_: string, __: string, ___?: Record<string, string>) => '',
   translations: {} as LocaleMap,
   updateTranslationInMemory: (_: string, __: string, ___: string, ____: string) => {},
@@ -23,27 +24,35 @@ const I18nContext = createContext<I18nContextType>({
 
 export const useI18n = () => useContext(I18nContext);
 
-export const I18nProvider = ({ children, defaultLocale = 'en' }: { children: any; defaultLocale?: string }) => {
-  const [locale, setLocale] = useState(() => {
+export const I18nProvider = ({ children, defaultLocale = 'en' }: { children: any; defaultLocale?: TLocale }) => {
+  const [locale, setLocale] = useState<TLocale>(() => {
     if (typeof window === 'undefined') return defaultLocale;
     const saved = localStorage.getItem('locale');
-    if (saved === 'ru' || saved === 'en') return saved;
+    if (saved === 'ru' || saved === 'en') return saved as TLocale;
     const navigatorLocale = (navigator.languages?.[0] || navigator.language || '').toLowerCase();
-    if (navigatorLocale.startsWith('ru')) return 'ru';
-    if (navigatorLocale.startsWith('en')) return 'en';
-    return 'en';
+    if (navigatorLocale.startsWith('ru')) return 'ru' as TLocale;
+    if (navigatorLocale.startsWith('en')) return 'en' as TLocale;
+    return 'en' as TLocale;
   });
   const [translations, setTranslations] = useState<LocaleMap>({});
 
   useEffect(() => {
     (async () => {
-      const res = await Api.get<{ locale: string }, { [key: string]: { [key: string]: { [key: string]: string } } }>(
-        `/translations/export`,
-        { locale }
-      );
-      if (!res.success) return;
-      const data = res.payload;
-      setTranslations(data);
+      try {
+        const res = await Api.get<{ locale: string }, { [key: string]: { [key: string]: { [key: string]: string } } }>(
+          `/translations/export`,
+          { locale }
+        );
+        if (res.success && res.payload) {
+          setTranslations(res.payload);
+        } else {
+          // fallback to local locales if API fails or returns no data
+          setTranslations(localLocales);
+        }
+      } catch (_error) {
+        // fallback to local locales if API request fails
+        setTranslations(localLocales);
+      }
     })();
   }, [locale]);
 
