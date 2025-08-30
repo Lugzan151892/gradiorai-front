@@ -1,11 +1,12 @@
 'use client';
 
 import React, { useRef, useState } from 'react';
-import CustomIcon from '../icon/CustomIcon';
-import UILabel from '../label/UILabel';
+import CustomIcon from '@/components/ui/icon/CustomIcon';
+import UILabel from '@/components/ui/label/UILabel';
 import { cn } from '@/lib/utils';
 import { formatFileSize } from '@/core/utils/files';
 import { IFile } from '@/core/interfaces/types';
+import { Trans } from '@/i18n/Trans';
 
 const BYTES_IN_MB = 1024 * 1024;
 
@@ -33,7 +34,7 @@ const FileDropzone: React.FC<IFileDropzoneProps> = ({
   id,
 }) => {
   const [isDragOver, setIsDragOver] = useState(false);
-  const [insideErrors, setInsideErrors] = useState<string[]>([]);
+  const [insideErrors, setInsideErrors] = useState<Array<string | React.ReactNode>>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
@@ -49,8 +50,24 @@ const FileDropzone: React.FC<IFileDropzoneProps> = ({
   };
 
   const getInsideErrors = (f: File) => {
-    const errorType = formats && !formats.includes(getFileExtension(f.name) || '') ? 'Неверный формат файла' : '';
-    const errorSize = maxFileSize && f.size > maxFileSize * BYTES_IN_MB ? 'Размер файла превышает допустимый' : '';
+    const errorType =
+      formats && !formats.includes(getFileExtension(f.name) || '') ? (
+        <Trans
+          ns={'common'}
+          k={'common_wrong_file_format'}
+        />
+      ) : (
+        ''
+      );
+    const errorSize =
+      maxFileSize && f.size > maxFileSize * BYTES_IN_MB ? (
+        <Trans
+          ns={'common'}
+          k={'common_wrong_file_size'}
+        />
+      ) : (
+        ''
+      );
     return [errorType, errorSize].filter(Boolean);
   };
 
@@ -119,7 +136,19 @@ const FileDropzone: React.FC<IFileDropzoneProps> = ({
         }`}
       >
         <div className={cn('border-1 border-dashed flex flex-col items-center p-4 text-text-disabled', borderClasses)}>
-          <p className={'text-sm mb-8'}>{file ? 'Файл добавлен' : 'Перетащите файл сюда или нажмите, чтобы выбрать'}</p>
+          <p className={'text-sm mb-8'}>
+            {file ? (
+              <Trans
+                ns={'common'}
+                k={'common_file_added'}
+              />
+            ) : (
+              <Trans
+                ns={'common'}
+                k={'common_file_drag_available'}
+              />
+            )}
+          </p>
           <div className={'h-15 w-15 rounded-full border-main-gray border-1 flex items-center justify-center mb-8'}>
             <CustomIcon
               name={file ? 'document-ready' : 'document-upload'}
@@ -151,12 +180,31 @@ const FileDropzone: React.FC<IFileDropzoneProps> = ({
                 name={'close-circle'}
                 color={'var(--main-error)'}
               />
-              <div className={'text-xs'}>Удалить</div>
+              <div className={'text-xs'}>
+                <Trans
+                  ns={'common'}
+                  k={'common_delete'}
+                />
+              </div>
             </div>
           )}
-          {maxFileSize && !file && <p className={'text-xs mb-2'}>{`Максимальный размер файла: ${maxFileSize} Mb`}</p>}
+          {maxFileSize && !file && (
+            <p className={'text-xs mb-2'}>
+              <Trans
+                ns={'common'}
+                k={'common_max_file_size'}
+              />
+              {`: ${maxFileSize} Mb`}
+            </p>
+          )}
           {!file && formats?.length ? (
-            <p className={'text-xs mt-1'}>{`Допустимые форматы: ${formats.map((e) => e.toUpperCase()).join(', ')}`}</p>
+            <p className={'text-xs mt-1'}>
+              <Trans
+                ns={'common'}
+                k={'common_available_formats'}
+              />
+              {`: ${formats.map((e) => e.toUpperCase()).join(', ')}`}
+            </p>
           ) : null}
           <input
             type={'file'}
@@ -171,7 +219,7 @@ const FileDropzone: React.FC<IFileDropzoneProps> = ({
       {errorsList.length > 0 && (
         <div className={'mt-2 text-xs text-error flex flex-col items-start'}>
           {errorsList.map((e) => (
-            <span key={e}>{e}</span>
+            <span key={e?.toString()}>{e}</span>
           ))}
         </div>
       )}

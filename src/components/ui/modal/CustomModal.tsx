@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 
 interface ICustomModalProps {
   open?: boolean;
-  caption?: string;
+  caption?: string | React.ReactNode;
   header?: Readonly<React.ReactNode>;
   children?: Readonly<React.ReactNode>;
   footer?: Readonly<React.ReactNode>;

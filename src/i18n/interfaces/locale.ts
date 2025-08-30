@@ -1,5 +1,5 @@
 export type TLocale = 'ru' | 'en';
-export type TNameSpace = 'common' | 'main';
+export type TNameSpace = 'common' | 'main' | 'profile';
 
 type Dedupe<T extends readonly unknown[], Seen extends readonly unknown[] = []> = T extends readonly [
   infer H,
@@ -34,6 +34,19 @@ export const COMMON_KEYS = ensureNoDuplicates([
   'common_license',
   'common_instruments',
   'common_contacts',
+  'common_name',
+  'common_change',
+  'common_set_password',
+  'common_current_password',
+  'common_new_password',
+  'common_confirm_password',
+  'common_file_added',
+  'common_wrong_file_format',
+  'common_wrong_file_size',
+  'common_file_drag_available',
+  'common_delete',
+  'common_max_file_size',
+  'common_available_formats',
 ] as const);
 export const MAIN_KEYS = ensureNoDuplicates([
   'main_title',
@@ -113,12 +126,22 @@ export const MAIN_KEYS = ensureNoDuplicates([
   'main_faq_card_title_5',
   'main_faq_card_description_5',
 ] as const);
+
+export const PROFILE_KEYS = ensureNoDuplicates([
+  'profile_user_profile',
+  'profile_change_avatar',
+  'profile_add_avatar',
+  'profile_cv_file',
+  'profile_cv_file_description',
+] as const);
 export type TCommonKey = (typeof COMMON_KEYS)[number];
 export type TMainKey = (typeof MAIN_KEYS)[number];
+export type TProfileKey = (typeof PROFILE_KEYS)[number];
 
 export interface INamespaceKeyMap {
   main: TMainKey;
   common: TCommonKey;
+  profile: TProfileKey;
 }
 
 export type TTranslationsShape = {

@@ -11,7 +11,7 @@ type TInputType = 'text' | 'password' | 'email' | 'number';
 type TInpuLevel = 'default' | 'small' | 'square';
 
 interface Props extends Pick<React.ComponentProps<'input'>, 'id' | 'disabled' | 'placeholder' | 'value' | 'className'> {
-  label?: string;
+  label?: string | React.ReactNode;
   type?: TInputType;
   error?: string[] | string;
   linkChild?: React.ReactNode;
