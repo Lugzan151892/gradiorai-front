@@ -7,6 +7,7 @@ import { normalizeServerDate } from '@/core/utils/date';
 import { cn } from '@/lib/utils';
 import UIButton from '@/components/ui/button/UIButton';
 import { useRouter } from 'next/navigation';
+import { Trans } from '@/i18n/Trans';
 
 interface IInterviewModalProps {
   open?: boolean;
@@ -39,7 +40,12 @@ const InterviewModal: React.FC<IInterviewModalProps> = ({ open = false, onClose,
   return (
     <CustomModal
       open={open}
-      caption={'История собеседования'}
+      caption={
+        <Trans
+          ns={'profile'}
+          k={'profile_interview_history'}
+        />
+      }
       onClose={onClose}
     >
       <div className={'lg:min-w-[400px] max-w-[840px] h-[calc(100dvh-112px)] lg:mx-auto flex flex-col p-6'}>
@@ -49,9 +55,25 @@ const InterviewModal: React.FC<IInterviewModalProps> = ({ open = false, onClose,
             <div>{normalizeServerDate(interview?.created_at || '')}</div>
           </div>
           <div>
-            <span>Статус: </span>
+            <span>
+              <Trans
+                ns={'common'}
+                k={'common_status'}
+              />
+              :{' '}
+            </span>
             <span className={cn(interview?.finished && 'text-success', !interview?.finished && 'text-main-blue')}>
-              {interview?.finished ? 'Пройдено' : 'В процессе'}
+              {interview?.finished ? (
+                <Trans
+                  ns={'profile'}
+                  k={'profile_interview_finished'}
+                />
+              ) : (
+                <Trans
+                  ns={'profile'}
+                  k={'profile_interview_in_progress'}
+                />
+              )}
             </span>
           </div>
         </div>
@@ -75,7 +97,12 @@ const InterviewModal: React.FC<IInterviewModalProps> = ({ open = false, onClose,
             ))}
             {interview?.finished && (
               <div className={'bg-message-gray p-4 rounded-input'}>
-                <div className={'text-2xl mb-4'}>Результат собеседования</div>
+                <div className={'text-2xl mb-4'}>
+                  <Trans
+                    ns={'profile'}
+                    k={'profile_interview_history'}
+                  />
+                </div>
                 <div>{interview.recomendations}</div>
               </div>
             )}

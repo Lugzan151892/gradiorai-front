@@ -34,10 +34,11 @@ export const I18nProvider = ({ children, defaultLocale = 'en' }: { children: any
     if (navigatorLocale.startsWith('en')) return 'en' as TLocale;
     return 'en' as TLocale;
   });
-  const [translations, setTranslations] = useState<LocaleMap>({});
+  const [translations, setTranslations] = useState<LocaleMap>(localLocales);
 
   useEffect(() => {
     (async () => {
+      setTranslations(localLocales);
       try {
         const res = await Api.get<{ locale: string }, { [key: string]: { [key: string]: { [key: string]: string } } }>(
           `/translations/export`,
@@ -45,9 +46,6 @@ export const I18nProvider = ({ children, defaultLocale = 'en' }: { children: any
         );
         if (res.success && res.payload) {
           setTranslations(res.payload);
-        } else {
-          // fallback to local locales if API fails or returns no data
-          setTranslations(localLocales);
         }
       } catch (_error) {
         // fallback to local locales if API request fails

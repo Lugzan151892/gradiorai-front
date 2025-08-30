@@ -6,12 +6,14 @@ export const Trans = <N extends TNameSpace, K extends INamespaceKeyMap[N]>({
   ns,
   k,
   children,
+  className,
   format,
   as = 'span',
 }: {
   ns: N;
   k: K;
   children?: React.ReactNode;
+  className?: string;
   format?: 'uppercase' | 'lovercase';
   as?: 'span' | 'button' | 'div';
 }) => {
@@ -29,6 +31,7 @@ export const Trans = <N extends TNameSpace, K extends INamespaceKeyMap[N]>({
   const Tag = as;
   return (
     <Tag
+      className={className}
       data-i18n={`${ns}:${k}`}
       data-i18n-value={text}
     >

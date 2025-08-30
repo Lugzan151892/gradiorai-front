@@ -184,11 +184,16 @@ const UIInput: React.FC<Props> = ({
           ))}
       </div>
       <div className={'min-h-4'}>
-        {errorsList.length && !disabled ? (
-          <div className={'mt-2 text-xs text-error'}>{errorsList.join(' ')}</div>
-        ) : (
-          linkChild && <div>{linkChild}</div>
-        )}
+        {errorsList.length && !disabled
+          ? errorsList.map((error) => (
+              <div
+                key={error}
+                className={'mt-2 text-xs text-error'}
+              >
+                {error}
+              </div>
+            ))
+          : linkChild && <div>{linkChild}</div>}
       </div>
     </div>
   );

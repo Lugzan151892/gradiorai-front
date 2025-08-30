@@ -4,7 +4,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import React from 'react';
 
 interface IUISelectProps {
-  options: Array<{ id: string | number; text: string; item?: React.ReactNode }>;
+  options: Array<{ id: string | number; text?: string; item?: React.ReactNode }>;
   optionType?: 'string' | 'number';
   id?: string;
   value?: string | number;

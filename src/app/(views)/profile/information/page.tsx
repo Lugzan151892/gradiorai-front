@@ -34,9 +34,9 @@ const ProfileInformation = () => {
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [newPassword, setNewPassword] = useState('');
-  const [newPasswordError, setNewPasswordError] = useState('');
+  const [newPasswordError, setNewPasswordError] = useState<string | React.ReactNode>('');
   const [repeatedNewPassword, setRepeatedNewPassword] = useState('');
-  const [repeatedNewPasswordError, setRepeatedNewPasswordError] = useState('');
+  const [repeatedNewPasswordError, setRepeatedNewPasswordError] = useState<string | React.ReactNode>('');
 
   const [code, setCode] = useState('');
   const [codeError, setCodeError] = useState(false);
@@ -69,12 +69,39 @@ const ProfileInformation = () => {
   };
 
   const handleSetPassword = async () => {
-    const newPasswordErrorMsg = password ? '' : 'Поле не заполнено';
-    const newPasswordReqError = /^(?=.*[A-Z])(?=.*[\W_]).{8,}$/.test(password)
-      ? ''
-      : 'Пароль должен содержать минимум 8 символов, заглавную букву и спецсимвол';
-    const repeatedNewPasswordErrorMsg = repeatedNewPassword ? '' : 'Поле не заполнено';
-    const passwordMismatchError = newPassword !== repeatedNewPassword ? 'Пароли не совпадают' : '';
+    const newPasswordErrorMsg = password ? (
+      ''
+    ) : (
+      <Trans
+        ns={'common'}
+        k={'common_field_empty'}
+      />
+    );
+    const newPasswordReqError = /^(?=.*[A-Z])(?=.*[\W_]).{8,}$/.test(password) ? (
+      ''
+    ) : (
+      <Trans
+        ns={'common'}
+        k={'common_password_validation'}
+      />
+    );
+    const repeatedNewPasswordErrorMsg = repeatedNewPassword ? (
+      ''
+    ) : (
+      <Trans
+        ns={'common'}
+        k={'common_field_empty'}
+      />
+    );
+    const passwordMismatchError =
+      newPassword !== repeatedNewPassword ? (
+        <Trans
+          ns={'common'}
+          k={'common_passwords_doesnt_match'}
+        />
+      ) : (
+        ''
+      );
 
     if (newPasswordErrorMsg || repeatedNewPasswordErrorMsg || newPasswordReqError || passwordMismatchError) {
       setNewPasswordError(newPasswordErrorMsg || newPasswordReqError);
@@ -137,7 +164,12 @@ const ProfileInformation = () => {
 
       dispatch(
         openModal({
-          text: 'Пароль успешно изменен.',
+          text: (
+            <Trans
+              ns={'common'}
+              k={'common_password_changed'}
+            />
+          ),
           type: 'success',
         })
       );
@@ -169,7 +201,12 @@ const ProfileInformation = () => {
 
       dispatch(
         openModal({
-          text: 'Имя пользователя изменено.',
+          text: (
+            <Trans
+              ns={'profile'}
+              k={'profile_username_changed'}
+            />
+          ),
           type: 'success',
         })
       );

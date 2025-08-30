@@ -47,6 +47,17 @@ export const COMMON_KEYS = ensureNoDuplicates([
   'common_delete',
   'common_max_file_size',
   'common_available_formats',
+  'common_password_changed',
+  'common_field_empty',
+  'common_passwords_doesnt_match',
+  'common_password_validation', //'Пароль должен содержать минимум 8 символов, заглавную букву и спецсимвол'
+  'common_profile',
+  'common_results',
+  'common_status',
+  'common_date',
+  'common_rating',
+  'common_all',
+  'common_cancel',
 ] as const);
 export const MAIN_KEYS = ensureNoDuplicates([
   'main_title',
@@ -133,6 +144,24 @@ export const PROFILE_KEYS = ensureNoDuplicates([
   'profile_add_avatar',
   'profile_cv_file',
   'profile_cv_file_description',
+  'profile_username_changed',
+  'profile_delete_interview',
+  'profile_delete_interview_description', //Вы действительно хотите удалить это собеседование? Это действие необратимо.
+  'profile_interview_success', //Успешно пройдено
+  'profile_interview_finished', //пройдено
+  'profile_interview_history',
+  'profile_interview_failed', //Неудачно
+  'profile_interview_in_progress', //В процессе
+  'profile_interview_result', //В процессе
+  'profile_time_all',
+  'profile_time_today',
+  'profile_time_week',
+  'profile_time_month',
+  'profile_time_three_months',
+  'profile_result_eight_and_more',
+  'profile_result_five_to_eight',
+  'profile_result_four_and_less',
+  'profile_result_any',
 ] as const);
 export type TCommonKey = (typeof COMMON_KEYS)[number];
 export type TMainKey = (typeof MAIN_KEYS)[number];
