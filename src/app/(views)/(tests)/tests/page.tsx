@@ -21,6 +21,7 @@ import GenerateModal from '@/features/loading/GenerateModal';
 import { sleep } from '@/core/utils/common';
 import { cn } from '@/lib/utils';
 import classes from './styles/animatedBlock.module.css';
+import { Trans } from '@/i18n/Trans';
 
 const TestsView = () => {
   const dispatch = useAppDispatch();
@@ -189,17 +190,33 @@ const TestsView = () => {
         style={{ background: 'var(--main-gradient)' }}
       >
         <div className={'w-full lg:max-w-[808px] flex flex-col gap-6 text-center'}>
-          <div className={'lg:text-5xl text-4xl leading-[100%] font-bold'}>Тестирование</div>
+          <div className={'lg:text-5xl text-4xl leading-[100%] font-bold'}>
+            <Trans
+              ns={'tests'}
+              k={'tests_tests'}
+            />
+          </div>
           <div className={'lg:text-xl text-base'}>
-            Тест адаптируется под ваш уровень подготовки. Чем выше уровень — тем глубже и детальнее будут вопросы.
+            <Trans
+              ns={'tests'}
+              k={'tests_description'}
+            />
           </div>
         </div>
       </div>
       <div className={'max-w-[685px] mx-auto flex flex-col relative px-4 overflow-hidden'}>
         <div className={'p-6 bg-main-black rounded-3xl flex flex-col gap-4 items-center mb-6 text-center z-2'}>
-          <div className={'font-semibold text-xl'}>Уровень вопросов</div>
+          <div className={'font-semibold text-xl'}>
+            <Trans
+              ns={'tests'}
+              k={'tests_questions_level'}
+            />
+          </div>
           <div className={'text-text-disabled'}>
-            Сложность вопросов и критерии оценки будут адаптированы под ваш уровень
+            <Trans
+              ns={'tests'}
+              k={'tests_questions_level_description'}
+            />
           </div>
           <div className={'flex gap-3 items-center'}>
             <div className={'flex flex-wrap gap-3 justify-center'}>
@@ -242,9 +259,17 @@ const TestsView = () => {
               classes['dynamic-section']
             )}
           >
-            <div className={'font-semibold text-xl'}>Специализация</div>
+            <div className={'font-semibold text-xl'}>
+              <Trans
+                ns={'tests'}
+                k={'tests_spec'}
+              />
+            </div>
             <div className={'text-text-disabled'}>
-              Здесь вы можете отфильтровать направления подходящие под специализацию
+              <Trans
+                ns={'tests'}
+                k={'tests_spec_description'}
+              />
             </div>
             <div className={'flex flex-wrap gap-3 justify-center'}>
               {specs.length ? (
@@ -257,7 +282,10 @@ const TestsView = () => {
                   />
                 ))
               ) : (
-                <div>Специализации не найдены</div>
+                <Trans
+                  ns={'tests'}
+                  k={'tests_spec_not_found'}
+                />
               )}
             </div>
             <div className={'mx-auto w-max mt-4'}>
@@ -271,8 +299,18 @@ const TestsView = () => {
           </div>
         </div>
         <div className={'p-6 bg-main-black rounded-3xl flex flex-col gap-4 items-center text-center mb-6'}>
-          <div className={'font-semibold text-xl'}>Направление</div>
-          <div className={'text-text-disabled'}>Каждое направление включает в себя набор вопросов</div>
+          <div className={'font-semibold text-xl'}>
+            <Trans
+              ns={'tests'}
+              k={'tests_direction'}
+            />
+          </div>
+          <div className={'text-text-disabled'}>
+            <Trans
+              ns={'tests'}
+              k={'tests_direction_description'}
+            />
+          </div>
           <div className={'flex flex-wrap gap-3 justify-center'}>
             {techs.length ? (
               techs.map((tech) => (
@@ -284,7 +322,10 @@ const TestsView = () => {
                 />
               ))
             ) : (
-              <div>Специализации не найдены</div>
+              <Trans
+                ns={'tests'}
+                k={'tests_direction_not_found'}
+              />
             )}
           </div>
           <div className={'mx-auto w-max mt-4'}>
@@ -303,7 +344,13 @@ const TestsView = () => {
             text={'НАЧАТЬ ТЕСТИРОВАНИЕ'}
             iconAfter={'arrow-top-right'}
             onClick={generateTests}
-          />
+          >
+            <Trans
+              ns={'tests'}
+              k={'tests_start'}
+              format={'uppercase'}
+            />
+          </UIButton>
         </div>
       </div>
       <AddSpecModal
@@ -332,7 +379,12 @@ const TestsView = () => {
         />
       </InfoModal>
       <GenerateModal
-        text={'Тест генерируется, пожалуйста подождите.'}
+        text={
+          <Trans
+            ns={'tests'}
+            k={'tests_generating_please_wait'}
+          />
+        }
         opened={generateModal}
       />
     </section>

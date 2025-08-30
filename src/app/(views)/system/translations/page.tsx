@@ -42,6 +42,10 @@ const AdminTransactions = () => {
       id: 'interview',
       text: 'interview',
     },
+    {
+      id: 'tests',
+      text: 'tests',
+    },
   ];
 
   const localeOptions: Array<{

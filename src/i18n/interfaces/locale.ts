@@ -1,5 +1,5 @@
 export type TLocale = 'ru' | 'en';
-export type TNameSpace = 'common' | 'main' | 'profile' | 'interview';
+export type TNameSpace = 'common' | 'main' | 'profile' | 'interview' | 'tests';
 
 type Dedupe<T extends readonly unknown[], Seen extends readonly unknown[] = []> = T extends readonly [
   infer H,
@@ -50,7 +50,7 @@ export const COMMON_KEYS = ensureNoDuplicates([
   'common_password_changed',
   'common_field_empty',
   'common_passwords_doesnt_match',
-  'common_password_validation', //'Пароль должен содержать минимум 8 символов, заглавную букву и спецсимвол'
+  'common_password_validation',
   'common_profile',
   'common_results',
   'common_status',
@@ -188,16 +188,44 @@ export const INTERVIEW_KEYS = ensureNoDuplicates([
   'interview_voice_recording',
   'interview_answer_generation',
 ] as const);
+
+export const TESTS_KEYS = ensureNoDuplicates([
+  'tests_tests',
+  'tests_description',
+  'tests_questions_level',
+  'tests_questions_level_description',
+  'tests_spec',
+  'tests_spec_description',
+  'tests_spec_not_found',
+  'tests_direction',
+  'tests_direction_description',
+  'tests_direction_not_found',
+  'tests_generating_please_wait',
+  'tests_start',
+  'tests_next',
+  'tests_finish',
+  'tests_result',
+  'test_try_again',
+  'test_rate_testing',
+  'test_leave_review',
+  'test_leave_review_description',
+  'test_leave_send_review',
+  'test_result_bad',
+  'test_result_good',
+  'test_result_perfect',
+] as const);
 export type TCommonKey = (typeof COMMON_KEYS)[number];
 export type TMainKey = (typeof MAIN_KEYS)[number];
 export type TProfileKey = (typeof PROFILE_KEYS)[number];
 export type TInterviewKey = (typeof INTERVIEW_KEYS)[number];
+export type TTestsKey = (typeof TESTS_KEYS)[number];
 
 export interface INamespaceKeyMap {
   main: TMainKey;
   common: TCommonKey;
   profile: TProfileKey;
   interview: TInterviewKey;
+  tests: TTestsKey;
 }
 
 export type TTranslationsShape = {
