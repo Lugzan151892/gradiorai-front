@@ -165,29 +165,45 @@ const HeaderUserState: React.FC<Readonly<IHeaderUserStateProps>> = ({ showMenu, 
     };
   }, [showMenu, setShowMenu]);
 
+  const localeComponent = (
+    <UISelect
+      options={[
+        {
+          id: 'ru',
+          item: (
+            <div className={'flex gap-2'}>
+              <CustomIcon
+                name={'flag-ru'}
+                size={24}
+              />
+              <div className={'text-[10px] text-gray-200'}>RU</div>
+            </div>
+          ),
+        },
+        {
+          id: 'en',
+          item: (
+            <div className={'flex gap-2'}>
+              <CustomIcon
+                name={'flag-us'}
+                size={24}
+              />
+              <div className={'text-[10px] text-gray-200'}>EN</div>
+            </div>
+          ),
+        },
+      ]}
+      value={locale}
+      onChange={(val) => setLocale(String(val) as TLocale)}
+      className={''}
+      placeholder={'locale'}
+    />
+  );
+
   return (
     <>
-      <UISelect
-        options={[
-          { id: 'ru', text: 'ru' },
-          { id: 'en', text: 'en' },
-        ]}
-        value={locale}
-        onChange={(val) => setLocale(String(val) as TLocale)}
-        className={''}
-        placeholder={'locale'}
-      />
       <div className={'flex gap-4'}>
-        <UISelect
-          options={[
-            { id: 'ru', text: 'ru' },
-            { id: 'en', text: 'en' },
-          ]}
-          value={locale}
-          onChange={(val) => setLocale(String(val) as TLocale)}
-          className={''}
-          placeholder={'locale'}
-        />
+        {localeComponent}
         {!user?.id ? (
           <div className={'flex'}>
             <UIButton
