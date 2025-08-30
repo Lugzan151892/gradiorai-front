@@ -15,6 +15,7 @@ import UIButton from '@/components/ui/button/UIButton';
 import { cn } from '@/lib/utils';
 import MarkdownMessage from '@/components/markdown-message/MarkdownMessage';
 import { Trans } from '@/i18n/Trans';
+import { useI18n } from '@/i18n/I18nProvider';
 
 const CurrentInterviewPage = () => {
   const { id } = useParams();
@@ -150,6 +151,8 @@ const CurrentInterviewPage = () => {
     return () => eventSource.close();
   }, []);
 
+  const { t } = useI18n();
+
   useEffect(() => {
     loadInterview();
   }, [loadInterview]);
@@ -248,7 +251,7 @@ const CurrentInterviewPage = () => {
             value={isListening ? `${userMessage} ${interimTranscript}`.trim() : userMessage}
             onInput={setUserMessage}
             autoResize
-            placeholder={'Введите текст'}
+            placeholder={t('common', 'common_input_text')}
             paddingGap={70}
             onChange={sendMessage}
             disabled={isGenerating || interview?.finished || isListening}

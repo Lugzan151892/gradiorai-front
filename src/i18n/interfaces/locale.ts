@@ -58,6 +58,7 @@ export const COMMON_KEYS = ensureNoDuplicates([
   'common_rating',
   'common_all',
   'common_cancel',
+  'common_input_text',
 ] as const);
 export const MAIN_KEYS = ensureNoDuplicates([
   'main_title',
@@ -183,6 +184,9 @@ export const INTERVIEW_KEYS = ensureNoDuplicates([
   'interview_create_cv_prepare_resume',
   'interview_create_cv_result',
   'interview_result',
+  'interview_start_new',
+  'interview_voice_recording',
+  'interview_answer_generation',
 ] as const);
 export type TCommonKey = (typeof COMMON_KEYS)[number];
 export type TMainKey = (typeof MAIN_KEYS)[number];

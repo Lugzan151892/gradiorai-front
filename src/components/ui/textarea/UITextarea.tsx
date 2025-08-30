@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import UILabel from '@/components/ui/label/UILabel';
 
-interface Props extends Pick<React.ComponentProps<'input'>, 'id' | 'disabled' | 'placeholder' | 'value' | 'className'> {
+interface Props extends Pick<React.ComponentProps<'input'>, 'id' | 'placeholder' | 'disabled' | 'value' | 'className'> {
   label?: string | React.ReactNode;
   hint?: string | React.ReactNode;
   error?: string[] | string;
