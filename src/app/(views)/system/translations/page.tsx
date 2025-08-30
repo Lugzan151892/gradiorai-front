@@ -2,11 +2,14 @@
 
 import UIButton from '@/components/ui/button/UIButton';
 import FileDropzone from '@/components/ui/file-dropzone/FileDropzone';
+import UIInput from '@/components/ui/input/UIInput';
+import UISelect from '@/components/ui/select/UISelect';
 import Api from '@/core/api/api';
 import errorHandler from '@/core/utils/error/errorHandler';
 import { setLoading } from '@/features/loading/loadingSlice';
 import routeChecker from '@/hoc/routeChecker';
 import { useAppDispatch } from '@/hooks/redux';
+import { TLocale, TNameSpace } from '@/i18n/interfaces/locale';
 import { openModal } from '@/store/tech/techSlice';
 import React, { useState } from 'react';
 
@@ -14,6 +17,42 @@ const AdminTransactions = () => {
   const dispatch = useAppDispatch();
 
   const [localesJson, setLocalesJson] = useState<null | File>(null);
+  const [namespace, setNamespace] = useState<TNameSpace>('common');
+  const [locale, setLocale] = useState<TLocale>('ru');
+  const [key, setKey] = useState('');
+  const [value, setValue] = useState('');
+
+  const namespacesOptions: Array<{
+    id: TNameSpace;
+    text: TNameSpace;
+  }> = [
+    {
+      id: 'common',
+      text: 'common',
+    },
+    {
+      id: 'main',
+      text: 'main',
+    },
+    {
+      id: 'profile',
+      text: 'profile',
+    },
+  ];
+
+  const localeOptions: Array<{
+    id: TLocale;
+    text: TLocale;
+  }> = [
+    {
+      id: 'ru',
+      text: 'ru',
+    },
+    {
+      id: 'en',
+      text: 'en',
+    },
+  ];
 
   const downloadFile = async () => {
     try {
@@ -30,6 +69,29 @@ const AdminTransactions = () => {
     try {
       dispatch(setLoading(true));
       await Api.postFormData('/translations/import', { file: localesJson });
+      dispatch(
+        openModal({
+          text: 'Переводы успешно обновлены!',
+          type: 'success',
+        })
+      );
+
+      setLocalesJson(null);
+    } catch (e) {
+      errorHandler(e, dispatch);
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
+
+  const save = async () => {
+    if (!key || !value) {
+      return;
+    }
+
+    try {
+      dispatch(setLoading(true));
+      await Api.patch('/translations/update', { locale, namespace, key, value });
       dispatch(
         openModal({
           text: 'Переводы успешно обновлены!',
@@ -69,6 +131,38 @@ const AdminTransactions = () => {
           text={'Загрузить файл переводов'}
           onClick={() => loadFile()}
         />
+        <div className={'mt-2'}>
+          <div>Добавить перевод:</div>
+          <div className={'flex items-center gap-2'}>
+            <UISelect
+              options={namespacesOptions}
+              value={namespace}
+              onChange={(e) => setNamespace(e as TNameSpace)}
+            />
+            <UISelect
+              options={localeOptions}
+              value={locale}
+              onChange={(e) => setLocale(e as TLocale)}
+            />
+            <UIInput
+              label={'Ключ'}
+              value={key}
+              level={'square'}
+              onInput={setKey}
+            />
+            <UIInput
+              label={'Значение'}
+              level={'square'}
+              value={value}
+              onInput={setValue}
+            />
+            <UIButton
+              text={'Сохранить'}
+              disabled={!key || !locale}
+              onClick={save}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );
