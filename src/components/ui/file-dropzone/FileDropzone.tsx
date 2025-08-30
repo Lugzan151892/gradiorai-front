@@ -14,7 +14,7 @@ interface IFileDropzoneProps {
   onFileSelected: (file: File | null) => void;
   maxFileSize?: number;
   className?: string;
-  label?: string;
+  label?: string | React.ReactNode;
   file?: IFile | File | null;
   filePath?: string; // для файла из БД, если нужно прямой путь
   error?: string[] | string;

@@ -1,5 +1,5 @@
 export type TLocale = 'ru' | 'en';
-export type TNameSpace = 'common' | 'main' | 'profile';
+export type TNameSpace = 'common' | 'main' | 'profile' | 'interview';
 
 type Dedupe<T extends readonly unknown[], Seen extends readonly unknown[] = []> = T extends readonly [
   infer H,
@@ -146,13 +146,13 @@ export const PROFILE_KEYS = ensureNoDuplicates([
   'profile_cv_file_description',
   'profile_username_changed',
   'profile_delete_interview',
-  'profile_delete_interview_description', //Вы действительно хотите удалить это собеседование? Это действие необратимо.
-  'profile_interview_success', //Успешно пройдено
-  'profile_interview_finished', //пройдено
+  'profile_delete_interview_description',
+  'profile_interview_success',
+  'profile_interview_finished',
   'profile_interview_history',
-  'profile_interview_failed', //Неудачно
-  'profile_interview_in_progress', //В процессе
-  'profile_interview_result', //В процессе
+  'profile_interview_failed',
+  'profile_interview_in_progress',
+  'profile_interview_result',
   'profile_time_all',
   'profile_time_today',
   'profile_time_week',
@@ -163,14 +163,37 @@ export const PROFILE_KEYS = ensureNoDuplicates([
   'profile_result_four_and_less',
   'profile_result_any',
 ] as const);
+
+export const INTERVIEW_KEYS = ensureNoDuplicates([
+  'interview_description',
+  'interview_cv_file',
+  'interview_add_file_vakancies',
+  'interview_add_file_vakancies_description',
+  'interview_your_vakancie',
+  'interview_additional_info',
+  'interview_additional_info_description',
+  'interview_start',
+  'interview_check_cv_description',
+  'interview_check_cv_check',
+  'interview_check_cv_clear',
+  'interview_check_cv_result',
+  'interview_create_cv_description',
+  'interview_create_cv_about',
+  'interview_create_cv_about_description',
+  'interview_create_cv_prepare_resume',
+  'interview_create_cv_result',
+  'interview_result',
+] as const);
 export type TCommonKey = (typeof COMMON_KEYS)[number];
 export type TMainKey = (typeof MAIN_KEYS)[number];
 export type TProfileKey = (typeof PROFILE_KEYS)[number];
+export type TInterviewKey = (typeof INTERVIEW_KEYS)[number];
 
 export interface INamespaceKeyMap {
   main: TMainKey;
   common: TCommonKey;
   profile: TProfileKey;
+  interview: TInterviewKey;
 }
 
 export type TTranslationsShape = {

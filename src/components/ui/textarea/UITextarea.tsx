@@ -6,8 +6,8 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import UILabel from '@/components/ui/label/UILabel';
 
 interface Props extends Pick<React.ComponentProps<'input'>, 'id' | 'disabled' | 'placeholder' | 'value' | 'className'> {
-  label?: string;
-  hint?: string;
+  label?: string | React.ReactNode;
+  hint?: string | React.ReactNode;
   error?: string[] | string;
   linkChild?: React.ReactNode;
   success?: boolean;

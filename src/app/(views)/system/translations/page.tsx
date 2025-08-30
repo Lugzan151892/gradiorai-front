@@ -38,6 +38,10 @@ const AdminTransactions = () => {
       id: 'profile',
       text: 'profile',
     },
+    {
+      id: 'interview',
+      text: 'interview',
+    },
   ];
 
   const localeOptions: Array<{
