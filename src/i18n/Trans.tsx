@@ -15,7 +15,7 @@ export const Trans = <N extends TNameSpace, K extends INamespaceKeyMap[N]>({
   children?: React.ReactNode;
   className?: string;
   format?: 'uppercase' | 'lovercase';
-  as?: 'span' | 'button' | 'div';
+  as?: 'span' | 'button' | 'div' | 'a';
 }) => {
   const { t } = useI18n();
   const formatText = (t: string) => {

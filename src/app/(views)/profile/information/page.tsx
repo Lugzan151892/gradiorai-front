@@ -401,9 +401,18 @@ const ProfileInformation = () => {
         )}
         {passwordStep === ESET_PASSWORD_STEPS.EMAIL_CONFIRMATION && (
           <div className={'flex flex-col text-center mb-3'}>
-            <div className={'text-white text-2xl mb-3'}>Подтвердите Email</div>
+            <div className={'text-white text-2xl mb-3'}>
+              <Trans
+                ns={'common'}
+                k={'common_confirm_email'}
+              />
+            </div>
             <div className={'text-white text-sm mb-3'}>
-              Код отправлен на адрес <span className={'text-main-purple'}>{user?.email}</span>
+              <Trans
+                ns={'auth'}
+                k={'auth_code_was_sent_to'}
+              />{' '}
+              <span className={'text-main-purple'}>{user?.email}</span>
             </div>
             <CustomCodeInput
               className={'mx-auto rounded-input'}
@@ -415,7 +424,10 @@ const ProfileInformation = () => {
               className={'text-main-purple text-sm mt-3 hover:underline cursor-pointer'}
               onClick={handleRequestCode}
             >
-              Отправить повторно?
+              <Trans
+                ns={'auth'}
+                k={'auth_code_resent'}
+              />
             </div>
           </div>
         )}

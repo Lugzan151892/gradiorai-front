@@ -9,18 +9,34 @@ import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import UIButton from '@/components/ui/button/UIButton';
 import UIInput from '@/components/ui/input/UIInput';
+import { Trans } from '@/i18n/Trans';
+import { useI18n } from '@/i18n/I18nProvider';
 
 const LoginView = () => {
   const router = useRouter();
   const [email, setEmail] = useState('');
-  const [emailError, setEmailError] = useState('');
+  const [emailError, setEmailError] = useState<string | React.ReactNode>('');
   const [password, setPassword] = useState('');
-  const [passwordError, setPasswordError] = useState('');
+  const [passwordError, setPasswordError] = useState<string | React.ReactNode>('');
   const dispatch = useAppDispatch();
 
   const handleLogin = async () => {
-    const emailErrorMsg = email ? '' : 'Поле не заполнено';
-    const passwordErrorMsg = password ? '' : 'Поле не заполнено';
+    const emailErrorMsg = email ? (
+      ''
+    ) : (
+      <Trans
+        ns={'common'}
+        k={'common_field_empty'}
+      />
+    );
+    const passwordErrorMsg = password ? (
+      ''
+    ) : (
+      <Trans
+        ns={'common'}
+        k={'common_field_empty'}
+      />
+    );
 
     setEmailError(emailErrorMsg);
     setPasswordError(passwordErrorMsg);
@@ -64,13 +80,23 @@ const LoginView = () => {
       className={'mt-2 text-main-purple text-xs cursor-pointer hover:underline'}
       onClick={handleRestorePassword}
     >
-      Забыли пароль?
+      <Trans
+        ns={'auth'}
+        k={'auth_forgot_password'}
+      />
     </div>
   );
 
+  const { t } = useI18n();
+
   return (
     <div className={'text-black flex flex-col w-full h-full items-center mx-4'}>
-      <div className={'mb-16 text-white text-center text-3xl lg:text-5xl font-bold'}>С возвращением!</div>
+      <div className={'mb-16 text-white text-center text-3xl lg:text-5xl font-bold'}>
+        <Trans
+          ns={'auth'}
+          k={'auth_welcome_back'}
+        />
+      </div>
       <div className={'w-full max-w-xs'}>
         <UIInput
           className={'mb-3'}
@@ -86,10 +112,15 @@ const LoginView = () => {
           }}
         />
         <UIInput
-          label={'Пароль'}
+          label={
+            <Trans
+              ns={'common'}
+              k={'common_password'}
+            />
+          }
           type={'password'}
           id={'password'}
-          placeholder={'Пароль'}
+          placeholder={t('common', 'common_password')}
           value={password}
           error={passwordError}
           linkChild={forgetPasswordMarkup}
@@ -104,7 +135,13 @@ const LoginView = () => {
           text={'ВОЙТИ'}
           onClick={handleLogin}
           iconAfter={'arrow-top-right'}
-        />
+        >
+          <Trans
+            ns={'auth'}
+            k={'auth_login'}
+            format={'uppercase'}
+          />
+        </UIButton>
         <div className={'flex my-6'}>
           <UIButton
             className={'mx-auto'}
@@ -112,7 +149,12 @@ const LoginView = () => {
             type={'transparent'}
             onClick={handleGoRegistration}
             iconBefore={'user-add'}
-          />
+          >
+            <Trans
+              ns={'auth'}
+              k={'auth_registration'}
+            />
+          </UIButton>
         </div>
       </div>
     </div>
