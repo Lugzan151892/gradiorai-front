@@ -45,7 +45,7 @@
     "main": {
       "main_title": "Preparing for an Interview with AI",
       "main_do_check_cv": "CHECK RESUME",
-      "main_do_tests": "ПРОЙТИ ТЕСТИРОВАНИЕ",
+      "main_do_tests": "Start test",
       "main_do_interview": "Pass the interview",
       "main_about_card_title_5": "> 5000",
       "main_about_card_title_6": "up to 5x",
@@ -198,6 +198,7 @@
       "main_about": "О нас",
       "main_title": "Подготовка к собеседованию с AI",
       "main_do_check_cv": "ПРОВЕРИТЬ РЕЗЮМЕ",
+      "main_do_tests": "Пройти тестирование",
       "main_intruments_description": "Наши инструменты помогут Вам пройти любое собеседование с помощью персонализированных симуляций и обратной связи в реальном времени",
       "main_card_title_1": "Оценка знаний",
       "main_card_title_2": "Подготовка к собеседованиям",
