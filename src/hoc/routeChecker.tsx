@@ -13,7 +13,7 @@ const routeChecker = (WrappedComponent: React.ComponentType, type: 'authOnly' | 
     useEffect(() => {
       if (unAuth && (type === 'authOnly' || type === 'adminOnly')) {
         router.push('/login');
-      } else if ((user && type === 'guestOnly') || (user && !user.admin && type === 'adminOnly')) {
+      } else if (user && !user.admin && (type === 'guestOnly' || type === 'adminOnly')) {
         if (window.history.length > 2) {
           router.back();
         } else {
