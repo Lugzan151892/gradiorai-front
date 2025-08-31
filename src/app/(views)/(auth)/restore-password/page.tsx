@@ -11,16 +11,18 @@ import errorHandler from '@/core/utils/error/errorHandler';
 import { openModal } from '@/store/tech/techSlice';
 import routeChecker from '@/hoc/routeChecker';
 import UIInput from '@/components/ui/input/UIInput';
+import { Trans } from '@/i18n/Trans';
+import { useI18n } from '@/i18n/I18nProvider';
 
 const RestorePassword = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const [email, setEmail] = useState('');
-  const [emailError, setEmailError] = useState('');
+  const [emailError, setEmailError] = useState<string | React.ReactNode>('');
   const [password, setPassword] = useState('');
-  const [passwordError, setPasswordError] = useState('');
+  const [passwordError, setPasswordError] = useState<string | React.ReactNode>('');
   const [repeatedPassword, setRepeatedPassword] = useState('');
-  const [repeatedPasswordError, setRepeatedPasswordError] = useState('');
+  const [repeatedPasswordError, setRepeatedPasswordError] = useState<string | React.ReactNode>('');
   const [showCodeBlock, setShowCodeBlock] = useState(false);
   const [code, setCode] = useState('');
   const [codeError, setCodeError] = useState(false);
@@ -35,8 +37,22 @@ const RestorePassword = () => {
   };
 
   const handleRequestCode = async () => {
-    const emailErrorMsg = email ? '' : 'Поле не заполнено';
-    const emailRegError = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email) ? '' : 'Некорректный формат';
+    const emailErrorMsg = email ? (
+      ''
+    ) : (
+      <Trans
+        ns={'common'}
+        k={'common_field_empty'}
+      />
+    );
+    const emailRegError = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email) ? (
+      ''
+    ) : (
+      <Trans
+        ns={'common'}
+        k={'common_invalid_format'}
+      />
+    );
 
     if (emailErrorMsg || emailRegError) {
       setEmailError(emailErrorMsg || emailRegError);
@@ -64,12 +80,39 @@ const RestorePassword = () => {
   };
 
   const handleSetPassword = async () => {
-    const passwordErrorMsg = password ? '' : 'Поле не заполнено';
-    const passwordReqError = /^(?=.*[A-Z])(?=.*[\W_]).{8,}$/.test(password)
-      ? ''
-      : 'Пароль должен содержать минимум 8 символов, заглавную букву и спецсимвол';
-    const repeatedPasswordErrorMsg = repeatedPassword ? '' : 'Поле не заполнено';
-    const passwordMismatchError = password !== repeatedPassword ? 'Пароли не совпадают' : '';
+    const passwordErrorMsg = password ? (
+      ''
+    ) : (
+      <Trans
+        ns={'common'}
+        k={'common_field_empty'}
+      />
+    );
+    const passwordReqError = /^(?=.*[A-Z])(?=.*[\W_]).{8,}$/.test(password) ? (
+      ''
+    ) : (
+      <Trans
+        ns={'common'}
+        k={'common_password_validation'}
+      />
+    );
+    const repeatedPasswordErrorMsg = repeatedPassword ? (
+      ''
+    ) : (
+      <Trans
+        ns={'common'}
+        k={'common_field_empty'}
+      />
+    );
+    const passwordMismatchError =
+      password !== repeatedPassword ? (
+        <Trans
+          ns={'common'}
+          k={'common_passwords_doesnt_match'}
+        />
+      ) : (
+        ''
+      );
 
     if (passwordErrorMsg || repeatedPasswordErrorMsg || passwordReqError || passwordMismatchError) {
       setPasswordError(passwordErrorMsg || passwordReqError);
@@ -83,7 +126,12 @@ const RestorePassword = () => {
       dispatch(setLoading(false));
       dispatch(
         openModal({
-          text: 'Пароль успешно изменен.',
+          text: (
+            <Trans
+              ns={'auth'}
+              k={'auth_password_changed_successfully'}
+            />
+          ),
           onClick: () => router.push('/login'),
         })
       );
@@ -131,17 +179,29 @@ const RestorePassword = () => {
     router.push('/registration');
   };
 
+  const { t } = useI18n();
+
   return (
     <div className={'text-black flex flex-col w-full h-full items-center mx-4'}>
-      <div className={'mb-16 text-white text-center text-3xl lg:text-5xl font-bold'}>Изменение пароля</div>
+      <div className={'mb-16 text-white text-center text-3xl lg:text-5xl font-bold'}>
+        <Trans
+          ns={'auth'}
+          k={'auth_change_password_title'}
+        />
+      </div>
       <div className={'w-full max-w-xs'}>
         {step === 2 ? (
           <>
             <UIInput
-              label={'Пароль'}
+              label={
+                <Trans
+                  ns={'common'}
+                  k={'common_password'}
+                />
+              }
               className={'mb-3'}
               type={'password'}
-              placeholder={'Пароль'}
+              placeholder={t('common', 'common_password')}
               id={'password'}
               value={password}
               error={passwordError}
@@ -151,9 +211,14 @@ const RestorePassword = () => {
               }}
             />
             <UIInput
-              label={'Повторите пароль'}
+              label={
+                <Trans
+                  ns={'common'}
+                  k={'common_repeat_password'}
+                />
+              }
               type={'password'}
-              placeholder={'Повторите пароль'}
+              placeholder={t('common', 'common_repeat_password')}
               id={'repeated-password'}
               value={repeatedPassword}
               error={repeatedPasswordError}
@@ -181,9 +246,18 @@ const RestorePassword = () => {
         ) : null}
         {showCodeBlock && step === 1 && (
           <div className={'flex flex-col text-center mb-3'}>
-            <div className={'text-white text-2xl mb-3'}>Подтвердите Email</div>
+            <div className={'text-white text-2xl mb-3'}>
+              <Trans
+                ns={'common'}
+                k={'common_confirm_email'}
+              />
+            </div>
             <div className={'text-white text-sm mb-3'}>
-              Код отправлен на адрес <span className={'text-main-purple'}>{email}</span>
+              <Trans
+                ns={'auth'}
+                k={'auth_code_was_sent_to'}
+              />{' '}
+              <span className={'text-main-purple'}>{email}</span>
             </div>
             <CustomCodeInput
               className={'mx-auto rounded-input'}
@@ -195,7 +269,10 @@ const RestorePassword = () => {
               className={'text-main-purple text-sm mt-3 hover:underline cursor-pointer'}
               onClick={handleRequestCode}
             >
-              Отправить повторно?
+              <Trans
+                ns={'auth'}
+                k={'auth_code_resent'}
+              />
             </div>
           </div>
         )}
@@ -207,22 +284,34 @@ const RestorePassword = () => {
             !!repeatedPasswordError ||
             (showCodeBlock && (code.length < 4 || codeError))
           }
-          text={'Изменить'}
           onClick={handleConfirmButton}
-        />
+        >
+          <Trans
+            ns={'auth'}
+            k={'auth_change_password_change'}
+          />
+        </UIButton>
         <div className={'flex w-full justify-center gap-4 my-6'}>
           <UIButton
-            text={'Регистрация'}
             type={'transparent'}
             onClick={handleGoRegistration}
             iconBefore={'user-add'}
-          />
+          >
+            <Trans
+              ns={'auth'}
+              k={'auth_registration_as_reg'}
+            />
+          </UIButton>
           <UIButton
-            text={'Вход'}
             type={'transparent'}
             onClick={handleGoLogin}
             iconBefore={'login-new'}
-          />
+          >
+            <Trans
+              ns={'auth'}
+              k={'auth_login_as_entrance'}
+            />
+          </UIButton>
         </div>
       </div>
     </div>
