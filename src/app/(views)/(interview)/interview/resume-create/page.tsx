@@ -9,6 +9,7 @@ import UIButton from '@/components/ui/button/UIButton';
 import UILabel from '@/components/ui/label/UILabel';
 import UITextarea from '@/components/ui/textarea/UITextarea';
 import MarkdownMessage from '@/components/markdown-message/MarkdownMessage';
+import { Trans } from '@/i18n/Trans';
 
 const ResumeCreate = () => {
   const [userDescription, setUserDescription] = useState('');
@@ -47,9 +48,17 @@ const ResumeCreate = () => {
         style={{ background: 'var(--main-gradient)' }}
       >
         <div className={'w-full lg:max-w-[808px] flex flex-col gap-6 text-center'}>
-          <div className={'lg:text-5xl text-4xl leading-[100%] font-bold'}>Создание резюме</div>
+          <div className={'lg:text-5xl text-4xl leading-[100%] font-bold'}>
+            <Trans
+              ns={'common'}
+              k={'common_create_cv'}
+            />
+          </div>
           <div className={'lg:text-xl text-base'}>
-            Опишите свои навыки и получите готовый и структурированный текст для своего резюме.
+            <Trans
+              ns={'interview'}
+              k={'interview_create_cv_description'}
+            />
           </div>
         </div>
       </div>
@@ -58,8 +67,18 @@ const ResumeCreate = () => {
           <UITextarea
             className={'mt-6'}
             id={'user-description'}
-            label={'О себе'}
-            hint={'Подробно опишите информацию о себе и своих навыках'}
+            label={
+              <Trans
+                ns={'interview'}
+                k={'interview_create_cv_about'}
+              />
+            }
+            hint={
+              <Trans
+                ns={'interview'}
+                k={'interview_create_cv_about_description'}
+              />
+            }
             value={userDescription}
             disabled={!!createResult}
             rows={10}
@@ -71,11 +90,28 @@ const ResumeCreate = () => {
               disabled={!createResult && !userDescription}
               text={!!createResult ? 'Сбросить результат' : 'Подготовить текст резюме'}
               onClick={!!createResult ? clearData : createResume}
-            />
+            >
+              {!!createResult ? (
+                <Trans
+                  ns={'interview'}
+                  k={'interview_check_cv_clear'}
+                />
+              ) : (
+                <Trans
+                  ns={'interview'}
+                  k={'interview_create_cv_prepare_resume'}
+                />
+              )}
+            </UIButton>
           </div>
         </div>
         <div className={'flex flex-col'}>
-          <UILabel className={'mb-2'}>Результат генерации</UILabel>
+          <UILabel className={'mb-2'}>
+            <Trans
+              ns={'interview'}
+              k={'interview_create_cv_result'}
+            />
+          </UILabel>
           <div className={'bg-main-dark p-4 text-center rounded-3xl min-h-[300px] max-h-[400px] overflow-auto'}>
             {createResult && (
               <MarkdownMessage

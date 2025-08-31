@@ -6,7 +6,7 @@ import LoaderComponent from '@/features/loading/components/LoaderComponent';
 
 interface IGenerateModalProps {
   opened?: boolean;
-  text?: string;
+  text?: string | React.ReactNode;
   onCLose?: () => void;
 }
 

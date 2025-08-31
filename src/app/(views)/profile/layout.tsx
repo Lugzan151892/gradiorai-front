@@ -5,10 +5,27 @@ import React, { ReactNode } from 'react';
 import { useSelectedLayoutSegment } from 'next/navigation';
 import AppLayoutClient from '@/components/app-layout/AppLayoutClient';
 import { cn } from '@/lib/utils';
+import { Trans } from '@/i18n/Trans';
 
 const tabs = [
-  { href: '/profile/information', label: 'Профиль' },
-  { href: '/profile/results', label: 'Результаты' },
+  {
+    href: '/profile/information',
+    label: (
+      <Trans
+        ns={'common'}
+        k={'common_profile'}
+      />
+    ),
+  },
+  {
+    href: '/profile/results',
+    label: (
+      <Trans
+        ns={'common'}
+        k={'common_results'}
+      />
+    ),
+  },
 ];
 
 const ProfileLayout = ({ children }: { children: ReactNode }) => {

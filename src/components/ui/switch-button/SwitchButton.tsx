@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils';
 import UILabel from '@/components/ui/label/UILabel';
 
 interface ISwitchProps {
-  label?: string;
+  label?: string | React.ReactNode;
   className?: string;
   disabled?: boolean;
   checked?: boolean;
