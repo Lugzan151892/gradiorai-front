@@ -9,6 +9,7 @@ import Api from '@/core/api/api';
 import UIButton from '@/components/ui/button/UIButton';
 import UILabel from '@/components/ui/label/UILabel';
 import MarkdownMessage from '@/components/markdown-message/MarkdownMessage';
+import { Trans } from '@/i18n/Trans';
 
 const ResumePrepare = () => {
   const [userCV, setUserCV] = useState<null | File>(null);
@@ -51,14 +52,29 @@ const ResumePrepare = () => {
         style={{ background: 'var(--main-gradient)' }}
       >
         <div className={'w-full lg:max-w-[808px] flex flex-col gap-6 text-center'}>
-          <div className={'lg:text-5xl text-4xl leading-[100%] font-bold'}>Проверка резюме</div>
-          <div className={'lg:text-xl text-base'}>Приложите свое резюме и получите рекомендации по его улучшению.</div>
+          <div className={'lg:text-5xl text-4xl leading-[100%] font-bold'}>
+            <Trans
+              ns={'common'}
+              k={'common_check_cv'}
+            />
+          </div>
+          <div className={'lg:text-xl text-base'}>
+            <Trans
+              ns={'interview'}
+              k={'interview_check_cv_description'}
+            />
+          </div>
         </div>
       </div>
       <div className={'p-6 bg-main-black rounded-3xl flex flex-col gap-3 text-center mx-2 flex-1'}>
         <div className={'flex flex-col'}>
           <FileDropzone
-            label={'Ваше резюме'}
+            label={
+              <Trans
+                ns={'interview'}
+                k={'interview_cv_file'}
+              />
+            }
             maxFileSize={2}
             file={userCV}
             formats={['docx', 'pdf']}
@@ -70,11 +86,28 @@ const ResumePrepare = () => {
               disabled={!checkResult && !userCV}
               text={!!checkResult ? 'Сбросить результат' : 'Проверить'}
               onClick={!!checkResult ? clearData : checkResume}
-            />
+            >
+              {!!checkResult ? (
+                <Trans
+                  ns={'interview'}
+                  k={'interview_check_cv_clear'}
+                />
+              ) : (
+                <Trans
+                  ns={'interview'}
+                  k={'interview_check_cv_check'}
+                />
+              )}
+            </UIButton>
           </div>
         </div>
         <div className={'flex flex-col'}>
-          <UILabel className={'mb-2'}>Результат проверки</UILabel>
+          <UILabel className={'mb-2'}>
+            <Trans
+              ns={'interview'}
+              k={'interview_check_cv_result'}
+            />
+          </UILabel>
           <div className={'bg-main-dark p-4 text-center rounded-3xl min-h-[300px] max-h-[400px] overflow-auto'}>
             {checkResult && (
               <MarkdownMessage

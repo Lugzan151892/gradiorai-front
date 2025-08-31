@@ -14,6 +14,8 @@ import routeChecker from '@/hoc/routeChecker';
 import UIButton from '@/components/ui/button/UIButton';
 import { cn } from '@/lib/utils';
 import MarkdownMessage from '@/components/markdown-message/MarkdownMessage';
+import { Trans } from '@/i18n/Trans';
+import { useI18n } from '@/i18n/I18nProvider';
 
 const CurrentInterviewPage = () => {
   const { id } = useParams();
@@ -33,7 +35,7 @@ const CurrentInterviewPage = () => {
 
     const handleScroll = () => {
       const { scrollTop, scrollHeight, clientHeight } = container;
-      const isAtBottom = scrollTop + clientHeight >= scrollHeight - 50; // небольшой отступ
+      const isAtBottom = scrollTop + clientHeight >= scrollHeight - 50;
 
       setShowScrollToBottom(!isAtBottom);
     };
@@ -149,6 +151,8 @@ const CurrentInterviewPage = () => {
     return () => eventSource.close();
   }, []);
 
+  const { t } = useI18n();
+
   useEffect(() => {
     loadInterview();
   }, [loadInterview]);
@@ -182,7 +186,12 @@ const CurrentInterviewPage = () => {
           )}
           {interview?.finished && (
             <div className={'bg-message-gray p-4 rounded-input'}>
-              <div className={'text-2xl mb-4'}>Результат собеседования</div>
+              <div className={'text-2xl mb-4'}>
+                <Trans
+                  ns={'interview'}
+                  k={'interview_result'}
+                />
+              </div>
               <div>{interview.recomendations}</div>
               <div className={'w-full flex items-center mt-4 mb-2 px-4'}>
                 <UIButton
@@ -190,7 +199,13 @@ const CurrentInterviewPage = () => {
                   iconAfter={'arrow-top-right'}
                   text={'НАЧАТЬ НОВОЕ СОБЕСЕДОВАНИЕ'}
                   onClick={() => router.push('/interview')}
-                />
+                >
+                  <Trans
+                    ns={'interview'}
+                    k={'interview_start_new'}
+                    format={'uppercase'}
+                  />
+                </UIButton>
               </div>
             </div>
           )}
@@ -216,8 +231,18 @@ const CurrentInterviewPage = () => {
             <div className={'h-4 mb-2'}>
               {(isListening || isGenerating || true) && (
                 <div className={'text-text-disabled flex justify-center'}>
-                  {isListening && <div>Записываем голос ...</div>}
-                  {isGenerating && <div>Генерируем ответ ...</div>}
+                  {isListening && (
+                    <Trans
+                      ns={'interview'}
+                      k={'interview_voice_recording'}
+                    />
+                  )}
+                  {isGenerating && (
+                    <Trans
+                      ns={'interview'}
+                      k={'interview_answer_generation'}
+                    />
+                  )}
                 </div>
               )}
             </div>
@@ -226,7 +251,7 @@ const CurrentInterviewPage = () => {
             value={isListening ? `${userMessage} ${interimTranscript}`.trim() : userMessage}
             onInput={setUserMessage}
             autoResize
-            placeholder={'Введите текст'}
+            placeholder={t('common', 'common_input_text')}
             paddingGap={70}
             onChange={sendMessage}
             disabled={isGenerating || interview?.finished || isListening}

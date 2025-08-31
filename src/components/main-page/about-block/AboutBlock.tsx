@@ -2,8 +2,8 @@ import UIAccordion from '@/components/ui/accordion/UIAccordion';
 import React from 'react';
 
 interface IAccordionBlockProps {
-  title: string;
-  content: string;
+  title: React.ReactNode;
+  content: React.ReactNode;
 }
 
 const AboutBlock: React.FC<Readonly<IAccordionBlockProps>> = ({ title, content }) => {
