@@ -1,5 +1,5 @@
 export type TLocale = 'ru' | 'en';
-export type TNameSpace = 'common' | 'main' | 'profile' | 'interview' | 'tests';
+export type TNameSpace = 'common' | 'main' | 'profile' | 'interview' | 'tests' | 'auth';
 
 type Dedupe<T extends readonly unknown[], Seen extends readonly unknown[] = []> = T extends readonly [
   infer H,
@@ -37,7 +37,10 @@ export const COMMON_KEYS = ensureNoDuplicates([
   'common_name',
   'common_change',
   'common_set_password',
+  'common_password',
   'common_current_password',
+  'common_repeat_password',
+  'common_confirm_email',
   'common_new_password',
   'common_confirm_password',
   'common_file_added',
@@ -59,6 +62,7 @@ export const COMMON_KEYS = ensureNoDuplicates([
   'common_all',
   'common_cancel',
   'common_input_text',
+  'common_invalid_format',
 ] as const);
 export const MAIN_KEYS = ensureNoDuplicates([
   'main_title',
@@ -214,11 +218,28 @@ export const TESTS_KEYS = ensureNoDuplicates([
   'test_result_good',
   'test_result_perfect',
 ] as const);
+
+export const AUTH_KEYS = ensureNoDuplicates([
+  'auth_login',
+  'auth_welcome_back',
+  'auth_forgot_password',
+  'auth_registration',
+  'auth_welcome',
+  'auth_code_was_sent_to',
+  'auth_code_resent',
+  'auth_login_as_entrance',
+  'auth_registration_as_reg',
+  'auth_confirm_terms_text',
+  'auth_change_password_title',
+  'auth_change_password_change',
+  'auth_password_changed_successfully',
+] as const);
 export type TCommonKey = (typeof COMMON_KEYS)[number];
 export type TMainKey = (typeof MAIN_KEYS)[number];
 export type TProfileKey = (typeof PROFILE_KEYS)[number];
 export type TInterviewKey = (typeof INTERVIEW_KEYS)[number];
 export type TTestsKey = (typeof TESTS_KEYS)[number];
+export type TAuthKey = (typeof AUTH_KEYS)[number];
 
 export interface INamespaceKeyMap {
   main: TMainKey;
@@ -226,6 +247,7 @@ export interface INamespaceKeyMap {
   profile: TProfileKey;
   interview: TInterviewKey;
   tests: TTestsKey;
+  auth: TAuthKey;
 }
 
 export type TTranslationsShape = {

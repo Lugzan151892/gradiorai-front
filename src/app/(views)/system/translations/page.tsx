@@ -46,6 +46,10 @@ const AdminTransactions = () => {
       id: 'tests',
       text: 'tests',
     },
+    {
+      id: 'auth',
+      text: 'auth',
+    },
   ];
 
   const localeOptions: Array<{
