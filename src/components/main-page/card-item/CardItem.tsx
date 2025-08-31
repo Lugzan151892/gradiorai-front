@@ -4,9 +4,9 @@ import CustomIcon from '@/components/ui/icon/CustomIcon';
 
 const CardItem: React.FC<
   Readonly<{
-    title: string;
-    description: string;
-    additional: string;
+    title: React.ReactNode;
+    description: React.ReactNode;
+    additional: React.ReactNode;
     icon: keyof typeof IconMarkup;
   }>
 > = ({ title, description, additional, icon }) => {

@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import CustomIcon from '@/components/ui/icon/CustomIcon';
 
 interface AccordionProps {
-  title: string;
+  title: string | React.ReactNode;
   children: React.ReactNode;
 }
 
