@@ -69,7 +69,7 @@ const SystemPage = () => {
       href: 'system/translations',
     },
     {
-      id: 12,
+      id: ESYSTEM_PAGES.ANALIZE,
       text: 'Доска задач + аналитика',
       href: 'system/issue-board',
     },
