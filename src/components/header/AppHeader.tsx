@@ -10,18 +10,19 @@ import IconMarkup from '@/components/ui/icon/utils/IconMarkup';
 import { cn } from '@/lib/utils';
 import { sleep } from '@/core/utils/common';
 import { usePathname } from 'next/navigation';
+import { Trans } from '@/i18n/Trans';
 
 interface ILinkItem {
   id: string;
-  text: string;
+  text: string | React.ReactNode;
   href?: string;
   onClick?: () => void;
   submenu?: {
-    subTitle: string;
+    subTitle: string | React.ReactNode;
     links: Array<{
       id: number;
-      text: string;
-      description: string;
+      text: string | React.ReactNode;
+      description: string | React.ReactNode;
       href: string;
       icon: keyof typeof IconMarkup;
     }>;
@@ -69,7 +70,13 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
   const links: ILinkItem[] = [
     {
       id: 'ABOUT',
-      text: 'О НАС',
+      text: (
+        <Trans
+          ns={'main'}
+          k={'main_about'}
+          format={'uppercase'}
+        />
+      ),
       onClick: async () => {
         if (pathName !== '/') {
           router.push('/');
@@ -81,35 +88,90 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
     },
     {
       id: 'INSTRUMENTS',
-      text: 'ИНСТРУМЕНТЫ',
+      text: (
+        <Trans
+          ns={'common'}
+          k={'common_instruments'}
+          format={'uppercase'}
+        />
+      ),
       submenu: {
-        subTitle: 'Инструменты',
+        subTitle: (
+          <Trans
+            ns={'common'}
+            k={'common_instruments'}
+          />
+        ),
         links: [
           {
             id: 1,
-            text: 'СОБЕСЕДОВАНИЕ',
-            description: 'Подготовься к реальным вопросам',
+            text: (
+              <Trans
+                ns={'common'}
+                k={'common_interview'}
+                format={'uppercase'}
+              />
+            ),
+            description: (
+              <Trans
+                ns={'common'}
+                k={'common_interview_description'}
+              />
+            ),
             href: '/interview',
             icon: 'two-users',
           },
           {
             id: 2,
-            text: 'ТЕСТИРОВАНИЕ',
-            description: 'Проверь знания и навыки',
+            text: (
+              <Trans
+                ns={'common'}
+                k={'common_tests'}
+                format={'uppercase'}
+              />
+            ),
+            description: (
+              <Trans
+                ns={'common'}
+                k={'common_tests_description'}
+              />
+            ),
             href: '/tests',
             icon: 'to-do-list',
           },
           {
             id: 3,
-            text: 'ПРОВЕРКА РЕЗЮМЕ',
-            description: 'Улучши свое резюме',
+            text: (
+              <Trans
+                ns={'common'}
+                k={'common_check_cv'}
+                format={'uppercase'}
+              />
+            ),
+            description: (
+              <Trans
+                ns={'common'}
+                k={'common_check_cv_description'}
+              />
+            ),
             href: '/interview/resume-check',
             icon: 'file-check',
           },
           {
             id: 4,
-            text: 'СОЗДАНИЕ РЕЗЮМЕ',
-            description: 'Составь резюме быстро',
+            text: (
+              <Trans
+                ns={'common'}
+                k={'common_create_cv'}
+                format={'uppercase'}
+              />
+            ),
+            description: (
+              <Trans
+                ns={'common'}
+                k={'common_create_cv_description'}
+              />
+            ),
             href: '/interview/resume-create',
             icon: 'file-create',
           },
@@ -118,7 +180,13 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
     },
     {
       id: 'FAQ',
-      text: 'FAQ',
+      text: (
+        <Trans
+          ns={'common'}
+          k={'common_faq'}
+          format={'uppercase'}
+        />
+      ),
       onClick: async () => {
         if (pathName !== '/') {
           router.push('/');
@@ -168,7 +236,10 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
             router.push('/');
           }}
         >
-          gradiorAI
+          <Trans
+            ns={'common'}
+            k={'common_sitename'}
+          />
         </div>
       </div>
       {withState && (

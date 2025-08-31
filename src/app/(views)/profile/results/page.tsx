@@ -25,6 +25,7 @@ import {
   statusOptions,
   timeOptions,
 } from '@/app/(views)/profile/results/utils';
+import { Trans } from '@/i18n/Trans';
 
 const ProfileResults = () => {
   const confirm = useConfirm();
@@ -106,12 +107,40 @@ const ProfileResults = () => {
     if (!id) return;
 
     const checkConfirm = await confirm({
-      caption: 'Удалить собеседование?',
-      content: 'Вы действительно хотите удалить это собеседование? Это действие необратимо.',
+      caption: (
+        <Trans
+          ns={'profile'}
+          k={'profile_delete_interview'}
+        />
+      ),
+      content: (
+        <Trans
+          ns={'profile'}
+          k={'profile_delete_interview_description'}
+        />
+      ),
       type: 'warning',
       buttons: [
-        { key: 'yes', label: 'Удалить', type: 'danger' },
-        { key: 'no', label: 'Отмена', type: 'default' },
+        {
+          key: 'yes',
+          label: (
+            <Trans
+              ns={'common'}
+              k={'common_delete'}
+            />
+          ),
+          type: 'danger',
+        },
+        {
+          key: 'no',
+          label: (
+            <Trans
+              ns={'common'}
+              k={'common_cancel'}
+            />
+          ),
+          type: 'default',
+        },
       ],
     });
 
@@ -142,7 +171,12 @@ const ProfileResults = () => {
         <div className={'flex gap-4 lg:flex-row flex-col'}>
           <div className={'flex gap-4 lg:w-auto w-full'}>
             <div className={'flex flex-col gap-2 lg:w-auto w-full'}>
-              <UILabel>Статус</UILabel>
+              <UILabel>
+                <Trans
+                  ns={'common'}
+                  k={'common_status'}
+                />
+              </UILabel>
               <UISelect
                 className={'lg:w-[180px] w-full'}
                 value={statusFilter}
@@ -152,7 +186,12 @@ const ProfileResults = () => {
               />
             </div>
             <div className={'flex flex-col gap-2 lg:w-auto w-full'}>
-              <UILabel>Дата</UILabel>
+              <UILabel>
+                <Trans
+                  ns={'common'}
+                  k={'common_date'}
+                />
+              </UILabel>
               <UISelect
                 className={'lg:w-[180px] w-full'}
                 value={timeFilter}
@@ -162,7 +201,12 @@ const ProfileResults = () => {
             </div>
           </div>
           <div className={'flex flex-col gap-2 w-full'}>
-            <UILabel>Оценка</UILabel>
+            <UILabel>
+              <Trans
+                ns={'common'}
+                k={'common_rating'}
+              />
+            </UILabel>
             <UISelect
               className={'lg:w-[180px] w-full'}
               value={resultFilter}
@@ -203,14 +247,37 @@ const ProfileResults = () => {
                       )}
                     </div>
                     <div className={'lg:ml-0 ml-1 flex items-center'}>
-                      <span className={'mr-2'}>Статус: </span>
+                      <span className={'mr-2'}>
+                        <Trans
+                          ns={'common'}
+                          k={'common_status'}
+                        />
+                        :
+                      </span>
                       <span
                         className={cn(
                           interview.finished && (interview.success ? 'text-success' : 'text-error'),
                           !interview.finished && 'text-yellow'
                         )}
                       >
-                        {interview.finished ? (interview.success ? 'Успешно пройдено' : 'Неудачно') : 'В процессе'}
+                        {interview.finished ? (
+                          interview.success ? (
+                            <Trans
+                              ns={'profile'}
+                              k={'profile_interview_success'}
+                            />
+                          ) : (
+                            <Trans
+                              ns={'profile'}
+                              k={'profile_interview_failed'}
+                            />
+                          )
+                        ) : (
+                          <Trans
+                            ns={'profile'}
+                            k={'profile_interview_in_progress'}
+                          />
+                        )}
                       </span>
                     </div>
                   </div>

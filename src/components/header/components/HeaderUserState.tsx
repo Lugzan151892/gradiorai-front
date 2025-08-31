@@ -12,6 +12,9 @@ import MenuItem, { IMenuItemProps } from '@/components/header/components/MenuIte
 import { EMENU_ITEM } from '@/components/header/interfaces';
 import { cn } from '@/lib/utils';
 import UserAvatar from '@/components/user-avatar/UserAvatar';
+import UISelect from '@/components/ui/select/UISelect';
+import { useI18n } from '@/i18n/I18nProvider';
+import { TLocale } from '@/i18n/interfaces/locale';
 
 interface IMenuItem extends IMenuItemProps {
   id: EMENU_ITEM;
@@ -27,6 +30,7 @@ const HeaderUserState: React.FC<Readonly<IHeaderUserStateProps>> = ({ showMenu, 
   const router = useRouter();
   const { user } = useAppSelector((state: RootState) => state.user);
   const dispatch = useAppDispatch();
+  const { locale, setLocale } = useI18n();
 
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -161,60 +165,98 @@ const HeaderUserState: React.FC<Readonly<IHeaderUserStateProps>> = ({ showMenu, 
     };
   }, [showMenu, setShowMenu]);
 
+  const localeComponent = (
+    <UISelect
+      options={[
+        {
+          id: 'ru',
+          item: (
+            <div className={'flex gap-2'}>
+              <CustomIcon
+                name={'flag-ru'}
+                size={24}
+              />
+              <div className={'text-[10px] text-gray-200'}>RU</div>
+            </div>
+          ),
+        },
+        {
+          id: 'en',
+          item: (
+            <div className={'flex gap-2'}>
+              <CustomIcon
+                name={'flag-us'}
+                size={24}
+              />
+              <div className={'text-[10px] text-gray-200'}>EN</div>
+            </div>
+          ),
+        },
+      ]}
+      value={locale}
+      onChange={(val) => setLocale(String(val) as TLocale)}
+      className={''}
+      placeholder={'locale'}
+    />
+  );
+
   return (
     <>
-      {!user?.id ? (
-        <div className={'flex gap-2'}>
-          <UIButton
-            onClick={handleLogin}
-            text={'ВОЙТИ'}
-          />
-        </div>
-      ) : (
-        <div
-          className={'flex items-center'}
-          ref={menuRef}
-        >
-          <div
-            className={'flex items-center cursor-pointer select-none'}
-            onClick={() => setShowMenu?.(!showMenu)}
-          >
-            <UserAvatar size={40} />
-            <CustomIcon
-              name={'menu-arrow'}
-              color={'var(--main-white)'}
-              className={cn('ml-1 transform transition-transform duration-300', showMenu && 'rotate-180')}
+      <div className={'flex gap-4'}>
+        {localeComponent}
+        {!user?.id ? (
+          <div className={'flex'}>
+            <UIButton
+              onClick={handleLogin}
+              text={'ВОЙТИ'}
             />
           </div>
-          {showMenu && (
+        ) : (
+          <div
+            className={'flex items-center'}
+            ref={menuRef}
+          >
             <div
-              className={cn(
-                'z-50 p-4 bg-black lg:border lg:border-main-gray lg:rounded-xl flex flex-col overflow-hidden',
-                'lg:w-[350px] w-full max-w-full lg:max-h-[500px] h-screen max-h-[calc(100dvh-90px)] absolute top-[90px] lg:right-[100px] right-0 overflow-y-auto'
-              )}
+              className={'flex items-center cursor-pointer select-none'}
+              onClick={() => setShowMenu?.(!showMenu)}
             >
-              <MenuItem
-                icon={'user'}
-                text={username || ''}
-                isLink
-                isStatic
-                className={'mb-4'}
-                onClick={() => router.push('/profile/information')}
+              <UserAvatar size={40} />
+              <CustomIcon
+                name={'menu-arrow'}
+                color={'var(--main-white)'}
+                className={cn('ml-1 transform transition-transform duration-300', showMenu && 'rotate-180')}
               />
-              <div className={'flex flex-col gap-1 h-full'}>
-                {menuItems
-                  .filter((e) => !e.hide)
-                  .map((item) => (
-                    <MenuItem
-                      key={item.id}
-                      {...item}
-                    />
-                  ))}
-              </div>
             </div>
-          )}
-        </div>
-      )}
+            {showMenu && (
+              <div
+                className={cn(
+                  'z-50 p-4 bg-black lg:border lg:border-main-gray lg:rounded-xl flex flex-col overflow-hidden',
+                  'lg:w-[350px] w-full max-w-full lg:max-h-[500px] h-screen max-h-[calc(100dvh-90px)] absolute top-[90px] lg:right-[100px] right-0 overflow-y-auto'
+                )}
+              >
+                <MenuItem
+                  icon={'user'}
+                  text={username || ''}
+                  isLink
+                  isStatic
+                  className={'mb-4'}
+                  onClick={() => router.push('/profile/information')}
+                />
+                <div className={'flex flex-col gap-1 h-full'}>
+                  {menuItems
+                    .filter((e) => !e.hide)
+                    .map((item) => (
+                      <MenuItem
+                        key={item.id}
+                        {...item}
+                      />
+                    ))}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
     </>
   );
 };
