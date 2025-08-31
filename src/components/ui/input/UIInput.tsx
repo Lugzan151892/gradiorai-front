@@ -13,7 +13,7 @@ type TInpuLevel = 'default' | 'small' | 'square';
 interface Props extends Pick<React.ComponentProps<'input'>, 'id' | 'disabled' | 'placeholder' | 'value' | 'className'> {
   label?: string | React.ReactNode;
   type?: TInputType;
-  error?: string[] | string;
+  error?: string[] | string | React.ReactNode;
   linkChild?: React.ReactNode;
   autoComplete?: boolean;
   success?: boolean;
@@ -187,7 +187,7 @@ const UIInput: React.FC<Props> = ({
         {errorsList.length && !disabled
           ? errorsList.map((error) => (
               <div
-                key={error}
+                key={error.toString()}
                 className={'mt-2 text-xs text-error'}
               >
                 {error}
