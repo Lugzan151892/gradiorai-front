@@ -15,6 +15,7 @@ import UserAvatar from '@/components/user-avatar/UserAvatar';
 import UISelect from '@/components/ui/select/UISelect';
 import { useI18n } from '@/i18n/I18nProvider';
 import { TLocale } from '@/i18n/interfaces/locale';
+import { Trans } from '@/i18n/Trans';
 
 interface IMenuItem extends IMenuItemProps {
   id: EMENU_ITEM;
@@ -171,7 +172,7 @@ const HeaderUserState: React.FC<Readonly<IHeaderUserStateProps>> = ({ showMenu, 
         {
           id: 'ru',
           item: (
-            <div className={'flex gap-2'}>
+            <div className={'flex gap-2 items-center'}>
               <CustomIcon
                 name={'flag-ru'}
                 size={24}
@@ -183,7 +184,7 @@ const HeaderUserState: React.FC<Readonly<IHeaderUserStateProps>> = ({ showMenu, 
         {
           id: 'en',
           item: (
-            <div className={'flex gap-2'}>
+            <div className={'flex gap-2 items-center'}>
               <CustomIcon
                 name={'flag-us'}
                 size={24}
@@ -209,7 +210,13 @@ const HeaderUserState: React.FC<Readonly<IHeaderUserStateProps>> = ({ showMenu, 
             <UIButton
               onClick={handleLogin}
               text={'ВОЙТИ'}
-            />
+            >
+              <Trans
+                ns={'auth'}
+                k={'auth_login'}
+                format={'uppercase'}
+              />
+            </UIButton>
           </div>
         ) : (
           <div

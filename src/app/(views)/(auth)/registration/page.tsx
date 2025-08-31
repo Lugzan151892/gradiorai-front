@@ -12,29 +12,72 @@ import UIButton from '@/components/ui/button/UIButton';
 import routeChecker from '@/hoc/routeChecker';
 import UIInput from '@/components/ui/input/UIInput';
 import { getPublicFileLink } from '@/core/utils/files';
+import { Trans } from '@/i18n/Trans';
+import { useI18n } from '@/i18n/I18nProvider';
 
 const RegistrationPage = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const [email, setEmail] = useState('');
-  const [emailError, setEmailError] = useState('');
+  const [emailError, setEmailError] = useState<string | React.ReactNode>('');
   const [password, setPassword] = useState('');
-  const [passwordError, setPasswordError] = useState('');
+  const [passwordError, setPasswordError] = useState<string | React.ReactNode>('');
   const [repeatedPassword, setRepeatedPassword] = useState('');
-  const [repeatedPasswordError, setRepeatedPasswordError] = useState('');
+  const [repeatedPasswordError, setRepeatedPasswordError] = useState<string | React.ReactNode>('');
   const [showCodeBlock, setShowCodeBlock] = useState(false);
   const [code, setCode] = useState('');
   const [codeError, setCodeError] = useState(false);
 
   const handleCheckIsFieldsValid = () => {
-    const emailErrorMsg = email ? '' : 'Поле не заполнено';
-    const emailRegError = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email) ? '' : 'Некорректный формат';
-    const passwordErrorMsg = password ? '' : 'Поле не заполнено';
-    const passwordReqError = /^(?=.*[A-Z])(?=.*[\W_]).{8,}$/.test(password)
-      ? ''
-      : 'Пароль должен содержать минимум 8 символов, заглавную букву и спецсимвол';
-    const repeatedPasswordErrorMsg = repeatedPassword ? '' : 'Поле не заполнено';
-    const passwordMismatchError = password !== repeatedPassword ? 'Пароли не совпадают' : '';
+    const emailErrorMsg = email ? (
+      ''
+    ) : (
+      <Trans
+        ns={'common'}
+        k={'common_field_empty'}
+      />
+    );
+    const emailRegError = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email) ? (
+      ''
+    ) : (
+      <Trans
+        ns={'common'}
+        k={'common_invalid_format'}
+      />
+    );
+    const passwordErrorMsg = password ? (
+      ''
+    ) : (
+      <Trans
+        ns={'common'}
+        k={'common_field_empty'}
+      />
+    );
+    const passwordReqError = /^(?=.*[A-Z])(?=.*[\W_]).{8,}$/.test(password) ? (
+      ''
+    ) : (
+      <Trans
+        ns={'common'}
+        k={'common_password_validation'}
+      />
+    );
+    const repeatedPasswordErrorMsg = repeatedPassword ? (
+      ''
+    ) : (
+      <Trans
+        ns={'common'}
+        k={'common_field_empty'}
+      />
+    );
+    const passwordMismatchError =
+      password !== repeatedPassword ? (
+        <Trans
+          ns={'common'}
+          k={'common_passwords_doesnt_match'}
+        />
+      ) : (
+        ''
+      );
 
     if (emailErrorMsg || passwordErrorMsg || repeatedPasswordErrorMsg || emailRegError || passwordReqError) {
       setEmailError(emailErrorMsg || emailRegError);
@@ -128,9 +171,16 @@ const RegistrationPage = () => {
     loadSystemFiles();
   }, [loadSystemFiles]);
 
+  const { t } = useI18n();
+
   return (
     <div className={'text-black flex flex-col w-full h-full items-center mx-4'}>
-      <div className={'mb-16 text-white text-center text-3xl lg:text-5xl font-bold'}>Добро пожаловать!</div>
+      <div className={'mb-16 text-white text-center text-3xl lg:text-5xl font-bold'}>
+        <Trans
+          ns={'auth'}
+          k={'auth_welcome'}
+        />
+      </div>
       <div className={'w-full max-w-xs'}>
         <UIInput
           className={'mb-3'}
@@ -149,10 +199,15 @@ const RegistrationPage = () => {
         {!showCodeBlock && (
           <div>
             <UIInput
-              label={'Пароль'}
+              label={
+                <Trans
+                  ns={'common'}
+                  k={'common_password'}
+                />
+              }
               className={'mb-3'}
               type={'password'}
-              placeholder={'Пароль'}
+              placeholder={t('common', 'common_password')}
               id={'password'}
               value={password}
               error={passwordError}
@@ -162,9 +217,14 @@ const RegistrationPage = () => {
               }}
             />
             <UIInput
-              label={'Повторите пароль'}
+              label={
+                <Trans
+                  ns={'common'}
+                  k={'common_repeat_password'}
+                />
+              }
               type={'password'}
-              placeholder={'Повторите пароль'}
+              placeholder={t('common', 'common_repeat_password')}
               id={'repeated-password'}
               value={repeatedPassword}
               error={repeatedPasswordError}
@@ -177,9 +237,18 @@ const RegistrationPage = () => {
         )}
         {showCodeBlock && (
           <div className={'flex flex-col text-center'}>
-            <div className={'text-white text-2xl mb-3'}>Подтвердите Email</div>
+            <div className={'text-white text-2xl mb-3'}>
+              <Trans
+                ns={'common'}
+                k={'common_confirm_email'}
+              />
+            </div>
             <div className={'text-white text-sm mb-3'}>
-              Код отправлен на адрес <span className={'text-main-purple'}>{email}</span>
+              <Trans
+                ns={'auth'}
+                k={'auth_code_was_sent_to'}
+              />{' '}
+              <span className={'text-main-purple'}>{email}</span>
             </div>
             <CustomCodeInput
               className={'mx-auto rounded-input'}
@@ -191,7 +260,10 @@ const RegistrationPage = () => {
               className={'text-main-purple text-sm mt-3 hover:underline cursor-pointer'}
               onClick={handleRequestCode}
             >
-              Отправить повторно?
+              <Trans
+                ns={'auth'}
+                k={'auth_code_resent'}
+              />
             </div>
           </div>
         )}
@@ -203,9 +275,14 @@ const RegistrationPage = () => {
             !!repeatedPasswordError ||
             (showCodeBlock && (code.length < 4 || codeError))
           }
-          text={'ЗАРЕГИСТРИРОВАТЬСЯ'}
           onClick={showCodeBlock ? handleRegister : handleRequestCode}
-        />
+        >
+          <Trans
+            ns={'auth'}
+            k={'auth_registration_as_reg'}
+            format={'uppercase'}
+          />
+        </UIButton>
         <div className={'flex flex-col items-center my-6'}>
           <UIButton
             className={'mx-auto'}
@@ -213,17 +290,28 @@ const RegistrationPage = () => {
             type={'transparent'}
             onClick={handleGoLogin}
             iconBefore={'login-new'}
-          />
+          >
+            <Trans
+              ns={'auth'}
+              k={'auth_login_as_entrance'}
+            />
+          </UIButton>
           {privatePolicy && personalTerms && (
             <div className={'text-white text-xs mt-2 text-center flex flex-col'}>
-              <span>Регистрируясь, я даю согласие на хранение и обработку предоставленных данных.</span>
+              <Trans
+                ns={'auth'}
+                k={'auth_confirm_terms_text'}
+              />
               <a
                 className={'text-main-purple text-xs cursor-pointer hover:underline'}
                 target={'_blank'}
                 href={getPublicFileLink(personalTerms?.path || '')}
                 rel={'noreferrer'}
               >
-                Согласие на обработку персональных данных
+                <Trans
+                  ns={'common'}
+                  k={'common_terms_condition'}
+                />
               </a>
               <a
                 className={'text-main-purple text-xs cursor-pointer hover:underline'}
@@ -231,7 +319,10 @@ const RegistrationPage = () => {
                 href={getPublicFileLink(privatePolicy?.path || '')}
                 rel={'noreferrer'}
               >
-                Политика конфиденциальности
+                <Trans
+                  ns={'common'}
+                  k={'common_private_policy'}
+                />
               </a>
             </div>
           )}
