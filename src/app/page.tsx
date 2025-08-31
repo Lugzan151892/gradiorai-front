@@ -22,6 +22,7 @@ import Api from '@/core/api/api';
 import { setLoading } from '@/features/loading/loadingSlice';
 import { getPublicFileLink } from '@/core/utils/files';
 import { Trans } from '@/i18n/Trans';
+import MessengerPopup from '@/components/messenger-popup/MessengerPopup';
 
 const Home = () => {
   const router = useRouter();
@@ -1012,6 +1013,11 @@ const Home = () => {
           </div>
         </div>
       </footer>
+
+      <MessengerPopup
+        title={'Совет дня'}
+        delay={3000}
+      />
     </AppLayout>
   );
 };
