@@ -40,7 +40,11 @@
       "common_date": "Date",
       "common_rating": "Rating",
       "common_all": "All",
-      "common_input_text": " Enter text"
+      "common_input_text": " Enter text",
+      "common_password": "Password",
+      "common_invalid_format": "Invalid format",
+      "common_repeat_password": " Repeat password",
+      "common_confirm_email": "Confirm Email"
     },
     "main": {
       "main_title": "Preparing for an Interview with AI",
@@ -162,6 +166,7 @@
       "interview_create_cv_result": "Generation result",
       "interview_result": "Interview result",
       "interview_start_new": "Start a new interview",
+      "interview_voice_recordingЗаписываем голос ...": "Recording voice...",
       "interview_voice_recording": "Recording voice...",
       "interview_answer_generation": "Generating response..."
     },
@@ -189,6 +194,21 @@
       "test_result_bad": "Don't be upset - this is a great opportunity to improve your knowledge! Try again, you will definitely succeed!",
       "test_result_good": "Not a bad result, but there is room for improvement! Analyze the mistakes and try again.",
       "test_result_perfect": "Excellent result! You showed excellent knowledge and coped with all the questions. Keep it up!"
+    },
+    "auth": {
+      "auth_login": "Sign in",
+      "auth_welcome_back": "Welcome back!",
+      "auth_forgot_password": "Forgot your password?",
+      "auth_registration": "Sign up",
+      "auth_welcome": " Welcome!",
+      "auth_code_was_sent_to": "The code has been sent to the address",
+      "auth_code_resent": "Resend?",
+      "auth_login_as_entrance": "Login",
+      "auth_registration_as_reg": "Sign up",
+      "auth_confirm_terms_text": "By registering, I agree to the storage and processing of the data provided.",
+      "auth_change_password_title": "Changing your password",
+      "auth_change_password_change": " Change",
+      "auth_password_changed_successfully": " Password changed successfully."
     }
   },
   "ru": {
@@ -198,7 +218,6 @@
       "main_about": "О нас",
       "main_title": "Подготовка к собеседованию с AI",
       "main_do_check_cv": "ПРОВЕРИТЬ РЕЗЮМЕ",
-      "main_do_tests": "Пройти тестирование",
       "main_intruments_description": "Наши инструменты помогут Вам пройти любое собеседование с помощью персонализированных симуляций и обратной связи в реальном времени",
       "main_card_title_1": "Оценка знаний",
       "main_card_title_2": "Подготовка к собеседованиям",
@@ -268,7 +287,8 @@
       "main_faq_card_description_2": "Мы предлагаем подготовку по IT специальностям, Frontend, Backend, менеджменту, и другим востребованным направлениям. Список регулярно обновляется.",
       "main_faq_card_description_3": "Вы загружаете свое резюме в систему, после чего получаете подробный анализ с рекомендациями по структуре, стилю, ключевым словам и сильным/слабым сторонам.",
       "main_faq_card_description_4": "Да, у нас есть отдельные блоки вопросов и подготовка для тех, кто только начинает карьеру, с разбором базовых вопросов.",
-      "main_faq_card_description_5": "Да, все предоставляемые нами инструменты абсолютно бесплатны."
+      "main_faq_card_description_5": "Да, все предоставляемые нами инструменты абсолютно бесплатны.",
+      "main_do_tests": "Пройти тестирование"
     },
     "common": {
       "common_instruments": "Инструменты",
@@ -307,7 +327,11 @@
       "common_date": "Дата",
       "common_rating": "Оценка",
       "common_all": "Все",
-      "common_input_text": "Введите текст"
+      "common_input_text": "Введите текст",
+      "common_password": "Пароль",
+      "common_invalid_format": "Некорректный формат",
+      "common_repeat_password": "Повторите пароль",
+      "common_confirm_email": "Подтвердите Email"
     },
     "profile": {
       "profile_cv_file_description": "Вы можете добавить файл по умолчанию, для добавления информации к собеседованию",
@@ -378,6 +402,21 @@
       "test_result_bad": "Не расстраивайтесь — это отличная возможность улучшить свои знания! Попробуйте еще раз, у вас точно получится!",
       "test_result_good": "Неплохой результат, но есть куда расти! Разберите ошибки и попробуйте снова.",
       "test_result_perfect": "Отличный результат! Вы показали отличные знания и справились со всеми вопросами. Так держать!"
+    },
+    "auth": {
+      "auth_login": "Войти",
+      "auth_welcome_back": "С возвращением!",
+      "auth_forgot_password": "Забыли пароль?",
+      "auth_registration": "Регистрация",
+      "auth_welcome": "Добро пожаловать!",
+      "auth_code_was_sent_to": "Код отправлен на адрес",
+      "auth_code_resent": "Отправить повторно?",
+      "auth_login_as_entrance": "Вход",
+      "auth_registration_as_reg": "Зарегистрироваться",
+      "auth_confirm_terms_text": "Регистрируясь, я даю согласие на хранение и обработку предоставленных данных.",
+      "auth_change_password_title": "Изменение пароля",
+      "auth_change_password_change": "Изменить",
+      "auth_password_changed_successfully": "Пароль успешно изменен."
     }
   }
 }

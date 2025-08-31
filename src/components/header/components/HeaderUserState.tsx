@@ -172,7 +172,7 @@ const HeaderUserState: React.FC<Readonly<IHeaderUserStateProps>> = ({ showMenu, 
         {
           id: 'ru',
           item: (
-            <div className={'flex gap-2'}>
+            <div className={'flex gap-2 items-center'}>
               <CustomIcon
                 name={'flag-ru'}
                 size={24}
@@ -184,7 +184,7 @@ const HeaderUserState: React.FC<Readonly<IHeaderUserStateProps>> = ({ showMenu, 
         {
           id: 'en',
           item: (
-            <div className={'flex gap-2'}>
+            <div className={'flex gap-2 items-center'}>
               <CustomIcon
                 name={'flag-us'}
                 size={24}
