@@ -67,6 +67,8 @@ export const COMMON_KEYS = ensureNoDuplicates([
   'common_logout',
   'common_trans_password',
   'common_email',
+  'common_now',
+  'common_daily_advice',
 ] as const);
 export const MAIN_KEYS = ensureNoDuplicates([
   'main_title',

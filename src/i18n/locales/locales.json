@@ -48,7 +48,9 @@
       "common_system": "System",
       "common_logout": "Logout",
       "common_trans_password": "Password, if not auth",
-      "common_email": "E-mail"
+      "common_email": "E-mail",
+      "common_now": " Now",
+      "common_daily_advice": "Tip of the day"
     },
     "main": {
       "main_title": "Preparing for an Interview with AI",
@@ -342,7 +344,9 @@
       "common_system": "Система",
       "common_logout": "Выйти",
       "common_trans_password": "Пароль, если не авторизован",
-      "common_email": "E-mail"
+      "common_email": "E-mail",
+      "common_now": "Сейчас",
+      "common_daily_advice": "Совет дня"
     },
     "profile": {
       "profile_cv_file_description": "Вы можете добавить файл по умолчанию, для добавления информации к собеседованию",

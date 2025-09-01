@@ -1015,7 +1015,12 @@ const Home = () => {
       </footer>
 
       <MessengerPopup
-        title={'Совет дня'}
+        title={
+          <Trans
+            ns={'common'}
+            k={'common_daily_advice'}
+          />
+        }
         delay={3000}
       />
     </AppLayout>
