@@ -63,6 +63,8 @@ export const COMMON_KEYS = ensureNoDuplicates([
   'common_cancel',
   'common_input_text',
   'common_invalid_format',
+  'common_system',
+  'common_logout',
 ] as const);
 export const MAIN_KEYS = ensureNoDuplicates([
   'main_title',
@@ -233,6 +235,7 @@ export const AUTH_KEYS = ensureNoDuplicates([
   'auth_change_password_title',
   'auth_change_password_change',
   'auth_password_changed_successfully',
+  'auth_google_login',
 ] as const);
 export type TCommonKey = (typeof COMMON_KEYS)[number];
 export type TMainKey = (typeof MAIN_KEYS)[number];
