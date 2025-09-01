@@ -105,44 +105,79 @@ const HeaderUserState: React.FC<Readonly<IHeaderUserStateProps>> = ({ showMenu, 
   const menuItems: IMenuItem[] = [
     {
       id: EMENU_ITEM.PROFILE,
-      text: 'Профиль',
+      text: (
+        <Trans
+          ns={'common'}
+          k={'common_profile'}
+        />
+      ),
       icon: 'profile',
       onClick: () => handleMenuClick(EMENU_ITEM.PROFILE),
     },
     {
       id: EMENU_ITEM.SYSTEM,
-      text: 'Система',
+      text: (
+        <Trans
+          ns={'common'}
+          k={'common_system'}
+        />
+      ),
       icon: 'settings',
       onClick: () => handleMenuClick(EMENU_ITEM.SYSTEM),
       hide: !user?.admin,
     },
     {
       id: EMENU_ITEM.INTERVIEW,
-      text: 'Собеседование',
+      text: (
+        <Trans
+          ns={'common'}
+          k={'common_interview'}
+        />
+      ),
       icon: 'two-users',
       onClick: () => handleMenuClick(EMENU_ITEM.INTERVIEW),
     },
     {
       id: EMENU_ITEM.TESTS,
-      text: 'Тестирование',
+      text: (
+        <Trans
+          ns={'common'}
+          k={'common_tests'}
+        />
+      ),
       icon: 'to-do-list',
       onClick: () => handleMenuClick(EMENU_ITEM.TESTS),
     },
     {
       id: EMENU_ITEM.RESUME_CHECK,
-      text: 'Проверка резюме',
+      text: (
+        <Trans
+          ns={'common'}
+          k={'common_check_cv'}
+        />
+      ),
       icon: 'file-check',
       onClick: () => handleMenuClick(EMENU_ITEM.RESUME_CHECK),
     },
     {
       id: EMENU_ITEM.RESUME_CREATE,
-      text: 'Создание резюме',
+      text: (
+        <Trans
+          ns={'common'}
+          k={'common_create_cv'}
+        />
+      ),
       icon: 'file-create',
       onClick: () => handleMenuClick(EMENU_ITEM.RESUME_CREATE),
     },
     {
       id: EMENU_ITEM.QUIT,
-      text: 'Выход',
+      text: (
+        <Trans
+          ns={'common'}
+          k={'common_logout'}
+        />
+      ),
       icon: 'logout',
       color: 'var(--main-error)',
       className: 'mt-auto',
