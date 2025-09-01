@@ -1,6 +1,6 @@
 'use client';
 
-import Api from '@/core/api/api';
+import Api, { API_PATH } from '@/core/api/api';
 import errorHandler from '@/core/utils/error/errorHandler';
 import routeChecker from '@/hoc/routeChecker';
 import { useAppDispatch } from '@/hooks/redux';
@@ -89,6 +89,10 @@ const LoginView = () => {
 
   const { t } = useI18n();
 
+  const handleGoogleLogin = async () => {
+    router.push(`${API_PATH}/auth/google`);
+  };
+
   return (
     <div className={'text-black flex flex-col w-full h-full items-center mx-4'}>
       <div className={'mb-16 text-white text-center text-3xl lg:text-5xl font-bold'}>
@@ -142,7 +146,7 @@ const LoginView = () => {
             format={'uppercase'}
           />
         </UIButton>
-        <div className={'flex my-6'}>
+        <div className={'flex flex-col my-6'}>
           <UIButton
             className={'mx-auto'}
             text={'Регистрация'}
@@ -153,6 +157,18 @@ const LoginView = () => {
             <Trans
               ns={'auth'}
               k={'auth_registration'}
+            />
+          </UIButton>
+          <UIButton
+            className={'mx-auto mt-3'}
+            text={'Войти с помощью Google'}
+            type={'transparent'}
+            iconBefore={'google-icon'}
+            onClick={handleGoogleLogin}
+          >
+            <Trans
+              ns={'auth'}
+              k={'auth_google_login'}
             />
           </UIButton>
         </div>

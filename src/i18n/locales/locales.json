@@ -44,7 +44,9 @@
       "common_password": "Password",
       "common_invalid_format": "Invalid format",
       "common_repeat_password": " Repeat password",
-      "common_confirm_email": "Confirm Email"
+      "common_confirm_email": "Confirm Email",
+      "common_system": "System",
+      "common_logout": "Logout"
     },
     "main": {
       "main_title": "Preparing for an Interview with AI",
@@ -144,7 +146,8 @@
       "profile_result_any": "Any",
       "profile_result_eight_and_more": "8.0 and above",
       "profile_result_five_to_eight": "from 5.0 to 8.0",
-      "profile_result_four_and_less": "4.0 and below"
+      "profile_result_four_and_less": "4.0 and below",
+      "profile_add_avatar": "Add image"
     },
     "interview": {
       "interview_description": "Specify the configuration parameters for creating the interview context.",
@@ -208,7 +211,8 @@
       "auth_confirm_terms_text": "By registering, I agree to the storage and processing of the data provided.",
       "auth_change_password_title": "Changing your password",
       "auth_change_password_change": " Change",
-      "auth_password_changed_successfully": " Password changed successfully."
+      "auth_password_changed_successfully": " Password changed successfully.",
+      "auth_google_login": "Login with Google"
     }
   },
   "ru": {
@@ -331,7 +335,9 @@
       "common_password": "Пароль",
       "common_invalid_format": "Некорректный формат",
       "common_repeat_password": "Повторите пароль",
-      "common_confirm_email": "Подтвердите Email"
+      "common_confirm_email": "Подтвердите Email",
+      "common_system": "Система",
+      "common_logout": "Выйти"
     },
     "profile": {
       "profile_cv_file_description": "Вы можете добавить файл по умолчанию, для добавления информации к собеседованию",
@@ -353,7 +359,8 @@
       "profile_result_any": "Любая",
       "profile_result_eight_and_more": "8.0 и выше",
       "profile_result_five_to_eight": "от 5.0 до 8.0",
-      "profile_result_four_and_less": "4.0 и ниже"
+      "profile_result_four_and_less": "4.0 и ниже",
+      "profile_add_avatar": "Добавить аватар"
     },
     "interview": {
       "interview_description": "Укажите конфигурацию параметров для составления контекста собеседования.",
@@ -416,7 +423,8 @@
       "auth_confirm_terms_text": "Регистрируясь, я даю согласие на хранение и обработку предоставленных данных.",
       "auth_change_password_title": "Изменение пароля",
       "auth_change_password_change": "Изменить",
-      "auth_password_changed_successfully": "Пароль успешно изменен."
+      "auth_password_changed_successfully": "Пароль успешно изменен.",
+      "auth_google_login": "Войти с помощью Google"
     }
   }
 }
