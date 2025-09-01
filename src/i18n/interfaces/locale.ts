@@ -63,6 +63,8 @@ export const COMMON_KEYS = ensureNoDuplicates([
   'common_cancel',
   'common_input_text',
   'common_invalid_format',
+  'common_system',
+  'common_logout',
 ] as const);
 export const MAIN_KEYS = ensureNoDuplicates([
   'main_title',
