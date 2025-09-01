@@ -46,7 +46,9 @@
       "common_repeat_password": " Repeat password",
       "common_confirm_email": "Confirm Email",
       "common_system": "System",
-      "common_logout": "Logout"
+      "common_logout": "Logout",
+      "common_trans_password": "Password, if not auth",
+      "common_email": "E-mail"
     },
     "main": {
       "main_title": "Preparing for an Interview with AI",
@@ -212,7 +214,8 @@
       "auth_change_password_title": "Changing your password",
       "auth_change_password_change": " Change",
       "auth_password_changed_successfully": " Password changed successfully.",
-      "auth_google_login": "Login with Google"
+      "auth_google_login": "Login with Google",
+      "auth_time_description": "Authorization takes 15 seconds"
     }
   },
   "ru": {
@@ -337,7 +340,9 @@
       "common_repeat_password": "Повторите пароль",
       "common_confirm_email": "Подтвердите Email",
       "common_system": "Система",
-      "common_logout": "Выйти"
+      "common_logout": "Выйти",
+      "common_trans_password": "Пароль, если не авторизован",
+      "common_email": "E-mail"
     },
     "profile": {
       "profile_cv_file_description": "Вы можете добавить файл по умолчанию, для добавления информации к собеседованию",
@@ -424,7 +429,8 @@
       "auth_change_password_title": "Изменение пароля",
       "auth_change_password_change": "Изменить",
       "auth_password_changed_successfully": "Пароль успешно изменен.",
-      "auth_google_login": "Войти с помощью Google"
+      "auth_google_login": "Войти с помощью Google",
+      "auth_time_description": "Авторизация займет 15 секунд"
     }
   }
 }

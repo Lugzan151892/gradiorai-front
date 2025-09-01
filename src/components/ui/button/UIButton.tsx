@@ -8,6 +8,7 @@ interface ICustomButtonProps {
   className?: string;
   type?: 'default' | 'transparent' | 'square';
   children?: Readonly<React.ReactNode>;
+  centerText?: boolean;
   iconAfter?: keyof typeof iconMarkup;
   iconBefore?: keyof typeof iconMarkup;
   onClick?: () => void;
@@ -20,6 +21,7 @@ const UIButton: React.FC<ICustomButtonProps> = ({
   children,
   onClick,
   disabled,
+  centerText,
   iconAfter,
   iconBefore,
   type = 'default',
@@ -56,7 +58,15 @@ const UIButton: React.FC<ICustomButtonProps> = ({
             name={iconBefore}
           />
         )}
-        <span className={'truncate overflow-hidden whitespace-nowrap flex-1'}>{children || text}</span>
+        <span
+          className={cn(
+            'truncate overflow-hidden whitespace-nowrap flex-1',
+            centerText && iconAfter && !iconBefore && 'pl-8',
+            centerText && iconBefore && !iconAfter && 'pr-8'
+          )}
+        >
+          {children || text}
+        </span>
         {iconAfter && (
           <CustomIcon
             className={'ml-3'}
