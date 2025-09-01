@@ -6,7 +6,7 @@ import UserAvatar from '@/components/user-avatar/UserAvatar';
 
 export interface IMenuItemProps {
   icon: keyof typeof IconMarkup;
-  text: string;
+  text: string | React.ReactNode;
   isLink?: boolean;
   isStatic?: boolean;
   color?: string;
