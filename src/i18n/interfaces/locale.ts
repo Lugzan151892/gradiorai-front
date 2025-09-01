@@ -233,6 +233,7 @@ export const AUTH_KEYS = ensureNoDuplicates([
   'auth_change_password_title',
   'auth_change_password_change',
   'auth_password_changed_successfully',
+  'auth_google_login',
 ] as const);
 export type TCommonKey = (typeof COMMON_KEYS)[number];
 export type TMainKey = (typeof MAIN_KEYS)[number];
