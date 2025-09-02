@@ -1,4 +1,5 @@
 import CustomIcon from '@/components/ui/icon/CustomIcon';
+import { Trans } from '@/i18n/Trans';
 import React from 'react';
 
 export enum EINTERVIEW_STATUS_FILTER {
@@ -24,19 +25,39 @@ export enum EINTERVIEW_RESULT_FILTER {
 export const statusOptions = [
   {
     id: EINTERVIEW_STATUS_FILTER.ALL,
-    text: 'Все',
+    item: (
+      <Trans
+        ns={'common'}
+        k={'common_all'}
+      />
+    ),
   },
   {
     id: EINTERVIEW_STATUS_FILTER.SUCCESS,
-    text: 'Успешно пройдено',
+    item: (
+      <Trans
+        ns={'profile'}
+        k={'profile_interview_success'}
+      />
+    ),
   },
   {
     id: EINTERVIEW_STATUS_FILTER.FAILED,
-    text: 'Неудачно',
+    item: (
+      <Trans
+        ns={'profile'}
+        k={'profile_interview_failed'}
+      />
+    ),
   },
   {
     id: EINTERVIEW_STATUS_FILTER.IN_PROGRESS,
-    text: 'В процессе',
+    item: (
+      <Trans
+        ns={'profile'}
+        k={'profile_interview_in_progress'}
+      />
+    ),
   },
 ];
 
@@ -44,22 +65,52 @@ export const timeOptions = [
   {
     id: EINTERVIEW_TIME_FILTER.ALL,
     text: 'За все время',
+    item: (
+      <Trans
+        ns={'profile'}
+        k={'profile_time_all'}
+      />
+    ),
   },
   {
     id: EINTERVIEW_TIME_FILTER.TODAY,
     text: 'Сегодня',
+    item: (
+      <Trans
+        ns={'profile'}
+        k={'profile_time_today'}
+      />
+    ),
   },
   {
     id: EINTERVIEW_TIME_FILTER.WEEK,
     text: 'За последнюю неделю',
+    item: (
+      <Trans
+        ns={'profile'}
+        k={'profile_time_week'}
+      />
+    ),
   },
   {
     id: EINTERVIEW_TIME_FILTER.MONTH,
     text: 'За последний месяц',
+    item: (
+      <Trans
+        ns={'profile'}
+        k={'profile_time_month'}
+      />
+    ),
   },
   {
     id: EINTERVIEW_TIME_FILTER.THREE_MONTHS,
     text: 'За 3 месяца',
+    item: (
+      <Trans
+        ns={'profile'}
+        k={'profile_time_three_months'}
+      />
+    ),
   },
 ];
 
@@ -67,6 +118,12 @@ export const resultOptions = [
   {
     id: EINTERVIEW_RESULT_FILTER.ALL,
     text: 'Любая',
+    item: (
+      <Trans
+        ns={'profile'}
+        k={'profile_result_any'}
+      />
+    ),
   },
   {
     id: EINTERVIEW_RESULT_FILTER.EIGHT_AND_MORE,
@@ -77,7 +134,10 @@ export const resultOptions = [
           color={'var(--main-yellow)'}
           name={'result-star'}
         />
-        <div>8.0 и выше</div>
+        <Trans
+          ns={'profile'}
+          k={'profile_result_eight_and_more'}
+        />
       </div>
     ),
   },
@@ -90,7 +150,10 @@ export const resultOptions = [
           color={'var(--main-yellow)'}
           name={'result-star'}
         />
-        <div>от 5.0 до 8.0</div>
+        <Trans
+          ns={'profile'}
+          k={'profile_result_five_to_eight'}
+        />
       </div>
     ),
   },
@@ -103,7 +166,10 @@ export const resultOptions = [
           color={'var(--main-yellow)'}
           name={'result-star'}
         />
-        <div>4.0 и ниже</div>
+        <Trans
+          ns={'profile'}
+          k={'profile_result_four_and_less'}
+        />
       </div>
     ),
   },

@@ -34,6 +34,11 @@ const getIconViewBox = (name: keyof typeof IconMarkup) => {
       return '0 0 50 50';
     case 'profile':
       return '0 0 26 26';
+    case 'flag-ru':
+    case 'flag-us':
+      return '0 0 513 343';
+    case 'google-icon':
+      return '0 0 48 48';
     default:
       return '0 0 24 24';
   }

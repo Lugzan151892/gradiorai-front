@@ -11,9 +11,9 @@ type TInputType = 'text' | 'password' | 'email' | 'number';
 type TInpuLevel = 'default' | 'small' | 'square';
 
 interface Props extends Pick<React.ComponentProps<'input'>, 'id' | 'disabled' | 'placeholder' | 'value' | 'className'> {
-  label?: string;
+  label?: string | React.ReactNode;
   type?: TInputType;
-  error?: string[] | string;
+  error?: string[] | string | React.ReactNode;
   linkChild?: React.ReactNode;
   autoComplete?: boolean;
   success?: boolean;
@@ -184,11 +184,16 @@ const UIInput: React.FC<Props> = ({
           ))}
       </div>
       <div className={'min-h-4'}>
-        {errorsList.length && !disabled ? (
-          <div className={'mt-2 text-xs text-error'}>{errorsList.join(' ')}</div>
-        ) : (
-          linkChild && <div>{linkChild}</div>
-        )}
+        {errorsList.length && !disabled
+          ? errorsList.map((error) => (
+              <div
+                key={error.toString()}
+                className={'mt-2 text-xs text-error'}
+              >
+                {error}
+              </div>
+            ))
+          : linkChild && <div>{linkChild}</div>}
       </div>
     </div>
   );

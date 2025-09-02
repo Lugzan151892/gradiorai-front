@@ -4,67 +4,72 @@ import UIButton from '@/components/ui/button/UIButton';
 import routeChecker from '@/hoc/routeChecker';
 import { useRouter } from 'next/navigation';
 import React from 'react';
+import { ESYSTEM_PAGES } from './interfaces';
 
 const SystemPage = () => {
   const router = useRouter();
-  const buttons = [
+  const buttons: {
+    id: ESYSTEM_PAGES;
+    text: string;
+    href: string;
+  }[] = [
     {
-      id: 1,
+      id: ESYSTEM_PAGES.LOGS,
       text: 'Логи',
       href: 'system/logs',
     },
     {
-      id: 2,
+      id: ESYSTEM_PAGES.GPT,
       text: 'Настройки ГПТ',
       href: 'system/gpt',
     },
     {
-      id: 3,
+      id: ESYSTEM_PAGES.QUESTIONS,
       text: 'Список вопросов',
       href: 'system/questions',
     },
     {
-      id: 4,
+      id: ESYSTEM_PAGES.ENTITIES,
       text: 'Изменение сущностей',
       href: 'system/edit-entities',
     },
     {
-      id: 5,
+      id: ESYSTEM_PAGES.USERS,
       text: 'Список пользователей',
       href: 'system/users',
     },
     {
-      id: 6,
+      id: ESYSTEM_PAGES.REVIEWS,
       text: 'Отзывы пользователей',
       href: 'system/reviews',
     },
     {
-      id: 7,
+      id: ESYSTEM_PAGES.INTERVIEWS,
       text: 'Мои собеседования',
       href: 'system/interviews',
     },
     {
-      id: 8,
+      id: ESYSTEM_PAGES.FILES,
       text: 'Системные файлы',
       href: 'system/files',
     },
     {
-      id: 9,
+      id: ESYSTEM_PAGES.ACTIONS,
       text: 'Активность пользователей',
       href: 'system/actions-log',
     },
     {
-      id: 10,
+      id: ESYSTEM_PAGES.TRANSACTIONS,
       text: 'Затраты на сервис',
       href: 'system/admins-transactions',
     },
     {
-      id: 11,
-      text: 'Список бэкапов',
-      href: 'system/backups',
+      id: ESYSTEM_PAGES.TRANSLATIONS,
+      text: 'Локализация',
+      href: 'system/translations',
     },
     {
-      id: 12,
+      id: ESYSTEM_PAGES.ANALIZE,
       text: 'Доска задач + аналитика',
       href: 'system/issue-board',
     },
