@@ -8,11 +8,15 @@ import { TLocale } from '@/i18n/interfaces/locale';
 import UITextarea from '@/components/ui/textarea/UITextarea';
 import UILabel from '@/components/ui/label/UILabel';
 import UIButton from '@/components/ui/button/UIButton';
+import CustomIcon from '@/components/ui/icon/CustomIcon';
+import UIInput from '@/components/ui/input/UIInput';
+import { Trans } from './Trans';
 
 export function EditorProvider({ children }: { children: React.ReactNode }) {
   const [active, setActive] = useState(false);
   const [targetEl, setTargetEl] = useState<HTMLElement | null>(null);
   const [value, setValue] = useState('');
+  const [password, setPassword] = useState('');
   const { locale, updateTranslationInMemory } = useI18n();
   const [selectedLocale, setSelectedLocale] = useState<TLocale>(locale);
   const [nsKey, setNsKey] = useState<{ ns: string; key: string } | null>(null);
@@ -95,7 +99,7 @@ export function EditorProvider({ children }: { children: React.ReactNode }) {
     if (!attr) return;
 
     const [ns, key] = attr.split(':');
-    await Api.patch('/translations/update', { locale: selectedLocale, namespace: ns, key, value });
+    await Api.patch('/translations/update', { locale: selectedLocale, namespace: ns, key, value, password });
 
     updateTranslationInMemory(selectedLocale, ns, key, value);
   }
@@ -141,6 +145,8 @@ export function EditorProvider({ children }: { children: React.ReactNode }) {
     };
   }, [isDragging, dragOffset.x, dragOffset.y]);
 
+  const { t } = useI18n();
+
   return (
     <>
       {active && (
@@ -166,17 +172,54 @@ export function EditorProvider({ children }: { children: React.ReactNode }) {
             >
               Изменить текст
             </h3>
-            <div className={'mb-3 flex items-center'}>
-              <div>Язык: </div>
-              <UISelect
-                options={[
-                  { id: 'ru', text: 'ru' },
-                  { id: 'en', text: 'en' },
-                ]}
-                value={selectedLocale}
-                onChange={handleLocaleChange}
-                className={''}
-                placeholder={'locale'}
+            <div className={'flex'}>
+              <div className={'mb-3 flex items-center'}>
+                <div>Язык: </div>
+                <UISelect
+                  options={[
+                    {
+                      id: 'ru',
+                      item: (
+                        <div className={'flex gap-2 items-center'}>
+                          <CustomIcon
+                            name={'flag-ru'}
+                            size={24}
+                          />
+                          <div className={'text-[10px] text-gray-200'}>RU</div>
+                        </div>
+                      ),
+                    },
+                    {
+                      id: 'en',
+                      item: (
+                        <div className={'flex gap-2 items-center'}>
+                          <CustomIcon
+                            name={'flag-us'}
+                            size={24}
+                          />
+                          <div className={'text-[10px] text-gray-200'}>EN</div>
+                        </div>
+                      ),
+                    },
+                  ]}
+                  value={selectedLocale}
+                  onChange={handleLocaleChange}
+                  placeholder={'locale'}
+                />
+              </div>
+              <UIInput
+                label={
+                  <Trans
+                    ns={'common'}
+                    k={'common_trans_password'}
+                  />
+                }
+                level={'square'}
+                type={'password'}
+                id={'password'}
+                placeholder={t('common', 'common_trans_password')}
+                value={password}
+                onInput={setPassword}
               />
             </div>
             <UILabel

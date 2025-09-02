@@ -104,12 +104,17 @@ const LoginView = () => {
       <div className={'w-full max-w-xs'}>
         <UIInput
           className={'mb-3'}
-          label={'E-mail'}
+          label={
+            <Trans
+              ns={'common'}
+              k={'common_email'}
+            />
+          }
           value={email}
           id={'email'}
           error={emailError}
           type={'email'}
-          placeholder={'Email'}
+          placeholder={t('common', 'common_password')}
           onInput={(val) => {
             setEmail(val);
             setEmailError('');
@@ -137,6 +142,7 @@ const LoginView = () => {
           className={'w-full mt-6'}
           disabled={!!emailError || !!passwordError}
           text={'ВОЙТИ'}
+          centerText
           onClick={handleLogin}
           iconAfter={'arrow-top-right'}
         >
@@ -159,18 +165,25 @@ const LoginView = () => {
               k={'auth_registration'}
             />
           </UIButton>
-          <UIButton
-            className={'mx-auto mt-3'}
-            text={'Войти с помощью Google'}
-            type={'transparent'}
-            iconBefore={'google-icon'}
-            onClick={handleGoogleLogin}
-          >
+          <div className={'flex flex-col items-center mt-3'}>
             <Trans
+              className={'text-text-disabled text-sm'}
               ns={'auth'}
-              k={'auth_google_login'}
+              k={'auth_time_description'}
             />
-          </UIButton>
+            <UIButton
+              className={'mx-auto mt-3'}
+              text={'Войти с помощью Google'}
+              type={'transparent'}
+              iconBefore={'google-icon'}
+              onClick={handleGoogleLogin}
+            >
+              <Trans
+                ns={'auth'}
+                k={'auth_google_login'}
+              />
+            </UIButton>
+          </div>
         </div>
       </div>
     </div>
