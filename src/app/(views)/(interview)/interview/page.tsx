@@ -11,6 +11,7 @@ import UIButton from '@/components/ui/button/UIButton';
 import SwitchButton from '@/components/ui/switch-button/SwitchButton';
 import UITextarea from '@/components/ui/textarea/UITextarea';
 import routeChecker from '@/hoc/routeChecker';
+import { Trans } from '@/i18n/Trans';
 
 const InterviewView = () => {
   const [vakanciesFile, setVakanciesFile] = useState<null | File>(null);
@@ -61,9 +62,17 @@ const InterviewView = () => {
         style={{ background: 'var(--main-gradient)' }}
       >
         <div className={'w-full lg:max-w-[808px] flex flex-col gap-6 text-center'}>
-          <div className={'lg:text-5xl text-4xl leading-[100%] font-bold'}>Cобеседование</div>
+          <div className={'lg:text-5xl text-4xl leading-[100%] font-bold'}>
+            <Trans
+              ns={'common'}
+              k={'common_interview'}
+            />
+          </div>
           <div className={'lg:text-xl text-base'}>
-            Укажите конфигурацию параметров для составления контекста собеседования.
+            <Trans
+              ns={'interview'}
+              k={'interview_description'}
+            />
           </div>
         </div>
       </div>
@@ -71,7 +80,12 @@ const InterviewView = () => {
       <div className={'p-6 bg-main-black rounded-3xl gap-4 z-20 text-center mx-4'}>
         <div className={'max-w-[808px] flex flex-col mx-auto'}>
           <FileDropzone
-            label={'Ваше резюме'}
+            label={
+              <Trans
+                ns={'interview'}
+                k={'interview_cv_file'}
+              />
+            }
             maxFileSize={2}
             file={userCV}
             formats={['docx', 'pdf']}
@@ -79,15 +93,30 @@ const InterviewView = () => {
           />
           <SwitchButton
             className={'mt-6'}
-            label={'Добавить файл с вакансией'}
+            label={
+              <Trans
+                ns={'interview'}
+                k={'interview_add_file_vakancies'}
+              />
+            }
             checked={addVCFile}
             onChange={(val) => setAddVCFile(val)}
           />
-          <div className={'text-left text-xs mt-1 text-text-disabled'}>Файл вакансии на которую вы откликаетесь</div>
+          <div className={'text-left text-xs mt-1 text-text-disabled'}>
+            <Trans
+              ns={'interview'}
+              k={'interview_add_file_vakancies_description'}
+            />
+          </div>
           {addVCFile && (
             <FileDropzone
               className={'mt-6'}
-              label={'Ваша вакансия'}
+              label={
+                <Trans
+                  ns={'interview'}
+                  k={'interview_your_vakancie'}
+                />
+              }
               file={vakanciesFile}
               maxFileSize={2}
               formats={['docx', 'pdf']}
@@ -97,9 +126,17 @@ const InterviewView = () => {
           <UITextarea
             className={'mt-6'}
             id={'user-description'}
-            label={'Дополнительная информация'}
+            label={
+              <Trans
+                ns={'interview'}
+                k={'interview_additional_info'}
+              />
+            }
             hint={
-              'Здесь можно описать вакансию, на которую Вы хотите пройти собеседование или дать больше информации о себе'
+              <Trans
+                ns={'interview'}
+                k={'interview_additional_info_description'}
+              />
             }
             value={userDescription}
             rows={10}
@@ -114,7 +151,13 @@ const InterviewView = () => {
           disabled={!userCV}
           text={'НАЧАТЬ'}
           onClick={startInterview}
-        />
+        >
+          <Trans
+            ns={'interview'}
+            k={'interview_start'}
+            format={'uppercase'}
+          />
+        </UIButton>
       </div>
     </section>
   );

@@ -14,6 +14,8 @@ import errorHandler from '@/core/utils/error/errorHandler';
 import { setLoading } from '@/features/loading/loadingSlice';
 import { useBreakpoint } from '@/hooks/useBreakpoints';
 import { cn } from '@/lib/utils';
+import { Trans } from '@/i18n/Trans';
+import { useI18n } from '@/i18n/I18nProvider';
 
 const GenerateTest: React.FC<{
   tests: ITest[];
@@ -88,10 +90,17 @@ const GenerateTest: React.FC<{
     setSaveQuestionModal(true);
   };
 
+  const { t } = useI18n();
+
   if (showResults) {
     return (
       <section className={'mt-6 w-full lg:max-w-[1440px] max-w-screen lg:mx-auto h-full px-4'}>
-        <div className={'lg:text-5xl text-4xl leading-[100%] font-bold text-center mb-6'}>Результат тестирования</div>
+        <div className={'lg:text-5xl text-4xl leading-[100%] font-bold text-center mb-6'}>
+          <Trans
+            ns={'tests'}
+            k={'tests_result'}
+          />
+        </div>
         <div className={'max-w-[685px] mx-auto flex flex-col relative lg:px-4'}>
           <div className={'flex flex-col'}>
             <ProgressBar
@@ -102,12 +111,23 @@ const GenerateTest: React.FC<{
               className={'mx-auto mt-8'}
               text={'ПОПРОБОВАТЬ СНОВА'}
               onClick={goToTests}
-            />
+            >
+              <Trans
+                ns={'tests'}
+                k={'test_try_again'}
+                format={'uppercase'}
+              />
+            </UIButton>
           </div>
         </div>
         <div className={'bg-main-black rounded-3xl flex justify-center p-8 mt-10 mb-8'}>
           <div className={'flex flex-col gap-6 items-center text-center lg:max-w-[1200px] w-full'}>
-            <div className={'lg:text-xl text-base'}>Пожалуйста, оцените тестирование</div>
+            <div className={'lg:text-xl text-base'}>
+              <Trans
+                ns={'tests'}
+                k={'test_rate_testing'}
+              />
+            </div>
             <div
               className={'flex lg:gap-7 gap-5 mt-2'}
               onMouseLeave={() => setUserHover(0)}
@@ -125,19 +145,29 @@ const GenerateTest: React.FC<{
               ))}
             </div>
             <UITextarea
-              label={'Оставьте отзыв'}
-              placeholder={'Расскажите о своих впечатлениях'}
+              label={
+                <Trans
+                  ns={'tests'}
+                  k={'test_leave_review'}
+                />
+              }
+              placeholder={t('tests', 'test_leave_review_description')}
               value={comment}
               rows={isMobile ? 3 : 4}
               onInput={setComment}
               disabled={reviewSent}
             />
             <UIButton
-              text={'ОТПРАВИТЬ ОТЗЫВ'}
               iconAfter={'arrow-top-right'}
               disabled={(!userRating && !comment) || reviewSent}
               onClick={handleReview}
-            />
+            >
+              <Trans
+                ns={'tests'}
+                k={'test_leave_send_review'}
+                format={'uppercase'}
+              />
+            </UIButton>
           </div>
         </div>
       </section>
@@ -170,10 +200,21 @@ const GenerateTest: React.FC<{
           />
         </AdminWrapper>
         <UIButton
-          text={currentQuestion === tests.length ? 'Завершить' : 'Далее'}
           disabled={!userChoise}
           onClick={handleSetQuestion}
-        />
+        >
+          {currentQuestion === tests.length ? (
+            <Trans
+              ns={'tests'}
+              k={'tests_finish'}
+            />
+          ) : (
+            <Trans
+              ns={'tests'}
+              k={'tests_next'}
+            />
+          )}
+        </UIButton>
       </div>
       <SaveQuestionModal
         techs={techs}

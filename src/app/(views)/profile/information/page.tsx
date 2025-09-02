@@ -16,6 +16,7 @@ import { AvatarUploadModal } from '@/app/(views)/profile/components/AvatarUpload
 import UserAvatar from '@/components/user-avatar/UserAvatar';
 import { IFile } from '@/core/interfaces/types';
 import CustomIcon from '@/components/ui/icon/CustomIcon';
+import { Trans } from '@/i18n/Trans';
 
 enum ESET_PASSWORD_STEPS {
   CURRENT_PASSWORD = 1,
@@ -33,9 +34,9 @@ const ProfileInformation = () => {
   const [password, setPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [newPassword, setNewPassword] = useState('');
-  const [newPasswordError, setNewPasswordError] = useState('');
+  const [newPasswordError, setNewPasswordError] = useState<string | React.ReactNode>('');
   const [repeatedNewPassword, setRepeatedNewPassword] = useState('');
-  const [repeatedNewPasswordError, setRepeatedNewPasswordError] = useState('');
+  const [repeatedNewPasswordError, setRepeatedNewPasswordError] = useState<string | React.ReactNode>('');
 
   const [code, setCode] = useState('');
   const [codeError, setCodeError] = useState(false);
@@ -68,12 +69,39 @@ const ProfileInformation = () => {
   };
 
   const handleSetPassword = async () => {
-    const newPasswordErrorMsg = password ? '' : 'Поле не заполнено';
-    const newPasswordReqError = /^(?=.*[A-Z])(?=.*[\W_]).{8,}$/.test(password)
-      ? ''
-      : 'Пароль должен содержать минимум 8 символов, заглавную букву и спецсимвол';
-    const repeatedNewPasswordErrorMsg = repeatedNewPassword ? '' : 'Поле не заполнено';
-    const passwordMismatchError = newPassword !== repeatedNewPassword ? 'Пароли не совпадают' : '';
+    const newPasswordErrorMsg = password ? (
+      ''
+    ) : (
+      <Trans
+        ns={'common'}
+        k={'common_field_empty'}
+      />
+    );
+    const newPasswordReqError = /^(?=.*[A-Z])(?=.*[\W_]).{8,}$/.test(password) ? (
+      ''
+    ) : (
+      <Trans
+        ns={'common'}
+        k={'common_password_validation'}
+      />
+    );
+    const repeatedNewPasswordErrorMsg = repeatedNewPassword ? (
+      ''
+    ) : (
+      <Trans
+        ns={'common'}
+        k={'common_field_empty'}
+      />
+    );
+    const passwordMismatchError =
+      newPassword !== repeatedNewPassword ? (
+        <Trans
+          ns={'common'}
+          k={'common_passwords_doesnt_match'}
+        />
+      ) : (
+        ''
+      );
 
     if (newPasswordErrorMsg || repeatedNewPasswordErrorMsg || newPasswordReqError || passwordMismatchError) {
       setNewPasswordError(newPasswordErrorMsg || newPasswordReqError);
@@ -136,7 +164,12 @@ const ProfileInformation = () => {
 
       dispatch(
         openModal({
-          text: 'Пароль успешно изменен.',
+          text: (
+            <Trans
+              ns={'common'}
+              k={'common_password_changed'}
+            />
+          ),
           type: 'success',
         })
       );
@@ -168,7 +201,12 @@ const ProfileInformation = () => {
 
       dispatch(
         openModal({
-          text: 'Имя пользователя изменено.',
+          text: (
+            <Trans
+              ns={'profile'}
+              k={'profile_username_changed'}
+            />
+          ),
           type: 'success',
         })
       );
@@ -227,7 +265,12 @@ const ProfileInformation = () => {
   return (
     <div className={'flex flex-wrap lg:flex-row flex-col gap-6'}>
       <div className={'p-6 bg-main-black rounded-3xl h-auto h-full min-h-[460px] lg:w-[420px] w-full flex flex-col'}>
-        <div className={'text-2xl font-bold mb-6'}>Профиль пользователя</div>
+        <div className={'text-2xl font-bold mb-6'}>
+          <Trans
+            ns={'profile'}
+            k={'profile_user_profile'}
+          />
+        </div>
         <div className={'flex flex-col items-center mb-4'}>
           <UserAvatar size={80} />
           <input
@@ -241,13 +284,28 @@ const ProfileInformation = () => {
             className={'cursor-pointer hover:underline hover:text-main-purple mt-2'}
             onClick={handleClick}
           >
-            {user?.files.some((file) => file.type === 'AVATAR') ? 'Изменить аватар' : 'Добавить аватар'}
+            {user?.files.some((file) => file.type === 'AVATAR') ? (
+              <Trans
+                ns={'profile'}
+                k={'profile_change_avatar'}
+              />
+            ) : (
+              <Trans
+                ns={'profile'}
+                k={'profile_add_avatar'}
+              />
+            )}
           </div>
         </div>
         <div className={'flex flex-col h-full grow'}>
           <UIInput
             id={'name'}
-            label={'Имя'}
+            label={
+              <Trans
+                ns={'common'}
+                k={'common_name'}
+              />
+            }
             level={'square'}
             autoComplete={false}
             value={username}
@@ -260,18 +318,33 @@ const ProfileInformation = () => {
           <UIButton
             className={'mt-auto'}
             type={'square'}
-            text={'ИЗМЕНИТЬ'}
             onClick={handleSetUsername}
-          />
+          >
+            <Trans
+              ns={'common'}
+              k={'common_change'}
+              format={'uppercase'}
+            />
+          </UIButton>
         </div>
       </div>
       <div className={'p-6 bg-main-black rounded-3xl min-h-[460px] lg:w-[420px] w-full flex flex-col'}>
-        <div className={'text-2xl font-bold mb-6'}>Изменить пароль</div>
+        <div className={'text-2xl font-bold mb-6'}>
+          <Trans
+            ns={'common'}
+            k={'common_set_password'}
+          />
+        </div>
         {passwordStep === ESET_PASSWORD_STEPS.CURRENT_PASSWORD && (
           <div className={'flex flex-col h-full gap-2'}>
             <UIInput
               level={'square'}
-              label={'Текущий пароль'}
+              label={
+                <Trans
+                  ns={'common'}
+                  k={'common_current_password'}
+                />
+              }
               type={'password'}
               autoComplete={false}
               value={password}
@@ -283,7 +356,12 @@ const ProfileInformation = () => {
             />
             <UIInput
               level={'square'}
-              label={'Новый пароль'}
+              label={
+                <Trans
+                  ns={'common'}
+                  k={'common_new_password'}
+                />
+              }
               type={'password'}
               value={newPassword}
               error={newPasswordError}
@@ -294,7 +372,12 @@ const ProfileInformation = () => {
             />
             <UIInput
               level={'square'}
-              label={'Подтвердите пароль'}
+              label={
+                <Trans
+                  ns={'common'}
+                  k={'common_confirm_password'}
+                />
+              }
               type={'password'}
               value={repeatedNewPassword}
               error={repeatedNewPasswordError}
@@ -306,16 +389,30 @@ const ProfileInformation = () => {
             <UIButton
               className={'mt-auto'}
               type={'square'}
-              text={'ИЗМЕНИТЬ'}
               onClick={handleSetPassword}
-            />
+            >
+              <Trans
+                ns={'common'}
+                k={'common_change'}
+                format={'uppercase'}
+              />
+            </UIButton>
           </div>
         )}
         {passwordStep === ESET_PASSWORD_STEPS.EMAIL_CONFIRMATION && (
           <div className={'flex flex-col text-center mb-3'}>
-            <div className={'text-white text-2xl mb-3'}>Подтвердите Email</div>
+            <div className={'text-white text-2xl mb-3'}>
+              <Trans
+                ns={'common'}
+                k={'common_confirm_email'}
+              />
+            </div>
             <div className={'text-white text-sm mb-3'}>
-              Код отправлен на адрес <span className={'text-main-purple'}>{user?.email}</span>
+              <Trans
+                ns={'auth'}
+                k={'auth_code_was_sent_to'}
+              />{' '}
+              <span className={'text-main-purple'}>{user?.email}</span>
             </div>
             <CustomCodeInput
               className={'mx-auto rounded-input'}
@@ -327,17 +424,30 @@ const ProfileInformation = () => {
               className={'text-main-purple text-sm mt-3 hover:underline cursor-pointer'}
               onClick={handleRequestCode}
             >
-              Отправить повторно?
+              <Trans
+                ns={'auth'}
+                k={'auth_code_resent'}
+              />
             </div>
           </div>
         )}
       </div>
       <div className={'p-6 bg-main-black rounded-3xl min-h-[460px] lg:w-[460px] max-w-[460px]'}>
-        <div className={'text-2xl font-bold mb-6'}>Файл для собеседований</div>
+        <div className={'text-2xl font-bold mb-6'}>
+          <Trans
+            ns={'profile'}
+            k={'profile_cv_file'}
+          />
+        </div>
         <div>
           <div className={'flex items-center gap-2 mb-4'}>
             <CustomIcon name={'info-icon'} />
-            <div>Вы можете добавить файл по умолчанию, для добавления информации к собеседованию</div>
+            <div>
+              <Trans
+                ns={'profile'}
+                k={'profile_cv_file_description'}
+              />
+            </div>
           </div>
           <FileDropzone
             maxFileSize={2}

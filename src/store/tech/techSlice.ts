@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 type TInfoModalIconType = 'success' | 'error' | 'warning';
 interface IInfoModalSettings {
   type: TInfoModalIconType;
-  text: string;
+  text: string | React.ReactNode;
   buttonText: string;
   redirect: string;
   errorStatus?: number;
@@ -31,7 +31,7 @@ const techSlice = createSlice({
         payload,
       }: {
         payload: {
-          text: string;
+          text: string | React.ReactNode;
           redirect?: string;
           type?: TInfoModalIconType;
           status?: number;

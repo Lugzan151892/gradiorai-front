@@ -1,11 +1,12 @@
 'use client';
 
+import { Trans } from '@/i18n/Trans';
 import React, { useEffect, useRef, useState } from 'react';
 
 type ColorStep = {
   percent: number;
   color: string;
-  text: string;
+  text: string | React.ReactNode;
 };
 
 interface ProgressBarProps {
@@ -19,22 +20,42 @@ const defaultColors: ColorStep[] = [
   {
     percent: 0,
     color: 'text-main-gray stroke-main-gray',
-    text: 'Не расстраивайтесь — это отличная возможность улучшить свои знания! Попробуйте еще раз, у вас точно получится!',
+    text: (
+      <Trans
+        ns={'tests'}
+        k={'test_result_bad'}
+      />
+    ),
   },
   {
     percent: 5,
     color: 'text-main-purple stroke-main-purple',
-    text: 'Не расстраивайтесь — это отличная возможность улучшить свои знания! Попробуйте еще раз, у вас точно получится!',
+    text: (
+      <Trans
+        ns={'tests'}
+        k={'test_result_bad'}
+      />
+    ),
   },
   {
     percent: 30,
     color: 'text-main-purple stroke-main-purple',
-    text: 'Неплохой результат, но есть куда расти! Разберите ошибки и попробуйте снова.',
+    text: (
+      <Trans
+        ns={'tests'}
+        k={'test_result_good'}
+      />
+    ),
   },
   {
     percent: 80,
     color: 'text-main-purple stroke-main-purple',
-    text: 'Отличный результат! Вы показали отличные знания и справились со всеми вопросами. Так держать!',
+    text: (
+      <Trans
+        ns={'tests'}
+        k={'test_result_perfect'}
+      />
+    ),
   },
 ];
 
@@ -65,7 +86,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ score, maxScore, colorSteps =
 
   const caption = () => {
     const percent = Math.round((score * 100) / maxScore);
-    let text = colorSteps[0]?.text || '';
+    let text: string | React.ReactNode = colorSteps[0]?.text || '';
     for (const step of colorSteps) {
       if (percent >= step.percent) {
         text = step.text;

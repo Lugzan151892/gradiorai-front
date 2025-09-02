@@ -135,6 +135,17 @@ class Api {
     return await this.handleResponse<T, R, true>(path, 'POST', options, true);
   }
 
+  static async patch<T extends object | undefined, R>(path: string, options: T = {} as T): Promise<IResponse<R>> {
+    return await this.handleResponse<T, R, false>(path, 'PATCH', options);
+  }
+
+  static async patchSilent<T extends object | undefined, R>(
+    path: string,
+    options: T = {} as T
+  ): Promise<IResponseSilent<R>> {
+    return await this.handleResponse<T, R, true>(path, 'PATCH', options, true);
+  }
+
   static async put<T extends object | undefined, R>(path: string, options: T = {} as T): Promise<IResponse<R>> {
     return await this.handleResponse<T, R, false>(path, 'PUT', options);
   }

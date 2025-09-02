@@ -12,6 +12,10 @@ import MenuItem, { IMenuItemProps } from '@/components/header/components/MenuIte
 import { EMENU_ITEM } from '@/components/header/interfaces';
 import { cn } from '@/lib/utils';
 import UserAvatar from '@/components/user-avatar/UserAvatar';
+import UISelect from '@/components/ui/select/UISelect';
+import { useI18n } from '@/i18n/I18nProvider';
+import { TLocale } from '@/i18n/interfaces/locale';
+import { Trans } from '@/i18n/Trans';
 
 interface IMenuItem extends IMenuItemProps {
   id: EMENU_ITEM;
@@ -27,6 +31,7 @@ const HeaderUserState: React.FC<Readonly<IHeaderUserStateProps>> = ({ showMenu, 
   const router = useRouter();
   const { user } = useAppSelector((state: RootState) => state.user);
   const dispatch = useAppDispatch();
+  const { locale, setLocale } = useI18n();
 
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -100,44 +105,79 @@ const HeaderUserState: React.FC<Readonly<IHeaderUserStateProps>> = ({ showMenu, 
   const menuItems: IMenuItem[] = [
     {
       id: EMENU_ITEM.PROFILE,
-      text: 'Профиль',
+      text: (
+        <Trans
+          ns={'common'}
+          k={'common_profile'}
+        />
+      ),
       icon: 'profile',
       onClick: () => handleMenuClick(EMENU_ITEM.PROFILE),
     },
     {
       id: EMENU_ITEM.SYSTEM,
-      text: 'Система',
+      text: (
+        <Trans
+          ns={'common'}
+          k={'common_system'}
+        />
+      ),
       icon: 'settings',
       onClick: () => handleMenuClick(EMENU_ITEM.SYSTEM),
       hide: !user?.admin,
     },
     {
       id: EMENU_ITEM.INTERVIEW,
-      text: 'Собеседование',
+      text: (
+        <Trans
+          ns={'common'}
+          k={'common_interview'}
+        />
+      ),
       icon: 'two-users',
       onClick: () => handleMenuClick(EMENU_ITEM.INTERVIEW),
     },
     {
       id: EMENU_ITEM.TESTS,
-      text: 'Тестирование',
+      text: (
+        <Trans
+          ns={'common'}
+          k={'common_tests'}
+        />
+      ),
       icon: 'to-do-list',
       onClick: () => handleMenuClick(EMENU_ITEM.TESTS),
     },
     {
       id: EMENU_ITEM.RESUME_CHECK,
-      text: 'Проверка резюме',
+      text: (
+        <Trans
+          ns={'common'}
+          k={'common_check_cv'}
+        />
+      ),
       icon: 'file-check',
       onClick: () => handleMenuClick(EMENU_ITEM.RESUME_CHECK),
     },
     {
       id: EMENU_ITEM.RESUME_CREATE,
-      text: 'Создание резюме',
+      text: (
+        <Trans
+          ns={'common'}
+          k={'common_create_cv'}
+        />
+      ),
       icon: 'file-create',
       onClick: () => handleMenuClick(EMENU_ITEM.RESUME_CREATE),
     },
     {
       id: EMENU_ITEM.QUIT,
-      text: 'Выход',
+      text: (
+        <Trans
+          ns={'common'}
+          k={'common_logout'}
+        />
+      ),
       icon: 'logout',
       color: 'var(--main-error)',
       className: 'mt-auto',
@@ -161,60 +201,104 @@ const HeaderUserState: React.FC<Readonly<IHeaderUserStateProps>> = ({ showMenu, 
     };
   }, [showMenu, setShowMenu]);
 
+  const localeComponent = (
+    <UISelect
+      options={[
+        {
+          id: 'ru',
+          item: (
+            <div className={'flex gap-2 items-center'}>
+              <CustomIcon
+                name={'flag-ru'}
+                size={24}
+              />
+              <div className={'text-[10px] text-gray-200'}>RU</div>
+            </div>
+          ),
+        },
+        {
+          id: 'en',
+          item: (
+            <div className={'flex gap-2 items-center'}>
+              <CustomIcon
+                name={'flag-us'}
+                size={24}
+              />
+              <div className={'text-[10px] text-gray-200'}>EN</div>
+            </div>
+          ),
+        },
+      ]}
+      value={locale}
+      onChange={(val) => setLocale(String(val) as TLocale)}
+      className={''}
+      placeholder={'locale'}
+    />
+  );
+
   return (
     <>
-      {!user?.id ? (
-        <div className={'flex gap-2'}>
-          <UIButton
-            onClick={handleLogin}
-            text={'ВОЙТИ'}
-          />
-        </div>
-      ) : (
-        <div
-          className={'flex items-center'}
-          ref={menuRef}
-        >
-          <div
-            className={'flex items-center cursor-pointer select-none'}
-            onClick={() => setShowMenu?.(!showMenu)}
-          >
-            <UserAvatar size={40} />
-            <CustomIcon
-              name={'menu-arrow'}
-              color={'var(--main-white)'}
-              className={cn('ml-1 transform transition-transform duration-300', showMenu && 'rotate-180')}
-            />
-          </div>
-          {showMenu && (
-            <div
-              className={cn(
-                'z-50 p-4 bg-black lg:border lg:border-main-gray lg:rounded-xl flex flex-col overflow-hidden',
-                'lg:w-[350px] w-full max-w-full lg:max-h-[500px] h-screen max-h-[calc(100dvh-90px)] absolute top-[90px] lg:right-[100px] right-0 overflow-y-auto'
-              )}
+      <div className={'flex gap-4'}>
+        {localeComponent}
+        {!user?.id ? (
+          <div className={'flex'}>
+            <UIButton
+              onClick={handleLogin}
+              text={'ВОЙТИ'}
             >
-              <MenuItem
-                icon={'user'}
-                text={username || ''}
-                isLink
-                isStatic
-                className={'mb-4'}
-                onClick={() => router.push('/profile/information')}
+              <Trans
+                ns={'auth'}
+                k={'auth_login'}
+                format={'uppercase'}
               />
-              <div className={'flex flex-col gap-1 h-full'}>
-                {menuItems
-                  .filter((e) => !e.hide)
-                  .map((item) => (
-                    <MenuItem
-                      key={item.id}
-                      {...item}
-                    />
-                  ))}
-              </div>
+            </UIButton>
+          </div>
+        ) : (
+          <div
+            className={'flex items-center'}
+            ref={menuRef}
+          >
+            <div
+              className={'flex items-center cursor-pointer select-none'}
+              onClick={() => setShowMenu?.(!showMenu)}
+            >
+              <UserAvatar size={40} />
+              <CustomIcon
+                name={'menu-arrow'}
+                color={'var(--main-white)'}
+                className={cn('ml-1 transform transition-transform duration-300', showMenu && 'rotate-180')}
+              />
             </div>
-          )}
-        </div>
-      )}
+            {showMenu && (
+              <div
+                className={cn(
+                  'z-50 p-4 bg-black lg:border lg:border-main-gray lg:rounded-xl flex flex-col overflow-hidden',
+                  'lg:w-[350px] w-full max-w-full lg:max-h-[500px] h-screen max-h-[calc(100dvh-90px)] absolute top-[90px] lg:right-[100px] right-0 overflow-y-auto'
+                )}
+              >
+                <MenuItem
+                  icon={'user'}
+                  text={username || ''}
+                  isLink
+                  isStatic
+                  className={'mb-4'}
+                  onClick={() => router.push('/profile/information')}
+                />
+                <div className={'flex flex-col gap-1 h-full'}>
+                  {menuItems
+                    .filter((e) => !e.hide)
+                    .map((item) => (
+                      <MenuItem
+                        key={item.id}
+                        {...item}
+                      />
+                    ))}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
     </>
   );
 };

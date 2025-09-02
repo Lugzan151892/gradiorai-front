@@ -5,12 +5,12 @@ import { cn } from '@/lib/utils';
 
 type ConfirmButton = {
   key: string;
-  label: string;
+  label: string | React.ReactNode;
   type?: 'default' | 'danger';
 };
 
 type ConfirmOptions = {
-  caption?: string;
+  caption?: string | React.ReactNode;
   content?: React.ReactNode;
   buttons: ConfirmButton[];
   type?: 'success' | 'error' | 'warning';

@@ -1,6 +1,6 @@
 'use client';
 
-import Api from '@/core/api/api';
+import Api, { API_PATH } from '@/core/api/api';
 import errorHandler from '@/core/utils/error/errorHandler';
 import routeChecker from '@/hoc/routeChecker';
 import { useAppDispatch } from '@/hooks/redux';
@@ -9,18 +9,34 @@ import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import UIButton from '@/components/ui/button/UIButton';
 import UIInput from '@/components/ui/input/UIInput';
+import { Trans } from '@/i18n/Trans';
+import { useI18n } from '@/i18n/I18nProvider';
 
 const LoginView = () => {
   const router = useRouter();
   const [email, setEmail] = useState('');
-  const [emailError, setEmailError] = useState('');
+  const [emailError, setEmailError] = useState<string | React.ReactNode>('');
   const [password, setPassword] = useState('');
-  const [passwordError, setPasswordError] = useState('');
+  const [passwordError, setPasswordError] = useState<string | React.ReactNode>('');
   const dispatch = useAppDispatch();
 
   const handleLogin = async () => {
-    const emailErrorMsg = email ? '' : 'Поле не заполнено';
-    const passwordErrorMsg = password ? '' : 'Поле не заполнено';
+    const emailErrorMsg = email ? (
+      ''
+    ) : (
+      <Trans
+        ns={'common'}
+        k={'common_field_empty'}
+      />
+    );
+    const passwordErrorMsg = password ? (
+      ''
+    ) : (
+      <Trans
+        ns={'common'}
+        k={'common_field_empty'}
+      />
+    );
 
     setEmailError(emailErrorMsg);
     setPasswordError(passwordErrorMsg);
@@ -64,32 +80,56 @@ const LoginView = () => {
       className={'mt-2 text-main-purple text-xs cursor-pointer hover:underline'}
       onClick={handleRestorePassword}
     >
-      Забыли пароль?
+      <Trans
+        ns={'auth'}
+        k={'auth_forgot_password'}
+      />
     </div>
   );
 
+  const { t } = useI18n();
+
+  const handleGoogleLogin = async () => {
+    router.push(`${API_PATH}/auth/google`);
+  };
+
   return (
     <div className={'text-black flex flex-col w-full h-full items-center mx-4'}>
-      <div className={'mb-16 text-white text-center text-3xl lg:text-5xl font-bold'}>С возвращением!</div>
+      <div className={'mb-16 text-white text-center text-3xl lg:text-5xl font-bold'}>
+        <Trans
+          ns={'auth'}
+          k={'auth_welcome_back'}
+        />
+      </div>
       <div className={'w-full max-w-xs'}>
         <UIInput
           className={'mb-3'}
-          label={'E-mail'}
+          label={
+            <Trans
+              ns={'common'}
+              k={'common_email'}
+            />
+          }
           value={email}
           id={'email'}
           error={emailError}
           type={'email'}
-          placeholder={'Email'}
+          placeholder={t('common', 'common_password')}
           onInput={(val) => {
             setEmail(val);
             setEmailError('');
           }}
         />
         <UIInput
-          label={'Пароль'}
+          label={
+            <Trans
+              ns={'common'}
+              k={'common_password'}
+            />
+          }
           type={'password'}
           id={'password'}
-          placeholder={'Пароль'}
+          placeholder={t('common', 'common_password')}
           value={password}
           error={passwordError}
           linkChild={forgetPasswordMarkup}
@@ -102,17 +142,48 @@ const LoginView = () => {
           className={'w-full mt-6'}
           disabled={!!emailError || !!passwordError}
           text={'ВОЙТИ'}
+          centerText
           onClick={handleLogin}
           iconAfter={'arrow-top-right'}
-        />
-        <div className={'flex my-6'}>
+        >
+          <Trans
+            ns={'auth'}
+            k={'auth_login'}
+            format={'uppercase'}
+          />
+        </UIButton>
+        <div className={'flex flex-col my-6'}>
           <UIButton
             className={'mx-auto'}
             text={'Регистрация'}
             type={'transparent'}
             onClick={handleGoRegistration}
             iconBefore={'user-add'}
-          />
+          >
+            <Trans
+              ns={'auth'}
+              k={'auth_registration'}
+            />
+          </UIButton>
+          <div className={'flex flex-col items-center mt-3'}>
+            <Trans
+              className={'text-text-disabled text-sm'}
+              ns={'auth'}
+              k={'auth_time_description'}
+            />
+            <UIButton
+              className={'mx-auto mt-3'}
+              text={'Войти с помощью Google'}
+              type={'transparent'}
+              iconBefore={'google-icon'}
+              onClick={handleGoogleLogin}
+            >
+              <Trans
+                ns={'auth'}
+                k={'auth_google_login'}
+              />
+            </UIButton>
+          </div>
         </div>
       </div>
     </div>

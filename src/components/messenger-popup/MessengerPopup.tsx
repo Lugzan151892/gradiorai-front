@@ -3,17 +3,26 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 import Api from '@/core/api/api';
+import { Trans } from '@/i18n/Trans';
+import { useI18n } from '@/i18n/I18nProvider';
 
 interface IMessengerPopupProps {
-  title: string;
+  title: string | React.ReactNode;
   delay?: number;
   className?: string;
+}
+
+interface IAdvice {
+  advice?: string;
+  advice_ru?: string;
+  advice_en: string;
 }
 
 const MessengerPopup: React.FC<IMessengerPopupProps> = ({ title, delay = 2000, className }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
-  const [advice, setAdvice] = useState('');
+  const [advice, setAdvice] = useState<IAdvice | null>();
+  const { locale } = useI18n();
 
   const loadDaylyAdvice = useCallback(async () => {
     const today = new Date().toDateString();
@@ -21,10 +30,10 @@ const MessengerPopup: React.FC<IMessengerPopupProps> = ({ title, delay = 2000, c
     const wasDismissed = localStorage.getItem(dismissedKey);
 
     if (!wasDismissed) {
-      const result = await Api.getSilent<undefined, { response: { advice: string }; usage: any }>('/gpt/advice');
+      const result = await Api.getSilent<undefined, { response: IAdvice; usage: any }>('/gpt/advice');
 
       if (result.success) {
-        setAdvice(result.payload.response.advice);
+        setAdvice(result.payload.response);
         const timer = setTimeout(() => {
           setIsVisible(true);
         }, delay);
@@ -52,6 +61,8 @@ const MessengerPopup: React.FC<IMessengerPopupProps> = ({ title, delay = 2000, c
     }, 300);
   };
 
+  const adviceText = (locale === 'ru' ? advice?.advice_ru : advice?.advice_en) || advice?.advice;
+
   if (!isVisible) return null;
 
   return (
@@ -77,7 +88,12 @@ const MessengerPopup: React.FC<IMessengerPopupProps> = ({ title, delay = 2000, c
           </div>
           <div className={'flex-1'}>
             <div className={'font-semibold text-gray-900 text-sm'}>{title}</div>
-            <div className={'text-xs text-gray-500'}>Сейчас</div>
+            <div className={'text-xs text-gray-500'}>
+              <Trans
+                ns={'common'}
+                k={'common_now'}
+              />
+            </div>
           </div>
           <button
             onClick={handleClose}
@@ -108,7 +124,7 @@ const MessengerPopup: React.FC<IMessengerPopupProps> = ({ title, delay = 2000, c
             </svg>
           </button>
         </div>
-        <div className={'text-gray-700 text-sm leading-relaxed'}>{advice}</div>
+        <div className={'text-gray-700 text-sm leading-relaxed'}>{adviceText}</div>
         <div className={'flex items-center justify-end mt-2'}>
           <div className={'flex items-center gap-1'}>
             <svg
