@@ -11,6 +11,9 @@ import { cn } from '@/lib/utils';
 import { sleep } from '@/core/utils/common';
 import { usePathname } from 'next/navigation';
 import { Trans } from '@/i18n/Trans';
+import { useRandomButton } from '@/hooks/useRandomButton';
+import { RootState } from '@/store';
+import { useAppSelector } from '@/hooks/redux';
 
 interface ILinkItem {
   id: string;
@@ -37,7 +40,8 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
   const [showMenu, setShowMenu] = useState(false);
   const [hoveredLinkId, setHoveredLinkId] = useState<string | null>(null);
   const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
+  const { user } = useAppSelector((state: RootState) => state.user);
+  const { selectedButton } = useRandomButton({ user });
   const cancelHoverTimeout = () => {
     if (hoverTimeoutRef.current) {
       clearTimeout(hoverTimeoutRef.current);
@@ -245,14 +249,14 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
       {withState && (
         <div
           className={cn(
-            'absolute top-[33px] left-[50%] transform-[translate(-50%,0)] p-2 xl:flex hidden gap-2 rounded-3xl border-1 border-main-gray bg-main-dark'
+            'absolute top-[33px] left-[50%] transform-[translate(-50%,0)] p-2 xl:flex hidden rounded-3xl border-1 border-main-gray bg-main-dark'
           )}
           onMouseLeave={() => delayedSetHoveredId(null)}
         >
-          {links.map((el) => (
+          {links.map((el, index) => (
             <div
               key={el.id}
-              className={'relative'}
+              className={cn('relative', !index ? 'ml-0' : 'ml-2')}
               onMouseEnter={() => {
                 cancelHoverTimeout();
                 setHoveredLinkId(el.submenu ? el.id : null);
@@ -310,6 +314,31 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
               )}
             </div>
           ))}
+          <div
+            className={cn(
+              'transition-all duration-300 ease-in-out overflow-hidden',
+              scrolled 
+                ? 'max-w-[300px] opacity-100 translate-x-0 ml-2' 
+                : 'max-w-0 opacity-0 translate-x-4'
+            )}
+          >
+            <div
+              className={cn(
+                'px-4 py-1 flex cursor-pointer rounded-3xl transition-colors duration-150 text-main-black bg-main-white hover:[box-shadow:inset_0_0_0_1px_hsla(0,0%,100%,0.04)]'
+              )}
+              onClick={() => {
+                if (selectedButton.onClick) selectedButton.onClick();
+              }}
+            >
+              <div className={'font-medium text-sm whitespace-nowrap'}>{selectedButton.children}</div>
+              <CustomIcon
+                className={'ml-2'}
+                name={'arrow-top-right'}
+                size={16}
+                color={'var(--main-black)'}
+              />
+            </div>
+          </div>
         </div>
       )}
       {withState && (
