@@ -56,7 +56,7 @@ const InterviewView = () => {
   };
 
   return (
-    <section className={'mt-6 w-full max-w-[1440px] mx-auto h-full'}>
+    <section className={'mt-6 w-full lg:px-10 h-full'}>
       <div
         className={'lg:h-[198px] rounded-b-4xl flex flex-col justify-center items-center mb-6 px-4 lg:py-auto py-14'}
         style={{ background: 'var(--main-gradient)' }}

@@ -37,6 +37,7 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
   withState,
 }) => {
   const [scrolled, setScrolled] = useState(false);
+  const [showAdditionalButton, setShowAdditionalButton] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [hoveredLinkId, setHoveredLinkId] = useState<string | null>(null);
   const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -61,6 +62,7 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
     const scrollEl = scrollRef?.current;
     if (!scrollEl) return;
     const onScroll = () => {
+      setShowAdditionalButton(scrollEl.scrollTop > 500);
       setScrolled(scrollEl.scrollTop > 10);
     };
 
@@ -330,7 +332,7 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
           <div
             className={cn(
               'transition-all duration-300 ease-in-out overflow-hidden',
-              scrolled ? 'max-w-[300px] opacity-100 translate-x-0 ml-2' : 'max-w-0 opacity-0 translate-x-4'
+              showAdditionalButton ? 'max-w-[300px] opacity-100 translate-x-0 ml-2' : 'max-w-0 opacity-0 translate-x-4'
             )}
           >
             <div
