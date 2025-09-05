@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 import Api from '@/core/api/api';
 import { Trans } from '@/i18n/Trans';
 import { useI18n } from '@/i18n/I18nProvider';
+import { useBreakpoint } from '@/hooks/useBreakpoints';
 
 interface IMessengerPopupProps {
   title: string | React.ReactNode;
@@ -22,6 +23,8 @@ const MessengerPopup: React.FC<IMessengerPopupProps> = ({ title, delay = 2000, c
   const [isVisible, setIsVisible] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [advice, setAdvice] = useState<IAdvice | null>();
+  const [isContentExpanded, setIsContentExpanded] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
   const { locale } = useI18n();
 
   const loadDaylyAdvice = useCallback(async () => {
@@ -61,6 +64,17 @@ const MessengerPopup: React.FC<IMessengerPopupProps> = ({ title, delay = 2000, c
     }, 300);
   };
 
+  const { isMobile } = useBreakpoint();
+
+  const handleToggleContent = () => {
+    if (!isMobile || isAnimating) return;
+    setIsAnimating(true);
+    setIsContentExpanded(!isContentExpanded);
+    setTimeout(() => {
+      setIsAnimating(false);
+    }, 300);
+  };
+
   const adviceText = (locale === 'ru' ? advice?.advice_ru : advice?.advice_en) || advice?.advice;
 
   if (!isVisible) return null;
@@ -86,8 +100,26 @@ const MessengerPopup: React.FC<IMessengerPopupProps> = ({ title, delay = 2000, c
           >
             <span className={'text-white text-sm font-bold'}>AI</span>
           </div>
-          <div className={'flex-1'}>
-            <div className={'font-semibold text-gray-900 text-sm'}>{title}</div>
+          <div
+            className={'flex-1 cursor-pointer lg:cursor-default'}
+            onClick={handleToggleContent}
+          >
+            <div className={'font-semibold text-gray-900 text-sm flex items-center gap-2'}>
+              <span>{title}</span>
+              <div className={'lg:hidden'}>
+                <svg
+                  width={'16'}
+                  height={'16'}
+                  viewBox={'0 0 24 24'}
+                  fill={'none'}
+                  stroke={'currentColor'}
+                  strokeWidth={'2'}
+                  className={`transition-transform duration-300 ${isContentExpanded ? 'rotate-180' : 'rotate-0'}`}
+                >
+                  <polyline points={'6,9 12,15 18,9'} />
+                </svg>
+              </div>
+            </div>
             <div className={'text-xs text-gray-500'}>
               <Trans
                 ns={'common'}
@@ -124,19 +156,27 @@ const MessengerPopup: React.FC<IMessengerPopupProps> = ({ title, delay = 2000, c
             </svg>
           </button>
         </div>
-        <div className={'text-gray-700 text-sm leading-relaxed'}>{adviceText}</div>
-        <div className={'flex items-center justify-end mt-2'}>
-          <div className={'flex items-center gap-1'}>
-            <svg
-              width={'12'}
-              height={'12'}
-              viewBox={'0 0 24 24'}
-              fill={'currentColor'}
-              className={'text-blue-500'}
-            >
-              <path d={'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'} />
-            </svg>
-            <span className={'text-xs text-gray-400'}>1</span>
+        <div
+          className={cn(
+            'overflow-hidden transition-all duration-700 ease-in-out',
+            'lg:max-h-none lg:opacity-100',
+            isContentExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+          )}
+        >
+          <div className={'text-gray-700 text-sm leading-relaxed'}>{adviceText}</div>
+          <div className={'flex items-center justify-end mt-2'}>
+            <div className={'flex items-center gap-1'}>
+              <svg
+                width={'12'}
+                height={'12'}
+                viewBox={'0 0 24 24'}
+                fill={'currentColor'}
+                className={'text-blue-500'}
+              >
+                <path d={'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'} />
+              </svg>
+              <span className={'text-xs text-gray-400'}>1</span>
+            </div>
           </div>
         </div>
       </div>
