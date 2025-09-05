@@ -6,6 +6,7 @@ import { setLoading } from '@/features/loading/loadingSlice';
 import { useAppDispatch } from '@/hooks/redux';
 import Api from '@/core/api/api';
 import errorHandler from '@/core/utils/error/errorHandler';
+import { IFakeUser } from '@/app/(views)/system/interfaces';
 
 const UserRatingsTable = () => {
   const [usersRating, setUsersRating] = useState<IUserRating[]>([]);
@@ -16,8 +17,20 @@ const UserRatingsTable = () => {
       try {
         dispatch(setLoading(true));
         const response = await Api.getSilent<undefined, { data: IUserRating[] }>('/user/rating/get-users-rating');
-        if (response.success) {
-          setUsersRating(response.payload.data);
+        const fakeUsers = await Api.getSilent<undefined, IFakeUser[]>('/user/rating/fake-users');
+        if (response.success && fakeUsers.success) {
+          const users = [
+            ...response.payload.data,
+            ...fakeUsers.payload.map((user) => ({
+              ...user,
+              user_id: 0,
+              user: { id: user.id, email: user.name, admin: false },
+              tests_rating: user.total_rating,
+              interviews_rating: user.total_rating,
+            })),
+          ];
+          users.sort((a, b) => b.total_rating - a.total_rating);
+          setUsersRating(users.slice(0, 10) as IUserRating[]);
         }
       } catch (e) {
         errorHandler(e, dispatch);
@@ -59,7 +72,7 @@ const UserRatingsTable = () => {
             </div>
           </div>
           <div className={'flex flex-col gap-2'}>
-            <div className={'text-4xl font-bold text-main-purple text-center'}>{usersRating[0].total_rating}</div>
+            <div className={'text-4xl font-bold text-main-purple text-center'}>{usersRating[0]?.total_rating}</div>
             <div className={'text-text-disabled text-lg'}>
               <Trans
                 ns={'main'}
