@@ -71,7 +71,38 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
   const router = useRouter();
   const pathName = usePathname();
 
+  const goHome = () => {
+    const el = document.getElementById('home');
+    if (el) {
+      const offset = 112;
+      const scrollContainer = scrollRef?.current;
+
+      if (scrollContainer) {
+        const elTop = el.getBoundingClientRect().top;
+        const containerTop = scrollContainer.getBoundingClientRect().top;
+        const scrollOffset = elTop - containerTop + scrollContainer.scrollTop - offset;
+
+        scrollContainer.scrollTo({
+          top: scrollOffset,
+          behavior: 'smooth',
+        });
+      }
+    }
+    router.push('/');
+  };
+
   const links: ILinkItem[] = [
+    {
+      id: 'HOME',
+      text: (
+        <Trans
+          ns={'main'}
+          k={'main_go_home'}
+          format={'uppercase'}
+        />
+      ),
+      onClick: goHome,
+    },
     {
       id: 'ABOUT',
       text: (
@@ -220,25 +251,7 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
         />
         <div
           className={'ml-2 cursor-pointer text-white lg:text-2xl text-base'}
-          onClick={() => {
-            const el = document.getElementById('home');
-            if (el) {
-              const offset = 112;
-              const scrollContainer = scrollRef?.current;
-
-              if (scrollContainer) {
-                const elTop = el.getBoundingClientRect().top;
-                const containerTop = scrollContainer.getBoundingClientRect().top;
-                const scrollOffset = elTop - containerTop + scrollContainer.scrollTop - offset;
-
-                scrollContainer.scrollTo({
-                  top: scrollOffset,
-                  behavior: 'smooth',
-                });
-              }
-            }
-            router.push('/');
-          }}
+          onClick={goHome}
         >
           <Trans
             ns={'common'}
