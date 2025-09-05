@@ -14,7 +14,7 @@ import chatExample from '@/components/main-page/assets/chat-example.png';
 import testExample from '@/components/main-page/assets/test-example.png';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
 import { RootState } from '@/store';
-import { getRandomElement } from '@/core/utils/array';
+import { useRandomButton } from '@/hooks/useRandomButton';
 import logoTransparentFull from '@/assets/icons/gradior_transparent_full.png';
 import AboutBlock from '@/components/main-page/about-block/AboutBlock';
 import errorHandler from '@/core/utils/error/errorHandler';
@@ -30,19 +30,7 @@ const Home = () => {
 
   const { user } = useAppSelector((state: RootState) => state.user);
 
-  const [mainButton, setMainButton] = useState({
-    id: 1,
-    text: 'ПРОЙТИ ТЕСТИРОВАНИЕ',
-    onClick: () => router.push('/tests'),
-    unauth: true,
-    children: (
-      <Trans
-        ns={'main'}
-        k={'main_do_tests'}
-        format={'uppercase'}
-      />
-    ),
-  });
+  const { selectedButton: mainButton } = useRandomButton({ user });
 
   const [privatePolicy, setPrivatePolicy] = useState<any>(null);
   const [personalTerms, setPersonalTerms] = useState<any>(null);
@@ -65,75 +53,10 @@ const Home = () => {
     loadSystemFiles();
   }, [loadSystemFiles]);
 
-  useEffect(() => {
-    const buttons = [
-      {
-        id: 1,
-        text: 'ПРОЙТИ ТЕСТИРОВАНИЕ',
-        onClick: () => router.push('/tests'),
-        unauth: true,
-        children: (
-          <Trans
-            ns={'main'}
-            k={'main_do_tests'}
-            format={'uppercase'}
-          />
-        ),
-      },
-      {
-        id: 2,
-        text: 'ПРОЙТИ СОБЕСЕДОВАНИЕ',
-        onClick: () => router.push('/interview'),
-        unauth: false,
-        children: (
-          <Trans
-            ns={'main'}
-            k={'main_do_interview'}
-            format={'uppercase'}
-          />
-        ),
-      },
-      {
-        id: 3,
-        text: 'ПРОВЕРИТЬ РЕЗЮМЕ',
-        onClick: () => router.push('/interview/resume-check'),
-        unauth: false,
-        children: (
-          <Trans
-            ns={'main'}
-            k={'main_do_check_cv'}
-            format={'uppercase'}
-          />
-        ),
-      },
-      {
-        id: 4,
-        text: 'СОЗДАТЬ РЕЗЮМЕ',
-        onClick: () => router.push('/interview/resume-create'),
-        unauth: false,
-        children: (
-          <Trans
-            ns={'main'}
-            k={'main_do_create_cv'}
-            format={'uppercase'}
-          />
-        ),
-      },
-    ];
-
-    const filteredButtons = buttons.filter((el) => !!user || el.unauth);
-
-    const newButton = getRandomElement(filteredButtons);
-
-    if (newButton) {
-      setMainButton(newButton);
-    }
-  }, [user, router]);
-
   return (
     <AppLayout>
       <div id={'home'} />
-      <div className={'lg:mt-6 w-full max-w-[1440px] mx-auto'}>
+      <div className={'lg:mt-6 lg:px-10'}>
         <section
           className={'lg:h-[758px] h-[544px] rounded-b-4xl flex flex-col justify-center items-center px-4'}
           style={{ background: 'var(--main-gradient)' }}
