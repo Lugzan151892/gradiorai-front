@@ -147,6 +147,7 @@ export const MAIN_KEYS = ensureNoDuplicates([
   'main_faq_card_description_4',
   'main_faq_card_title_5',
   'main_faq_card_description_5',
+  'main_go_home',
 ] as const);
 
 export const PROFILE_KEYS = ensureNoDuplicates([
