@@ -53,9 +53,25 @@ const GenerateTest: React.FC<{
     }
   };
 
+  const updateUserResult = async () => {
+    try {
+      dispatch(setLoading(true));
+      await Api.postSilent('/user/rating/update-test-result', {
+        level,
+        questions: tests.length,
+        correct: userResult,
+      });
+    } catch (e) {
+      errorHandler(e, dispatch);
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
+
   const handleSetQuestion = () => {
     if (currentQuestion === tests.length) {
       setShowResults(true);
+      updateUserResult();
     } else {
       setUserChoise(undefined);
       setCurrentQuestion(currentQuestion + 1);
