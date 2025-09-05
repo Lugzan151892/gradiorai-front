@@ -11,6 +11,9 @@ import { cn } from '@/lib/utils';
 import { sleep } from '@/core/utils/common';
 import { usePathname } from 'next/navigation';
 import { Trans } from '@/i18n/Trans';
+import { useRandomButton } from '@/hooks/useRandomButton';
+import { RootState } from '@/store';
+import { useAppSelector } from '@/hooks/redux';
 
 interface ILinkItem {
   id: string;
@@ -34,10 +37,12 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
   withState,
 }) => {
   const [scrolled, setScrolled] = useState(false);
+  const [showAdditionalButton, setShowAdditionalButton] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [hoveredLinkId, setHoveredLinkId] = useState<string | null>(null);
   const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
+  const { user } = useAppSelector((state: RootState) => state.user);
+  const { selectedButton } = useRandomButton({ user });
   const cancelHoverTimeout = () => {
     if (hoverTimeoutRef.current) {
       clearTimeout(hoverTimeoutRef.current);
@@ -57,6 +62,7 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
     const scrollEl = scrollRef?.current;
     if (!scrollEl) return;
     const onScroll = () => {
+      setShowAdditionalButton(scrollEl.scrollTop > 500);
       setScrolled(scrollEl.scrollTop > 10);
     };
 
@@ -67,7 +73,38 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
   const router = useRouter();
   const pathName = usePathname();
 
+  const goHome = () => {
+    const el = document.getElementById('home');
+    if (el) {
+      const offset = 112;
+      const scrollContainer = scrollRef?.current;
+
+      if (scrollContainer) {
+        const elTop = el.getBoundingClientRect().top;
+        const containerTop = scrollContainer.getBoundingClientRect().top;
+        const scrollOffset = elTop - containerTop + scrollContainer.scrollTop - offset;
+
+        scrollContainer.scrollTo({
+          top: scrollOffset,
+          behavior: 'smooth',
+        });
+      }
+    }
+    router.push('/');
+  };
+
   const links: ILinkItem[] = [
+    {
+      id: 'HOME',
+      text: (
+        <Trans
+          ns={'main'}
+          k={'main_go_home'}
+          format={'uppercase'}
+        />
+      ),
+      onClick: goHome,
+    },
     {
       id: 'ABOUT',
       text: (
@@ -201,7 +238,7 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
   return (
     <div
       className={cn(
-        'flex fixed top-0 left-0 right-0 z-10 h-[112px] shadow-indigo-900 lg:px-60 px-4 items-center transition-shadow duration-300',
+        'flex fixed top-0 left-0 right-0 z-10 h-[112px] shadow-indigo-900 lg:px-10 px-4 items-center transition-shadow duration-300',
         withState ? 'justify-between' : 'justify-center',
         scrolled && 'shadow-xl bg-main-dark',
         showMenu && 'lg:bg-main-dark bg-black'
@@ -216,25 +253,7 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
         />
         <div
           className={'ml-2 cursor-pointer text-white lg:text-2xl text-base'}
-          onClick={() => {
-            const el = document.getElementById('home');
-            if (el) {
-              const offset = 112;
-              const scrollContainer = scrollRef?.current;
-
-              if (scrollContainer) {
-                const elTop = el.getBoundingClientRect().top;
-                const containerTop = scrollContainer.getBoundingClientRect().top;
-                const scrollOffset = elTop - containerTop + scrollContainer.scrollTop - offset;
-
-                scrollContainer.scrollTo({
-                  top: scrollOffset,
-                  behavior: 'smooth',
-                });
-              }
-            }
-            router.push('/');
-          }}
+          onClick={goHome}
         >
           <Trans
             ns={'common'}
@@ -245,14 +264,14 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
       {withState && (
         <div
           className={cn(
-            'absolute top-[33px] left-[50%] transform-[translate(-50%,0)] p-2 xl:flex hidden gap-2 rounded-3xl border-1 border-main-gray bg-main-dark'
+            'absolute top-[33px] left-[50%] transform-[translate(-50%,0)] p-2 xl:flex hidden rounded-3xl border-1 border-main-gray bg-main-dark'
           )}
           onMouseLeave={() => delayedSetHoveredId(null)}
         >
-          {links.map((el) => (
+          {links.map((el, index) => (
             <div
               key={el.id}
-              className={'relative'}
+              className={cn('relative', !index ? 'ml-0' : 'ml-2')}
               onMouseEnter={() => {
                 cancelHoverTimeout();
                 setHoveredLinkId(el.submenu ? el.id : null);
@@ -310,6 +329,29 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
               )}
             </div>
           ))}
+          <div
+            className={cn(
+              'transition-all duration-300 ease-in-out overflow-hidden',
+              showAdditionalButton ? 'max-w-[300px] opacity-100 translate-x-0 ml-2' : 'max-w-0 opacity-0 translate-x-4'
+            )}
+          >
+            <div
+              className={cn(
+                'px-4 py-1 flex cursor-pointer rounded-3xl transition-colors duration-150 text-main-black bg-main-white hover:[box-shadow:inset_0_4px_4px_rgba(0,0,0,0.25)]'
+              )}
+              onClick={() => {
+                if (selectedButton.onClick) selectedButton.onClick();
+              }}
+            >
+              <div className={'font-medium text-sm whitespace-nowrap'}>{selectedButton.children}</div>
+              <CustomIcon
+                className={'ml-2'}
+                name={'arrow-top-right'}
+                size={16}
+                color={'var(--main-black)'}
+              />
+            </div>
+          </div>
         </div>
       )}
       {withState && (

@@ -46,7 +46,7 @@ const ResumePrepare = () => {
   };
 
   return (
-    <section className={'w-full max-w-[1440px] mx-auto flex flex-col pb-3'}>
+    <section className={'w-full lg:px-10 flex flex-col pb-3'}>
       <div
         className={'lg:h-[198px] rounded-b-4xl flex flex-col justify-center items-center mb-6 px-4 lg:py-auto py-14'}
         style={{ background: 'var(--main-gradient)' }}
