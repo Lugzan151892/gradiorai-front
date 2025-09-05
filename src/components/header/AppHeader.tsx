@@ -205,7 +205,7 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
   return (
     <div
       className={cn(
-        'flex fixed top-0 left-0 right-0 z-10 h-[112px] shadow-indigo-900 lg:px-60 px-4 items-center transition-shadow duration-300',
+        'flex fixed top-0 left-0 right-0 z-10 h-[112px] shadow-indigo-900 lg:px-10 px-4 items-center transition-shadow duration-300',
         withState ? 'justify-between' : 'justify-center',
         scrolled && 'shadow-xl bg-main-dark',
         showMenu && 'lg:bg-main-dark bg-black'
@@ -317,14 +317,12 @@ const AppHeader: React.FC<Readonly<{ scrollRef?: React.RefObject<HTMLDivElement 
           <div
             className={cn(
               'transition-all duration-300 ease-in-out overflow-hidden',
-              scrolled 
-                ? 'max-w-[300px] opacity-100 translate-x-0 ml-2' 
-                : 'max-w-0 opacity-0 translate-x-4'
+              scrolled ? 'max-w-[300px] opacity-100 translate-x-0 ml-2' : 'max-w-0 opacity-0 translate-x-4'
             )}
           >
             <div
               className={cn(
-                'px-4 py-1 flex cursor-pointer rounded-3xl transition-colors duration-150 text-main-black bg-main-white hover:[box-shadow:inset_0_0_0_1px_hsla(0,0%,100%,0.04)]'
+                'px-4 py-1 flex cursor-pointer rounded-3xl transition-colors duration-150 text-main-black bg-main-white hover:[box-shadow:inset_0_4px_4px_rgba(0,0,0,0.25)]'
               )}
               onClick={() => {
                 if (selectedButton.onClick) selectedButton.onClick();

@@ -53,11 +53,10 @@ const Home = () => {
     loadSystemFiles();
   }, [loadSystemFiles]);
 
-
   return (
     <AppLayout>
       <div id={'home'} />
-      <div className={'lg:mt-6 w-full max-w-[1440px] mx-auto'}>
+      <div className={'lg:mt-6 lg:px-10'}>
         <section
           className={'lg:h-[758px] h-[544px] rounded-b-4xl flex flex-col justify-center items-center px-4'}
           style={{ background: 'var(--main-gradient)' }}
