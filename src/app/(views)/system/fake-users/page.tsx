@@ -1,7 +1,6 @@
 'use client';
 
 import Api from '@/core/api/api';
-import { normalizeServerDate } from '@/core/utils/date';
 import errorHandler from '@/core/utils/error/errorHandler';
 import { setLoading } from '@/features/loading/loadingSlice';
 import { useAppDispatch } from '@/hooks/redux';
@@ -11,7 +10,7 @@ import { openModal } from '@/store/tech/techSlice';
 import { ScrollArea } from '@/components/ui/scroll-area/ScrollArea';
 import routeChecker from '@/hoc/routeChecker';
 import { IFakeUser } from '@/app/(views)/system/interfaces';
-import FakeUserModal from './components/FakeUserModal';
+import FakeUserModal from '@/app/(views)/system/fake-users/components/FakeUserModal';
 
 const SystemFakeUsers = () => {
   const [fakeUsers, setFakeUsers] = useState<IFakeUser[]>([]);
