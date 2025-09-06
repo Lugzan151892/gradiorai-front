@@ -1,6 +1,18 @@
 import { IInterview } from '@/app/(views)/(interview)/interview/types';
 import { EGPT_SETTINGS_TYPE, ESKILL_LEVEL } from '@/core/interfaces/enums';
 
+export interface IUserRating {
+  id: number;
+  user_id: number;
+  user: IUser;
+  tests_rating: number;
+  interviews_rating: number;
+  total_rating: number;
+  last_activity: string;
+  updated_at: string;
+  created_at: string;
+}
+
 export interface IUser {
   id: number;
   email: string;
@@ -23,6 +35,7 @@ export interface IUser {
     user_id: number;
   }>;
   files: Array<IFile>;
+  user_rating: IUserRating;
 }
 
 export interface IUserReview {

@@ -73,7 +73,13 @@ const SystemPage = () => {
       text: 'Доска задач + аналитика',
       href: 'system/issue-board',
     },
+    {
+      id: ESYSTEM_PAGES.FAKE_USERS,
+      text: 'Фейковые пользователи',
+      href: 'system/fake-users',
+    },
   ];
+
   return (
     <div className={'flex items-center h-full w-full justify-center my-auto'}>
       <div
