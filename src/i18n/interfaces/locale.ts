@@ -177,6 +177,7 @@ export const PROFILE_KEYS = ensureNoDuplicates([
   'profile_result_five_to_eight',
   'profile_result_four_and_less',
   'profile_result_any',
+  'profile_google_user_notification',
 ] as const);
 
 export const INTERVIEW_KEYS = ensureNoDuplicates([
