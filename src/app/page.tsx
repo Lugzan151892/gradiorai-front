@@ -23,6 +23,7 @@ import { setLoading } from '@/features/loading/loadingSlice';
 import { getPublicFileLink } from '@/core/utils/files';
 import { Trans } from '@/i18n/Trans';
 import MessengerPopup from '@/components/messenger-popup/MessengerPopup';
+import UserRatingsTable from '@/components/user-ratings-table/UserRatingsTable';
 
 const Home = () => {
   const router = useRouter();
@@ -61,7 +62,7 @@ const Home = () => {
           className={'lg:h-[758px] h-[544px] rounded-b-4xl flex flex-col justify-center items-center px-4'}
           style={{ background: 'var(--main-gradient)' }}
         >
-          <div className={'max-w-full lg:max-w-[1100px] flex flex-col gap-6 text-center'}>
+          <div className={'max-w-full lg:max-w-[1100px] flex flex-col gap-6 text-center px-2'}>
             <div className={'lg:text-[64px] text-[40px] leading-[100%] font-bold'}>
               <Trans
                 ns={'main'}
@@ -89,6 +90,9 @@ const Home = () => {
               </UIButton>
             </div>
           </div>
+        </section>
+        <section className={'px-4 mx-auto mt-20'}>
+          <UserRatingsTable />
         </section>
         <section className={'w-full flex flex-col justify-center items-center mt-20 gap-19 px-4'}>
           <div className={'max-w-[1040px] lg:text-2xl text-xl font-semibold text-center'}>
@@ -566,7 +570,7 @@ const Home = () => {
           className={'lg:h-[454px] h-[544px] rounded-b-4xl flex justify-center items-center lg:mt-[140px] mt-18'}
           style={{ background: 'var(--main-gradient)' }}
         >
-          <div className={'w-full lg:max-w-[808px] flex flex-col gap-6 text-center'}>
+          <div className={'w-full lg:max-w-[808px] px-3 flex flex-col gap-6 text-center'}>
             <div className={'lg:text-5xl text-4xl leading-[100%] font-bold'}>
               <Trans
                 ns={'main'}
@@ -673,7 +677,7 @@ const Home = () => {
           className={'lg:h-[454px] h-[544px] rounded-b-4xl flex justify-center items-center lg:mt-[140px] mt-18'}
           style={{ background: 'var(--main-gradient)' }}
         >
-          <div className={'w-full lg:max-w-[808px] flex flex-col gap-6 text-center'}>
+          <div className={'w-full lg:max-w-[808px] px-3 flex flex-col gap-6 text-center'}>
             <div className={'lg:text-5xl text-4xl leading-[100%] font-bold'}>
               <Trans
                 ns={'main'}
