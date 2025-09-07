@@ -64,6 +64,11 @@ const SystemPage = () => {
       href: 'system/admins-transactions',
     },
     {
+      id: ESYSTEM_PAGES.BACKUPS,
+      text: 'Бэкапы базы данных',
+      href: 'system/backups',
+    },
+    {
       id: ESYSTEM_PAGES.TRANSLATIONS,
       text: 'Локализация',
       href: 'system/translations',
