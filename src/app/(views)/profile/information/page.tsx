@@ -69,7 +69,7 @@ const ProfileInformation = () => {
   };
 
   const handleSetPassword = async () => {
-    const newPasswordErrorMsg = password ? (
+    const newPasswordErrorMsg = newPassword ? (
       ''
     ) : (
       <Trans
@@ -77,7 +77,7 @@ const ProfileInformation = () => {
         k={'common_field_empty'}
       />
     );
-    const newPasswordReqError = /^(?=.*[A-Z])(?=.*[\W_]).{8,}$/.test(password) ? (
+    const newPasswordReqError = /^(?=.*[A-Z])(?=.*[\W_-]).{8,}$/.test(newPassword) ? (
       ''
     ) : (
       <Trans
@@ -178,6 +178,7 @@ const ProfileInformation = () => {
       setPassword('');
       setNewPassword('');
       setRepeatedNewPassword('');
+      dispatch(getUserData());
     } catch (e) {
       errorHandler(e, dispatch);
     } finally {
@@ -337,23 +338,35 @@ const ProfileInformation = () => {
         </div>
         {passwordStep === ESET_PASSWORD_STEPS.CURRENT_PASSWORD && (
           <div className={'flex flex-col h-full gap-2'}>
-            <UIInput
-              level={'square'}
-              label={
-                <Trans
-                  ns={'common'}
-                  k={'common_current_password'}
-                />
-              }
-              type={'password'}
-              autoComplete={false}
-              value={password}
-              error={passwordError}
-              onInput={(val) => {
-                setPassword(val);
-                setPasswordError('');
-              }}
-            />
+            {user?.isGoogle && !user?.is_password_created ? (
+              <div className={'flex items-center gap-2 mb-4'}>
+                <CustomIcon name={'info-icon'} />
+                <div>
+                  <Trans
+                    ns={'profile'}
+                    k={'profile_google_user_notification'}
+                  />
+                </div>
+              </div>
+            ) : (
+              <UIInput
+                level={'square'}
+                label={
+                  <Trans
+                    ns={'common'}
+                    k={'common_current_password'}
+                  />
+                }
+                type={'password'}
+                autoComplete={false}
+                value={password}
+                error={passwordError}
+                onInput={(val) => {
+                  setPassword(val);
+                  setPasswordError('');
+                }}
+              />
+            )}
             <UIInput
               level={'square'}
               label={
