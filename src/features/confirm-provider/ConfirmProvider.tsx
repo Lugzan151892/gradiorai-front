@@ -47,6 +47,7 @@ export const ConfirmProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
       {modalState && (
         <CustomModal
+          className={'max-w-md'}
           open
           caption={modalState.options.caption}
           type={modalState.options.type}

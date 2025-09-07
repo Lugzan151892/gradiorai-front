@@ -9,6 +9,10 @@ import { useAppDispatch } from '@/hooks/redux';
 import React, { useCallback, useEffect, useState } from 'react';
 import { ScrollArea } from '@/components/ui/scroll-area/ScrollArea';
 import routeChecker from '@/hoc/routeChecker';
+import UIButton from '@/components/ui/button/UIButton';
+import { openModal } from '@/store/tech/techSlice';
+import { useConfirm } from '@/features/confirm-provider/ConfirmProvider';
+import { Trans } from '@/i18n/Trans';
 
 const SystemUsers = () => {
   const [users, setUsers] = useState<IUser[]>([]);
@@ -31,6 +35,57 @@ const SystemUsers = () => {
     loadUsers();
   }, [loadUsers]);
 
+  const confirm = useConfirm();
+
+  const deleteUser = async (id: number) => {
+    const checkConfirm = await confirm({
+      caption: 'Вы уверены, что хотите удалить пользователя?',
+      content:
+        'Это действие нельзя будет отменить. Все данные пользователя будут удалены. В том числе и связанные с ним сущности.',
+      type: 'warning',
+      buttons: [
+        {
+          key: 'yes',
+          label: (
+            <Trans
+              ns={'common'}
+              k={'common_delete'}
+            />
+          ),
+          type: 'danger',
+        },
+        {
+          key: 'no',
+          label: (
+            <Trans
+              ns={'common'}
+              k={'common_cancel'}
+            />
+          ),
+          type: 'default',
+        },
+      ],
+    });
+
+    if (checkConfirm !== 'yes') return;
+
+    try {
+      dispatch(setLoading(true));
+
+      await Api.delete(`/user/user/${id}`);
+      loadUsers();
+
+      openModal({
+        text: 'Пользователь удален',
+        type: 'success',
+      });
+    } catch (e) {
+      errorHandler(e, dispatch);
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
+
   return (
     <div className={'flex flex-col h-full items-center'}>
       <div className={'text-5xl mb-5'}>Список зарегистрированных пользователей</div>
@@ -39,7 +94,7 @@ const SystemUsers = () => {
           <div className={'mb-4 relative bg-modal'}>
             <div
               className={
-                'sticky top-0 left-0 border grid grid-cols-[3%_15%_12%_15%_10%_10%_19%_16%] min-h-8 border bg-modal'
+                'sticky top-0 left-0 border grid grid-cols-[3%_15%_12%_15%_10%_19%_16%_10%] min-h-8 border bg-modal'
               }
             >
               <div className={'text-2xl border-r text-center'}>ID</div>
@@ -47,15 +102,15 @@ const SystemUsers = () => {
               <div className={'text-2xl border-r px-2'}>Дата регистрации</div>
               <div className={'text-2xl border-r px-2'}>Последний вход</div>
               <div className={'text-2xl border-r px-2'}>Последний IP</div>
-              <div className={'text-2xl border-r px-2'}>3 последних IP</div>
               <div className={'text-2xl border-r px-2'}>Кол-во пройденных вопросов</div>
-              <div className={'text-2xl text-center'}>STATUS</div>
+              <div className={'text-2xl border-r text-center'}>STATUS</div>
+              <div className={'text-2xl text-center'}>ACTIONS</div>
             </div>
             {users.length &&
               users.map((user) => (
                 <div
                   key={user.id}
-                  className={'border w-full grid grid-cols-[3%_15%_12%_15%_10%_10%_19%_16%]'}
+                  className={'border w-full grid grid-cols-[3%_15%_12%_15%_10%_19%_16%_10%]'}
                 >
                   <div className={'text-xl border-r text-center'}>{user.id}</div>
                   <div className={'text-xl border-r px-2'}>{user.email}</div>
@@ -66,18 +121,14 @@ const SystemUsers = () => {
                     {user.last_login ? normalizeServerDate(user.last_login) : ''}
                   </div>
                   <div className={'text-xl border-r px-2'}>{user.last_ip || ''}</div>
-                  <div className={'text-xl border-r px-2'}>
-                    {user.ip_log
-                      ? user.ip_log.map((ip, iIp) => (
-                          <span key={iIp}>
-                            {ip.ip}
-                            <br />
-                          </span>
-                        ))
-                      : ''}
-                  </div>
                   <div className={'text-xl border-r text-center'}>{user.questions_passed?.length || 0}</div>
-                  <div className={'text-xl text-center'}>{user.admin ? 'ADMIN' : 'USER'}</div>
+                  <div className={'text-xl border-r text-center'}>{user.admin ? 'ADMIN' : 'USER'}</div>
+                  <div className={'text-xl text-center p-2'}>
+                    <UIButton
+                      text={'Удалить'}
+                      onClick={() => deleteUser(user.id)}
+                    />
+                  </div>
                 </div>
               ))}
           </div>

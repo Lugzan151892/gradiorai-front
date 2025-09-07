@@ -36,6 +36,10 @@ export interface IUser {
   }>;
   files: Array<IFile>;
   user_rating: IUserRating;
+  /** Пользователь зарегистрировался через Google */
+  isGoogle?: boolean;
+  /** Пользователь создал пароль */
+  is_password_created?: boolean;
 }
 
 export interface IUserReview {
