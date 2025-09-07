@@ -12,6 +12,7 @@ interface ICustomModalProps {
   fullScreen?: boolean;
   type?: 'success' | 'error' | 'warning';
   onClose?: (vaL: boolean) => void;
+  className?: string;
 }
 
 const CustomModal: React.FC<ICustomModalProps> = ({
@@ -23,6 +24,7 @@ const CustomModal: React.FC<ICustomModalProps> = ({
   footer,
   fullScreen,
   onClose,
+  className,
 }) => {
   const typeColor = () => {
     switch (type) {
@@ -51,11 +53,12 @@ const CustomModal: React.FC<ICustomModalProps> = ({
           <div className={'flex h-full items-center justify-center p-4 overflow-hidden'}>
             <DialogPanel
               transition
-              className={
-                'rounded-3xl bg-black border-1 text-white flex flex-col duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0 overflow-hidden ' +
-                `border-${typeColor()} ` +
-                widthClasses
-              }
+              className={cn(
+                'rounded-3xl bg-black border-1 text-white flex flex-col duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0 overflow-hidden',
+                `border-${typeColor()}`,
+                widthClasses,
+                className
+              )}
             >
               {header || (
                 <div

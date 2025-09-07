@@ -18,9 +18,12 @@ const AdminTransactions = () => {
 
   const [localesJson, setLocalesJson] = useState<null | File>(null);
   const [namespace, setNamespace] = useState<TNameSpace>('common');
+  const [namespaceToDelete, setNamespaceToDelete] = useState<TNameSpace>('common');
   const [locale, setLocale] = useState<TLocale>('ru');
+  const [localeToDelete, setLocaleToDelete] = useState<TLocale>('ru');
   const [key, setKey] = useState('');
   const [value, setValue] = useState('');
+  const [keyToDelete, setKeyToDelete] = useState('');
 
   const namespacesOptions: Array<{
     id: TNameSpace;
@@ -119,6 +122,27 @@ const AdminTransactions = () => {
     }
   };
 
+  const deleteKey = async () => {
+    if (!keyToDelete || !localeToDelete) {
+      return;
+    }
+
+    try {
+      dispatch(setLoading(true));
+      await Api.delete(`/translations/${localeToDelete}/${namespaceToDelete}/${keyToDelete}`);
+      dispatch(
+        openModal({
+          text: 'Переводы успешно обновлены!',
+          type: 'success',
+        })
+      );
+    } catch (e) {
+      errorHandler(e, dispatch);
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
+
   return (
     <div className={'flex flex-col h-full items-center'}>
       <div className={'flex items-center justify-center mb-5'}>
@@ -172,6 +196,32 @@ const AdminTransactions = () => {
               text={'Сохранить'}
               disabled={!key || !locale}
               onClick={save}
+            />
+          </div>
+        </div>
+        <div className={'mt-2'}>
+          <div>Удалить перевод:</div>
+          <div className={'flex items-center gap-2'}>
+            <UISelect
+              options={namespacesOptions}
+              value={namespaceToDelete}
+              onChange={(e) => setNamespaceToDelete(e as TNameSpace)}
+            />
+            <UISelect
+              options={localeOptions}
+              value={localeToDelete}
+              onChange={(e) => setLocaleToDelete(e as TLocale)}
+            />
+            <UIInput
+              label={'Ключ'}
+              value={keyToDelete}
+              level={'square'}
+              onInput={setKeyToDelete}
+            />
+            <UIButton
+              text={'Удалить'}
+              disabled={!keyToDelete || !localeToDelete}
+              onClick={deleteKey}
             />
           </div>
         </div>

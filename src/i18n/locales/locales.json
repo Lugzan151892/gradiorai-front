@@ -1,8 +1,6 @@
 {
   "en": {
     "common": {
-      "save": "Другой текст для сейва",
-      "main_text": "Подготовка к собеседованию с AI",
       "common_instruments": "Tools",
       "common_faq": "FAQ",
       "common_sitename": "gradiorAI",
@@ -299,7 +297,10 @@
       "main_faq_card_description_4": "Да, у нас есть отдельные блоки вопросов и подготовка для тех, кто только начинает карьеру, с разбором базовых вопросов.",
       "main_faq_card_description_5": "Да, все предоставляемые нами инструменты абсолютно бесплатны.",
       "main_do_tests": "Пройти тестирование",
-      "main_go_home": "На главную"
+      "main_go_home": "На главную",
+      "main_users_rating_title": "Рейтинг пользователей",
+      "main_users_rating_users_amount_title": "Топ пользователей",
+      "main_users_rating_max_rating_title": "Максимальный рейтинг"
     },
     "common": {
       "common_instruments": "Инструменты",
