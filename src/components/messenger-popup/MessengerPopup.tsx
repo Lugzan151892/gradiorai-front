@@ -28,7 +28,8 @@ const MessengerPopup: React.FC<IMessengerPopupProps> = ({ title, delay = 2000, c
   const { locale } = useI18n();
 
   const loadDaylyAdvice = useCallback(async () => {
-    const today = new Date().toDateString();
+    // Use a stable date format to avoid hydration mismatch
+    const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
     const dismissedKey = `messenger-popup-dismissed-${today}`;
     const wasDismissed = localStorage.getItem(dismissedKey);
 
@@ -54,7 +55,7 @@ const MessengerPopup: React.FC<IMessengerPopupProps> = ({ title, delay = 2000, c
     setIsClosing(true);
 
     /** Сохранение в локалстораге закрытого окна. Если окно закрыто, сегодня больше не отображаем. */
-    const today = new Date().toDateString();
+    const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
     const dismissedKey = `messenger-popup-dismissed-${today}`;
     localStorage.setItem(dismissedKey, 'true');
 
