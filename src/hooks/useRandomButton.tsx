@@ -104,7 +104,8 @@ export const useRandomButton = ({ user, customButtons }: UseRandomButtonOptions 
         dispatch(setSelectedButton(newButton));
       }
     }
-  }, [user, customButtons, isInitialized, selectedButton, defaultButtons, dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user, customButtons, isInitialized, defaultButtons, dispatch]);
 
   const allButtons = customButtons || defaultButtons;
   const filteredButtons = allButtons.filter((el: ButtonItem) => !!user || el.unauth);
