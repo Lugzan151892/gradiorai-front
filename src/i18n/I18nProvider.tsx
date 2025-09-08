@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import Api from '@/core/api/api';
 import { TLocale } from '@/i18n/interfaces/locale';
 import localLocales from '@/i18n/locales/locales.json';
@@ -25,7 +25,7 @@ const I18nContext = createContext<I18nContextType>({
 export const useI18n = () => useContext(I18nContext);
 
 export const I18nProvider = ({ children, defaultLocale = 'ru' }: { children: any; defaultLocale?: TLocale }) => {
-  const getUserLocale = (): TLocale => {
+  const getUserLocale = useCallback((): TLocale => {
     if (typeof window === 'undefined') return defaultLocale;
     const saved = localStorage.getItem('locale');
     if (saved === 'ru' || saved === 'en') return saved;
@@ -33,12 +33,17 @@ export const I18nProvider = ({ children, defaultLocale = 'ru' }: { children: any
     if (navigatorLocale.startsWith('ru')) return 'ru';
     if (navigatorLocale.startsWith('en')) return 'en';
     return 'en';
-  };
+  }, [defaultLocale]);
 
-  const [locale, setLocale] = useState<TLocale>(getUserLocale());
+  const [locale, setLocale] = useState<TLocale>(defaultLocale);
   const [translations, setTranslations] = useState<LocaleMap>({
-    [locale]: { ...localLocales[locale] },
+    [defaultLocale]: { ...localLocales[defaultLocale] },
   });
+
+  useEffect(() => {
+    const clientLocale = getUserLocale();
+    setLocale(clientLocale);
+  }, [getUserLocale]);
 
   useEffect(() => {
     (async () => {
@@ -54,7 +59,6 @@ export const I18nProvider = ({ children, defaultLocale = 'ru' }: { children: any
           setTranslations(res.payload);
         }
       } catch (_error) {
-        // fallback to local locales if API request fails
         setTranslations(localLocales);
       }
     })();
