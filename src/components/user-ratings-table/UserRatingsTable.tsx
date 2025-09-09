@@ -63,7 +63,7 @@ const UserRatingsTable = () => {
           ))}
         </div>
         <div className={'w-full border-1 border-main-gray my-7'} />
-        <div className={'flex lg:gap-40 gap-10 items-center justify-center'}>
+        <div className={'flex sm:flex-row flex-col lg:gap-40 gap-10 items-center justify-center'}>
           <div className={'flex flex-col gap-2'}>
             <div className={'text-4xl font-bold text-main-purple text-center'}>{usersRating.length}</div>
             <div className={'text-text-disabled text-lg'}>
