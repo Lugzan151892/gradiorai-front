@@ -9,7 +9,7 @@ export const Trans = <N extends TNameSpace, K extends INamespaceKeyMap[N]>({
   className,
   format,
   as = 'span',
-  preserveLineBreaks = false,
+  preserveLineBreaks = true,
 }: {
   ns: N;
   k: K;
@@ -34,37 +34,19 @@ export const Trans = <N extends TNameSpace, K extends INamespaceKeyMap[N]>({
   };
 
   const renderTextWithLineBreaks = (text: string) => {
-    if (!preserveLineBreaks) {
+    if (!preserveLineBreaks || typeof text !== 'string') {
       return text;
     }
 
-    // Разделяем текст на части по двойным переносам строк (абзацы)
-    const paragraphs = text.split(/\n\s*\n/);
+    // Разбиваем текст по символам \n и создаем элементы с <br />
+    const parts = text.split('\n');
     
-    return paragraphs.map((paragraph, paragraphIndex) => {
-      // Внутри каждого абзаца обрабатываем одинарные переносы строк
-      const lines = paragraph.split('\n').map((line, lineIndex, linesArray) => (
-        <React.Fragment key={lineIndex}>
-          {line}
-          {lineIndex < linesArray.length - 1 && <br />}
-        </React.Fragment>
-      ));
-
-      // Если абзацев больше одного, оборачиваем каждый в <p>
-      if (paragraphs.length > 1) {
-        return (
-          <p 
-            key={paragraphIndex} 
-            style={{ margin: paragraphIndex === 0 ? '0 0 1em 0' : '1em 0' }}
-          >
-            {lines}
-          </p>
-        );
-      }
-      
-      // Если абзац один, просто возвращаем строки с <br>
-      return lines;
-    });
+    return parts.map((part, index) => (
+      <React.Fragment key={index}>
+        {part}
+        {index < parts.length - 1 && <br />}
+      </React.Fragment>
+    ));
   };
 
   const rawText = t(ns, k) || (children ?? '');
