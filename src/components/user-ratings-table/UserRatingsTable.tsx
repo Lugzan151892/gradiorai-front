@@ -11,6 +11,8 @@ import { IFakeUser } from '@/app/(views)/system/interfaces';
 const UserRatingsTable = () => {
   const [usersRating, setUsersRating] = useState<IUserRating[]>([]);
   const dispatch = useAppDispatch();
+  /** @todo: Перевести на реальные данные */
+  const averageRating = 3027;
 
   useEffect(() => {
     const fetchUsersRating = async () => {
@@ -68,6 +70,15 @@ const UserRatingsTable = () => {
               <Trans
                 ns={'main'}
                 k={'main_users_rating_users_amount_title'}
+              />
+            </div>
+          </div>
+          <div className={'flex flex-col gap-2'}>
+            <div className={'text-4xl font-bold text-main-purple text-center'}>{averageRating}</div>
+            <div className={'text-text-disabled text-lg'}>
+              <Trans
+                ns={'main'}
+                k={'main_users_rating_users_average_title'}
               />
             </div>
           </div>
