@@ -12,10 +12,8 @@ import MenuItem, { IMenuItemProps } from '@/components/header/components/MenuIte
 import { EMENU_ITEM } from '@/components/header/interfaces';
 import { cn } from '@/lib/utils';
 import UserAvatar from '@/components/user-avatar/UserAvatar';
-import UISelect from '@/components/ui/select/UISelect';
-import { useI18n } from '@/i18n/I18nProvider';
-import { TLocale } from '@/i18n/interfaces/locale';
 import { Trans } from '@/i18n/Trans';
+import LocaleSelect from '@/components/locale-select/LocaleSelect';
 
 interface IMenuItem extends IMenuItemProps {
   id: EMENU_ITEM;
@@ -31,7 +29,6 @@ const HeaderUserState: React.FC<Readonly<IHeaderUserStateProps>> = ({ showMenu, 
   const router = useRouter();
   const { user } = useAppSelector((state: RootState) => state.user);
   const dispatch = useAppDispatch();
-  const { locale, setLocale } = useI18n();
 
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -201,45 +198,10 @@ const HeaderUserState: React.FC<Readonly<IHeaderUserStateProps>> = ({ showMenu, 
     };
   }, [showMenu, setShowMenu]);
 
-  const localeComponent = (
-    <UISelect
-      options={[
-        {
-          id: 'ru',
-          item: (
-            <div className={'flex gap-2 items-center'}>
-              <CustomIcon
-                name={'flag-ru'}
-                size={24}
-              />
-              <div className={'text-[10px] text-gray-200'}>RU</div>
-            </div>
-          ),
-        },
-        {
-          id: 'en',
-          item: (
-            <div className={'flex gap-2 items-center'}>
-              <CustomIcon
-                name={'flag-us'}
-                size={24}
-              />
-              <div className={'text-[10px] text-gray-200'}>EN</div>
-            </div>
-          ),
-        },
-      ]}
-      value={locale}
-      onChange={(val) => setLocale(String(val) as TLocale)}
-      className={''}
-      placeholder={'locale'}
-    />
-  );
-
   return (
     <>
       <div className={'flex gap-4'}>
-        {localeComponent}
+        <LocaleSelect />
         {!user?.id ? (
           <div className={'flex'}>
             <UIButton
