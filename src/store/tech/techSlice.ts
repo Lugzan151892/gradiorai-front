@@ -51,10 +51,6 @@ const techSlice = createSlice({
       if (state.mainModalSettings.onClick) {
         state.mainModalSettings.onClick();
       }
-
-      // setTimeout(() => {
-      //   state.mainModalSettings = defaultModalSettings();
-      // }, 500);
     },
 
     resetModalSettings(state) {

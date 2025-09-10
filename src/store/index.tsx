@@ -5,7 +5,7 @@ export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: false, // Отключает предупреждение о non-serializable объектах
+      serializableCheck: false,
     }),
 });
 
