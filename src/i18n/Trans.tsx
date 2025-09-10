@@ -9,6 +9,7 @@ export const Trans = <N extends TNameSpace, K extends INamespaceKeyMap[N]>({
   className,
   format,
   as = 'span',
+  preserveLineBreaks = true,
 }: {
   ns: N;
   k: K;
@@ -16,26 +17,49 @@ export const Trans = <N extends TNameSpace, K extends INamespaceKeyMap[N]>({
   className?: string;
   format?: 'uppercase' | 'lovercase';
   as?: 'span' | 'button' | 'div' | 'a';
+  preserveLineBreaks?: boolean;
 }) => {
   const { t } = useI18n();
-  const formatText = (t: string) => {
-    if (!format) return t;
+  
+  const formatText = (text: string) => {
+    if (!format) return text;
     switch (format) {
       case 'uppercase':
-        return t.toUpperCase();
+        return text.toUpperCase();
       case 'lovercase':
-        return t.toLowerCase();
+        return text.toLowerCase();
+      default:
+        return text;
     }
   };
-  const text = formatText(t(ns, k)) || (children ?? '');
+
+  const renderTextWithLineBreaks = (text: string) => {
+    if (!preserveLineBreaks || typeof text !== 'string') {
+      return text;
+    }
+
+    /** Разбиваем текст по символам \n и создаем элементы с <br /> */
+    const parts = text.split('\n');
+    
+    return parts.map((part, index) => (
+      <React.Fragment key={index}>
+        {part}
+        {index < parts.length - 1 && <br />}
+      </React.Fragment>
+    ));
+  };
+
+  const rawText = t(ns, k) || (children ?? '');
+  const formattedText = formatText(rawText as string);
   const Tag = as;
+
   return (
     <Tag
       className={className}
       data-i18n={`${ns}:${k}`}
-      data-i18n-value={text}
+      data-i18n-value={formattedText}
     >
-      {text}
+      {renderTextWithLineBreaks(formattedText as string)}
     </Tag>
   );
 };
