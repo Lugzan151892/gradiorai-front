@@ -38,7 +38,7 @@ export const Trans = <N extends TNameSpace, K extends INamespaceKeyMap[N]>({
       return text;
     }
 
-    // Разбиваем текст по символам \n и создаем элементы с <br />
+    /** Разбиваем текст по символам \n и создаем элементы с <br /> */
     const parts = text.split('\n');
     
     return parts.map((part, index) => (

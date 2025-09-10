@@ -151,6 +151,7 @@ export const MAIN_KEYS = ensureNoDuplicates([
   'main_users_rating_title',
   'main_users_rating_users_amount_title',
   'main_users_rating_max_rating_title',
+  'main_users_rating_users_average_title',
 ] as const);
 
 export const PROFILE_KEYS = ensureNoDuplicates([

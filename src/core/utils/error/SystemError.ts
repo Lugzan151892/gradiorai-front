@@ -13,13 +13,13 @@ export default class SystemError extends Error {
 
     switch (this.type) {
       case 'server':
-        this.message = 'Ошибка сервера.\r\nСвяжитесь с разработчиками.';
+        this.message = 'Ошибка сервера.\r\nСвяжитесь с разработчиками. (support@gradior.ru)';
         break;
       case 'auth':
         this.message = 'Ошибка авторизации.';
         break;
       default:
-        this.message = 'Произошла ошибка.\r\nСвяжитесь с разработчиками.';
+        this.message = 'Произошла ошибка.\r\nСвяжитесь с разработчиками. (support@gradior.ru)';
         break;
     }
   }

@@ -13,7 +13,7 @@ const breakpoints = {
 
 type Breakpoint = keyof typeof breakpoints;
 
-export function useBreakpoint(): { isMobile: boolean; screen: Record<Breakpoint, boolean> } {
+export const useBreakpoint = (): { isMobile: boolean; screen: Record<Breakpoint, boolean> } => {
   const [breakpoint, setBreakpoint] = useState<Breakpoint>('lg');
   const [isClient, setIsClient] = useState(false);
 
@@ -59,4 +59,4 @@ export function useBreakpoint(): { isMobile: boolean; screen: Record<Breakpoint,
   }, [screen, isClient]);
 
   return { isMobile, screen };
-}
+};

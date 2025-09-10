@@ -3,6 +3,7 @@
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
 import React from 'react';
 import LoaderComponent from '@/features/loading/components/LoaderComponent';
+import { cn } from '@/lib/utils';
 
 interface IGenerateModalProps {
   opened?: boolean;
@@ -28,9 +29,10 @@ const GenerateModal: React.FC<Readonly<IGenerateModalProps>> = ({ opened, text, 
           <div className={'flex min-h-full items-center justify-center p-4'}>
             <DialogPanel
               transition
-              className={
-                'w-full max-w-md flex flex-col rounded-3xl bg-black p-6 border-1 border-white min-h-[180px] duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0'
-              }
+              className={cn(
+                'w-full max-w-md flex flex-col rounded-3xl bg-black p-6 border-1 border-white min-h-[180px]', 
+                'duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0'
+              )}
             >
               <div className={'grid grid-cols-[40px_1fr_40px] gap-3 items-center justify-items-center'}>
                 <div />
