@@ -485,7 +485,7 @@ const Home = () => {
         </section>
         <section className={'lg:mt-20 mt-18 flex lg:flex-row flex-col items-center h-full px-4'}>
           <div
-            className={'w-full flex flex-col p-6 gap-4 border-1 border-main-gray rounded-3xl w-1/5 lg:min-h-[242px]'}
+            className={'w-full flex flex-col p-6 gap-4 border-1 border-main-gray rounded-3xl w-1/5 lg:min-h-[150px]'}
           >
             <div className={'lg:text-xl text-base font-semibold leading-[100%]'}>
               <Trans
@@ -516,7 +516,7 @@ const Home = () => {
           </div>
           <div className={'border-1 border-main-gray border-dashed lg:w-1/15 lg:h-0 h-8 w-0'} />
           <div
-            className={'w-full flex flex-col p-6 gap-4 border-1 border-main-gray rounded-3xl w-1/5 lg:min-h-[242px]'}
+            className={'w-full flex flex-col p-6 gap-4 border-1 border-main-gray rounded-3xl w-1/5 lg:min-h-[150px]'}
           >
             <div className={'lg:text-xl text-base font-semibold leading-[100%]'}>
               <Trans
@@ -533,7 +533,7 @@ const Home = () => {
           </div>
           <div className={'border-1 border-main-gray border-dashed lg:w-1/15 lg:h-0 h-8 w-0'} />
           <div
-            className={'w-full flex flex-col p-6 gap-4 border-1 border-main-gray rounded-3xl w-1/5 lg:min-h-[242px]'}
+            className={'w-full flex flex-col p-6 gap-4 border-1 border-main-gray rounded-3xl w-1/5 lg:min-h-[150px]'}
           >
             <div className={'lg:text-xl text-base font-semibold leading-[100%]'}>
               <Trans
@@ -550,7 +550,7 @@ const Home = () => {
           </div>
           <div className={'border-1 border-main-gray border-dashed lg:w-1/15 lg:h-0 h-8 w-0'} />
           <div
-            className={'w-full flex flex-col p-6 gap-4 border-1 border-main-gray rounded-3xl w-1/5 lg:min-h-[242px]'}
+            className={'w-full flex flex-col p-6 gap-4 border-1 border-main-gray rounded-3xl w-1/5 lg:min-h-[150px]'}
           >
             <div className={'lg:text-xl text-base font-semibold leading-[100%]'}>
               <Trans
