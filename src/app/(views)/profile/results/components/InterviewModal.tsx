@@ -62,12 +62,24 @@ const InterviewModal: React.FC<IInterviewModalProps> = ({ open = false, onClose,
               />
               :{' '}
             </span>
-            <span className={cn(interview?.finished && 'text-success', !interview?.finished && 'text-main-blue')}>
+            <span
+              className={cn(
+                interview?.finished && (interview?.success ? 'text-success' : 'text-error'),
+                !interview?.finished && 'text-yellow'
+              )}
+            >
               {interview?.finished ? (
-                <Trans
-                  ns={'profile'}
-                  k={'profile_interview_finished'}
-                />
+                interview?.success ? (
+                  <Trans
+                    ns={'profile'}
+                    k={'profile_interview_success'}
+                  />
+                ) : (
+                  <Trans
+                    ns={'profile'}
+                    k={'profile_interview_failed'}
+                  />
+                )
               ) : (
                 <Trans
                   ns={'profile'}
