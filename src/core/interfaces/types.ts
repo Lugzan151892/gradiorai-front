@@ -134,3 +134,32 @@ export interface IFile {
   updatedAt: string;
   type: string;
 }
+
+export enum ACHIEVEMENT_TYPE {
+  ONESHOT = 'ONESHOT',
+  PROGRESS = 'PROGRESS',
+}
+
+export enum ACHIEVEMENT_TRIGGER {
+  ANSWER_QUESTION = 'ANSWER_QUESTION',
+  PASS_TEST = 'PASS_TEST',
+  REGISTER = 'REGISTER',
+  FIRST_TEST = 'FIRST_TEST',
+  LOGIN = 'LOGIN',
+}
+
+export interface IAchievement {
+  id: number;
+  key: string;
+  title: string;
+  description: string;
+  type: ACHIEVEMENT_TYPE;
+  trigger: ACHIEVEMENT_TRIGGER;
+  target: number;
+  reward_points: number;
+  image_id: number;
+  image: File | IFile | null;
+  active?: boolean;
+  created_at?: string;
+  updated_at?: string;
+}

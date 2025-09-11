@@ -83,6 +83,11 @@ const SystemPage = () => {
       text: 'Фейковые пользователи',
       href: 'system/fake-users',
     },
+    {
+      id: ESYSTEM_PAGES.ACHIEVEMENTS,
+      text: 'Достижения',
+      href: 'system/achievements',
+    },
   ];
 
   return (
