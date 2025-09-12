@@ -163,3 +163,11 @@ export interface IAchievement {
   created_at?: string;
   updated_at?: string;
 }
+
+export interface IAchievementWithProgress extends IAchievement {
+  userProgress: {
+    completed: boolean;
+    completed_at: string;
+    progress: number;
+  };
+}
