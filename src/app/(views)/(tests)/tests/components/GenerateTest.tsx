@@ -47,6 +47,10 @@ const GenerateTest: React.FC<{
       await Api.postSilent('/questions/update-progress', { question_id: tests[currentQuestion - 1].id });
     }
 
+    if (user?.id) {
+      await Api.postSilent('/questions/add-question-passed', { correct: answer.correct });
+    }
+
     setUserChoise(answer.id);
     if (answer.correct) {
       setUserResult(userResult + 1);
@@ -68,8 +72,9 @@ const GenerateTest: React.FC<{
     }
   };
 
-  const handleSetQuestion = () => {
+  const handleSetQuestion = async () => {
     if (currentQuestion === tests.length) {
+      await Api.postSilent('/questions/test-passed', { score: Number((userResult / tests.length).toFixed(2)) });
       setShowResults(true);
       updateUserResult();
     } else {

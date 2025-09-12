@@ -26,6 +26,15 @@ const tabs = [
       />
     ),
   },
+  {
+    href: '/profile/achievements',
+    label: (
+      <Trans
+        ns={'common'}
+        k={'common_achievements'}
+      />
+    ),
+  },
 ];
 
 const ProfileLayout = ({ children }: { children: ReactNode }) => {
