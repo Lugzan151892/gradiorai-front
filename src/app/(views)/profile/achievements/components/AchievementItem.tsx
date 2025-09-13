@@ -14,7 +14,7 @@ const AchievementItem: React.FC<AchievementItemProps> = ({ achievement, classNam
   return (
     <div
       className={cn(
-        'flex flex-col gap-4 rounded-[10px] bg-main-black border-2 border-main-purple p-6 w-[max-content] max-w-[350px]',
+        'flex flex-col gap-4 rounded-[10px] bg-main-black border-2 border-main-purple p-6 w-[max-content] max-w-[350px] min-w-[350px] min-h-[130px]',
         className,
         !achievement.userProgress?.completed && 'border-text-disabled'
       )}
@@ -40,7 +40,7 @@ const AchievementItem: React.FC<AchievementItemProps> = ({ achievement, classNam
             }}
           />
         </div>
-        <div className={'flex flex-col'}>
+        <div className={'flex flex-col w-full'}>
           <div className={'flex gap-2 items-center'}>
             <Trans
               className={'text-lg'}
