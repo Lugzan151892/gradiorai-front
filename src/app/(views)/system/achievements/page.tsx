@@ -108,7 +108,8 @@ const SystemAchievements = () => {
   const handleSaveAchievement = async (achievement: IAchievement) => {
     try {
       dispatch(setLoading(true));
-      if (achievement.id) await Api.putFormData<IAchievement, IAchievement>('/achievements', achievement);
+      if (achievement.id)
+        await Api.putFormData<IAchievement, IAchievement>(`/achievements/${achievement.id}`, achievement);
       else await Api.postFormData<IAchievement, IAchievement>('/achievements', achievement);
 
       dispatch(
