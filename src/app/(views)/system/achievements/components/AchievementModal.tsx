@@ -30,9 +30,6 @@ const AchievementModal: React.FC<ISaveQuestionModalProps> = ({ open = false, onC
     if (!editedAchievement.key) {
       errors.push('key: Ключ не может быть пустым');
     }
-    if (!editedAchievement.title) {
-      errors.push('title: Название не может быть пустым');
-    }
     if (editedAchievement.target < 0) {
       errors.push('target: Целевое значение не может быть отрицательным');
     }
@@ -66,22 +63,23 @@ const AchievementModal: React.FC<ISaveQuestionModalProps> = ({ open = false, onC
               label={'Ключ'}
               value={editedAchievement.key}
               onInput={(val) => {
-                setEditedAchievement({ ...editedAchievement, key: val });
+                setEditedAchievement({
+                  ...editedAchievement,
+                  key: val,
+                  title: `${val}_title`,
+                  description: `${val}_description`,
+                });
               }}
             />
             <UIInput
               label={'Название'}
               value={editedAchievement.title}
-              onInput={(val) => {
-                setEditedAchievement({ ...editedAchievement, title: val });
-              }}
+              disabled
             />
             <UIInput
               label={'Описание'}
               value={editedAchievement.description}
-              onInput={(val) => {
-                setEditedAchievement({ ...editedAchievement, description: val });
-              }}
+              disabled
             />
             <div className={'flex gap-4 lg:flex-row flex-col'}>
               <div className={'flex flex-col gap-2 lg:w-auto w-full'}>
