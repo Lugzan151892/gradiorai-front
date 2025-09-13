@@ -1,6 +1,6 @@
 import CustomModal from '@/components/ui/modal/CustomModal';
 import React, { useEffect, useState } from 'react';
-import { ACHIEVEMENT_TRIGGER, ACHIEVEMENT_TYPE, IAchievement, IFile } from '@/core/interfaces/types';
+import { EACHIEVEMENT_TRIGGER, EACHIEVEMENT_TYPE, IAchievement, IFile } from '@/core/interfaces/types';
 import UIButton from '@/components/ui/button/UIButton';
 import UIInput from '@/components/ui/input/UIInput';
 import UISelect from '@/components/ui/select/UISelect';
@@ -88,10 +88,10 @@ const AchievementModal: React.FC<ISaveQuestionModalProps> = ({ open = false, onC
                 <UILabel>Тип</UILabel>
                 <UISelect
                   value={editedAchievement.type}
-                  onChange={(val: ACHIEVEMENT_TYPE) => {
+                  onChange={(val: EACHIEVEMENT_TYPE) => {
                     setEditedAchievement({ ...editedAchievement, type: val });
                   }}
-                  options={Object.values(ACHIEVEMENT_TYPE).map((type) => ({
+                  options={Object.values(EACHIEVEMENT_TYPE).map((type) => ({
                     id: type,
                     text: type,
                   }))}
@@ -101,10 +101,10 @@ const AchievementModal: React.FC<ISaveQuestionModalProps> = ({ open = false, onC
                 <UILabel>Триггер</UILabel>
                 <UISelect
                   value={editedAchievement.trigger}
-                  onChange={(val: ACHIEVEMENT_TRIGGER) => {
+                  onChange={(val: EACHIEVEMENT_TRIGGER) => {
                     setEditedAchievement({ ...editedAchievement, trigger: val });
                   }}
-                  options={Object.values(ACHIEVEMENT_TRIGGER).map((trigger) => ({
+                  options={Object.values(EACHIEVEMENT_TRIGGER).map((trigger) => ({
                     id: trigger,
                     text: trigger,
                   }))}

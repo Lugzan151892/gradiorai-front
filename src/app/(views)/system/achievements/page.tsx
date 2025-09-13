@@ -3,7 +3,7 @@
 import { ScrollArea } from '@/components/ui/scroll-area/ScrollArea';
 import routeChecker from '@/hoc/routeChecker';
 import React, { useCallback, useEffect, useState } from 'react';
-import { ACHIEVEMENT_TRIGGER, ACHIEVEMENT_TYPE, IAchievement } from '@/core/interfaces/types';
+import { EACHIEVEMENT_TRIGGER, EACHIEVEMENT_TYPE, IAchievement } from '@/core/interfaces/types';
 import Api from '@/core/api/api';
 import errorHandler from '@/core/utils/error/errorHandler';
 import { setLoading } from '@/features/loading/loadingSlice';
@@ -28,8 +28,8 @@ const SystemAchievements = () => {
       image_id: 0,
       image: null,
       reward_points: 0,
-      type: ACHIEVEMENT_TYPE.ONESHOT,
-      trigger: ACHIEVEMENT_TRIGGER.ANSWER_QUESTION,
+      type: EACHIEVEMENT_TYPE.ONESHOT,
+      trigger: EACHIEVEMENT_TRIGGER.ANSWER_QUESTION,
       target: 0,
       description: '',
       active: true,

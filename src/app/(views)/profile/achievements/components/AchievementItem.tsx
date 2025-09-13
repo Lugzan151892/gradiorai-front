@@ -1,11 +1,10 @@
 import CustomIcon from '@/components/ui/icon/CustomIcon';
-import { IAchievement } from '@/core/interfaces/types';
+import { EACHIEVEMENT_TYPE, IAchievement } from '@/core/interfaces/types';
 import { normalizeServerDate } from '@/core/utils/date';
 import { getPublicFileLink } from '@/core/utils/files';
 import { Trans } from '@/i18n/Trans';
 import { cn } from '@/lib/utils';
 import React from 'react';
-
 interface AchievementItemProps {
   achievement: IAchievement;
   className?: string;
@@ -48,10 +47,11 @@ const AchievementItem: React.FC<AchievementItemProps> = ({ achievement, classNam
               ns={'achievement'}
               k={achievement.title as any}
             />
-            <div className={'flex gap-1 items-center text-main-purple ml-auto'}>
+            <div className={'flex gap-1 items-center text-main-purple ml-auto text-lg'}>
               <CustomIcon
                 name={'star'}
                 size={20}
+                color={'var(--main-purple)'}
               />
               {achievement.reward_points}
             </div>
@@ -73,24 +73,26 @@ const AchievementItem: React.FC<AchievementItemProps> = ({ achievement, classNam
         </div>
       )}
 
-      {!achievement.userProgress?.completed && achievement.target && (
-        <div className={'flex flex-col gap-2 mt-auto'}>
-          <div className={'flex justify-between text-xs text-text-disabled'}>
-            <span>Прогресс</span>
-            <span>
-              {achievement.userProgress?.progress || 0} / {achievement.target}
-            </span>
+      {!achievement.userProgress?.completed &&
+        achievement.target &&
+        achievement.type === EACHIEVEMENT_TYPE.PROGRESS && (
+          <div className={'flex flex-col gap-2 mt-auto'}>
+            <div className={'flex justify-between text-xs text-text-disabled'}>
+              <span>Прогресс</span>
+              <span>
+                {achievement.userProgress?.progress || 0} / {achievement.target}
+              </span>
+            </div>
+            <div className={'w-full bg-main-gray rounded-full h-2'}>
+              <div
+                className={'bg-main-purple h-2 rounded-full transition-all duration-300'}
+                style={{
+                  width: `${Math.min(((achievement.userProgress?.progress || 0) / achievement.target) * 100, 100)}%`,
+                }}
+              />
+            </div>
           </div>
-          <div className={'w-full bg-main-gray rounded-full h-2'}>
-            <div
-              className={'bg-main-purple h-2 rounded-full transition-all duration-300'}
-              style={{
-                width: `${Math.min(((achievement.userProgress?.progress || 0) / achievement.target) * 100, 100)}%`,
-              }}
-            />
-          </div>
-        </div>
-      )}
+        )}
     </div>
   );
 };

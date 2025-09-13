@@ -135,12 +135,12 @@ export interface IFile {
   type: string;
 }
 
-export enum ACHIEVEMENT_TYPE {
+export enum EACHIEVEMENT_TYPE {
   ONESHOT = 'ONESHOT',
   PROGRESS = 'PROGRESS',
 }
 
-export enum ACHIEVEMENT_TRIGGER {
+export enum EACHIEVEMENT_TRIGGER {
   /** пользователь ответил на вопрос (payload `{ count?: number } */
   ANSWER_QUESTION = 'ANSWER_QUESTION',
   /** пользователь ответил на вопрос правильно */
@@ -172,8 +172,8 @@ export interface IAchievement {
   key: string;
   title: string;
   description: string;
-  type: ACHIEVEMENT_TYPE;
-  trigger: ACHIEVEMENT_TRIGGER;
+  type: EACHIEVEMENT_TYPE;
+  trigger: EACHIEVEMENT_TRIGGER;
   target: number;
   reward_points: number;
   image_id: number;
