@@ -41,7 +41,7 @@ class Api {
 
   static requestFormData<T extends Record<string, any> | undefined>(
     path: string,
-    method: 'POST',
+    method: 'POST' | 'PUT',
     options: T = {} as T
   ): Promise<Response> {
     const authToken = localStorage.getItem('token');
@@ -89,7 +89,7 @@ class Api {
     isFormData?: boolean
   ): Promise<ResponseType<R, S>> {
     const response =
-      isFormData && method === 'POST'
+      isFormData && (method === 'POST' || method === 'PUT')
         ? await this.requestFormData<T>(path, method, options)
         : await this.request<T>(path, method, options);
 
@@ -173,6 +173,10 @@ class Api {
     options: T = {} as T
   ): Promise<IResponse<R>> {
     return await this.handleResponse<T, R, false>(path, 'POST', options, false, true);
+  }
+
+  static async putFormData<T extends object | undefined, R>(path: string, options: T = {} as T): Promise<IResponse<R>> {
+    return await this.handleResponse<T, R, false>(path, 'PUT', options, false, true);
   }
 
   static createEvent(path: string) {

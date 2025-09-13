@@ -26,6 +26,15 @@ const tabs = [
       />
     ),
   },
+  {
+    href: '/profile/achievements',
+    label: (
+      <Trans
+        ns={'common'}
+        k={'common_achievements'}
+      />
+    ),
+  },
 ];
 
 const ProfileLayout = ({ children }: { children: ReactNode }) => {
@@ -49,7 +58,7 @@ const ProfileLayout = ({ children }: { children: ReactNode }) => {
             </Link>
           ))}
         </div>
-        <div>{children}</div>
+        <div className={'overflow-y-auto max-h-[calc(100vh-210px)]'}>{children}</div>
       </div>
     </AppLayoutClient>
   );
