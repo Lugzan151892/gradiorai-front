@@ -12,6 +12,7 @@ import UIButton from '@/components/ui/button/UIButton';
 import { openModal } from '@/store/tech/techSlice';
 import { useConfirm } from '@/features/confirm-provider/ConfirmProvider';
 import AchievementModal from '@/app/(views)/system/achievements/components/AchievementModal';
+import { Trans } from '@/i18n/Trans';
 
 const SystemAchievements = () => {
   const [achievements, setAchievements] = useState<IAchievement[]>([]);
@@ -30,7 +31,7 @@ const SystemAchievements = () => {
       reward_points: 0,
       type: EACHIEVEMENT_TYPE.ONESHOT,
       trigger: EACHIEVEMENT_TRIGGER.ANSWER_QUESTION,
-      target: 0,
+      target: 1,
       description: '',
       active: true,
     });
@@ -143,29 +144,36 @@ const SystemAchievements = () => {
           <div className={'mb-4 relative bg-modal'}>
             <div
               className={
-                'sticky top-0 left-0 border grid grid-cols-[5%_15%_20%_15%_15%_15%_15%] min-h-8 border bg-modal'
+                'sticky top-0 left-0 border grid grid-cols-[3%_15%_15%_7%_18%_10%_10%_22%] min-h-8 border bg-modal'
               }
             >
-              <div className={'text-2xl border-r px-2'}>ID</div>
-              <div className={'text-2xl border-r px-2'}>Название</div>
-              <div className={'text-2xl border-r px-2'}>Тип</div>
-              <div className={'text-2xl border-r px-2'}>Триггер</div>
-              <div className={'text-2xl border-r px-2'}>Целевое значение</div>
-              <div className={'text-2xl border-r px-2'}>Награда</div>
-              <div className={'text-2xl border-r px-2'}>ACTIONS</div>
+              <div className={'border-r px-2'}>ID</div>
+              <div className={'border-r px-2'}>Ключ</div>
+              <div className={'border-r px-2'}>Название</div>
+              <div className={'border-r px-2'}>Тип</div>
+              <div className={'border-r px-2'}>Триггер</div>
+              <div className={'border-r px-2'}>Целевое значение</div>
+              <div className={'border-r px-2'}>Награда</div>
+              <div className={'border-r px-2'}>ACTIONS</div>
             </div>
             {!!achievements.length &&
               achievements.map((achievement) => (
                 <div
                   key={achievement.id}
-                  className={'border w-full grid grid-cols-[5%_15%_20%_15%_15%_15%_15%]'}
+                  className={'border w-full grid grid-cols-[3%_15%_15%_7%_18%_10%_10%_22%]'}
                 >
-                  <div className={'text-xl border-r text-center'}>{achievement.id}</div>
-                  <div className={'text-xl border-r px-2 truncate'}>{achievement.title}</div>
-                  <div className={'text-xl border-r px-2'}>{achievement.type}</div>
-                  <div className={'text-xl border-r px-2'}>{achievement.trigger}</div>
-                  <div className={'text-xl border-r px-2'}>{achievement.target}</div>
-                  <div className={'text-xl border-r px-2'}>{achievement.reward_points}</div>
+                  <div className={'border-r text-center'}>{achievement.id}</div>
+                  <div className={'border-r px-2'}>{achievement.key}</div>
+                  <div className={'border-r px-2 truncate'}>
+                    <Trans
+                      ns={'achievement'}
+                      k={achievement.title as any}
+                    />
+                  </div>
+                  <div className={'border-r px-2'}>{achievement.type}</div>
+                  <div className={'border-r px-2'}>{achievement.trigger}</div>
+                  <div className={'border-r px-2'}>{achievement.target}</div>
+                  <div className={'border-r px-2'}>{achievement.reward_points}</div>
                   <div className={'flex flex-col px-2 py-2'}>
                     <UIButton
                       className={'mb-2'}
