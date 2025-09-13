@@ -13,6 +13,7 @@ export enum ESYSTEM_PAGES {
   TRANSLATIONS = 'TRANSLATIONS',
   ANALIZE = 'ANALIZE',
   FAKE_USERS = 'FAKE_USERS',
+  ACHIEVEMENTS = 'ACHIEVEMENTS',
 }
 
 export interface IFakeUser {
