@@ -40,6 +40,7 @@ const getIconViewBox = (name: keyof typeof IconMarkup) => {
     case 'google-icon':
       return '0 0 48 48';
     case 'icon-trophy':
+    case 'target':
       return '0 0 30 30';
     default:
       return '0 0 24 24';

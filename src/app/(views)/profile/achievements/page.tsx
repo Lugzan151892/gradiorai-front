@@ -2,7 +2,7 @@
 
 import CustomIcon from '@/components/ui/icon/CustomIcon';
 import Api from '@/core/api/api';
-import { IAchievement, IAchievementWithProgress } from '@/core/interfaces/types';
+import { IAchievement } from '@/core/interfaces/types';
 import errorHandler from '@/core/utils/error/errorHandler';
 import { setLoading } from '@/features/loading/loadingSlice';
 import { useAppDispatch } from '@/hooks/redux';
@@ -15,14 +15,13 @@ import AchievementItem from './components/AchievementItem';
 const ProfileAchievements = () => {
   const dispatch = useAppDispatch();
   const user = useSelector((state: RootState) => state.user.user);
-  const [userAchievements, setUserAchievements] = useState<IAchievementWithProgress[]>([]);
-  const [allAchievements, setAllAchievements] = useState<IAchievement[]>([]);
+  const [userAchievements, setUserAchievements] = useState<IAchievement[]>([]);
 
   const loadAchievements = useCallback(async () => {
     if (!user?.id) return;
     dispatch(setLoading(true));
     try {
-      const result = await Api.get<{ userId: number }, IAchievementWithProgress[]>('/achievements', {
+      const result = await Api.get<{ userId: number }, IAchievement[]>('/achievements', {
         userId: user.id,
       });
       setUserAchievements(result.payload);
@@ -33,48 +32,80 @@ const ProfileAchievements = () => {
     }
   }, [user, dispatch]);
 
-  const loadAllAchievements = useCallback(async () => {
-    dispatch(setLoading(true));
-    try {
-      const result = await Api.get<undefined, IAchievement[]>('/achievements');
-      setAllAchievements(result.payload);
-    } catch (error) {
-      errorHandler(error, dispatch);
-    } finally {
-      dispatch(setLoading(false));
-    }
-  }, [dispatch]);
+  const splittedAchievements = useMemo(() => {
+    return userAchievements.reduce<{ completed: IAchievement[]; notCompleted: IAchievement[] }>(
+      (acc, achievement) => {
+        if (achievement.userProgress?.completed) {
+          acc.completed.push(achievement);
+        } else {
+          acc.notCompleted.push(achievement);
+        }
+        return acc;
+      },
+      { completed: [], notCompleted: [] }
+    );
+  }, [userAchievements]);
 
   useEffect(() => {
     loadAchievements();
-    loadAllAchievements();
-  }, [loadAchievements, loadAllAchievements]);
+  }, [loadAchievements]);
 
   return (
-    <div>
-      <div>
-        <div className={'flex gap-3 items-center'}>
-          <CustomIcon
-            name={'icon-trophy'}
-            size={30}
-            color={'var(--main-purple)'}
-          />
-          <Trans
-            className={'text-2xl font-bold'}
-            ns={'profile'}
-            k={'profile_achievements_title_completed'}
-          />
-          <div className={'px-4 bg-main-purple text-white rounded-full text-base font-bold'}>4</div>
-        </div>
-        <div className={'flex gap-6 flex-wrap mt-4'}>
-          {userAchievements.map((achievement) => (
-            <AchievementItem
-              key={achievement.id}
-              achievement={achievement}
+    <div className={'flex flex-col gap-20'}>
+      {!!splittedAchievements.completed.length && (
+        <div>
+          <div className={'flex gap-3 items-center'}>
+            <CustomIcon
+              name={'icon-trophy'}
+              size={30}
+              color={'var(--main-purple)'}
             />
-          ))}
+            <Trans
+              className={'text-2xl font-bold'}
+              ns={'achievement'}
+              k={'achievement_title_completed'}
+            />
+            <div className={'px-4 bg-main-purple text-white rounded-full text-base font-bold'}>
+              {splittedAchievements.completed.length}
+            </div>
+          </div>
+          <div className={'flex gap-6 flex-wrap mt-4'}>
+            {splittedAchievements.completed.map((achievement) => (
+              <AchievementItem
+                key={achievement.id}
+                achievement={achievement}
+              />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
+      {!!splittedAchievements.notCompleted.length && (
+        <div>
+          <div className={'flex gap-3 items-center'}>
+            <CustomIcon
+              name={'target'}
+              size={30}
+              color={'var(--main-purple)'}
+            />
+            <Trans
+              className={'text-2xl font-bold'}
+              ns={'achievement'}
+              k={'achievement_title_not_completed'}
+            />
+            <div className={'px-4 bg-main-gray text-white rounded-full text-base font-bold'}>
+              {splittedAchievements.notCompleted.length}
+            </div>
+          </div>
+          <div className={'flex gap-6 flex-wrap mt-4'}>
+            {splittedAchievements.notCompleted.map((achievement) => (
+              <AchievementItem
+                key={achievement.id}
+                achievement={achievement}
+              />
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

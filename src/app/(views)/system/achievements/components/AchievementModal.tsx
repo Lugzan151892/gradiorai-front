@@ -140,7 +140,8 @@ const AchievementModal: React.FC<ISaveQuestionModalProps> = ({ open = false, onC
                     : undefined
                 }
                 formats={['svg']}
-                onFileSelected={(e) => setEditedAchievement({ ...editedAchievement, image: e })}
+                /** @todo: fix type */
+                onFileSelected={(e) => setEditedAchievement({ ...editedAchievement, image: e as unknown as IFile })}
               />
             </div>
           </div>
@@ -148,7 +149,7 @@ const AchievementModal: React.FC<ISaveQuestionModalProps> = ({ open = false, onC
           <div className={'flex'}>
             <UIButton
               className={'lg:ml-auto mx-auto'}
-              text={'Сохранить фейкового пользователя'}
+              text={'Сохранить достижение'}
               onClick={handleSave}
             />
           </div>

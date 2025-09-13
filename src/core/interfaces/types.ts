@@ -141,11 +141,30 @@ export enum ACHIEVEMENT_TYPE {
 }
 
 export enum ACHIEVEMENT_TRIGGER {
+  /** пользователь ответил на вопрос (payload `{ count?: number } */
   ANSWER_QUESTION = 'ANSWER_QUESTION',
+  /** пользователь ответил на вопрос правильно */
+  ANSWER_QUESTION_CORRECT = 'ANSWER_QUESTION_CORRECT',
+  /** пользователь ответил на вопрос правильно на уровне */
+  ANSWER_QUESTION_CORRECT_LEVEL_1 = 'ANSWER_QUESTION_CORRECT_LEVEL_1',
+  ANSWER_QUESTION_CORRECT_LEVEL_2 = 'ANSWER_QUESTION_CORRECT_LEVEL_2',
+  ANSWER_QUESTION_CORRECT_LEVEL_3 = 'ANSWER_QUESTION_CORRECT_LEVEL_3',
+  /** пользователь завершил тест (payload `{ score?: number }`) */
   PASS_TEST = 'PASS_TEST',
+  /** пользователь завершил интервью (payload `{ score?: number }`) */
+  PASS_INTERVIEW = 'PASS_INTERVIEW',
+  /** регистрация */
   REGISTER = 'REGISTER',
-  FIRST_TEST = 'FIRST_TEST',
+  /** вход в аккаунт */
   LOGIN = 'LOGIN',
+  /** установка username */
+  USERNAME_SET = 'USERNAME_SET',
+  /** добавление аватара */
+  AVATAR_SET = 'AVATAR_SET',
+  /** добавление cv */
+  CV_SET = 'CV_SET',
+  /** добавление отзыва о тесте */
+  TEST_REVIEW_CREATE = 'TEST_REVIEW_CREATE',
 }
 
 export interface IAchievement {
@@ -158,14 +177,11 @@ export interface IAchievement {
   target: number;
   reward_points: number;
   image_id: number;
-  image: File | IFile | null;
+  image: IFile | null;
   active?: boolean;
   created_at?: string;
   updated_at?: string;
-}
-
-export interface IAchievementWithProgress extends IAchievement {
-  userProgress: {
+  userProgress?: {
     completed: boolean;
     completed_at: string;
     progress: number;
