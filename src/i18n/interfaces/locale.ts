@@ -253,6 +253,7 @@ export const AUTH_KEYS = ensureNoDuplicates([
 export const ACHIEVEMENT_KEYS = ensureNoDuplicates([
   'achievement_title_completed',
   'achievement_title_not_completed',
+  'achievement_progress',
 ] as const);
 
 export type TCommonKey = (typeof COMMON_KEYS)[number];
