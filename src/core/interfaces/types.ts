@@ -90,6 +90,7 @@ export interface ITestParams {
   password?: string;
   techs: Array<number>;
   level: ESKILL_LEVEL;
+  locale?: string;
 }
 
 export interface ITech {
