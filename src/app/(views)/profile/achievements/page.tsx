@@ -51,17 +51,17 @@ const ProfileAchievements = () => {
   }, [loadAchievements]);
 
   return (
-    <div className={'flex flex-col gap-20'}>
+    <div className={'flex flex-col gap-20 w-full'}>
       {!!splittedAchievements.completed.length && (
-        <div>
-          <div className={'flex gap-3 items-center'}>
+        <div className={'min-w-0 flex-1'}>
+          <div className={'flex gap-3 items-center min-w-0'}>
             <CustomIcon
               name={'icon-trophy'}
               size={30}
               color={'var(--main-purple)'}
             />
             <Trans
-              className={'text-2xl font-bold'}
+              className={'text-2xl font-bold truncate min-w-0'}
               ns={'achievement'}
               k={'achievement_title_completed'}
             />
@@ -69,7 +69,7 @@ const ProfileAchievements = () => {
               {splittedAchievements.completed.length}
             </div>
           </div>
-          <div className={'flex gap-6 flex-wrap mt-4'}>
+          <div className={'flex gap-6 flex-wrap mt-4 justify-center lg:justify-start'}>
             {splittedAchievements.completed.map((achievement) => (
               <AchievementItem
                 key={achievement.id}
@@ -81,14 +81,14 @@ const ProfileAchievements = () => {
       )}
       {!!splittedAchievements.notCompleted.length && (
         <div>
-          <div className={'flex gap-3 items-center'}>
+          <div className={'flex gap-3 items-center min-w-0'}>
             <CustomIcon
               name={'target'}
               size={30}
               color={'var(--main-purple)'}
             />
             <Trans
-              className={'text-2xl font-bold'}
+              className={'text-2xl font-bold truncate min-w-0'}
               ns={'achievement'}
               k={'achievement_title_not_completed'}
             />
@@ -96,7 +96,7 @@ const ProfileAchievements = () => {
               {splittedAchievements.notCompleted.length}
             </div>
           </div>
-          <div className={'flex gap-6 flex-wrap mt-4'}>
+          <div className={'flex gap-6 flex-wrap mt-4 justify-center lg:justify-start'}>
             {splittedAchievements.notCompleted.map((achievement) => (
               <AchievementItem
                 key={achievement.id}

@@ -1,5 +1,5 @@
 import { Trans } from '@/i18n/Trans';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import UserRatingItem from './components/UserRatingItem';
 import { IUserRating } from '@/core/interfaces/types';
 import { setLoading } from '@/features/loading/loadingSlice';
@@ -11,8 +11,21 @@ import { IFakeUser } from '@/app/(views)/system/interfaces';
 const UserRatingsTable = () => {
   const [usersRating, setUsersRating] = useState<IUserRating[]>([]);
   const dispatch = useAppDispatch();
-  /** @todo: Перевести на реальные данные */
-  const averageRating = 3027;
+  const [averageRating, setAverageRating] = useState<number>(0);
+
+  const getAverageRating = useCallback(async () => {
+    dispatch(setLoading(true));
+    try {
+      const result = await Api.getSilent<undefined, { average_rating: number }>('/user/rating/average-rating');
+      if (result.success) {
+        setAverageRating(result.payload.average_rating);
+      }
+    } catch (e) {
+      errorHandler(e, dispatch);
+    } finally {
+      dispatch(setLoading(false));
+    }
+  }, [dispatch]);
 
   useEffect(() => {
     const fetchUsersRating = async () => {
@@ -41,10 +54,11 @@ const UserRatingsTable = () => {
       }
     };
     fetchUsersRating();
-  }, [dispatch]);
+    getAverageRating();
+  }, [dispatch, getAverageRating]);
 
   return (
-    <div className={'max-w-[1440px] mx-auto'}>
+    <div className={'lg:max-w-[1440px] max-w-[calc(100vw-40px)] mx-auto'}>
       <div className={'lg:text-2xl text-xl font-semibold text-center'}>
         <Trans
           ns={'main'}

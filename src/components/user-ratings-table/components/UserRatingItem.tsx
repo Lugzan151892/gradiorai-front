@@ -1,12 +1,12 @@
 import { cn } from '@/lib/utils';
 import React from 'react';
-import firstPlaceIcon from '../assets/trophy.svg';
-import secondPlaceIcon from '../assets/2nd-place-medal.svg';
-import thirdPlaceIcon from '../assets/3rd-place-medal.svg';
+import firstPlaceIcon from '@/components/user-ratings-table/assets/trophy.svg';
+import secondPlaceIcon from '@/components/user-ratings-table/assets/2nd-place-medal.svg';
+import thirdPlaceIcon from '@/components/user-ratings-table/assets/3rd-place-medal.svg';
 import Image from 'next/image';
 import { IUser } from '@/core/interfaces/types';
 import UserAvatar from '@/components/user-avatar/UserAvatar';
-import rankingIcon from '../assets/ranking.svg';
+import rankingIcon from '@/components/user-ratings-table/assets/ranking.svg';
 import { useBreakpoint } from '@/hooks/useBreakpoints';
 
 interface IUserRatingItemProps {
@@ -50,7 +50,7 @@ const UserRatingItem: React.FC<IUserRatingItemProps> = ({ rating, position, user
   };
   return (
     <div className={cn('flex items-center w-full lg:p-6 p-3 rounded-3xl border-1', itemBackground, itemBorderColor)}>
-      <div className={'flex items-center gap-4 pr-3'}>
+      <div className={'flex items-center lg:gap-4 gap-2 pr-3 min-w-0 flex-1'}>
         <div
           className={cn(
             'text-main-white text-xl font-bold rounded-full lg:w-11 lg:h-11 min-w-8 min-h-8 flex items-center justify-center',
@@ -65,7 +65,7 @@ const UserRatingItem: React.FC<IUserRatingItemProps> = ({ rating, position, user
           alt={'profile'}
         />
         <div
-          className={'text-main-white text-xl font-bold truncate'}
+          className={'text-main-white lg:text-xl text-lg font-bold truncate min-w-0'}
           title={user?.username || user?.email}
         >
           {user?.username || user?.email}
