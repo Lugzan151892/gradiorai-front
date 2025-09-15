@@ -29,9 +29,11 @@ const CustomModal: React.FC<ICustomModalProps> = ({
   const typeColor = () => {
     switch (type) {
       case 'success':
-      case 'error':
-      case 'warning':
         return type;
+      case 'error':
+        return 'main-gray';
+      case 'warning':
+        return 'main-gray';
       default:
         return 'main-gray';
     }
@@ -54,7 +56,7 @@ const CustomModal: React.FC<ICustomModalProps> = ({
             <DialogPanel
               transition
               className={cn(
-                'rounded-3xl bg-black border-1 text-white flex flex-col duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0 overflow-hidden',
+                'rounded-3xl bg-main-black border-1 text-white flex flex-col duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0 overflow-hidden',
                 `border-${typeColor()}`,
                 widthClasses,
                 className
@@ -63,7 +65,7 @@ const CustomModal: React.FC<ICustomModalProps> = ({
               {header || (
                 <div
                   className={cn(
-                    'grid grid-cols-[40px_1fr_40px] items-center py-2 px-4 justify-items-center border-b',
+                    'grid grid-cols-[40px_1fr_40px] items-center py-2 px-4 justify-items-center',
                     `border-${typeColor()} `
                   )}
                 >
