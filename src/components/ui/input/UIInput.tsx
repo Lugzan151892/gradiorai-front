@@ -16,6 +16,7 @@ interface Props extends Pick<React.ComponentProps<'input'>, 'id' | 'disabled' | 
   error?: string[] | string | React.ReactNode;
   linkChild?: React.ReactNode;
   autoComplete?: boolean;
+  disableAutofill?: boolean;
   success?: boolean;
   level?: TInpuLevel;
   onInput?: (val: string) => void;
@@ -35,6 +36,7 @@ const UIInput: React.FC<Props> = ({
   value,
   level = 'default',
   autoComplete = true,
+  disableAutofill = false,
   error,
   linkChild,
   success,
@@ -141,7 +143,12 @@ const UIInput: React.FC<Props> = ({
           onKeyDown={handleKeyDown}
           type={currentInputType}
           name={type}
-          autoComplete={autoComplete ? type : 'off'}
+          autoComplete={autoComplete && !disableAutofill ? type : 'off'}
+          autoCorrect={disableAutofill ? 'off' : undefined}
+          autoCapitalize={disableAutofill ? 'off' : undefined}
+          spellCheck={disableAutofill ? false : undefined}
+          data-lpignore={disableAutofill ? 'true' : undefined}
+          data-form-type={disableAutofill ? 'other' : undefined}
           disabled={disabled}
           placeholder={placeholder}
           className={cn(
