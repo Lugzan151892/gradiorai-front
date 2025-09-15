@@ -2,6 +2,7 @@
 
 import UIButton from '@/components/ui/button/UIButton';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux';
+import { cn } from '@/lib/utils';
 import { RootState } from '@/store';
 import { closeModal, resetModalSettings } from '@/store/tech/techSlice';
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react';
@@ -39,10 +40,11 @@ const ErrorModal = () => {
           <div className={'flex min-h-full items-center justify-center p-4'}>
             <DialogPanel
               transition
-              className={
-                'max-w-screen w-md flex flex-col mx-4 gap-3 rounded-3xl bg-black p-6 border-1 min-h-[180px] duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0 ' +
+              className={cn(
+                'max-w-screen w-md flex flex-col mx-4 gap-3 rounded-3xl bg-black p-6 border-1 min-h-[180px]',
+                'duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0',
                 `border-${settings.type === 'error' ? 'error' : 'white'}`
-              }
+              )}
             >
               <div className={'grid grid-cols-[40px_1fr_40px] gap-3 items-center justify-items-center'}>
                 <div />

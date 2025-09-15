@@ -22,6 +22,7 @@ import { sleep } from '@/core/utils/common';
 import { cn } from '@/lib/utils';
 import classes from './styles/animatedBlock.module.css';
 import { Trans } from '@/i18n/Trans';
+import { useI18n } from '@/i18n/I18nProvider';
 
 const TestsView = () => {
   const dispatch = useAppDispatch();
@@ -36,6 +37,7 @@ const TestsView = () => {
   const [tests, setTests] = useState<ITest[]>([]);
   const router = useRouter();
   const [generateModal, setGenerateModal] = useState(false);
+  const { locale } = useI18n();
 
   const [showAdditionalFilters, setShowAdditionalFilters] = useState(false);
 
@@ -117,6 +119,7 @@ const TestsView = () => {
     const data: ITestParams = {
       techs: questionsTechs,
       level: questionsLevel,
+      locale,
     };
 
     try {

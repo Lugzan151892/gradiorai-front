@@ -64,7 +64,6 @@ export function EditorProvider({ children }: { children: React.ReactNode }) {
       const [ns, key] = attr.split(':');
       setNsKey({ ns, key });
 
-      // Устанавливаем позицию каждый раз при открытии модального окна
       if (!hasBeenPositioned.current) {
         const newPos = {
           top: Math.round(window.innerHeight * 0.2),
@@ -72,15 +71,9 @@ export function EditorProvider({ children }: { children: React.ReactNode }) {
         };
         setModalPos(newPos);
         hasBeenPositioned.current = true;
-
-        // Устанавливаем локаль только при первом открытии модального окна
         setSelectedLocale(locale as TLocale);
       }
 
-      // Определяем какую локаль использовать для API запроса
-      // const localeToUse = hasBeenPositioned.current ? selectedLocale : (locale as TLocale);
-
-      // Используем текущую выбранную локаль для API запроса
       try {
         loadValue(ns, key);
       } catch {
@@ -116,12 +109,10 @@ export function EditorProvider({ children }: { children: React.ReactNode }) {
     }
   }
 
-  // drag handlers
   function onDragStart(e: React.MouseEvent<HTMLDivElement | HTMLHeadingElement>) {
     if (!modalPos) return;
     setIsDragging(true);
     setDragOffset({ x: e.clientX - modalPos.left, y: e.clientY - modalPos.top });
-    // prevent text selection while dragging
     e.preventDefault();
     e.stopPropagation();
   }

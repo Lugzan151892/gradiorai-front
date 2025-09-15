@@ -13,10 +13,13 @@ const breakpoints = {
 
 type Breakpoint = keyof typeof breakpoints;
 
-export function useBreakpoint(): { isMobile: boolean; screen: Record<Breakpoint, boolean> } {
-  const [breakpoint, setBreakpoint] = useState<Breakpoint>('xs');
+export const useBreakpoint = (): { isMobile: boolean; screen: Record<Breakpoint, boolean> } => {
+  const [breakpoint, setBreakpoint] = useState<Breakpoint>('lg');
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    setIsClient(true);
+
     function getBreakpoint(width: number): Breakpoint {
       if (width >= breakpoints['2xl']) return '2xl';
       if (width >= breakpoints.xl) return 'xl';
@@ -31,7 +34,7 @@ export function useBreakpoint(): { isMobile: boolean; screen: Record<Breakpoint,
       setBreakpoint(getBreakpoint(width));
     }
 
-    updateBreakpoint(); // Инициализация при загрузке
+    updateBreakpoint();
 
     window.addEventListener('resize', updateBreakpoint);
     return () => window.removeEventListener('resize', updateBreakpoint);
@@ -51,8 +54,9 @@ export function useBreakpoint(): { isMobile: boolean; screen: Record<Breakpoint,
   }, [breakpoint]);
 
   const isMobile = useMemo(() => {
+    if (!isClient) return false;
     return screen.xs || screen.sm || screen.md;
-  }, [screen]);
+  }, [screen, isClient]);
 
   return { isMobile, screen };
-}
+};

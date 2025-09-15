@@ -1,5 +1,5 @@
 export type TLocale = 'ru' | 'en';
-export type TNameSpace = 'common' | 'main' | 'profile' | 'interview' | 'tests' | 'auth';
+export type TNameSpace = 'common' | 'main' | 'profile' | 'interview' | 'tests' | 'auth' | 'achievement';
 
 type Dedupe<T extends readonly unknown[], Seen extends readonly unknown[] = []> = T extends readonly [
   infer H,
@@ -69,6 +69,7 @@ export const COMMON_KEYS = ensureNoDuplicates([
   'common_email',
   'common_now',
   'common_daily_advice',
+  'common_achievements',
 ] as const);
 export const MAIN_KEYS = ensureNoDuplicates([
   'main_title',
@@ -148,6 +149,10 @@ export const MAIN_KEYS = ensureNoDuplicates([
   'main_faq_card_title_5',
   'main_faq_card_description_5',
   'main_go_home',
+  'main_users_rating_title',
+  'main_users_rating_users_amount_title',
+  'main_users_rating_max_rating_title',
+  'main_users_rating_users_average_title',
 ] as const);
 
 export const PROFILE_KEYS = ensureNoDuplicates([
@@ -174,6 +179,7 @@ export const PROFILE_KEYS = ensureNoDuplicates([
   'profile_result_five_to_eight',
   'profile_result_four_and_less',
   'profile_result_any',
+  'profile_google_user_notification',
 ] as const);
 
 export const INTERVIEW_KEYS = ensureNoDuplicates([
@@ -243,12 +249,20 @@ export const AUTH_KEYS = ensureNoDuplicates([
   'auth_google_login',
   'auth_time_description',
 ] as const);
+
+export const ACHIEVEMENT_KEYS = ensureNoDuplicates([
+  'achievement_title_completed',
+  'achievement_title_not_completed',
+  'achievement_progress',
+] as const);
+
 export type TCommonKey = (typeof COMMON_KEYS)[number];
 export type TMainKey = (typeof MAIN_KEYS)[number];
 export type TProfileKey = (typeof PROFILE_KEYS)[number];
 export type TInterviewKey = (typeof INTERVIEW_KEYS)[number];
 export type TTestsKey = (typeof TESTS_KEYS)[number];
 export type TAuthKey = (typeof AUTH_KEYS)[number];
+export type TAchievementKey = (typeof ACHIEVEMENT_KEYS)[number];
 
 export interface INamespaceKeyMap {
   main: TMainKey;
@@ -257,6 +271,7 @@ export interface INamespaceKeyMap {
   interview: TInterviewKey;
   tests: TTestsKey;
   auth: TAuthKey;
+  achievement: TAchievementKey;
 }
 
 export type TTranslationsShape = {

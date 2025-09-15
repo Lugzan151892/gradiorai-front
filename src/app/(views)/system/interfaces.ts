@@ -12,4 +12,12 @@ export enum ESYSTEM_PAGES {
   BACKUPS = 'BACKUPS',
   TRANSLATIONS = 'TRANSLATIONS',
   ANALIZE = 'ANALIZE',
+  FAKE_USERS = 'FAKE_USERS',
+  ACHIEVEMENTS = 'ACHIEVEMENTS',
+}
+
+export interface IFakeUser {
+  id: string;
+  name: string;
+  total_rating: number;
 }
