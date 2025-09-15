@@ -153,6 +153,8 @@ export enum EACHIEVEMENT_TRIGGER {
   PASS_TEST = 'PASS_TEST',
   /** пользователь завершил интервью (payload `{ score?: number }`) */
   PASS_INTERVIEW = 'PASS_INTERVIEW',
+  /** пользователь завершил интервью с оценкой 10 */
+  PASS_INTERVIEW_SCORE_10 = 'PASS_INTERVIEW_SCORE_10',
   /** регистрация */
   REGISTER = 'REGISTER',
   /** вход в аккаунт */
