@@ -308,7 +308,7 @@ const ProfileInformation = () => {
               />
             }
             level={'square'}
-            autoComplete={false}
+            disableAutofill
             value={username}
             error={usernameError}
             onInput={(val) => {
