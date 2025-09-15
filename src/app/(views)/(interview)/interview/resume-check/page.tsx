@@ -1,21 +1,23 @@
 'use client';
 
 import FileDropzone from '@/components/ui/file-dropzone/FileDropzone';
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { setLoading } from '@/features/loading/loadingSlice';
 import errorHandler from '@/core/utils/error/errorHandler';
-import { useAppDispatch } from '@/hooks/redux';
-import Api from '@/core/api/api';
+import { useAppDispatch, useAppSelector } from '@/hooks/redux';
+import Api, { API_PATH } from '@/core/api/api';
 import UIButton from '@/components/ui/button/UIButton';
 import UILabel from '@/components/ui/label/UILabel';
 import MarkdownMessage from '@/components/markdown-message/MarkdownMessage';
 import { Trans } from '@/i18n/Trans';
+import { IFile } from '@/core/interfaces/types';
+import { RootState } from '@/store';
 
 const ResumePrepare = () => {
-  const [userCV, setUserCV] = useState<null | File>(null);
+  const [userCV, setUserCV] = useState<null | File | IFile>(null);
   const [checkResult, setCheckResult] = useState('');
   const dispatch = useAppDispatch();
-
+  const { user } = useAppSelector((state: RootState) => state.user);
   const checkResume = async () => {
     if (!userCV) {
       return;
@@ -28,7 +30,7 @@ const ResumePrepare = () => {
         resultFiles.push(userCV);
       }
 
-      const result = await Api.postFormData<{ cv: File | null }, { result: string }>('/interview/test-resume', {
+      const result = await Api.postFormData<{ cv: File | IFile | null }, { result: string }>('/interview/test-resume', {
         cv: userCV,
       });
 
@@ -39,6 +41,19 @@ const ResumePrepare = () => {
       dispatch(setLoading(false));
     }
   };
+
+  useEffect(() => {
+    const currentUserCv = user?.files.find((file) => file.type === 'CV');
+    if (currentUserCv) {
+      setUserCV(currentUserCv);
+    }
+  }, [user]);
+
+  const dbFilePath = useMemo(() => {
+    const isDbFile = userCV && !(userCV instanceof File);
+
+    return isDbFile ? `${API_PATH}/user/files/download/cv` : undefined;
+  }, [userCV]);
 
   const clearData = () => {
     setUserCV(null);
@@ -77,6 +92,7 @@ const ResumePrepare = () => {
             }
             maxFileSize={2}
             file={userCV}
+            filePath={dbFilePath}
             formats={['docx', 'pdf']}
             onFileSelected={setUserCV}
           />
