@@ -14,7 +14,7 @@ const AchievementItem: React.FC<AchievementItemProps> = ({ achievement, classNam
   return (
     <div
       className={cn(
-        'flex flex-col gap-4 rounded-[10px] bg-main-black border-2 border-main-purple p-6 w-[max-content] max-w-[350px] min-w-[350px] min-h-[160px]',
+        'flex flex-col gap-4 rounded-[10px] bg-main-black border-2 border-main-purple lg:p-6 p-3 w-[max-content] max-w-[350px] w-full min-h-[160px]',
         className,
         !achievement.userProgress?.completed && 'border-text-disabled'
       )}
@@ -66,7 +66,7 @@ const AchievementItem: React.FC<AchievementItemProps> = ({ achievement, classNam
         </div>
       </div>
       {!!achievement.userProgress?.completed && (
-        <div className={'flex gap-2 justify-end text-text-disabled text-xs'}>
+        <div className={'flex gap-2 justify-end text-text-disabled text-xs mt-auto'}>
           {normalizeServerDate(achievement.userProgress?.completed_at || '', 'DD.MM.YYYY')}
         </div>
       )}
