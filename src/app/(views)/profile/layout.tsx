@@ -43,7 +43,7 @@ const ProfileLayout = ({ children }: { children: ReactNode }) => {
   return (
     <AppLayoutClient withState>
       <div
-        className={'lg:mt-6 lg:w-full lg:max-w-[1440px] sm:max-w-[468px] max-w-[calc(100vw-40px)] mx-auto px-4 pb-4'}
+        className={'lg:mt-6 lg:w-full lg:max-w-[1490px] sm:max-w-[468px] max-w-[calc(100vw-40px)] mx-auto px-4 pb-4'}
       >
         <div className={'mb-4 flex gap-4 pb-2 justify-self-start overflow-x-auto scrollbar-hide w-full'}>
           {tabs.map((tab) => (
