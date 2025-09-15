@@ -5,54 +5,60 @@ export const useSpeechRecognition = (onFinalTranscript?: (text: string) => void)
   const [isListening, setIsListening] = useState(false);
   const [finalTranscript, setFinalTranscript] = useState('');
   const [interimTranscript, setInterimTranscript] = useState('');
+  const [isClient, setIsClient] = useState(false);
+
+  // Ensure we're on the client side before initializing
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    if (!isClient || typeof window === 'undefined') return;
 
-      if (!SpeechRecognition) {
-        console.warn('Speech Recognition API is not supported in this browser.');
-        return;
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+      console.warn('Speech Recognition API is not supported in this browser.');
+      return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = 'ru-RU';
+    recognition.interimResults = true;
+    recognition.continuous = true;
+
+    recognition.onresult = (event: SpeechRecognitionEvent) => {
+      let final = '';
+      let interim = '';
+
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        const result = event.results[i];
+        if (result.isFinal) {
+          final += result[0].transcript + ' ';
+        } else {
+          interim += result[0].transcript;
+        }
       }
 
-      const recognition = new SpeechRecognition();
-      recognition.lang = 'ru-RU';
-      recognition.interimResults = true;
-      recognition.continuous = true;
+      if (final) {
+        setFinalTranscript((prev) => {
+          const updated = prev + final;
+          onFinalTranscript?.(final.trim());
+          return updated;
+        });
+      }
 
-      recognition.onresult = (event: SpeechRecognitionEvent) => {
-        let final = '';
-        let interim = '';
+      setInterimTranscript(interim);
+    };
 
-        for (let i = event.resultIndex; i < event.results.length; i++) {
-          const result = event.results[i];
-          if (result.isFinal) {
-            final += result[0].transcript + ' ';
-          } else {
-            interim += result[0].transcript;
-          }
-        }
+    recognition.onend = () => {
+      if (isListening) {
+        recognition.start();
+      }
+    };
 
-        if (final) {
-          setFinalTranscript((prev) => {
-            const updated = prev + final;
-            onFinalTranscript?.(final.trim());
-            return updated;
-          });
-        }
-
-        setInterimTranscript(interim);
-      };
-
-      recognition.onend = () => {
-        if (isListening) {
-          recognition.start();
-        }
-      };
-
-      recognitionRef.current = recognition;
-    }
-  }, [isListening, onFinalTranscript]);
+    recognitionRef.current = recognition;
+  }, [isClient, isListening, onFinalTranscript]);
 
   const startListening = () => {
     if (recognitionRef.current && !isListening) {
@@ -77,6 +83,6 @@ export const useSpeechRecognition = (onFinalTranscript?: (text: string) => void)
     isListening,
     startListening,
     stopListening,
-    canUseRecognition: !!recognitionRef,
+    canUseRecognition: isClient && !!recognitionRef.current,
   };
 };

@@ -47,6 +47,7 @@ export const ConfirmProvider: React.FC<{ children: React.ReactNode }> = ({ child
 
       {modalState && (
         <CustomModal
+          className={'max-w-md'}
           open
           caption={modalState.options.caption}
           type={modalState.options.type}
@@ -58,8 +59,8 @@ export const ConfirmProvider: React.FC<{ children: React.ReactNode }> = ({ child
                   key={btn.key}
                   onClick={() => handleClose(btn.key)}
                   className={cn(
-                    'px-4 py-2 rounded cursor-pointer',
-                    btn.type === 'danger' ? 'bg-red-600 text-white' : 'bg-gray-300 text-black'
+                    'px-4 py-2 rounded cursor-pointer text-main-white',
+                    btn.type === 'danger' ? 'bg-main-gray' : 'bg-main-purple'
                   )}
                 >
                   {btn.label}
@@ -68,7 +69,7 @@ export const ConfirmProvider: React.FC<{ children: React.ReactNode }> = ({ child
             </div>
           }
         >
-          <div className={'p-4 text-xl text-center max-w-md'}>{modalState.options.content}</div>
+          <div className={'p-4 text-lg text-center max-w-md text-text-disabled'}>{modalState.options.content}</div>
         </CustomModal>
       )}
     </ConfirmContext.Provider>

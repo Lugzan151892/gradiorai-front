@@ -1,21 +1,24 @@
 'use client';
 
 import FileDropzone from '@/components/ui/file-dropzone/FileDropzone';
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { setLoading } from '@/features/loading/loadingSlice';
 import errorHandler from '@/core/utils/error/errorHandler';
-import { useAppDispatch } from '@/hooks/redux';
-import Api from '@/core/api/api';
+import { useAppDispatch, useAppSelector } from '@/hooks/redux';
+import Api, { API_PATH } from '@/core/api/api';
 import { useRouter } from 'next/navigation';
 import UIButton from '@/components/ui/button/UIButton';
 import SwitchButton from '@/components/ui/switch-button/SwitchButton';
 import UITextarea from '@/components/ui/textarea/UITextarea';
 import routeChecker from '@/hoc/routeChecker';
 import { Trans } from '@/i18n/Trans';
+import { RootState } from '@/store';
+import { IFile } from '@/core/interfaces/types';
 
 const InterviewView = () => {
+  const { user } = useAppSelector((state: RootState) => state.user);
   const [vakanciesFile, setVakanciesFile] = useState<null | File>(null);
-  const [userCV, setUserCV] = useState<null | File>(null);
+  const [userCV, setUserCV] = useState<null | File | IFile>(null);
   const [userDescription, setUserDescription] = useState('');
   const [addVCFile, setAddVCFile] = useState(false);
   const dispatch = useAppDispatch();
@@ -36,14 +39,14 @@ const InterviewView = () => {
       if (vakanciesFile) {
         resultFiles.push(vakanciesFile);
       }
-      const result = await Api.postFormData<{ user_prompt: string; cv: File | null; vac: File | null }, { id: string }>(
-        '/interview/create',
-        {
-          user_prompt: userDescription,
-          cv: userCV,
-          vac: vakanciesFile,
-        }
-      );
+      const result = await Api.postFormData<
+        { user_prompt: string; cv: File | IFile | null; vac: File | null },
+        { id: string }
+      >('/interview/create', {
+        user_prompt: userDescription,
+        cv: userCV,
+        vac: vakanciesFile,
+      });
 
       if (result.payload.id) {
         router.push(`/interview/${result.payload.id}`);
@@ -54,6 +57,19 @@ const InterviewView = () => {
       dispatch(setLoading(false));
     }
   };
+
+  useEffect(() => {
+    const currentUserCv = user?.files.find((file) => file.type === 'CV');
+    if (currentUserCv) {
+      setUserCV(currentUserCv);
+    }
+  }, [user]);
+
+  const dbFilePath = useMemo(() => {
+    const isDbFile = userCV && !(userCV instanceof File);
+
+    return isDbFile ? `${API_PATH}/user/files/download/cv` : undefined;
+  }, [userCV]);
 
   return (
     <section className={'mt-6 w-full lg:px-10 h-full'}>
@@ -88,6 +104,7 @@ const InterviewView = () => {
             }
             maxFileSize={2}
             file={userCV}
+            filePath={dbFilePath}
             formats={['docx', 'pdf']}
             onFileSelected={setUserCV}
           />

@@ -19,6 +19,7 @@
   --color-input-white: #f2f7f8;
   --color-main-blue: #2655c4;
   --color-main-yellow: #ffff00;
+  --color-secondary-gray: #2b2c3a;
 
   --inset-shadow-button: inset 0 4px 0 rgba(0, 0, 0, 0.25);
 }
@@ -30,7 +31,7 @@
   --main-gray: #3d3f4d;
   --main-black: #262525;
   --text-disabled: #aab1c0;
-  --main-purple: #461fc8;
+  --main-purple: #9073cb;
   --main-yellow: #ffff00;
   --main-gradient: radial-gradient(140% 107.13% at 50% 10%, transparent 37.41%, #63e 69.27%, #fff 100%);
 }
@@ -109,4 +110,14 @@ input::-webkit-inner-spin-button {
 
 .animate-slide-up {
   animation: slide-up 0.3s ease-out;
+}
+
+/* Hide scrollbar for horizontal scroll */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
 }
