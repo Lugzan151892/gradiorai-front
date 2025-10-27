@@ -61,7 +61,7 @@ A fully custom administration dashboard with:
 
 | Area              | Tech / Library         |
 |-------------------|------------------------|
-| Framework         | [Next.js 14](https://nextjs.org/) |
+| Framework         | [Next.js 15+](https://nextjs.org/) |
 | Language          | [TypeScript](https://www.typescriptlang.org/) |
 | Styling / Layout  | CSS Modules / Tailwind (if used) |
 | Auth              | Google OAuth (NextAuth / custom) |
