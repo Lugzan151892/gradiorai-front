@@ -81,11 +81,7 @@ cd gradiorai-front
 
 ### 2️⃣ Install dependencies
 
-npm install
-# or
-pnpm install
-# or
-yarn install
+npm install || pnpm install || yarn install
 
 ### 3️⃣ Run the development server
 
