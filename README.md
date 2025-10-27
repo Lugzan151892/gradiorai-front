@@ -1,36 +1,120 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tech Interview Platform — Frontend
 
-## Getting Started
+[![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-blue?logo=typescript)](https://www.typescriptlang.org/)
+[![Prettier](https://img.shields.io/badge/Code%20Style-Prettier-f8bc45?logo=prettier)](https://prettier.io/)
+[![ESLint](https://img.shields.io/badge/Lint-ESLint-4B32C3?logo=eslint)](https://eslint.org/)
+[![Mobile Friendly](https://img.shields.io/badge/Mobile%20Friendly-Yes-brightgreen)]()
 
-First, run the development server:
+> **Tech Interview Platform** — a modern web app for preparing technical interviews.  
+> Users can take AI-generated quizzes, chat with an AI interviewer in real time, and improve their resumes.  
+> Built with **Next.js** and designed for clean, scalable code with minimal dependencies.
 
-```bash
+---
+
+## 🌐 Live Environments
+
+- **Production:** [https://gradiorai.ru](https://gradiorai.ru)
+- **Staging:** [https://interviewready.ru](https://interviewready.ru)
+
+Both environments are continuously deployed and synced with the main and staging branches.
+
+---
+
+## 🚀 Features
+
+### 🧠 Core Functionality
+- **AI-Generated Tests:** Questions and answers are generated dynamically based on selected difficulty and topic.
+- **AI Interview Chat:** Simulates a real interview with an AI interviewer via Server-Sent Events (SSE) for real-time typing animation.
+- **Resume Builder:** Generate or improve your resume using AI suggestions and templates.
+
+### 👤 User System
+- **Google Authentication** via OAuth.
+- **Role-Based Access:**
+  - Guest pages (only for non-authenticated users)
+  - User-only sections (profile, tests, interview)
+  - Admin-only dashboard
+
+### 🛠️ Admin Panel
+A fully custom administration dashboard with:
+- User statistics and logs
+- Backup download & file upload/delete system
+- Server logs viewer
+- On-the-fly localization editor (switch language and edit text directly in a modal window)
+
+### 🌍 Localization
+- Built-in localization service with **two supported languages**.
+- Hot-reload of translations: press a shortcut to open a modal and edit strings in real time.
+
+### 📱 Responsive Design
+- Fully responsive layout — optimized for **mobile**, **tablet**, and **desktop**.
+- Uses minimal external UI libraries to keep the build lightweight and maintainable.
+
+### 🏆 Gamification
+- User **rating system**
+- **Achievements** for completing tests, interviews, or specific milestones
+- User **profile** with history of past tests and interviews
+
+---
+
+## 🧩 Tech Stack
+
+| Area              | Tech / Library         |
+|-------------------|------------------------|
+| Framework         | [Next.js 14](https://nextjs.org/) |
+| Language          | [TypeScript](https://www.typescriptlang.org/) |
+| Styling / Layout  | CSS Modules / Tailwind (if used) |
+| Auth              | Google OAuth (NextAuth / custom) |
+| Realtime          | SSE (Server-Sent Events) |
+| Linting / Format  | ESLint, Prettier |
+| State Management  | Built-in React hooks (minimal external libs) |
+| Deployment        | Staging & Production VPS servers via CI/CD |
+
+---
+
+## ⚙️ Getting Started (Local Development)
+
+### 1️⃣ Clone the repository
+
+git clone [https://github.com/YourUser/gradiorai-front.git](https://github.com/Lugzan151892/gradiorai-front.git)
+cd gradiorai-front
+
+### 2️⃣ Install dependencies
+
+npm install
+# or
+pnpm install
+# or
+yarn install
+
+### 3️⃣ Run the development server
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🧹 Code Quality
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+ESLint ensures consistent and error-free code.
+Prettier maintains clean formatting across the project.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🧠 SSE (Server-Sent Events)
 
-## Learn More
+Used for simulating real-time typing during AI interviews:
+Efficient one-way communication channel from server → client.
+Lightweight alternative to WebSockets.
+Smooth “typing” effect in chat interface.
 
-To learn more about Next.js, take a look at the following resources:
+## 🔐 Access Control Overview
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| User Role          | Access Level                                    |
+| ------------------ | ----------------------------------------------- |
+| Guest              | Login / Register / Public pages                 |
+| Authenticated User | Tests, Interview, Resume, Profile               |
+| Admin              | Admin dashboard, logs, backups, file management |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🧑‍💻 Author
+Denis (Lugzan151892)
+Frontend Developer (Next.js + TypeScript)
+📫 Telegram: @denis1518
 
-## Deploy on Vercel
+🔗 GitHub: https://github.com/Lugzan151892
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
