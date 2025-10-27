@@ -109,7 +109,7 @@ Smooth “typing” effect in chat interface.
 
 ## 🧑‍💻 Author
 Denis (Lugzan151892)
-Frontend Developer (Next.js + TypeScript)
+Full-stack developer Nest.js + (Next.js | React | Vue | Nuxt.js) + TypeScript
 📫 Telegram: @denis1518
 
 🔗 GitHub: https://github.com/Lugzan151892
