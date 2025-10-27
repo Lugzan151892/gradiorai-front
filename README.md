@@ -104,7 +104,7 @@ Smooth “typing” effect in chat interface.
 | User Role          | Access Level                                    |
 | ------------------ | ----------------------------------------------- |
 | Guest              | Login / Register / Public pages                 |
-| Authenticated User | Tests, Interview, Resume, Profile               |
+| Authenticated User | Interview, Profile                              |
 | Admin              | Admin dashboard, logs, backups, file management |
 
 ## 🧑‍💻 Author
